@@ -1,0 +1,155 @@
+@font-face {
+font-family: 'Circular Std Book';
+font-style: normal;
+font-weight: normal;
+src: local('Circular Std Book'), 
+        url('../fonts/CircularStd-Book.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Circular Std Book Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Circular Std Book Italic'), 
+        url('../fonts/CircularStd-BookItalic.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Circular Std Medium';
+font-style: normal;
+font-weight: normal;
+src: local('Circular Std Medium'), 
+        url('../fonts/CircularStd-Medium.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Circular Std Medium Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Circular Std Medium Italic'), 
+        url('../fonts/CircularStd-MediumItalic.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Circular Std Bold';
+font-style: normal;
+font-weight: normal;
+src: local('Circular Std Bold'), 
+        url('../fonts/CircularStd-Bold.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Circular Std Bold Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Circular Std Bold Italic'), 
+        url('../fonts/CircularStd-BoldItalic.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Circular Std Black';
+font-style: normal;
+font-weight: normal;
+src: local('Circular Std Black'), 
+        url('../fonts/CircularStd-Black.woff') format('woff');
+}
+
+
+@font-face {
+font-family: 'Circular Std Black Italic';
+font-style: normal;
+font-weight: normal;
+src: local('Circular Std Black Italic'), 
+        url('../fonts/CircularStd-BlackItalic.woff') format('woff');
+}
+
+
+
+
+
+
+
+
+
+.panel-cs { max-width: 650px; width: 100%; background: #fff; padding: 15px; border-radius: 15px; box-shadow: 0px 0px 15px #d5d5d5; margin: 25px auto;}
+
+
+.panel-cs .panel-heading {    font-family: "Circular Std Book"; font-size: 20px; color: #000; text-align: center; font-weight: bold; letter-spacing: 1px; text-transform: uppercase;}
+
+.panel-cs .panel-body label{ font-family: "Circular Std Book"; font-size: 18px; color: #000; }
+.panel-cs .panel-body select  {  font-family: "Circular Std Book"; font-size: 18px; color: #000; }
+.panel-cs .panel-body .right_btn { float: right; margin-bottom: 15px;}
+.panel-cs .panel-body textarea {font-family: "Circular Std Book"; font-size: 18px; height: 150px; resize: none;}
+.panel-cs .panel-body .form-group { margin-left: 0px; margin-right: 0px;}
+
+.btn-hldr { margin: 15px 0px; width: 100%; float: left;}
+.left_btn { float: left; margin-bottom: 15px;}
+
+.btn_green { font-family: "Circular Std Book";
+    font-size: 16px;
+    color: #fff;
+    padding: 7px 35px;
+    background: #429e47;
+    text-align: center;
+    border-radius: 5px;
+    border: 0px;
+    box-shadow: 0px 3px 1px #348238;  
+    margin-top: -3px;
+}
+
+.btn_green:focus { font-family: "Circular Std Book";
+    margin-top: 0px;
+    box-shadow: none;
+    color: #fff;
+}
+
+.btn_orange, .btn_green { color: #fff;}
+
+.btn_orange {  
+	font-family: "Circular Std Book";
+    font-size: 16px;
+    color: #fff;
+    padding: 7px 35px;
+    background: #f68000;
+    text-align: center;
+    border-radius: 5px;
+    border: 0px;
+    box-shadow: 0px 3px 1px #b55e00;  
+    margin-top: -3px;
+}
+
+.btn_orange:focus { font-family: "Circular Std Book";
+    margin-top: 0px;
+    box-shadow: none;
+    color: #fff;
+}
+
+.circle-btns  { display: -webkit-box;  display: -moz-box;  display: -ms-flexbox;  display: -webkit-flex;  display: flex;  -webkit-flex-flow: row wrap;  justify-content: center;  flex-wrap: wrap;}
+.circle-btns li a {  
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: "Circular Std Book";
+    font-size: 16px;
+    color: #fff;
+    cursor: pointer;
+}
+.circle-btns li { display: inline-block;
+    background: #429e47;
+    border-radius: 50%;
+    height: 100px;
+    width: 100px;
+    text-align: center;
+    position: relative; }  
+
+.circle-btns li { margin-right: 20px;}
+.circle-btns li:last-child { margin-right: 0px;}
+
+

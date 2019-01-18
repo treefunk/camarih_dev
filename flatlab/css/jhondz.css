@@ -1,0 +1,32 @@
+.no-sort{
+    position: relative;
+    top: -13px
+}
+
+#assignfilters button{
+    margin-top:23px;
+}
+
+.filterbuttons_j{
+    margin-bottom:5px;
+}
+
+.panel-heading{
+    margin-bottom:10px;
+}
+.panelcontent__{
+    margin: 0 50% 0 1em;
+    padding-bottom: 50px;
+}
+
+.panelcontent__2{
+	margin: 0 2em 0 1em;
+	padding-bottom: 50px;
+}
+
+.panelcontent__2 form header + div.form-group{
+    padding-top: 15px;
+}
+.assignheader{
+    font-size: 16px;
+}
