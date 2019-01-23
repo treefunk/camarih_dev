@@ -15,10 +15,9 @@
             <div class="van-hldr">
                 <form action="<?=base_url('availability/packages')?>" method="POST">
                 <seat-plan-selection
-                :seats_data='<?=json_encode($seat_map)?>'
-                :occupied_seats_data='<?=json_encode($occupied_seat_map)?>'
-                :pending_seats_data='<?=json_encode($pending_seat_map)?>'
-                :current_seats_data='<?=json_encode($current_seat_map)?>'
+                :seats_data='<?=json_encode($seat_layout)?>'
+                :seat_map='<?=json_encode($seat_map)?>'
+                :sels_data='<?=json_encode($current_seat_map)?>'
                 ></seat-plan-selection>
                 
                 </form>

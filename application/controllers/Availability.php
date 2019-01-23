@@ -73,7 +73,7 @@ class Availability extends MY_Controller {
         }
 
         //GET VAN LAYOUT
-        $data['seat_map'] = $this->rate_model->getVanlayoutByRateId($rate_id);                      
+        $data['seat_map'] = $this->rate_model->getVanlayoutByRateId($rate_id);                
 
         //GET OCCUPIED SEATS
         $data['occupied_seat_map'] = $this->seatplan_model->getOccupiedSeatsByRateId($rate->id);
@@ -95,6 +95,45 @@ class Availability extends MY_Controller {
             'rate_price' => $rate->price
         ];
 
+        $seat_layout = [];
+        $index = 1;
+        $row = 0;
+
+        foreach($data['seat_map'] as $row_length)
+        {
+            for($x = 0 ; $x < $row_length ; $x++)
+            {
+                foreach($data['current_seat_map'] as $current)
+                {
+                    if($current->seatnum == $index){
+                        $s['bday'] = $current->bday;
+                        $s['name'] = $current->name;
+                    }else{
+                        $s = null;
+                    }
+                    break;
+                }
+
+                $seat = (object)[
+                    'seatnum' => $index,
+                    'bday' => isset($s['bday']) ? $s['bday'] : '',
+                    'name' => isset($s['name']) ? $s['name'] : '',
+                    'isOccupied' => in_array($index,$data['occupied_seat_map']),
+                    'isPending' => in_array($index,$data['pending_seat_map']),
+                    'selected' => true,
+                    
+                ];
+    
+                $seat_layout[$row][] = $seat;
+                $index++;
+            }
+            $row++;
+        }
+        // var_dump($data['current_seat_map']); die();
+
+        $data['seat_layout'] = $seat_layout;
+
+
         $data['rate_selected'] = [
             'rate_id' => $rate->id,
             'rate_price' => $rate->price
@@ -105,7 +144,7 @@ class Availability extends MY_Controller {
         $this->session->set_userdata('selected', $data['selected']);
         // SET SESSION END
 
-
+        // var_dump($data['seat_layout']); die();
         $this->wrapper([
             'data' => $data,
             'view' => 'book'
@@ -224,7 +263,7 @@ class Availability extends MY_Controller {
                 foreach($data['selected_seats'] as $seat){
                     $seat_plan = [
                         "reservation_id" => $id,
-                        "seat_num" => $seat['seat_num'],
+                        "seat_num" => $seat['seatnum'],
                         "name" => $seat['name'],
                         "birth_date" => $seat['bday']
                     ];

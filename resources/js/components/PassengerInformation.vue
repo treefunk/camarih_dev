@@ -5,7 +5,7 @@
                 <h4 style="text-align: center;">
             Seat {{ passenger.seatnum }}
             </h4>
-            <input type="hidden" :name="`selected[${index}][seat_num]`" :value="passenger.seatnum">
+            <input type="hidden" :name="`selected[${index}][seatnum]`" :value="passenger.seatnum">
             <div class="col-md-12">
             <div class="form-group">
                 <label for="guest1">
@@ -16,7 +16,7 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-user"></span>
                     </span>
-                <input :name="`selected[${index}][name]`" :placeholder="`Seat ${passenger.seatnum} Fullname`" id="guest1" class="form-control" type="text" required="">
+                <input v-model="passenger.name" :name="`selected[${index}][name]`" :placeholder="`Seat ${passenger.seatnum} Fullname`" id="guest1" class="form-control" type="text" required="">
                 </div>
 
             </div>
@@ -54,7 +54,7 @@
         methods: {
             updateSelected(e){
                     let passenger = {
-                        seatnum: this.passenger.seat_num,
+                        seatnum: this.passenger.seatnum,
                         name: e.target.value
                     }
                     this.$emit('update-passenger-name',passenger)

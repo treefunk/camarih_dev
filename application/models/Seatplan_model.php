@@ -8,7 +8,7 @@ class Seatplan_model extends CMS_Model
         $this->table = "seat_plan";
     }
 
-    public function getOccupiedSeatsByRateId($rate_id)
+    public function getOccupiedSeatsByRateId($rate_id,$as_array_of_objects = false)
     {
 
         $occupied_seat_map = [];
@@ -19,6 +19,9 @@ class Seatplan_model extends CMS_Model
                                 ->join('rates', 'reservations.rate_id = rates.id')
                                 ->where('rates.id',$rate_id)
                                 ->get()->result();
+        if($as_array_of_objects){
+            return $occupied_seats;
+        }
         foreach($occupied_seats as $occupied_seat){
             $occupied_seat_map[] = (int)$occupied_seat->seat_num;
         }
@@ -42,7 +45,7 @@ class Seatplan_model extends CMS_Model
 
         $seats_num = [];
         foreach($pending_seat_map as $seat){
-            $seats_num[] = (int)$seat['seat_num'];
+            $seats_num[] = (int)$seat['seatnum'];
         }
 
         return $seats_num;
@@ -59,10 +62,12 @@ class Seatplan_model extends CMS_Model
             $seats= $this->session->userdata('selected_seats');
             foreach($seats as $seat){
                 $current_seats[] = (object)[
-                    'seatnum' => (int)$seat['seat_num'],
+                    'seatnum' => (int)$seat['seatnum'],
                     'bday' => $seat['bday'],
                     'name' => $seat['name'],
-                    'selected' => TRUE
+                    'isOccupied' => false,
+                    'isPending' => false,
+                    'selected' => true,
                 ];
 
             }
