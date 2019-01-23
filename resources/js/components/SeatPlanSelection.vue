@@ -21,7 +21,8 @@
                         'col-fixed-md': row.length < 4,
                         'col-fixed': row.length == 4
                     }">
-                        <input v-model="sels" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
+                        <input 
+                        v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
                         <label :for="`seat-${seat.seatnum}`">
                         <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum }}</span> </div>
                         <div class="seat-after z-depth-1"> </div>
@@ -31,8 +32,9 @@
                 
             </div>
             
-            <div v-for="(passenger,index) in sels" :key="index">
-                <passenger-information :passenger="passenger" > </passenger-information>
+            <div v-for="(row,i) in seats" :key="i">
+
+                <passenger-information v-for="(passenger,index) in row" :parentindex="i" :index="index" :key="index" :passenger="passenger" > </passenger-information>
             </div>
 
             <div class="btn-hldr">

@@ -99,37 +99,40 @@ class Availability extends MY_Controller {
         $index = 1;
         $row = 0;
 
+        // var_dump($data['current_seat_map']); die();
         foreach($data['seat_map'] as $row_length)
         {
-            for($x = 0 ; $x < $row_length ; $x++)
+            for($x = 0 ; $x < (int)$row_length ; $x++)
             {
+                $found = false;
                 foreach($data['current_seat_map'] as $current)
                 {
                     if($current->seatnum == $index){
                         $s['bday'] = $current->bday;
                         $s['name'] = $current->name;
-                    }else{
-                        $s = null;
+                        $found = true;
                     }
-                    break;
-                }
+                    continue;
 
+                }
                 $seat = (object)[
                     'seatnum' => $index,
-                    'bday' => isset($s['bday']) ? $s['bday'] : '',
-                    'name' => isset($s['name']) ? $s['name'] : '',
+                    'bday' => $found ? $s['bday'] : '',
+                    'name' => $found ? $s['name'] : '',
                     'isOccupied' => in_array($index,$data['occupied_seat_map']),
                     'isPending' => in_array($index,$data['pending_seat_map']),
-                    'selected' => true,
+                    'selected' => $found ? true : false,
                     
                 ];
+
     
-                $seat_layout[$row][] = $seat;
                 $index++;
+                $seat_layout[$row][] = $seat;
+                    
             }
             $row++;
         }
-        // var_dump($data['current_seat_map']); die();
+
 
         $data['seat_layout'] = $seat_layout;
 
@@ -161,7 +164,11 @@ class Availability extends MY_Controller {
         //show packages only to this rate destination
         $data['packages'] = $this->package_model->getByDestinationId($rate->destination_id);
 
-        $this->session->set_userdata('selected_seats',$seats);
+        $new_seats = [];
+        foreach($seats as $seat){
+            $new_seats[] = $seat;
+        }
+        $this->session->set_userdata('selected_seats',$new_seats);
 
 
         
