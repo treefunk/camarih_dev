@@ -59,6 +59,10 @@
             pending_seats_data: {
                 type: Array,
                 default: () => []
+            },
+            current_seats_data:{
+                type: Array,
+                default: () => []
             }
             ,
             post_url: {
@@ -69,7 +73,7 @@
             return {
                 seats: this.seats_data,
                 occupied_seats: this.occupied_seats_data,
-                selected: [],
+                selected: this.current_seats_data,
                 pending_seats: this.pending_seats_data
             }
         },
