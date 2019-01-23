@@ -45,6 +45,7 @@
       </footer>
       
   </div>
+</div>
   <script src="<?=base_url()?>frontend/js/vendor/jquery-v3.2.1.min.js"></script>
   <script src="<?=base_url()?>frontend/js/vendor/bootstrap.min.js"></script>
   <script src="<?=base_url()?>frontend/js/owl.carousel.min.js"></script>

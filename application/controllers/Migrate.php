@@ -80,7 +80,9 @@ class Migrate extends CI_Controller
 
       $this->db->insert('package_details',[
         'package_id' => $this->db->insert_id(),
-        'description' => 'Hotel + Tours + Transfers'
+        'description' => 'Hotel + Tours + Transfers',
+        'num_of_days' => 3,
+				'num_of_nights' => 2
       ]);
 
       $this->db->insert('packages',[
@@ -91,7 +93,9 @@ class Migrate extends CI_Controller
 
       $this->db->insert('package_details',[
         'package_id' => $this->db->insert_id(),
-        'description' => 'Hotel + Tours'
+        'description' => 'Hotel + Tours',
+        'num_of_days' => 6,
+				'num_of_nights' => 4
       ]);
 
 

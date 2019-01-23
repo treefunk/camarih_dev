@@ -1,5 +1,5 @@
 <body>
-  <div class="homepage" id="app">
+  <div class="homepage app">
       <header id="header">
         
           <div class="navbar-holder">
@@ -65,21 +65,16 @@
                   <li>
                     <p>My Account</p>
                     <a href="">
-                      <i class="fa fa-shopping-cart" aria-hidden="true">
-                        <div class="qntity">
-                          <span>1</span>
-                        </div>
-                      </i>
+                        <shopping-cart
+                        :shopping_cart_data = '<?=json_encode($this->session->userdata('cart'))?>'
+                        >
+                        </shopping-cart>
+                      
                     </a>
                   </li>
                   <li>
-                                            <!-- <div id="google_translate_element"></div><script type="text/javascript">
-                        function googleTranslateElementInit() {
-                        new google.translate.TranslateElement({pageLanguage: 'en', layout: google.translate.TranslateElement.InlineLayout.SIMPLE}, 'google_translate_element');
-                        }
-                        </script><script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-                                             -->
                   </li>
+
               </ul>
           </div>
       </header>

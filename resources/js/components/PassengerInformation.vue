@@ -54,7 +54,7 @@
         methods: {
             updateSelected(e){
                     let passenger = {
-                        seatnum: this.passenger.seatnum,
+                        seatnum: this.passenger.seat_num,
                         name: e.target.value
                     }
                     this.$emit('update-passenger-name',passenger)

@@ -9,6 +9,7 @@ class Tourpackages extends Admin_Controller {
 		$this->load->model('package_model');
 		$this->load->model('packagedetail_model');
 		$this->load->model('packagegallery_model');
+		$this->load->model('destination_model');
 	}
 
 
@@ -26,7 +27,10 @@ class Tourpackages extends Admin_Controller {
 
 	public function create()
 	{
+		$data['destinations'] = $this->destination_model->all();
+
 		$this->wrapper([
+			'data' => $data,
 			'view' => 'admin/packages/create'
 		]);
 	}
@@ -34,20 +38,24 @@ class Tourpackages extends Admin_Controller {
 	public function store()
 	{
 		$images = format_multiple_files($_FILES['images']);
-
-
+		
+		
 		$post = $this->input->post();
+
 		$this->db->trans_start();
 
 
 		if($package_id = $this->package_model->add([
 			'name' => $post['name'],
-			'rate' => $post['rate']
+			'rate' => $post['rate'],
+			'destination_id' => $post['destination_id']
 		])){
 			//package details
 			$this->packagedetail_model->add([
 				'package_id' => $package_id,
-				'description' => $post['description']
+				'description' => $post['description'],
+				'num_of_days' => $post['num_of_days'],
+				'num_of_nights' => $post['num_of_nights']
 			]);
 
 			//package gallery
@@ -102,7 +110,7 @@ class Tourpackages extends Admin_Controller {
 	public function edit($id){
 				
 		$data['package'] = $this->package_model->find($id);
-
+		$data['destinations'] = $this->destination_model->all();
 		$this->wrapper([
 			'view' => 'admin/packages/edit',
 			'data' => $data
@@ -121,11 +129,14 @@ class Tourpackages extends Admin_Controller {
 		$this->db->trans_start();
 		$changes += (int)$this->package_model->update($package->id, [
 			'name' => $post['name'],
-			'rate' => $post['rate']
+			'rate' => $post['rate'],
+			'destination_id' => $post['destination_id'] 
 		]);
 
 		$changes += (int)$this->packagedetail_model->update($package->package_details->id,[
-			'description' => $post['description']
+			'description' => $post['description'],
+			'num_of_days' => $post['num_of_days'],
+			'num_of_nights' => $post['num_of_nights']
 		]);
 
 		//images

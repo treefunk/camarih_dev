@@ -59,7 +59,7 @@
 
 
     <div class="table-hldr">
-        <table class="table app" >
+        <table class="table" >
             <thead>
                 <tr>
                     <th>Date</th>

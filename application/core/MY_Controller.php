@@ -17,6 +17,12 @@ class MY_Controller extends CI_Controller {
         $this->load->view('partials/nav.php');
         $this->load->view($data['view'],@$data['data']);
         $this->load->view('partials/footer.php');
+        
+        if(getenv('DEBUG') == 'true')
+        {
+            $this->load->view('debug.php',@$data['data']);
+            $d = $this->output->enable_profiler(true);
+        }
     }
 }
 

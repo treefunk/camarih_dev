@@ -64,6 +64,21 @@ class Package_model extends CMS_Model
         return $package;
     }
 
+    public function getByDestinationId($id)
+    {
+        $packages = $this->db->get_where('packages',[
+            'destination_id' => $id
+        ])->result();
+        
+        $result = [];
+
+        foreach($packages as $package){
+            $result[] = $this->find($package->id);
+        }
+        return $result;
+    }
+
+
 
     
 }

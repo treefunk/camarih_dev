@@ -57,7 +57,7 @@ class CMS_Model extends CI_Model
     public function handleUpload($file,$id = 0,$upload_path = './uploads/',$name = null,$allowed_types = 'jpg|png|gif|jpeg')
     {
         if(!file_exists($upload_path)){
-            mkdir($upload_path,777);
+            mkdir($upload_path,755);
         }
 
         unset($config);

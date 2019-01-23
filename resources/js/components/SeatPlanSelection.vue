@@ -1,46 +1,38 @@
 <template>
     <div>
+            <div class="outline">
+                <div v-for="(row,index) in seatMapConverted" :key="index" :class="{'row' : true, 'seat': (index == 0),'seat-spacing-sm': (index != 0)}">
+                    <div class="col-fixed-md" v-if="index == 0">
+                        <input class="occupied" disabled id="driverseat" name="seat" type="checkbox"> 
+                        <label for="driverseat">
+                        <div class="seat z-depth-soft"> <span class="idx"> Driver </span> </div>
+                        <div class="seat-after z-depth-1"> </div>
+                        </label>
+                    </div>
 
-                            <div class="outline">
-                                <div v-for="(row,index) in seatMapConverted" :key="index" :class="{'row' : true, 'seat': (index == 0),'seat-spacing-sm': (index != 0)}">
-                                    <div class="col-fixed-md" v-if="index == 0">
-                                        <input class="occupied" disabled id="driverseat" name="seat" type="checkbox"> 
-                                        <label for="driverseat">
-                                        <div class="seat z-depth-soft"> <span class="idx"> Driver </span> </div>
-                                        <div class="seat-after z-depth-1"> </div>
-                                        </label>
-                                    </div>
+                    <div v-for="(seat,i) in row"  :key="i" :class="{'col-fixed-md': (row.length < 4), 'col-fixed': (row.length == 4)}">
+                        <input v-model="selected" :disabled="seat.occupied || seat.pending" name="seat[]" :value="{seatnum: seat.seatnum + 1,name:'',bday:''}" :class="{'occupied':seat.occupied,'pending':seat.pending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
+                        <label :for="`seat-${seat.seatnum}`">
+                        <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum + 1 }}</span> </div>
+                        <div class="seat-after z-depth-1"> </div>
+                        </label>
+                    </div>                  
+                </div>
+                
+            </div>
+            
+            <div v-for="(passenger,index) in selected" :key="index" v-if="selected.length > 0">
 
-                                    <div v-for="(seat,i) in row"  :key="i" :class="{'col-fixed-md': (row.length < 4), 'col-fixed': (row.length == 4)}">
-                                        <input v-model="selected" :disabled="seat.occupied" name="seat[]" :value="{seatnum: seat.seatnum + 1,name:'',bday:''}" :class="{'occupied':seat.occupied}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
-                                        <label :for="`seat-${seat.seatnum}`">
-                                        <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum + 1 }}</span> </div>
-                                        <div class="seat-after z-depth-1"> </div>
-                                        </label>
-                                    </div>
+                <passenger-information 
+                @update-passenger-name="updatePassengerParent"
+                :passenger="passenger"
+                :index="index"> </passenger-information>
 
+            </div>
 
-                                
-                                
-
-
-                               
-                                </div>
-                                
-                            </div>
-                            
-                            <div v-for="(passenger,index) in selected" :key="index" v-if="selected.length > 0">
-
-                                <passenger-information 
-                                @update-passenger-name="updatePassengerParent"
-                                :passenger="passenger"
-                                :index="index"> </passenger-information>
-
-                            </div>
-
-                            <div class="btn-hldr">
-                                <button v-if="selected.length > 0" class="btn btn-default" type="submit">Submit</button>
-                            </div>
+            <div class="btn-hldr">
+                <button v-if="selected.length > 0" class="btn btn-default" type="submit">Submit</button>
+            </div>
     </div>
 </template>
 
@@ -64,6 +56,11 @@
                 type: Array,
                 default: () => [1,5,8]
             },
+            pending_seats_data: {
+                type: Array,
+                default: () => []
+            }
+            ,
             post_url: {
                 type: String
             }
@@ -72,7 +69,8 @@
             return {
                 seats: this.seats_data,
                 occupied_seats: this.occupied_seats_data,
-                selected: []
+                selected: [],
+                pending_seats: this.pending_seats_data
             }
         },
         methods: {
@@ -89,16 +87,23 @@
 
                         if(seatMap[x] == undefined) seatMap[x] = []
                         let isOccupied = (this.occupied_seats.includes(index + 1))
+                        let isPending = this.pending_seats.includes(index + 1)
 
                         seatMap[x].push({
                             seatnum: index,
-                            occupied: isOccupied
+                            occupied: isOccupied,
+                            pending: isPending
                         })
 
                         index++
                     }
                 }
                 return seatMap;
+            }
+        },
+        watch: {
+            selected(newSeats,oldSeats){
+                this.$store.commit('updateCurrentSeats',{ seatsLength: newSeats.length} )
             }
         }
     }
@@ -115,5 +120,8 @@
     position: relative;
     display: block;
     margin: 0 auto;
+}
+.pending{
+    background: yellow;
 }
 </style>
