@@ -1,11 +1,11 @@
 <template>
     
-        <div class="col-md-12 card">
+        <div class="col-md-12 card" v-if="passenger.selected && !passenger.isPending">
             <div class="card-holder">
                 <h4 style="text-align: center;">
             Seat {{ passenger.seatnum }}
             </h4>
-            <input type="hidden" :name="`selected[${index}][seat_num]`" :value="passenger.seatnum">
+            <input type="hidden" :name="`selected[${passenger.seatnum}][seatnum]`" :value="passenger.seatnum">
             <div class="col-md-12">
             <div class="form-group">
                 <label for="guest1">
@@ -16,7 +16,7 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-user"></span>
                     </span>
-                <input :name="`selected[${index}][name]`" :placeholder="`Seat ${passenger.seatnum} Fullname`" id="guest1" class="form-control" type="text" required="">
+                <input v-model="passenger.name" :name="`selected[${passenger.seatnum}][name]`" :placeholder="`Seat ${passenger.seatnum} Fullname`" id="guest1" class="form-control" type="text" required="">
                 </div>
 
             </div>
@@ -32,7 +32,7 @@
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
-                       <input :name="`selected[${index}][bday]`" type="date" id="bdate1" value="2001-01-10" max="2019-01-10" class="form-control" required="">
+                       <input :name="`selected[${passenger.seatnum}][bday]`" type="date" id="bdate1" value="2001-01-10" max="2019-01-10" class="form-control" required="">
                 </div>
             </div>
 
@@ -49,12 +49,13 @@
     export default {
         props: {
             passenger: Object,
-            index: Number
+            index: Number,
+            parentindex: Number,
         },
         methods: {
             updateSelected(e){
                     let passenger = {
-                        seatnum: this.passenger.seat_num,
+                        seatnum: this.passenger.seatnum,
                         name: e.target.value
                     }
                     this.$emit('update-passenger-name',passenger)

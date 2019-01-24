@@ -1,7 +1,13 @@
 <template>
     <div>
             <div class="outline">
-                <div v-for="(row,index) in seatMapConverted" :key="index" :class="{'row' : true, 'seat': (index == 0),'seat-spacing-sm': (index != 0)}">
+                
+                <div v-for="(row,index) in seats" :key="index" :class="['row',{
+                    'seat': row.length == index + 1,
+                    'seat-spacing-sm': row.length == index + 1
+                }]">
+                    
+                    <!-- driver -->
                     <div class="col-fixed-md" v-if="index == 0">
                         <input class="occupied" disabled id="driverseat" name="seat" type="checkbox"> 
                         <label for="driverseat">
@@ -10,10 +16,15 @@
                         </label>
                     </div>
 
-                    <div v-for="(seat,i) in row"  :key="i" :class="{'col-fixed-md': (row.length < 4), 'col-fixed': (row.length == 4)}">
-                        <input v-model="selected" :disabled="seat.occupied || seat.pending" name="seat[]" :value="{seatnum: seat.seatnum + 1,name:'',bday:''}" :class="{'occupied':seat.occupied,'pending':seat.pending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
+                    <!-- seat input -->
+                    <div v-for="(seat,i) in row" :key="i" :class="{
+                        'col-fixed-md': row.length < 4,
+                        'col-fixed': row.length >= 4
+                    }">
+                        <input 
+                        v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
                         <label :for="`seat-${seat.seatnum}`">
-                        <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum + 1 }}</span> </div>
+                        <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum }}</span> </div>
                         <div class="seat-after z-depth-1"> </div>
                         </label>
                     </div>                  
@@ -21,17 +32,13 @@
                 
             </div>
             
-            <div v-for="(passenger,index) in selected" :key="index" v-if="selected.length > 0">
+            <div v-for="(row,i) in seats" :key="i">
 
-                <passenger-information 
-                @update-passenger-name="updatePassengerParent"
-                :passenger="passenger"
-                :index="index"> </passenger-information>
-
+                <passenger-information v-for="(passenger,index) in row" :parentindex="i" :index="index" :key="index" :passenger="passenger" > </passenger-information>
             </div>
 
             <div class="btn-hldr">
-                <button v-if="selected.length > 0" class="btn btn-default" type="submit">Submit</button>
+                <button  class="btn btn-default" type="submit">Submit</button>
             </div>
     </div>
 </template>
@@ -45,18 +52,13 @@
             'passenger-information' : PassengerInformation
         },
         props: {
-            trip_availability: {
-                type: Object
-            },
             seats_data: {
-                type: Array,
-                default: () => ['2','4','2','1','2']
+                type: Array
             },
-            occupied_seats_data: {
-                type: Array,
-                default: () => [1,5,8]
+            seat_map: {
+                type: Array
             },
-            pending_seats_data: {
+            sels_data: {
                 type: Array,
                 default: () => []
             },
@@ -64,50 +66,33 @@
                 type: Array,
                 default: () => []
             }
-            ,
-            post_url: {
-                type: String
-            }
         },
         data(){
             return {
                 seats: this.seats_data,
-                occupied_seats: this.occupied_seats_data,
-                selected: this.current_seats_data,
-                pending_seats: this.pending_seats_data
+                sels: this.sels_data
             }
         },
-        methods: {
-            updatePassengerParent(passenger){
+        computed:{
+            selected(){
 
-        }
-        },
-        computed: {
-            seatMapConverted(){
-                let index = 0,seatMap = []
-                for(let x = 0; x < this.seats.length ; x++){
-                    let seat_num = parseInt(this.seats[x],10)
-                    for(let y = 0; y < seat_num; y++){
-
-                        if(seatMap[x] == undefined) seatMap[x] = []
-                        let isOccupied = (this.occupied_seats.includes(index + 1))
-                        let isPending = this.pending_seats.includes(index + 1)
-
-                        seatMap[x].push({
-                            seatnum: index,
-                            occupied: isOccupied,
-                            pending: isPending
-                        })
-
-                        index++
+                let filtered = []
+                for(let x = 0 ; x < this.seats.length ; x++)
+                {
+                    for(let y = 0; y < this.seats[x].length; y++)
+                    {
+                        if(!this.seats[x][y].isOccupied && !this.seats[x][y].isPending)
+                        {
+                            for(let z = 0; z < this.sels; z++){
+                                if(this.sels[z]['seatnum'] == this.seats[x][y]['seatnum']){
+                                    filtered.push(this.sels[z])
+                                }
+                            }
+                            filtered.push(this.seats[x][y])
+                        }
                     }
                 }
-                return seatMap;
-            }
-        },
-        watch: {
-            selected(newSeats,oldSeats){
-                this.$store.commit('updateCurrentSeats',{ seatsLength: newSeats.length} )
+                return filtered
             }
         }
     }
