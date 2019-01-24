@@ -38,6 +38,10 @@
                 }
 
                 this.seats.splice(index,1)
+                if(this.seats[0] > 3){
+                    this.seats[0] = 2
+                    return;
+                }
             }
         },
         watch:{
@@ -48,12 +52,19 @@
                     newSeats[0] = 2
                     return;
                 }
-
-                if(newSeats.length == oldSeats.length && newSeats[newSeats.length - 1] > 4){
-                    alert('You can only have 4 seats maximum in a row')
-                    newSeats[newSeats.length - 1] = 4
-                    return;
+                for(let x = 1 ; x <= newSeats.length; x++)
+                {
+                    if(newSeats[x] > 4){
+                        alert('You can only have 4 seats maximum in a row')
+                        newSeats[x] = 4
+                    }
                 }
+
+                // if(newSeats.length == oldSeats.length && newSeats[newSeats.length - 1] > 4){
+                //     alert('You can only have 4 seats maximum in a row')
+                //     newSeats[newSeats.length - 1] = 4
+                //     return;
+                // }
             }
         }
     }

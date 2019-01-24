@@ -5,13 +5,19 @@ class Availability extends MY_Controller {
 
 	public function __construct()
 	{
-		parent::__construct();
-        $this->load->model('destination_model');
-        $this->load->model('tripavailability_model');
-        $this->load->model('rate_model');
-        $this->load->model('reservation_model');
-        $this->load->model('seatplan_model');
-        $this->load->model('package_model');
+        parent::__construct();
+        
+        $this->load->model([
+            'destination_model',
+            'tripavailability_model',
+            'rate_model',
+            'cart_model',
+            'seatplan_model',
+            'package_model',
+            'van_model',
+            'reservation_model'
+        ]);
+
     }
     
     // public function index()
@@ -25,7 +31,6 @@ class Availability extends MY_Controller {
 
     // STEP 1 - show available rates
 
-    //todo show van vacancy
     public function check()
     {
         // destination_from: (string) "4"
@@ -54,6 +59,22 @@ class Availability extends MY_Controller {
 
         $this->session->set_userdata('check_availability', $post_data);
 
+        //van vacancy
+
+        //iterate in available trips
+        foreach($data['available_trips'] as $trip){
+            $van = $this->van_model->findById($trip->van_id);
+            $rate = $this->rate_model->findById($trip->rate_id);
+            $occupied = count($this->seatplan_model->getOccupiedSeatsByRateId($rate->id));
+            $pending = count($this->seatplan_model->getPendingSeatsByRateId($rate->id));
+            $trip->total_seats = $this->van_model->getTotalSeats($van);
+    
+            $trip->occupied_seats = $occupied + $pending;
+        }
+        //van vacany end
+
+
+        // var_dump($data['available_trips']); die();
         $this->wrapper([
             'data' => $data,
             'view' => 'check'
@@ -222,21 +243,29 @@ class Availability extends MY_Controller {
         if(!$this->session->has_userdata('cart')){
             $this->session->set_userdata('cart',[]);
         }
+
         $_SESSION['cart'][] = $data;
+        
+        $this->cart_model->clearCartSession();
 
-        var_dump($this->session->userdata('cart')); die();
-
+        return redirect(base_url('cart'));
     }
 
     public function process_cart(){
+        $post = $this->input->post();
         if($cart = $this->session->userdata('cart')){
+            $id = $this->reservation_model->add($post);
             foreach($cart as $item)
             {
+                $item->reservation_id = $id;
                 $this->process_booking($item); // todo run transaction here, if one query fails remove that item
             }
         }else{
             //todo cart is empty
         }
+
+        //clear current cart
+        unset($_SESSION['cart']);
     }
 
 
@@ -247,9 +276,8 @@ class Availability extends MY_Controller {
      */
     public function process_booking($data) //todo run this inside loop function of cart
     {
-        if($this->session->has_userdata('selected')){
+        if(isset($data['selected'])){
             $rate_id = $data['selected']['rate_id'];
-            // $rate_id = $this->session->userdata('selected_rate')['rate_id'];
         }else{
             //todo user hasn't selected a rate!
         }
@@ -261,19 +289,20 @@ class Availability extends MY_Controller {
         if($paid){
             $this->db->trans_begin();
             // Add Reservation
-            $reservation = [
+            $cart = [
                 'rate_id' => $rate->id,
                 'package_id' => is_object($data['selected_package']) ? $data['selected_package']->id : 0
             ];
 
-            if($id = $this->reservation_model->add($reservation)){
+            if($id = $this->cart_model->add($cart)){
                 foreach($data['selected_seats'] as $seat){
                     $seat_plan = [
-                        "reservation_id" => $id,
+                        "cart_id" => $id,
                         "seat_num" => $seat['seatnum'],
                         "name" => $seat['name'],
                         "birth_date" => $seat['bday']
                     ];
+
                     $this->seatplan_model->add($seat_plan);
                 }
             }

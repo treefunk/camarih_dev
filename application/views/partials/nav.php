@@ -65,10 +65,10 @@
                   <li>
                     <p>My Account</p>
                     <a href="">
-                        <shopping-cart
+                        <cart-icon
                         :shopping_cart_data = '<?=json_encode($this->session->userdata('cart'))?>'
                         >
-                        </shopping-cart>
+                        </cart-icon>
                       
                     </a>
                   </li>

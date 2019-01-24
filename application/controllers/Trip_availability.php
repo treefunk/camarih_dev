@@ -34,7 +34,7 @@ class Trip_availability extends Admin_Controller {
 
     public function store()
     {
-        // var_dump($_POST); die();
+        var_dump($_POST); die();
         $post = $this->input->post();
 
 
@@ -193,6 +193,11 @@ class Trip_availability extends Admin_Controller {
         ];
 
         return $data;
+    }
+
+    public function delete($id)
+    {
+        
     }
 
     

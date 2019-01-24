@@ -13,26 +13,32 @@ class Migration_Create_reservations_Table extends CI_Migration {
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
                         ),
-                        'name' => array(
+                        'full_name' => array(
                             'type' => 'LONGTEXT',
                             'null' => TRUE
                         ),
-                        'rate_id' => array(
-                            'type' => 'INT',
+                        'email' => array(
+                            'type' => 'VARCHAR',
                             'constraint' => '255',
-                            'unsigned' => TRUE
+                            'null' => TRUE
                         ),
-                        'package_id' => array(
-                            'type' => 'INT',
+                        'phone' => array(
+                            'type' => 'VARCHAR',
                             'constraint' => '255',
-                            'unsigned' => TRUE,
+                            'null' => TRUE
+                        ),
+                        'pickup_location' => array(
+                            'type' => 'LONGTEXT',
+                            'null' => TRUE
+                        ),
+                        'drop_location' => array(
+                            'type' => 'LONGTEXT',
                             'null' => TRUE
                         ),
                         'status' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '200',
                             'default' => 'pending',
-                            'unsigned' => TRUE,
                         ),
                         'active' => array(
                             'type' => 'TINYINT',

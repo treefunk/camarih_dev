@@ -23,12 +23,11 @@
                                           <label for="header">Description</label>
                                           <textarea name="description" id="description" class="form-control" rows="3"><?=set_value('description')?></textarea>
                                           </div>
-                                          <!-- <div class="form-group">
-                                              <label for="sub_header">Seat Count</label>
-                                              <input type="text" name="seat_count" class="form-control" id="sub_header"value="<?=set_value('seat_count'); ?>" placeholder="Enter Seat Count">
-                                          </div> -->
+      
                                           <div class="form-group">
-                                            <van-seat-map></van-seat-map>
+                                            <van-seat-map
+                                            
+                                            ></van-seat-map>
                                           </div>
                                           
 

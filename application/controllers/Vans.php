@@ -76,13 +76,15 @@ class Vans extends Admin_Controller {
     {
         $post = $this->input->post();
         $changes = 0;
+        
+        $post['seat_map'] = implode(',',$this->input->post('seats'));
+        unset($post['seats']);
 
         $this->load->library('form_validation');
 
         if(count($post))
         {
             $this->form_validation->set_rules('name','Name','required');
-            $this->form_validation->set_rules('seat_count','Seat Count','required');
         }
 
         if($this->form_validation->run() == FALSE)
@@ -94,6 +96,10 @@ class Vans extends Admin_Controller {
             ]]);
             return redirect('vans/edit/' . $id);
         }
+
+        
+
+
 
         $changes += $this->van_model->update($id,$post);
 
@@ -113,6 +119,10 @@ class Vans extends Admin_Controller {
     public function edit($id)
     {
         $data['van'] = $this->van_model->findById($id);
+        $data['van']->seatmap = NULL;
+        $data['van']->seatmap = explode(',',$data['van']->seat_map);
+
+
         return $this->wrapper([
             'view' => 'admin/vans/edit',
             'data' => $data

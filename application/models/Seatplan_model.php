@@ -15,10 +15,11 @@ class Seatplan_model extends CMS_Model
 
         $occupied_seats = $this->db->select('seat_plan.*')
                                 ->from('seat_plan')
-                                ->join('reservations', 'seat_plan.reservation_id = reservations.id')
-                                ->join('rates', 'reservations.rate_id = rates.id')
+                                ->join('carts', 'seat_plan.cart_id = carts.id')
+                                ->join('rates', 'carts.rate_id = rates.id')
                                 ->where('rates.id',$rate_id)
                                 ->get()->result();
+        // var_dump($occupied_seats) ; die();
         foreach($occupied_seats as $occupied_seat){
             $occupied_seat_map[] = (int)$occupied_seat->seat_num;
         }

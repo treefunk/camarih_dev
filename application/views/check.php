@@ -76,7 +76,7 @@
                 <tr>
                     <td><?=format_datetime_string($trip->departure_date,'m/d/Y')?></td>
                     <td><?=format_datetime_string($trip->departure_date,'h:i A')?></td>
-                    <td>0/12</td>
+                    <td><?=$trip->occupied_seats?> / <?=$trip->total_seats?></td>
                     <td>PHP <?=$trip->rate_price?></td>
                     <td>
                         <form action="<?=base_url('availability/book/'.$trip->rate_id)?>" method="POST">
