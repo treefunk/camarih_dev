@@ -17,10 +17,9 @@
                     </div>
 
                     <!-- seat input -->
-                    <div v-for="(seat,i) in row" :key="i" :class="{
-                        'col-fixed-md': row.length < 4,
-                        'col-fixed': row.length >= 4
-                    }">
+                    <div v-for="(seat,i) in row" :key="i"
+                    :style="`display:inline-block; width:calc(100% / ${index == 0 ? row.length + 1 : row.length});`"
+                    >
                         <input 
                         v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
                         <label :for="`seat-${seat.seatnum}`">
@@ -73,7 +72,11 @@
                 sels: this.sels_data
             }
         },
+        mounted(){
+                this.$store.commit('updateCurrentSeats', { seatsLength: this.currentSeats.length })
+        },
         computed:{
+            
             selected(){
 
                 let filtered = []
@@ -93,6 +96,15 @@
                     }
                 }
                 return filtered
+            },
+            currentSeats(){
+                return this.selected.filter( (seat) => seat.selected == true)
+            }
+        },
+        watch: {
+            currentSeats(newV) {
+                let currentLength = newV.length
+                this.$store.commit('updateCurrentSeats', { seatsLength: currentLength })
             }
         }
     }
@@ -113,4 +125,5 @@
 .pending{
     background: yellow;
 }
+
 </style>
