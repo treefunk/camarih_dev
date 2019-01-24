@@ -19,7 +19,7 @@
                     <!-- seat input -->
                     <div v-for="(seat,i) in row" :key="i" :class="{
                         'col-fixed-md': row.length < 4,
-                        'col-fixed': row.length == 4
+                        'col-fixed': row.length >= 4
                     }">
                         <input 
                         v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
