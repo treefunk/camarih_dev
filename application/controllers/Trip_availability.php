@@ -34,38 +34,60 @@ class Trip_availability extends Admin_Controller {
 
     public function store()
     {
-        var_dump($_POST); die();
+        /**
+         * van_id: (string) "1"
+        * destination_from: (string) "1"
+        * is_roundtrip: (string) "false"
+        * selling_start: (string) "01/01/2019"
+        * selling_end: (string) "01/31/2019"
+        * departure_time: (string) "06:00 AM"
+        * rates: 
+    * (array) [2 elements]
+        * 0: 
+        * (array) [2 elements]
+        * destination_id: (string) "1"
+        * price: (string) "200"
+        * 1: 
+        * (array) [2 elements]
+        * destination_id: (string) "2"
+        * price: (string) "300"
+         */
+        
+
         $post = $this->input->post();
 
 
-        $data = $this->format_dates_in_post($post);
-        $rates = $data['rates'];
-        unset($data['rates']);
 
+        //TODO SANITIZE INPUTS -----------------------------------------------------------------------------
+        
 
+        $raw_selling_start = "{$post['selling_start']} 00:00:00";
+        $raw_selling_end  = "{$post['selling_end']} 23:59:59";
+
+        $selling_start = format_date_and_time_for_sql($raw_selling_start); // function is in helpers/custom_helper.php
+        $selling_end = format_date_and_time_for_sql($raw_selling_end);
+    
+        
+        $data = [
+            'van_id' => $post['van_id'],
+            'destination_from' => $post['destination_from'],
+            'selling_start' => $selling_start,
+            'selling_end' => $selling_end,
+            'departure_time' => $post['departure_time'],
+            'rates' => $post['rates']
+        ];
+        
         $this->db->trans_begin();
-        if($id = $this->tripavailability_model->add($data)){
-            foreach($rates as $rate_from_post){
-                $this->rate_model->add([
-                    'trip_availability_id' => $id,
-                    'destination_id' => $rate_from_post['destination_id'],
-                    'price' => $rate_from_post['price']
-                ]);
-            }
-            $this->db->trans_commit();
-            //set success message
-            $alert = [
-                'type' => 'success',
-                'message' => 'Trip Successfully added.'
-            ];
-        }else{
-            $this->db->trans_rollback();
-            //set fail message
-            $alert = [
-                'type' => 'danger',
-                'message' => 'Something went wrong.'
-            ];
+
+        if($post['is_roundtrip'] == 'false') // one-way trip
+        {
+            if(!$this->tripavailability_model->addTripWithRates($data)) $this->db->trans_rollback();
+        }else{ // roundtrip
+            if(!$this->tripavailability_model->addTripWithRates($data)) $this->db->trans_rollback();
         }
+
+
+        $this->db->trans_complete();
         
         $this->session->set_flashdata('alert',$alert);
         return redirect(base_url('trip_availability'));
@@ -177,20 +199,71 @@ class Trip_availability extends Admin_Controller {
         /**
          * format selling date range
          */
-        $rawFrom = "{$post['from']} 00:00:00";
-        $rawTo = "{$post['to']} 23:59:59";
+        $rawFrom = "{$post['selling_start']} 00:00:00";
+        $rawTo = "{$post['selling_end']} 23:59:59";
         $selling_start = DateTime::createFromFormat('m/d/Y H:i:s',$rawFrom,$dt)->format(DateTime::ISO8601);
         $selling_end = DateTime::createFromFormat('m/d/Y H:i:s',$rawTo,$dt)->format(DateTime::ISO8601);
 
-        $data = [
-            'departure_date' => $departure_date,
-            'destination_from' => $post['destination_id'],
-            'selling_start' => $selling_start,
-            'selling_end' => $selling_end,
-            'is_roundtrip' => isset($post['is_roundtrip']) ? $post['is_roundtrip'] : 0,
-            'van_id' => $post['van_id'],
-            'rates' => $post['rates']
-        ];
+        $rawArrival = "{$post['arrival_date']} 00:00:00";
+        $arrival_date = DateTime::createFromFormat('m/d/Y H:i:s',$rawArrival,$dt)->format(DateTime::ISO8601);
+
+        if($post['is_roundtrip'] == 'true'){
+            $data = [];
+            $data[] = [
+                'departure_date' => $departure_date,
+                'destination_from' => $post['destination_id'],
+                'selling_start' => $selling_start,
+                'selling_end' => $selling_end,
+                'arrival_date' => $arrival_date,
+                'is_roundtrip' => isset($post['is_roundtrip']) ? $post['is_roundtrip'] : 0,
+                'van_id' => $post['van_id'],
+                'rates' => $post['rates']
+            ];
+
+            $rawDeparture_to = "{$post['departure_date_to']} {$post['departure_time_to']}";
+            $departure_date_to = format_date_and_time_for_sql($rawDeparture_to);
+
+            $rawFrom_to = "{$post['selling_start_to']} 00:00:00";
+            $rawTo_to = "{$post['selling_end_to']} 23:59:59";
+            $selling_start_to = DateTime::createFromFormat('m/d/Y H:i:s',$rawFrom_to,$dt)->format(DateTime::ISO8601);
+            $selling_end_to = DateTime::createFromFormat('m/d/Y H:i:s',$rawTo_to,$dt)->format(DateTime::ISO8601);
+            
+            $rawArrival_to = "{$post['arrival_date_to']} 00:00:00";
+            $arrival_date = DateTime::createFromFormat('m/d/Y H:i:s',$rawArrival_to,$dt)->format(DateTime::ISO8601);
+    
+
+            foreach($post['rates'] as $rate){
+                $data[] = [
+                    'departure_date' => $departure_date_to,
+                    'destination_from' => $rate['destination_id'],
+                    'selling_start' => $selling_start_to,
+                    'selling_end' => $selling_end_to,
+                    'is_roundtrip' => isset($post['is_roundtrip']) ? $post['is_roundtrip'] : 0,
+                    'van_id' => $post['van_id'],
+                    'arrival_date' => $arrival_date,
+                    'rates' => []
+                ];
+
+                $data[count($data) - 1]['rates'][] = [
+                    'destination_id' => $post['destination_id'],
+                    'price' => $rate['price']
+                ];
+                
+            }
+
+        }else{
+            $data = [
+                'departure_date' => $departure_date,
+                'destination_from' => $post['destination_id'],
+                'selling_start' => $selling_start,
+                'selling_end' => $selling_end,
+                'arrival_date' => $arrival_date,
+                'is_roundtrip' => isset($post['is_roundtrip']) ? $post['is_roundtrip'] : 0,
+                'van_id' => $post['van_id'],
+                'rates' => $post['rates']
+            ];
+        }
+
 
         return $data;
     }

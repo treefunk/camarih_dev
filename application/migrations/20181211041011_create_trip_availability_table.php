@@ -13,9 +13,6 @@ class Migration_Create_trip_availability_Table extends CI_Migration {
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
                         ),
-                        'departure_date' => array(  
-                            'type' => 'datetime',
-                        ),
                         'van_id' => array(
                             'type' => 'INT',
                             'constraint' => '100',
@@ -32,11 +29,6 @@ class Migration_Create_trip_availability_Table extends CI_Migration {
                         ),
                         'selling_end' => array(
                             'type' => 'datetime'
-                        ),
-                        'is_roundtrip' => array(
-                            'type' => 'TINYINT',
-                            'constraint' => '4',
-                            'comment' => '1 - roundtrip, 0 - one-way trip'
                         )
                 ));
 

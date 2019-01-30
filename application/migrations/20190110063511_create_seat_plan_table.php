@@ -18,6 +18,11 @@ class Migration_Create_seat_plan_Table extends CI_Migration {
                             'constraint' => '255',
                             'unsigned' => TRUE,
                         ),
+                        'trip_availability_id' => array(
+                            'type' => 'INT',
+                            'constraint' => '255',
+                            'unsigned' => TRUE,
+                        ),
                         'name' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '500'

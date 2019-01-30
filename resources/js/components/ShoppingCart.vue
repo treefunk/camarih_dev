@@ -2,60 +2,35 @@
     <div>
         <div class="item" :key="index" v-for="(item,index) in shopping_cart">
             <button type="button" @click="removeItem(index)" class="btn btn-danger">X</button>
-            <article class="hldr"> 
+
+            <article class="hldr">
                 <h2> Item {{ index + 1 }}</h2>
-                <ul class="pad-0 listn">
-                    <li>
-                        <div class="parent">
-                            <div class="children">
-                                <label for="destination_from">Origin</label>
-                            </div>
-                            <div class="children" >
-                                    {{ item.selected.origin.name }}
-                            </div>
-                        </div>
+                <li>
+                    Departure date: {{ item.check_availability.departure_from }}
+                    <br>
+                </li>
+                <li v-if="item.check_availability.departure_to != undefined">
+                    Return Date: {{ item.check_availability.departure_to  }}
+                </li>
+
+                Seats
+
+                <div>
+                    Departure seatplan
+                    <li v-for="(seat,i) in item.selected_seats[0]" :key="i">
+                        Seat Number: {{ seat.seatnum }} -- 
+                        Name: {{ seat.name }}
                     </li>
-                    <li>
-                        <div class="parent">
-                            <div class="children">
-                                <label for="destination_from">Destination</label>
-                            </div>
-                            <div class="children" >
-                                    {{ item.selected.destination.name }}
-                            </div>
-                        </div>
+                </div>
+
+                <div v-if="item.selected_seats.length == 2">
+                    Return seatplan
+                    <li v-for="(seat,i) in item.selected_seats[1]" :key="i">
+                        Seat Number: {{ seat.seatnum }} -- 
+                        Name: {{ seat.name }}
                     </li>
-                    <li>
-                        <div class="parent">
-                            <div class="children">
-                                <label for="destination_from">From</label>
-                            </div>
-                            <div class="children" >
-                                    {{ item.selected.from }}
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="parent">
-                            <div class="children">
-                                <label for="destination_from">From</label>
-                            </div>
-                            <div class="children" >
-                                    {{ item.selected.to }}
-                            </div>
-                        </div>
-                    </li>
-                    <li>
-                        <div class="parent">
-                                <div v-for="(seat,i) in item.selected_seats" :key="i" style="border: 1px solid black">
-                                    Seat {{ seat.seatnum }} <br>
-                                    Name {{ seat.name }}
-                                </div>
-                        </div>
-                    </li>
-                
-                
-                </ul>
+                </div>
+
             </article>
         </div>
     </div>

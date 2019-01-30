@@ -17,7 +17,7 @@ function format_multiple_files($files){
  */
 function format_date_and_time_for_sql($datetimestring){
     $dt = new DateTimeZone('Asia/Hong_Kong');
-    return DateTime::createFromFormat('m/d/Y h:i A' , $datetimestring, $dt)->format(DateTime::ISO8601);
+    return DateTime::createFromFormat('m/d/Y H:i:s' , $datetimestring, $dt)->format(DateTime::ISO8601);
 }
 
 /**

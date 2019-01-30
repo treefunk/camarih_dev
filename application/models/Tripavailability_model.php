@@ -126,32 +126,67 @@ class Tripavailability_model extends CMS_Model
     public function checkAvailability($post)
     {
         $dt = new DateTimeZone('Asia/Hong_Kong');
-        $post['departure_from'] = DateTime::createFromFormat('Y-m-d',$post['departure_from'],$dt)->format('Y-m-d') . " 00:00:00";
-        $post['departure_to'] = DateTime::createFromFormat('Y-m-d',$post['departure_to'],$dt)->format('Y-m-d') . " 23:59:59";
+        $departure_from_datetime = DateTime::createFromFormat('Y-m-d',$post['departure_from'],$dt);
+        $post['departure_from'] = $departure_from_datetime->format('Y-m-d') . " 00:00:00";
+
+        // if(isset($post['departure_to'])){
+        //     $departure_to_datetime = DateTime::createFromFormat('Y-m-d',$post['departure_to'],$dt);
+        //     $post['departure_to'] = $departure_to_datetime->format('Y-m-d') . " 23:59:59";
+        // }
 
         $today = (new DateTime('now',$dt))->format('Y-m-d H:i:s');
 
-                                // TODO join seat plan here!
-        $trips = $this->db->select('trip_availability.*, 
+        $available_trips = $this->db->select('trip_availability.*, 
                                     vans.name as van_name,
                                     rates.id as rate_id, rates.price as rate_price,rates.destination_id as destination_id')
-                          // join van
-                          ->join('vans', 'trip_availability.van_id = vans.id')
-                          // join rate
-                          ->join('rates','trip_availability.id = rates.trip_availability_id')
-                          ->from('trip_availability')
-                          // check all departure dates within the date range selected
-                          ->where("trip_availability.departure_date >=",$post['departure_from'])
-                          ->where("trip_availability.departure_date <=",$post['departure_to'])
-                          // check if today's date is in selling date range
-                          ->where("trip_availability.selling_start <=", $today)
-                          ->where("trip_availability.selling_end >=", $today)
-                          // only to this origin
-                          ->where("trip_availability.destination_from",$post['destination_from'])
-                          // only to this destination
-                          ->where("rates.destination_id",$post['destination_to'])
-                          ->get()->result();
-        return $trips;
+                                    // join van
+                                    ->join('vans', 'trip_availability.van_id = vans.id')
+                                    // join rate
+                                    ->join('rates','trip_availability.id = rates.trip_availability_id')
+                                    ->from('trip_availability')
+                                    // check if today's date is in selling date range
+                                    ->where("trip_availability.selling_start <=", $today)
+                                    ->where("trip_availability.selling_end >=", $today)
+                                    // only to this origin
+                                    ->where("trip_availability.destination_from",$post['destination_from'])
+                                    // only to this destination
+                                    ->where("rates.destination_id",$post['destination_to'])
+                                    // check if departure date is in selling range
+                                    ->where('trip_availability.selling_start <=',$departure_from_datetime->format('Y-m-d H:i:s'))
+                                    ->where('trip_availability.selling_end >=',$departure_from_datetime->format('Y-m-d H:i:s'))
+                                    ->get()->result();
+
+        return $available_trips;
+    }
+
+    public function addTripWithRates($data)
+    {
+
+        $rates = $data['rates'];
+        $departure_time = $data['departure_time'];
+
+        
+        unset($data['departure_time']);
+        unset($data['rates']);
+
+        if($id = $this->tripavailability_model->add($data)){
+            $order = 0;
+            foreach($rates as $rate_from_post){
+                $this->rate_model->add([
+                    'order' => ++$order,
+                    'trip_availability_id' => $id,
+                    'destination_id' => $rate_from_post['destination_id'],
+                    'price' => $rate_from_post['price'],
+
+                    'origin_id' => $data['destination_from'], // remove this if flow is changed
+                    'departure_time' => $departure_time, // remove this if flow is changed
+                ]);
+            }
+            //set success message
+            return true;
+        }else{
+            return false;
+        }
     }
 
     

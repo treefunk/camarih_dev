@@ -4,10 +4,9 @@
     </section>
 
 <section class="sec-2">
+
+
     <final-summary
-    :selected_data='<?=json_encode($selected)?>'
-    :selected_seats_data='<?=json_encode($selected_seats)?>'
-    :selected_package_data='<?=json_encode($selected_package)?>'
     :final_price='<?=json_encode($final_price)?>'
     >
     </final-summary>

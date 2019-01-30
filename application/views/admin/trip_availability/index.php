@@ -25,11 +25,9 @@
                   <table class="table table-hover">
                     <thead>
                     <tr>
-                        <th>Departure Date</th>
                         <th>Origin</th>
                         <th>Van</th>
                         <th>Selling Date Availability</th>
-                        <th>Roundtrip</th>
                         <th>Created At</th>
                         <th>Actions</th>
                     </tr>
@@ -37,11 +35,9 @@
                     <tbody>
                     <?php foreach($trips as $trip_availability): ?>
                     <tr>
-                        <td><?=format_datetime_string($trip_availability->departure_date,'M j Y h:i A')?></td>
                         <td><?=$trip_availability->origin->name?></td>
                         <td><?=$trip_availability->van->name?></td>
                         <td><?=format_datetime_string($trip_availability->selling_start,'M j Y')?> - <?=format_datetime_string($trip_availability->selling_end,'M j Y')?></td>
-                        <td><?=$trip_availability->is_roundtrip ? "Yes" : "No" ?></td>
                         <td><?=$trip_availability->created_at?></td>
                         <td>
                             <a href="<?=base_url("trip_availability/rates/").$trip_availability->id?>"><button class="btn btn-info">View Rates</button></a>

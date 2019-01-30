@@ -13,6 +13,7 @@ import BookSummary from './components/BookSummary.vue'
 import PackageSelection from './components/PackageSelection.vue'
 import FinalSummary from './components/FinalSummary.vue'
 import ShoppingCart from './components/ShoppingCart.vue'
+import BookATrip from './components/BookATrip.vue'
 
 
 // Vuex
@@ -41,7 +42,8 @@ new Vue({
         'book-summary': BookSummary,
         'package-selection': PackageSelection,
         'final-summary': FinalSummary,
-        'shopping-cart': ShoppingCart
+        'shopping-cart': ShoppingCart,
+        'book-a-trip' : BookATrip
     }   
 })
 

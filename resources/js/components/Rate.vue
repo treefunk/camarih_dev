@@ -1,27 +1,52 @@
 <template>
-    <div>
-            <div class="form-group">
-                <select @change="checkSelected" v-model="selectedFrom" class="form-control input-lg m-bot15" name="destination_id" id="destination">
-                    <option value="">Select Origin</option>
-                    <option v-for="(destination,index) in destinations" :value="destination.id" :key="index" >{{ destination.name }}</option>
-                </select>
+    <div class="rate">
+        <h3>
+                    {{ getOrdinal(index + 1) }} Destination
+        </h3>
+        <div class="clearfix">
+        <button type="button" class="btn btn-danger right_btn" @click="removeMe(index)"><i class="fa fa-times"></i></button>
+        </div>
+        <div class="row">
+            <div class="col-md-6" v-if="false">
+                <div class="form-group">
+                    <!-- origin selection -->
+                        <label for="select_van">Select Origin</label>
+                        <select class="form-control input-lg m-bot15" name="destination_from" id="van" v-model="rate.origin_id">
+                            <option value="">Select Origin</option>
+                            <option v-for="(destination,index) in destinations" :key="index" :value="destination.id">{{ destination.name }}</option> 
+                        </select>
+                </div>
             </div>
-            <label v-if="this.rate_list.length > 0" for="rate">Rates:</label>
-
-
-            <div v-for="(rate,index) in rates" :key="index">
-                <button type="button" class="btn btn-danger right_btn" @click="removeMe(index)"><i class="fa fa-times"></i></button>
-                <div class="form-group" v-if="selectedFrom != ''">
-                    <select v-model="rate.destination_id" class="form-control input-lg m-bot15" :name="`rates[${index}][destination_id]`" id="destination">
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="select_van">Select Destination</label>
+                    <select v-model="rate.destination_id" class="form-control input-lg m-bot15" :name="`rates[${index}][destination_id]`"
+                        id="destination">
                         <option value="">Select Destination</option>
-                        <option v-for="(destination,index) in destinationsWithoutSelected" :key="index" :value="destination.id">{{ destination.name }}</option>
+                        <option v-for="(destination,index) in destinations" :key="index" :value="destination.id">{{
+                            destination.name }}</option>
                     </select>
                 </div>
-
-                <div class="form-group">
-                    <input v-model="rate.price" type="text" class="form-control" :name="`rates[${index}][price]`" id="" placeholder="Enter Price">
-                </div>
             </div>
+        </div>
+        
+
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input v-model="rate.price" type="text" class="form-control" :name="`rates[${index}][price]`" id=""
+                placeholder="Enter Price">
+        </div>
+
+        <div class="form-group" v-if="false">
+            <!-- timepicker -->
+            <label for="departure_time">Departure Time</label>
+            <div class="input-group bootstrap-timepicker">
+                    <input  readonly v-model="rate.departure_time" name="departure_time" type="text" :class="`form-control timepicker-rate_${index}`" autocomplete="off">
+                    <span class="input-group-btn" >
+                        <button data-toggle="tooltip" data-placement="right" title="Click here to choose time" id="timepickr_rate" class="btn btn-default" type="button"><i class="fa fa-clock-o"></i></button>
+                    </span>
+            </div>
+        </div>
 
 
     </div>
@@ -30,70 +55,47 @@
 <script>
     export default {
         props: {
-            destinations: {
-                type: Array,
-                default: () => []
+            index: {
+                type: Number
             },
-            rate_list: {
-                type: Array,
-                default: () => []
+            rate: {
+                type: Object,
+                default: () => { 
+                    return {
+                        origin_id: "",
+                        destination_id: "",
+                        price: ""
+                    }
+                }
             },
-            selectedOrigin: String
+            destinations_data: {
+                type: Array
+            },
+            rate_length: Number
         },
         data(){
             return {
-                selectedTo: '',
-                filtered: [],
-                rates: this.rate_list,
-                selectedFrom: this.selectedOrigin
-            }
-        },
-        computed: {
-            destinationsWithoutSelected(){
-                
-                let newDestination = [];
-                let destinations = this.destinations;
-
-                for(let x = 0 ; x < destinations.length; x++){
-                    if(destinations[x].id != this.selectedFrom){
-                        newDestination.push(destinations[x])
-                    }
-                }
-
-                let selection = newDestination.map((d) => d.id)
-                let selected = this.rates.map((d) => d.destination_id)
-
-
-                let filtered = newDestination.map((d) => {
-                    if(selected.includes(d.id)){
-                        d.selected = true 
-                    }else{
-                        d.selected = false
-                    }
-                    return d
-                })
-                
-                return filtered
+                destinations: this.destinations_data 
             }
         },
         methods: {
-            checkSelected(e){
-                if(e.target.value == ''){
-                    this.$emit('clear-rates')
-                }   
-            },
             removeMe(index){
-                this.$emit('remove-selected',index)
-            }
-        },
-        watch: {
-            selectedFrom(newValue){
-                this.$emit('update-selected',newValue)
-            }
+                this.$emit('removeRate',index);
+            },
+            getOrdinal(n){
+                let s=["th","st","nd","rd"],
+                    v=n%100;
+                return n+(s[(v-20)%10]||s[v]||s[0]);
+            },
         }
     }
 </script>
 
 <style scoped>
+.rate{
+    border: 1px solid rgb(199, 128, 81);
+    padding: 15px 25px;
+    margin-bottom: 10px;
+}
 
 </style>

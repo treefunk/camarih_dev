@@ -16,7 +16,7 @@
                                         <?php //base_url/resources/js/components/TripAvailabilityForm.vue ?>
                                         <trip-availability-form
                                         :vans='<?=json_encode($vans)?>'
-                                        :destinations='<?=json_encode($destinations)?>'
+                                        :destinations_data='<?=json_encode($destinations)?>'
                                         post_url='<?=base_url('trip_availability/store')?>'
                                         />
                             </div>
@@ -28,6 +28,7 @@
               </section>
               <!-- page end-->
           </section>
+          
 </section>
 
 <?php //require_once "modals/add.php"; //Add modal here ?> 

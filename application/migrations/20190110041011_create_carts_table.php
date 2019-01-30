@@ -27,6 +27,9 @@ class Migration_Create_carts_Table extends CI_Migration {
                             'constraint' => '255',
                             'unsigned' => TRUE
                         ),
+                        'departure_date' => array(
+                            'type' => 'datetime'
+                        ),
                         'package_id' => array(
                             'type' => 'INT',
                             'constraint' => '255',

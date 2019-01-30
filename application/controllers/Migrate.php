@@ -101,6 +101,33 @@ class Migrate extends CI_Controller
 
     $this->db->trans_complete();
 
+    // destinations
+
+    $this->db->insert('destinations',[
+      'name' => 'Puerto Princesa',
+      'short_name' => "PPS"
+    ]);
+    $this->db->insert('destinations',[
+      'name' => 'Roxas',
+      'short_name' => "ROX"
+    ]);
+    $this->db->insert('destinations',[
+      'name' => 'Taytay',
+      'short_name' => "TTY"
+    ]);
+    $this->db->insert('destinations',[
+      'name' => 'El Nido',
+      'short_name' => "ELN"
+    ]);
+
+
+    $this->db->insert('vans',[
+      'name' => 'Regular Van',
+      'description' => "Just a regular van wid tv",
+      'seat_map' => '2,3,3,4'
+    ]);
+
+
 
   }
 

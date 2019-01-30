@@ -36,60 +36,10 @@
 
 
 <form action="<?=base_url()?>availability/check" method="POST">
-<article class="book-trip">
-  <div>
-    <ul class="pad-0 listn">
-      <li>
-        <p>Round-trip</p>
-      </li>
-      <li>
-        <p>One-way</p>
-      </li>
-    </ul>
-  </div>
-  <ul class="pad-0 listn">
-    <li>
-      <div>
-        <h4>Book A trip</h4>
-      </div>
-    </li>
-    <li>
-      <div>
-        <ul class="pad-0 listn">
-          <li>
-            <h5>From</h5>
-            <select name="destination_from">
-              <option value="">Select a Location</option>
-              <?php foreach($destinations as $destination): ?>
-                <option value="<?=$destination->id?>"><?=$destination->name?></option>
-              <?php endforeach; ?>
-            </select>
-            <input name="departure_from" type="date">
-          </li>
-          <li>
-            <h5>To</h5>
-            <select name="destination_to">
-              <option value="">Select a Location</option>
-              <?php foreach($destinations as $destination): ?>
-                <option value="<?=$destination->id?>"><?=$destination->name?></option>
-              <?php endforeach; ?>
-            </select>
-            <input name="departure_to" type="date">
-          </li>
-        </ul>
-      </div>
-    </li>
-    <li>
-      <div>
-        <button type="submit" style="background-color:transparent">
-          <h5>Check <i class="fa fa-arrow-right"></i> Availability</h5>
-
-        </button>
-      </div>
-    </li>
-  </ul>
+  <book-a-trip
+  :destinations='<?=json_encode($destinations)?>'
+  > </book-a-trip>
 </form>
-</article>
 
 <section class="sec-2">
     <article class="pckage_wrap clearfix">

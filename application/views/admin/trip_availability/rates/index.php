@@ -5,10 +5,6 @@
                   <header class="panel-heading">
                         <h3>Rate List</h3>
                       <div>
-                          <strong>Departure Date and Time:</strong>
-                          <?=format_datetime_string($trip_availability->departure_date,'M j Y h:i A')?>
-                      </div>
-                      <div>
                           <strong>Origin:</strong>
                           <?=$trip_availability->origin->name?> (<?=$trip_availability->origin->short_name?>)
                       </div>
@@ -18,13 +14,6 @@
                           </strong>
                           <?=format_datetime_string($trip_availability->selling_start,'M j Y')?> - <?=format_datetime_string($trip_availability->selling_end,'M j Y')?>
                       </div>
-                      <div>
-                          <strong>
-                              Type:
-                          </strong>
-                          <?=!$trip_availability->is_roundtrip ? 'One-way trip' : 'Roundtrip' ?>
-                      </div>
-
                       
                       <span class="pull-right">
                           <!-- <button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> Refresh</button> -->
