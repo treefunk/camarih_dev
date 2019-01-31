@@ -1,14 +1,13 @@
 <template>
     <div>
-        <section class="sec-3 clearfix">
+        <section :class="{ 'sec-3': isRight ,
+         'clearfix':isRight, 'sec-2': !isRight}">
             <article class="pckage_wrap clearfix">
-
               <div class="clearfix">
-                <aside class="left">
+                <aside :class="isRight ? 'right' : 'left'">
                   <img :src="item.image_path">
                 </aside>
-
-                <article class="right">
+                <article :class="!isRight ? 'right' : 'left'">
                   <div>
                     <ul class="pad-0 listn">
                         <li>
@@ -18,7 +17,7 @@
                           <h5>{{ item.package_details.description }}</h5>
                         </li>
                         <li>
-                          <h4>Php {{ item.price }} <span>per person</span></h4>
+                          <h4>Php {{ item.rate }} <span>per person</span></h4>
                         </li>
                         <li>
                           <h6>Adults</h6>
@@ -28,7 +27,7 @@
                     <aside>
                       <ul class="pad-0 listn">
                         <li>
-                          <a href="">View Details</a>
+                          <a :href="`${this.single_url}/${item.id}`">View Details</a>
                         </li>
                         <li>
                           <button @click="addToCart"><span class="add-to-cart">Add to cart</span></button>
@@ -51,10 +50,12 @@
     export default {
         data(){
             return {
-                adult_count: 0
+                adult_count: 0,
+                isRight: ((this.index + 1) % 2 == 0) ,
+                in: this.index
             }
         },
-        props: [ 'item' ],
+        props: [ 'item', 'index', 'single_url'],
         methods: {
             addToCart: function() {
 

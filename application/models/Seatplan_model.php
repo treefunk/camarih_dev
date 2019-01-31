@@ -68,6 +68,8 @@ class Seatplan_model extends CMS_Model
             return $seats_num[$offset];
         }
 
+        return $seats_num;
+
 
 
     }

@@ -82,7 +82,7 @@
       </article>
 
       <div class="view_all">
-        <a href="">View All Packages</a>
+        <a href="<?=base_url('packages')?>">View All Packages</a>
       </div>
     </article>
 </section>

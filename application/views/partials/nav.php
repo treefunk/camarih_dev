@@ -37,11 +37,11 @@
                         </ul> -->
                       
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="#">Home</a></li>
+                            <li class="active"><a href="<?=base_url()?>">Home</a></li>
                             <li><a href="#">About Us</a></li>
-                            <li><a href="#">Our Vans</a></li>
+                            <li><a href="<?=base_url('ourvans')?>">Our Vans</a></li>
                             <li><a href="#">Trip schedule</a></li>
-                            <li><a href="#">Tour packages</a></li>
+                            <li><a href="<?=base_url('packages')?>">Tour packages</a></li>
                             <li class="bg-orange"><a href="#">Contact Us</a></li>
                             <li class="acc dropdown">
                               <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account<b class="caret"></b></a>

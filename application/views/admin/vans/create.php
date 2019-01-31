@@ -23,6 +23,16 @@
                                           <label for="header">Description</label>
                                           <textarea name="description" id="description" class="form-control" rows="3"><?=set_value('description')?></textarea>
                                           </div>
+
+
+                                          <div class="form-group">
+                                              <label for="header">One-way trip Rate</label>
+                                              <input type="text" name="oneway_rate" class="form-control" id="oneway_rate" value="<?=set_value('oneway_rate'); ?>">
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="header">Roundtrip Rate</label>
+                                              <input type="text" name="roundtrip_rate" class="form-control" id="roundtrip_rate" value="<?=set_value('roundtrip_rate'); ?>">
+                                          </div>
       
                                           <div class="form-group">
                                             <van-seat-map

@@ -25,6 +25,15 @@
                                           </div>
 
                                           <div class="form-group">
+                                              <label for="header">One-way trip Rate</label>
+                                              <input type="text" name="oneway_rate" class="form-control" id="oneway_rate" value="<?=$van->van_details->oneway_rate?>">
+                                          </div>
+                                          <div class="form-group">
+                                              <label for="header">Roundtrip Rate</label>
+                                              <input type="text" name="roundtrip_rate" class="form-control" id="roundtrip_rate" value="<?=$van->van_details->roundtrip_rate?>">
+                                          </div>
+
+                                          <div class="form-group">
                                             <van-seat-map
                                             :seats_data='<?=json_encode($van->seatmap)?>'
                                             ></van-seat-map>

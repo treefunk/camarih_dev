@@ -10,12 +10,8 @@
                     <p>{{ bookdata.destination.name }}</p>
                 </div>
                 <div>
-                    <label for="departure_from">From:</label>
+                    <label for="departure_from">Departure Date:</label>
                     <p>{{ bookdata.from }}</p>
-                </div>
-                <div>
-                    <label for="departure_to">To:</label>
-                    <p>{{ bookdata.to }}</p>
                 </div>
                 <div>
                     <label for="Price">Total</label>

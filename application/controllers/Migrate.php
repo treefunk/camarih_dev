@@ -127,6 +127,12 @@ class Migrate extends CI_Controller
       'seat_map' => '2,3,3,4'
     ]);
 
+    $this->db->insert('van_details',[
+      'van_id' => $this->db->insert_id(),
+      'oneway_rate' => 2000,
+      'roundtrip_rate' => 4000
+    ]);
+
 
 
   }

@@ -1,6 +1,11 @@
 <template>
     <div >
-        <single-package v-for="(package,index) in packages" :item="package" :key="package.id">
+        <single-package 
+        v-for="(singlepackage,index) in packages" :item="singlepackage" 
+        :key="index" 
+        :index="index"
+        :single_url="single_url"
+        >
         </single-package>
     </div>
 </template>
@@ -14,7 +19,7 @@
         components : {
             'single-package' : SinglePackage
         },
-        props: [ 'packages' ]
+        props: [ 'packages','single_url']
     }
 </script>
 

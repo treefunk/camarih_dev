@@ -79,6 +79,13 @@
                     </li>
 
                     <li class="sub-menu">
+                      <a href="<?=base_url('tourpackages')?>">
+                          <i class="fa fa-truck"></i>
+                          <span>Tour Packages</span>
+                      </a>
+                    </li>
+
+                    <li class="sub-menu">
                         <a href="<?=base_url('trip_availability')?>">
                             <i class="fa fa-road"></i>
                             <span>Trip Availability</span>
