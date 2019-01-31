@@ -33,6 +33,7 @@ class Seatplan_model extends CMS_Model
 
     public function getPendingSeatsByRate($rate,$date,$offset = 0)
     {
+        
         $rate_id = $rate->id;
         $rate_datetime = DateTime::createFromFormat("H:i A",$rate->departure_time, new DateTimeZone('Asia/Hong_Kong'));
         $rate_time = $rate_datetime->format('h:i:s');
@@ -41,34 +42,57 @@ class Seatplan_model extends CMS_Model
 
         $pending_seat_map = [];
         $seats_num = [];
+        $test = [];
+        $new = [0 => [],1 => []];
 
-        if($this->session->has_userdata('cart')){
-            $cart_in_session = $this->session->userdata('cart');
-            
+        $cart_in_session = $this->session->userdata('cart');
+
+        //loop inside cart
+
+            // check if this seat rate matches in db
+        if($cart_in_session){
             foreach($cart_in_session as $cart){
-
-                
-
-                if( $cart['selected'][$offset]['trip_availability_id'] == $rate->trip_availability_id &&
+                if( isset($cart['selected'][$offset]) && $cart['selected'][$offset]['trip_availability_id'] == $rate->trip_availability_id &&
                     $cart['selected'][$offset]['from'] == $date
                 ){
-                    $pending_seat_map[] = array_merge($pending_seat_map,$cart['selected_seats'][$offset]);
-                        
-
+                    $pending_seat_map = array_merge($pending_seat_map,$cart['selected_seats']);
+                    $test[] = $cart['selected_seats'];
                 }
             }
-            if($offset ==1 ){
-                var_dump($pending_seat_map); die();
 
+            for($y = 0 ; $y < count($pending_seat_map); $y++){
+            foreach($pending_seat_map[$y] as $s){
+                $seats_num[$y][] = (int)$s['seatnum'];
             }
-            foreach($pending_seat_map as $seat){
-                $seats_num[] = (int)$seat['seatnum'];
-            }
+            
+        }
+        
+        
+        
+        // for($z = 0 ; $z < count($seats_num); $z++){
+        //     if($z == 0 || $z == 2){
+        //         $new[0][] = $seats_num[$z]
+        //     }
+        // }
 
-            return $seats_num[$offset];
+        $i = 0;
+        foreach($seats_num as $s){
+            $b = 0;
+            foreach($s as $p){
+                if(count($p) == 1){
+                    $new[0][] = $p;
+                }else{
+                    $new[1][] = $p;
+                }
+                
+            }
+            $i++;
+        }
+    
+
         }
 
-        return $seats_num;
+        return $new;
 
 
 

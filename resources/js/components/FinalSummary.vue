@@ -6,7 +6,7 @@
 
             <li>
                 <div class="parent">
-                    <div class="children"><label for="rate">Rate:</label></div>
+                    <div class="children"><label for="rate">Total Price:</label></div>
                 </div>
                 <div class="children">
                    <p>{{ final_price }}</p>

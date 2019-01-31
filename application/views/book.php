@@ -18,7 +18,7 @@
                     <seat-plan-selection
                     :seats_data='<?=json_encode($data[$offset]['seat_layout'])?>'
                     :seat_map='<?=json_encode($data[$offset]['seat_map'])?>'
-                    :sels_data='<?=json_encode($data[$offset]['current_seat_map'])?>'
+                    :sels_data='<?=json_encode([])?>'
                     key="<?=$offset?>"
                     ></seat-plan-selection>
 

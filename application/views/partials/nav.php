@@ -64,7 +64,7 @@
               <ul class="listn pad-0 top-list">
                   <li>
                     <p>My Account</p>
-                    <a href="">
+                    <a href="<?=base_url('cart')?>">
                         <cart-icon
                         :shopping_cart_data = '<?=json_encode($this->session->userdata('cart'))?>'
                         >

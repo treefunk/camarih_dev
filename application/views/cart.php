@@ -14,5 +14,8 @@
             </shopping-cart>
 
         </div>
+        <a href="<?=base_url('availability/process_cart')?>">
+        <button class="btn">Checkout</button>
+        </a>
 </section>
 </div>

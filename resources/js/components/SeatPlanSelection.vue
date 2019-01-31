@@ -36,7 +36,7 @@
                 <passenger-information v-for="(passenger,index) in row" :parentindex="i" :index="index" :key="index" :passenger="passenger" > </passenger-information>
             </div>
 
-            <div class="btn-hldr">
+            <div class="btn-hldr" v-if="currentSeats.length">
                 <button  class="btn btn-default" type="submit">Submit</button>
             </div>
     </div>
