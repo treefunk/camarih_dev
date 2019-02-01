@@ -73,6 +73,7 @@
                           <span>CMS</span>
                       <span class="dcjq-icon"></span></a>
                       <ul class="sub" style="display: none;">
+                          <li><a href="<?=base_url('about/edit')?>">About</a></li>
                           <li><a href="<?=base_url('sliders')?>">Sliders</a></li>
                           <li><a href="<?=base_url('testimonials')?>">Testimonials</a></li>
                       </ul>
@@ -103,6 +104,13 @@
                       <a href="<?=base_url('vans')?>">
                           <i class="fa fa-truck"></i>
                           <span>Vans</span>
+                      </a>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="<?=base_url('tripschedule')?>">
+                            <i class="fa fa-truck"></i>
+                          <span>Schedule</span>
                       </a>
                   </li>
 

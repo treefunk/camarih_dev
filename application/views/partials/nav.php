@@ -38,7 +38,7 @@
                       
                         <ul class="nav navbar-nav navbar-right">
                             <li class="active"><a href="<?=base_url()?>">Home</a></li>
-                            <li><a href="#">About Us</a></li>
+                            <li><a href="<?=base_url('aboutus')?>">About Us</a></li>
                             <li><a href="<?=base_url('ourvans')?>">Our Vans</a></li>
                             <li><a href="#">Trip schedule</a></li>
                             <li><a href="<?=base_url('packages')?>">Tour packages</a></li>

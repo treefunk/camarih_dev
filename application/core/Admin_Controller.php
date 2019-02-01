@@ -15,6 +15,7 @@ class Admin_Controller extends CI_Controller {
         if(!in_array($this->uri->segment(2),$this->allowed)){
             $this->checkIfAdmin();
         }
+        $this->load->database();
 
     }
 

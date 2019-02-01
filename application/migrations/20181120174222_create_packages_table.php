@@ -17,6 +17,11 @@ class Migration_Create_packages_Table extends CI_Migration {
                                 'type' => 'VARCHAR',
                                 'constraint' => '300'         
                         ),
+                        'image_name' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '100',
+                                'null' => true
+                        ),
                         'destination_id' => array(
                                 'type' => 'INT',
                                 'constraint' => '100',

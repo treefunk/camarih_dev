@@ -16,6 +16,11 @@ class Migration_Create_vans_Table extends CI_Migration {
                         'name' => array(
                             'type' => 'LONGTEXT'
                         ),
+                        'image_name' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '100',
+                                'null' => true
+                        ),
                         'description' => array(
                             'type' => 'LONGTEXT',
                             'null' => TRUE
