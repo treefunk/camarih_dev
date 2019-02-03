@@ -162,7 +162,7 @@ class Availability extends MY_Controller {
         if($onewaytrip){ //oneway trip
             $data = [];
             $data[] = $this->getSeatPlan($rate,$post_data);
-            
+
            
 
             $_SESSION['selected_rate'][] = $data[0]['rate_selected'];
@@ -335,7 +335,7 @@ class Availability extends MY_Controller {
 
         if($cart = $this->session->userdata('cart')){
             $id = $this->reservation_model->add($reservation_data);
-
+            
             foreach($cart as $item)
             {
                 $item['reservation_id'] = $id;

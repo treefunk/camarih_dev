@@ -16,6 +16,8 @@ class Seatplan_model extends CMS_Model
                 
         $occupied_seat_map = [];
 
+        
+
         $occupied_seats = $this->db->select('seat_plan.*')
                                     ->from('seat_plan')
                                     ->join('carts', 'seat_plan.cart_id = carts.id')
@@ -25,9 +27,22 @@ class Seatplan_model extends CMS_Model
                                     ->where('rates.trip_availability_id',$rate->trip_availability_id)
                                     ->get()->result();
         foreach($occupied_seats as $occupied_seat){
-            $occupied_seat_map[] = (int)$occupied_seat->seat_num;
-        }
+            $add = false;
+            $carts = $this->db->get_where('carts',[
+                'rate_id' => $rate_id
+            ])->result();
+            foreach($carts as $cart){
+                if((format_datetime_string($cart->departure_date,'Y-m-d') == $date)){
+                    $add = true;
+                }
+            }
 
+            if($add){
+                $occupied_seat_map[] = (int)$occupied_seat->seat_num;
+            }
+            
+        }
+    
 
         
         return $occupied_seat_map;
@@ -135,13 +150,12 @@ class Seatplan_model extends CMS_Model
             // var_dump($cart); die();
             foreach($cart as $item)
             {
-                $index = 0;
-                
-
                 $to_add = false;
-
+                
+                
                 foreach($item['selected_seats'] as $seat_group)
                 {
+                    $index = 0;
                     if($item['selected'][$index]['from'] == $date && $rate->trip_availability_id == $item['selected'][$index]['trip_availability_id']){
                         $return_index = $index;
                         $to_add = true;
@@ -162,7 +176,6 @@ class Seatplan_model extends CMS_Model
         }
 
         if($return_index != -1){
-            var_dump($pending_seats);
             if(array_key_exists($return_index,$pending_seats)){
                 return $pending_seats[$return_index];
             }else{
