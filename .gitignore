@@ -12,6 +12,7 @@ yarn-error.log*
 *.sln
 *.sw*
 application/vendor
+application/about.json
 
 .DS_Store
 node_modules
