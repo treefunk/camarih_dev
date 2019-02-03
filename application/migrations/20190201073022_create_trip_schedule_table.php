@@ -12,15 +12,19 @@ class Migration_Create_trip_schedule_Table extends CI_Migration {
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
                         ),
-                        'departure_time' => array(
+                        'trip_num' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '155',
+                        ),
+                        'departure_time_pps' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '255',
                             'null' => TRUE
                         ),
-                        'type' => array(
-                            'type' => 'tinyint',
-                            'constraint' => 5,
-                            'comment' => '1 = PPS - ELN, 2 = ELN - PPS'
+                        'departure_time_eln' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '255',
+                                'null' => TRUE
                         )
                 ));
 

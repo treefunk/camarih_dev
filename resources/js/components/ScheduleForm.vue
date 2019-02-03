@@ -1,29 +1,23 @@
 <template>
     <div>
         <div v-for="(schedule,index) in schedules" :key="index">
-            <div class="form-group">
-                <button type="button" class="btn btn-danger right_btn" @click="removeRow(index)"><i class="fa fa-times"></i></button>
-                <label for="select_type">Departure Time</label>
-                <input type="text" v-model="schedules[index].departure_time" :name="`schedules[${index}]`" id="departure_time"  class="form-control">  
+            {{ getOrdinal(index + 1) }} Trip
+                    <button type="button" class="btn btn-danger right_btn" @click="removeRow(index)"><i class="fa fa-times"></i></button>
+            <div class="row">
+                    <input type="hidden" :name="`schedules[${index}][trip_num]`" :value="index+1">
+                    <div class="form-group col-md-5">
+                        <label for="select_type">PPS TO ELN</label>
+                        <input type="text" v-model="schedules[index].departure_time_pps" :name="`schedules[${index}][departure_time_pps]`" id="departure_time"  class="form-control">  
+                    </div>
 
-                <!-- input elements here -->
-            <div class="form-group">
-                <label for="select_type">Select Route</label>
-                <div class="radio">
-                        <label>
-                            <input type="radio" v-model="schedules[index].type" :name="`type[${index}]`" id="type" value="1">
-                            PPS - ELN
-                        </label>
-                        <label>
-                            <input type="radio" v-model="schedules[index].type" :name="`type[${index}]`" id="type" value="2">
-                            ELN - PPS
-                        </label>
-                </div>
-            </div> 
+                    <div class="form-group col-md-5">
+                        <label for="select_type">ELN TO PPS</label>
+                        <input type="text" v-model="schedules[index].departure_time_eln" :name="`schedules[${index}][departure_time_eln]`" id="departure_time"  class="form-control">  
+                    </div>
             </div>
         <hr>
         </div>
-        <button type="button" class="btn_green" @click="addRow">Add Row</button>
+        <button type="button" class="btn_green" @click="addRow">Add Schedule</button>
     </div>
 </template>
 
@@ -43,13 +37,18 @@
         methods: {
             addRow(){
                 this.schedules.push({
-                    'departure_time': '',
-                    'type': ''
+                    'trip_num': this.schedules.length + 1,
+                    'departure_time_pps': '',
+                    'departure_time_eln': ''
                 })
             },
             removeRow(index){
                 this.schedules.splice(index,1)
-            }
+            }, getOrdinal(n){
+                let s=["th","st","nd","rd"],
+                    v=n%100;
+                return n+(s[(v-20)%10]||s[v]||s[0]);
+            },
         }
     }
 </script>

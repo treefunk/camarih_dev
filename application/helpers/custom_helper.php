@@ -27,3 +27,12 @@ function format_date_and_time_for_sql($datetimestring){
 function format_datetime_string($datetimestring,$output_format,$current_format = 'Y-m-d H:i:s'){
     return DateTime::createFromFormat($current_format,$datetimestring)->format($output_format);
 }
+
+
+/**
+ * sauce https://stackoverflow.com/questions/3109978/display-numbers-with-ordinal-suffix-in-php
+ */
+function ordinalSuffix( $n )
+{
+  return date('S',mktime(1,1,1,1,( (($n>=10)+($n>=20)+($n==0))*10 + $n%10) ));
+}

@@ -8,7 +8,7 @@
             <div class="row">
                 <div class="col-md-12">
                     <div class="panel-body">
-                        <form role="form" action="http://localhost/camarih_dev/about/update" method="POST" enctype="multipart/form-data">
+                        <form role="form" action="<?=base_url()?>/about/update" method="POST" enctype="multipart/form-data">
                             <div class="form-group"><label for="header">Header</label> <input type="text" name="header" id="header"
                                     value="<?=$about->header?>" class="form-control"></div>
                             <div class="form-group"><label for="header">Description</label> <textarea name="body"

@@ -11,13 +11,13 @@ class Schedule extends MY_Controller{
 
     public function index(){
 
-    }
-    
-    public function create(){
+        $data['schedules'] = $this->tripschedule_model->allByTripNum();
 
         $this->wrapper([
-            'view' => 'admin/schedule/create'
+            'data' => $data,
+            'view' => 'schedule'
         ]);
-        
+
     }
+
 }
