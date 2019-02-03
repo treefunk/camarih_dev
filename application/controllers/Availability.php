@@ -78,11 +78,13 @@ class Availability extends MY_Controller {
         //van vacancy
 
 
-        $index = 0;
-
         
+        // var_dump($data['available_trips']); die();
+        
+        $index = 0;
         // $data['available_trips'][0],[1] is present
             foreach($data['available_trips'] as $available_trip){
+
                 // will loop 2 times if it's roundtrip
                 foreach($available_trip as $trip){
                     $van = $this->van_model->findById($trip->van_id);
@@ -95,21 +97,16 @@ class Availability extends MY_Controller {
 
                     // get occupied and pending seats
                     $occupied = count($this->seatplan_model->getOccupiedSeatsByRate($rate,$dates[$index]));
-
-                    $pending = $this->seatplan_model->getPendingSeatsByRate($rate,$dates[$index],$index);
-
-
-                    $pending = count($pending) ? count(array_unique($pending[$index])) : 0;
+                    $pending = count($this->seatplan_model->getPendingSeatsByRateAndDate($rate,$dates[$index]));
                 
-                    $trip->pending = $pending;
+
                     $trip->total_seats = $this->van_model->getTotalSeats($van);
                     $trip->departure_time = $rate->departure_time;
                     $trip->occupied_seats = $occupied + $pending;
                 }
                 $index++;
             }
-
-
+            
 
         
         $this->wrapper([
@@ -177,9 +174,9 @@ class Availability extends MY_Controller {
 
             $return_data = $this->rev_from_to($post_data);
 
-            $data[] = $this->getSeatPlan($depart_rate,$post_data,0);
+            $data[] = $this->getSeatPlan($depart_rate,$post_data);
 
-            $data[] = $this->getSeatPlan($return_rate,$return_data,1);
+            $data[] = $this->getSeatPlan($return_rate,$return_data);
         
 
             foreach($data as $d){
@@ -190,7 +187,6 @@ class Availability extends MY_Controller {
             
             
         }
-        
         
 
         $this->session->set_userdata('check_availability', $post_data);
@@ -231,7 +227,6 @@ class Availability extends MY_Controller {
         }
 
         $onewaytrip = count($post['selected']) == 1;
-        // var_dump($post['selected']); die();
 
         // Package only applies to destination_id
 
@@ -382,11 +377,13 @@ class Availability extends MY_Controller {
         if($paid){
             $this->db->trans_begin();
             // Add Reservation
+         
             $cart = [
                 'rate_id' => $rate->id,
                 'package_id' => is_object($data['selected_package'][$offset]) ? $data['selected_package'][$offset]->id : 0,
                 'reservation_id' => $data['reservation_id'],
-                'departure_date' => "{$data['selected'][$offset]['from']} {$rate->departure_time}"
+                'departure_date' => format_date_and_time_for_sql("{$data['selected'][$offset]['from']} {$rate->departure_time}",$format = "Y-m-d H:i A"),
+                'departure_time' => $rate->departure_time
             ];
             
 
@@ -461,7 +458,7 @@ class Availability extends MY_Controller {
         $this->session->sess_destroy();
     }
 
-    public function getSeatPlan($rate,$post_data,$offset = 0){
+    public function getSeatPlan($rate,$post_data){
         //GET VAN LAYOUT
         $data['seat_map'] = $this->rate_model->getVanlayoutByRateId($rate->id);                
 
@@ -469,15 +466,7 @@ class Availability extends MY_Controller {
         $data['occupied_seat_map'] = $this->seatplan_model->getOccupiedSeatsByRate($rate,$post_data['departure_from']);
         
         //GET SELECTED SEATS IN CART
-        
-        $data['pending_seat_map'] = $this->seatplan_model->getPendingSeatsByRate($rate,$post_data['departure_from'],$offset);
-
-        if(count($data['pending_seat_map'])){
-            $data['pending_seat_map'] = $data['pending_seat_map'][$offset];
-        }else{
-            $data['pending_seat_map'] = [0=>[],1=>[]];
-        }
-
+        $data['pending_seat_map'] = $this->seatplan_model->getPendingSeatsByRateAndDate($rate,$post_data['departure_from']);
 
         //todo GET CURRENT SEATS IN SESSION
         // $data['current_seat_map'] = $this->seatplan_model->getCurrentSeatsByRateId($rate->id,$offset)[$offset];
@@ -537,6 +526,7 @@ class Availability extends MY_Controller {
         $data['seat_layout'] = $seat_layout;
 
 
+
         $data['rate_selected'] = [
             'rate_id' => $rate->id,
             'rate_price' => $rate->price
@@ -553,5 +543,10 @@ class Availability extends MY_Controller {
             "is_roundtrip" => "true"
         ];
 
+    }
+
+    public function viewCartSess(){
+        var_dump($this->session->userdata('cart'));
+        die();
     }
 }

@@ -30,6 +30,10 @@ class Migration_Create_carts_Table extends CI_Migration {
                         'departure_date' => array(
                             'type' => 'datetime'
                         ),
+                        'departure_time' => array(
+                            'type' => 'VARCHAR',
+                            'constraint' => '200'
+                        ),
                         'package_id' => array(
                             'type' => 'INT',
                             'constraint' => '255',

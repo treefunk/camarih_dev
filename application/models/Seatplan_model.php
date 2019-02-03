@@ -12,7 +12,7 @@ class Seatplan_model extends CMS_Model
     {
         $rate_id = $rate->id;
         $rate_datetime = DateTime::createFromFormat("H:i A",$rate->departure_time, new DateTimeZone('Asia/Hong_Kong'));
-        $rate_time = $rate_datetime->format('h:i:s');
+        $rate_time = $rate_datetime->format('h:i A');
                 
         $occupied_seat_map = [];
 
@@ -21,12 +21,14 @@ class Seatplan_model extends CMS_Model
                                     ->join('carts', 'seat_plan.cart_id = carts.id')
                                     ->join('rates', 'carts.rate_id = rates.id')
                                     ->join('trip_availability', 'trip_availability.id = rates.trip_availability_id')
-                                    ->where('carts.departure_date',"{$date} {$rate_time}")
+                                    ->where('carts.departure_time',$rate_time)
                                     ->where('rates.trip_availability_id',$rate->trip_availability_id)
                                     ->get()->result();
         foreach($occupied_seats as $occupied_seat){
             $occupied_seat_map[] = (int)$occupied_seat->seat_num;
         }
+
+
         
         return $occupied_seat_map;
     }
@@ -120,6 +122,57 @@ class Seatplan_model extends CMS_Model
         }
 
         return $current_seats;
+    }
+
+    public function getPendingSeatsByRateAndDate($rate,$date){
+     
+        $pending_seats = [];
+
+        $return_index = -1;
+        
+        //get the cart in session
+        if($this->session->has_userdata('cart') && count($cart = $this->session->userdata('cart'))){
+            // var_dump($cart); die();
+            foreach($cart as $item)
+            {
+                $index = 0;
+                
+
+                $to_add = false;
+
+                foreach($item['selected_seats'] as $seat_group)
+                {
+                    if($item['selected'][$index]['from'] == $date && $rate->trip_availability_id == $item['selected'][$index]['trip_availability_id']){
+                        $return_index = $index;
+                        $to_add = true;
+                    }
+
+                    foreach($seat_group as $seat){
+                        if($to_add){
+                            $pending_seats[$index][] = (int)$seat['seatnum'];
+                        }
+                    }
+                    $index++;
+                }
+                
+                
+            }
+        }else{
+            return [];
+        }
+
+        if($return_index != -1){
+            var_dump($pending_seats);
+            if(array_key_exists($return_index,$pending_seats)){
+                return $pending_seats[$return_index];
+            }else{
+                return [];
+            }
+        }else{
+            return [];
+        }
+
+
     }
     
 }

@@ -15,9 +15,9 @@ function format_multiple_files($files){
 /**
  * Formats 01/31/2019 11:00 AM to ISO8601 (for sql saving)
  */
-function format_date_and_time_for_sql($datetimestring){
+function format_date_and_time_for_sql($datetimestring,$format = "m/d/Y H:i:s"){
     $dt = new DateTimeZone('Asia/Hong_Kong');
-    return DateTime::createFromFormat('m/d/Y H:i:s' , $datetimestring, $dt)->format(DateTime::ISO8601);
+    return DateTime::createFromFormat($format , $datetimestring, $dt)->format(DateTime::ISO8601);
 }
 
 /**
