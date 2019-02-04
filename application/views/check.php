@@ -77,8 +77,13 @@
                     <td><?=$trip->departure_time?></td>
                     <td><?=$trip->occupied_seats?> / <?=$trip->total_seats?></td>
                     <td>
+                        <?php if($trip->occupied_seats != $trip->total_seats): ?>
                         <div class="radio"><label for=""><input type="radio" name="rate[0]" id="optionsRadios1" value="<?=$trip->rate_id?>" style="-webkit-appearance: radio;">PHP
                                 <?=$trip->rate_price?></label></div>
+                        <?php else: ?>
+                        FULL
+                        <?php endif;?>
+                        
                     </td>
                 </tr>
 
@@ -107,13 +112,13 @@
                     <td><?=$trip->departure_time?></td>
                     <td><?=$trip->occupied_seats?> / <?=$trip->total_seats?></td>
                     <td>
-                        <div class="radio">
-                            <label for="">
-                                <input type="radio" name="rate[1]" id="optionsRadios1" value="<?=$trip->rate_id?>" style="-webkit-appearance: radio;">
-                                PHP
-                                <?=$trip->rate_price?>
-                            </label>
-                        </div>
+                    <?php if($trip->occupied_seats != $trip->total_seats): ?>
+                        <div class="radio"><label for=""><input type="radio" name="rate[1]" id="optionsRadios1" value="<?=$trip->rate_id?>" style="-webkit-appearance: radio;">PHP
+                                <?=$trip->rate_price?></label></div>
+                        <?php else: ?>
+                        FULL
+                        <?php endif;?>
+                        
                     </td>
                 </tr>
 

@@ -15,6 +15,7 @@ import FinalSummary from './components/FinalSummary.vue'
 import ShoppingCart from './components/ShoppingCart.vue'
 import BookATrip from './components/BookATrip.vue'
 import ScheduleForm from './components/ScheduleForm.vue'
+import VanGallery from './components/VanGallery.vue'
 
 
 // Vuex
@@ -45,7 +46,8 @@ new Vue({
         'final-summary': FinalSummary,
         'shopping-cart': ShoppingCart,
         'book-a-trip' : BookATrip,
-        'schedule-form': ScheduleForm
+        'schedule-form': ScheduleForm,
+        'van-gallery': VanGallery
     }   
 })
 

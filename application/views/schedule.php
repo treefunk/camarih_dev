@@ -29,7 +29,7 @@
         <?php foreach($schedules as $sched): ?>
             <tr>
                 <td>
-                    <?=$sched->trip_num?><?=ordinalSuffix($sched->trip_num)?>
+                    <?=$sched->trip_num?><?=ordinalSuffix($sched->trip_num)?> Trip
                 </td>
                 <td><?=$sched->departure_time_pps?></td>
                 <td><?=$sched->departure_time_eln?></td>

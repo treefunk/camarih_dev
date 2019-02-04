@@ -12,8 +12,9 @@ class Seatplan_model extends CMS_Model
     {
         $rate_id = $rate->id;
         $rate_datetime = DateTime::createFromFormat("H:i A",$rate->departure_time, new DateTimeZone('Asia/Hong_Kong'));
+        $rate_string = $rate_datetime->format(DateTime::ISO8601);
         $rate_time = $rate_datetime->format('h:i A');
-                
+    
         $occupied_seat_map = [];
 
         
@@ -26,12 +27,18 @@ class Seatplan_model extends CMS_Model
                                     ->where('carts.departure_time',$rate_time)
                                     ->where('rates.trip_availability_id',$rate->trip_availability_id)
                                     ->get()->result();
+    
+        
         foreach($occupied_seats as $occupied_seat){
             $add = false;
-            $carts = $this->db->get_where('carts',[
-                'rate_id' => $rate_id
-            ])->result();
+            $carts = $this->db->select('carts.*')
+                              ->from('rates')
+                              ->join('trip_availability','trip_availability.id = rates.trip_availability_id')
+                              ->join('carts', 'carts.rate_id = rates.id')
+                              ->get()
+                              ->result();
             foreach($carts as $cart){
+                // var_dump(format_datetime_string($cart->departure_date,'Y-m-d')); die();
                 if((format_datetime_string($cart->departure_date,'Y-m-d') == $date)){
                     $add = true;
                 }
@@ -152,10 +159,10 @@ class Seatplan_model extends CMS_Model
             {
                 $to_add = false;
                 
+                $index = 0;
                 
                 foreach($item['selected_seats'] as $seat_group)
                 {
-                    $index = 0;
                     if($item['selected'][$index]['from'] == $date && $rate->trip_availability_id == $item['selected'][$index]['trip_availability_id']){
                         $return_index = $index;
                         $to_add = true;

@@ -129,9 +129,8 @@ class Paypal{
     {
         $client = new Client;
         $url = "{$this->main_url}/v1/payments/payment/{$payment_id}";
-        $response = $client->request('POST', $url, [
+        $response = $client->request('GET', $url, [
             'headers' => [
-                'Content-Type' => 'application/json',
                 'Authorization' => $this->auth,
             ]
         ]);
@@ -149,10 +148,8 @@ class Paypal{
                 'Content-Type' => 'application/json',
                 'Authorization' => $this->auth,
             ],
-            'data' => [
-                'payment_id' => $data->paymentId,
+            'json' => [
                 'payer_id' => $data->PayerID,
-                'transactions' => $data->transactions
             ]
         ]);
 

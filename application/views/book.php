@@ -14,7 +14,7 @@
             </book-summary>
             <li>
                 <div class="van-hldr">
-                    <form action="<?=base_url('availability/packages')?>" method="POST">
+                    <form action="<?=base_url('availability/summary')?>" method="POST">
                     <seat-plan-selection
                     :seats_data='<?=json_encode($data[$offset]['seat_layout'])?>'
                     :seat_map='<?=json_encode($data[$offset]['seat_map'])?>'
@@ -25,9 +25,15 @@
                     <?php if(count($data) > 1 && $offset != 1): ?>
                         <input type="hidden" name="is_roundtrip" value="true">
                     <?php endif; ?>
+                    
+
+
+
+
                     </form>
                 </div>
             </li>
+            
     
             <li></li>
             <a href="<?=base_url('availability/check')?>">

@@ -30,15 +30,67 @@
                 </div>
                 
             </div>
+
+        
+            
             
             <div v-for="(row,i) in seats" :key="i">
 
                 <passenger-information v-for="(passenger,index) in row" :parentindex="i" :index="index" :key="index" :passenger="passenger" > </passenger-information>
             </div>
 
+            <div class="modal fade" id="bookingInformation" tabindex="-1" role="dialog" aria-labelledby="bookingInformationLabel" aria-hidden="true"
+                        style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                    <h4 class="modal-title">Booking Information</h4>
+                                </div>
+                                <div class="modal-body">
+                                        
+                                    <div class="form-group"> <label for="fullname"> Fullname </label> <input name="booking_information[fullname]" class="form-control" id="fullname" required=""
+                                            type="text"> </div>
+
+
+                                    <div class="form-group"> <label for="email"> Email </label> <input name="booking_information[email]" class="form-control" id="email" required="" type="email">
+                                    </div>
+
+
+                                    <div class="form-group"> <label for="phone"> Phone </label> <input name="booking_information[phone]" class="form-control" id="phone" required="" type="text">
+                                    </div>
+
+
+                                    <div class="form-group"> <label for="pickup"> Pickup Location </label> <textarea name="booking_information[pickup_location]" class="form-control" id="pickup"
+                                            required="" rows="3"> </textarea> </div>
+
+
+                                    <div class="form-group"> <label for="drop"> Drop Location </label> <textarea name="booking_information[drop_location]" class="form-control" id="drop" required=""
+                                            rows="3"> </textarea> </div>
+
+
+                                    <div class="form-group"> <label for="flight"> Flight Info </label> <textarea name="booking_information[flight_info]" class="form-control" id="flight" required=""
+                                            rows="3"> </textarea> </div>
+                                    
+                   
+                                </div>
+                                <div class="modal-footer">
+                                    <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                                    <div class="btn-hldr" v-if="currentSeats.length">
+                                    <button  class="btn btn-default" type="submit">Submit</button>
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
             <div class="btn-hldr" v-if="currentSeats.length">
-                <button  class="btn btn-default" type="submit">Submit</button>
+                <button @click="showInfoForm" class="btn btn-default" type="button">Show</button>
             </div>
+
+            
+
+            
     </div>
 </template>
 
@@ -105,6 +157,11 @@
             currentSeats(newV) {
                 let currentLength = newV.length
                 this.$store.commit('updateCurrentSeats', { seatsLength: currentLength })
+            }
+        },
+        methods: {
+            showInfoForm(){
+                $('#bookingInformation').modal('show')   
             }
         }
     }

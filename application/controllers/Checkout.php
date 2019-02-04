@@ -24,7 +24,9 @@ class Checkout extends MY_Controller{
     public function show($payment_id){
         $paypal = new Paypal;
 
-        $paypal->showPayment($payment_id);
+        $details = $paypal->showPayment($payment_id);
+
+        var_dump($details); die();
     }
 
     public function confirm()

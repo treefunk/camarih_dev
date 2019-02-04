@@ -39,6 +39,12 @@
                                             
                                             ></van-seat-map>
                                           </div>
+
+                                          <div class="form-group">
+                                            <van-gallery>
+                                                
+                                            </van-gallery>
+                                          </div>
                                           
 
 

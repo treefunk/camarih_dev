@@ -40,7 +40,7 @@
                             <li class="active"><a href="<?=base_url()?>">Home</a></li>
                             <li><a href="<?=base_url('aboutus')?>">About Us</a></li>
                             <li><a href="<?=base_url('ourvans')?>">Our Vans</a></li>
-                            <li><a href="#">Trip schedule</a></li>
+                            <li><a href="<?=base_url('schedule')?>">Trip schedule</a></li>
                             <li><a href="<?=base_url('packages')?>">Tour packages</a></li>
                             <li class="bg-orange"><a href="#">Contact Us</a></li>
                             <li class="acc dropdown">

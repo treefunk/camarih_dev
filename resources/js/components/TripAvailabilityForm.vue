@@ -24,21 +24,6 @@
 
             
 
-            <!-- input elements here -->
-            <div class="form-group">
-                <label for="select_type">Select Type</label>
-                <div class="radio">
-                        <label>
-                            <input type="radio" v-model="trip_availability.is_roundtrip" name="is_roundtrip" id="is_roundtrip" :value="false">
-                            One-way Trip
-                        </label>
-                        <label>
-                            <input type="radio" v-model="trip_availability.is_roundtrip" name="is_roundtrip" id="is_roundtrip" :value="true">
-                            Roundtrip
-                        </label>
-                </div>
-            </div>
-
             <!-- selling date -->
             <div class="form-group" >
                 <label for="selling_date">Selling Date</label>

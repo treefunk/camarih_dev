@@ -13,10 +13,6 @@ class Migration_Create_carts_Table extends CI_Migration {
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
                         ),
-                        'name' => array(
-                            'type' => 'LONGTEXT',
-                            'null' => TRUE
-                        ),
                         'reservation_id' => array(
                             'type' => 'INT',
                             'constraint' => '255',
@@ -33,12 +29,6 @@ class Migration_Create_carts_Table extends CI_Migration {
                         'departure_time' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '200'
-                        ),
-                        'package_id' => array(
-                            'type' => 'INT',
-                            'constraint' => '255',
-                            'unsigned' => TRUE,
-                            'null' => TRUE
                         ),
                         'status' => array(
                             'type' => 'VARCHAR',
