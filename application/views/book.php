@@ -5,12 +5,12 @@
 </section>
 <section class="sec-2">
     <div style="margin-bottom:100px">
-    <a href="<?=base_url('availability/check')?>">
-                    <button class="btn btn-info"><< Back</button>
-                </a>    
-                    
+    
         <h2><?=$labels[$offset]?></h2>
-        <p>To select a seat, click on the number of the seat:</p>        
+        <p>To select a seat, click on the number of the seat:</p>
+        <a href="<?=base_url('availability/check')?>">
+                    <button class="btn btn-info"><< Back</button>
+                </a>           
         <ul class="parent pad-0 listn">
             <book-summary
             :book_data='<?=json_encode($data[$offset]['selected'])?>'
@@ -38,6 +38,8 @@
                     </form>
                 </div>
             </li>
+
+                    
             
                 
         </ul>

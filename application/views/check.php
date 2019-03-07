@@ -62,15 +62,16 @@
     <?php
     $book = true;
     if(count($available_trips) == 1){
-        $book = false;
+        
         if(!count($available_trips[0])){
+            $book = false;
             $errormessage = "No Available trips found";
             require_once "partials/no_trips_found.php";
         }
     }
 
     if(count($available_trips) == 2 && (!count($available_trips[0]) || !count($available_trips[1]))){
-        $book=false;
+        $book= false;
         $when = [];
         if(!count($available_trips[0])){
             $when[] = "Departure";

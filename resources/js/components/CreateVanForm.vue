@@ -96,7 +96,10 @@
                 this.formNotSubmitted = false;
                 console.log(Object.values(this.van))
 
-                if(Object.values(this.van).some(val => val == "") || this.van_seats.some(v => v == "")){
+                if(Object.values(this.van).some(val => {
+                    if(typeof val == 'object'){ return false }
+                        return val == ""
+                }) || this.van_seats.some(v => v == "")){
                     alert("Please fill in all the required fields.")
                     return -1;
                 }

@@ -46,12 +46,11 @@ class Van_model extends CMS_Model
             'van_id' => $van->id
         ])->result();
 
-        // $van_rates = $this->db->get_where('van_rate',[
-        //     'van_id' => $van->id
-        // ])->result();
+        $van_rates = $this->db->get_where('van_rate',[
+            'van_id' => $van->id
+        ])->result();
 
-
-        // $van->van_rates= $van_rates;
+        $van->van_rates= $van_rates;
         $van->van_details = $van_details;
         $van->van_gallery = $van_gallery;
         return $van;
