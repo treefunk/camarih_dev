@@ -18,9 +18,9 @@
           </div>
           <div class="top-nav ">
               <ul class="nav pull-right top-menu">
-                  <li>
+                  <!-- <li>
                       <input type="text" class="form-control search" placeholder="Search">
-                  </li>
+                  </li> -->
                   <!-- user login dropdown start-->
                   <li class="dropdown">
                       <a data-toggle="dropdown" class="dropdown-toggle" href="#">
@@ -34,9 +34,9 @@
                       </ul>
                   </li>
                   <!-- user login dropdown end -->
-                  <li class="sb-toggle-right">
+                  <!-- <li class="sb-toggle-right">
                       <i class="fa  fa-align-right"></i>
-                  </li>
+                  </li> -->
               </ul>
           </div>
       </header>
@@ -54,7 +54,7 @@
                   </li> -->
 
                   <li class="sub-menu">
-                      <a href="<?=base_url('admin')?>">
+                      <a href="<?=base_url('admin')?>" class="<?=isActive('admin')?>">
                           <i class="fa fa-laptop"></i>
                           <span>Admin Management</span>
                       </a>
@@ -68,47 +68,48 @@
                       </ul> -->
                   </li>
 
+                  <?php $cms_sub_items = ['about','sliders','testimonials']; $cms = isActive($cms_sub_items); ?>
                   <li class="sub-menu dcjq-parent-li">
-                      <a href="javascript:;" class="dcjq-parent">
-                          <span>CMS</span>
+                      <a href="javascript:;" class="dcjq-parent <?=$cms[0]?>">
+                          <span>CMS</span> 
                       <span class="dcjq-icon"></span></a>
-                      <ul class="sub" style="display: none;">
-                          <li><a href="<?=base_url('about/edit')?>">About</a></li>
-                          <li><a href="<?=base_url('sliders')?>">Sliders</a></li>
-                          <li><a href="<?=base_url('testimonials')?>">Testimonials</a></li>
+                      <ul class="sub" style="<?=$cms[1]?>">
+                          <li class="<?=isActive('about')?>"><a href="<?=base_url('about/edit')?>" >About</a></li>
+                          <li class="<?=isActive('sliders')?>"><a href="<?=base_url('sliders')?>" >Sliders</a></li>
+                          <li class="<?=isActive('testimonials')?>"><a href="<?=base_url('testimonials')?>" >Testimonials</a></li>
                       </ul>
                     </li>
 
                     <li class="sub-menu">
-                      <a href="<?=base_url('tourpackages')?>">
+                      <a href="<?=base_url('tourpackages')?>" class="<?=isActive("tourpackages")?>">
                           <i class="fa fa-truck"></i>
                           <span>Tour Packages</span>
                       </a>
                     </li>
 
                     <li class="sub-menu">
-                        <a href="<?=base_url('trip_availability')?>">
+                        <a href="<?=base_url('trip_availability')?>" class="<?=isActive("trip_availability")?>">
                             <i class="fa fa-road"></i>
                             <span>Trip Availability</span>
                         </a>
                     </li>
 
                   <li class="sub-menu">
-                      <a href="<?=base_url('destinations')?>">
+                      <a href="<?=base_url('destinations')?>" class="<?=isActive("destinations")?>">
                           <i class="fa fa-building-o"></i>
                           <span>Destinations</span>
                       </a>
                   </li>
 
                   <li class="sub-menu">
-                      <a href="<?=base_url('vans')?>">
+                      <a href="<?=base_url('vans')?>" class="<?=isActive("vans")?>">
                           <i class="fa fa-truck"></i>
                           <span>Vans</span>
                       </a>
                   </li>
 
                   <li class="sub-menu">
-                      <a href="<?=base_url('tripschedule')?>">
+                      <a href="<?=base_url('tripschedule')?>" class="<?=isActive("tripschedule")?>">
                             <i class="fa fa-truck"></i>
                           <span>Schedule</span>
                       </a>

@@ -124,7 +124,8 @@ class Migrate extends CI_Controller
     $this->db->insert('vans',[
       'name' => 'Regular Van',
       'description' => "Just a regular van wid tv",
-      'seat_map' => '2,3,3,4'
+      'seat_map' => '2,3,3,4',
+      'num_of_vans' => 2
     ]);
 
     $this->db->insert('van_details',[

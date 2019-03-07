@@ -17,6 +17,7 @@
                                         <trip-availability-form
                                         :vans='<?=json_encode($vans)?>'
                                         :destinations_data='<?=json_encode($destinations)?>'
+                                        :origins_data='<?=json_encode($origins)?>'
                                         post_url='<?=base_url('trip_availability/store')?>'
                                         />
                             </div>

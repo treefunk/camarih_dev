@@ -3,7 +3,7 @@
               <!-- page start-->
               <section class="panel">
                   <header class="panel-heading">
-                      Create Destination
+                      Edit Destination
                       <span class="pull-right">
                           <!-- <button type="button" id="loading-btn" class="btn btn-warning btn-xs"><i class="fa fa-refresh"></i> Refresh</button> -->
                       </span>
@@ -23,6 +23,15 @@
                                             <div class="form-group">
                                                 <label for="short_name">Short Name</label>
                                                 <input type="text" name="short_name" class="form-control" value="<?=$destination->short_name?>" id="short_name">
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Scope</label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" id="inlineCheckbox1" value="1" name="is_origin" <?=$destination->is_origin ? "checked" : null ?>>Origin
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" id="inlineCheckbox2" value="1" name="is_endpoint" <?=$destination->is_endpoint ? "checked" : null ?>>Passenger Drop off
+                                                    </label>
                                             </div>
 
                                         

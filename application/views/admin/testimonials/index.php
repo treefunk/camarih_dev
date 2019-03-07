@@ -26,9 +26,9 @@
                     <thead>
                     <tr>
                         <th>Image</th>
+                        <th>Title</th>
                         <th>Testimonial</th>
                         <th>Name</th>
-                        <th>Title</th>
                         <th>Occupation</th>
                         <th>Actions</th>
                     </tr>
@@ -38,18 +38,19 @@
                     <tr>
                         <td><?=$testimonial->image_name?></td>
                         <td><?=$testimonial->title?></td>
-                        <td><?=$testimonial->testimonial?></td>
+                        <td style="max-width: 350px"><?=shortVer($testimonial->testimonial,200)?></td>
                         <td><?=$testimonial->name?></td>
                         <td><?=$testimonial->occupation?></td>
                         <td>
-                            <a href="<?=base_url('testimonials/edit/').$testimonial->id?>">
-                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i> Edit </button>
-                            </a>
+                                <a href="<?=base_url('testimonials/edit/').$testimonial->id?>">
+                                    <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i> Edit </button>
+                                </a>
+                                <a data-toggle="modal" href="#deleteTestimonial"
+                                data-payload='<?=json_encode($testimonial)?>'>
+                                    <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i> Delete </button>
+                                </a>
 
-                            <a data-toggle="modal" href="#deleteTestimonial"
-                            data-payload='<?=json_encode($testimonial)?>'>
-                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i> Delete </button>
-                            </a>
+                            
                         </td>
                     </tr>
                     <?php endforeach; ?>

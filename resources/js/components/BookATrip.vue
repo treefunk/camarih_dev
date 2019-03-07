@@ -1,4 +1,5 @@
 <template>
+<form :action="url" method="POST" @submit.prevent="validateFields">
         <article class="book-trip">
         <div class='first_div'>
             <ul class="pad-0 listn">
@@ -22,18 +23,20 @@
                 <li>
                     <h5>From</h5>
                     <select name="destination_from" v-model="destination_from">
-                    <option value="">Select a Location</option>
-                        <option v-for="(destination,index) in destinations" :key="index" :value="`${destination.id}`">{{ destination.name }}</option>
+                    <option value="">Select Origin</option>
+                        <option v-for="(destination,index) in destinations" :key="index" v-show="destination_to != destination.id" :value="`${destination.id}`">{{ destination.name }}</option>
                     </select>
-                    <input name="departure_from" type="date">
+                    <h4 v-if="triptype == 'roundtrip'">Departing on</h4>
+                    <input name="departure_from" type="date" :min="date_today" @input="from = $event.target.value">
                 </li>
                 <li >
                     <h5>To</h5>
                     <select name="destination_to" v-model="destination_to">
-                    <option value="" >Select a Location</option>
-                        <option v-for="(destination,index) in destinations" :key="index" :value="`${destination.id}`">{{ destination.name }}</option>
+                    <option value="" >Select Destination</option>
+                        <option v-for="(destination,index) in destinations" v-show="destination_from != destination.id" :key="index" :value="`${destination.id}`">{{ destination.name }}</option>
                     </select>
-                    <input name="departure_to" type="date" v-if="this.triptype =='roundtrip'">
+                    <h4 v-if="triptype == 'roundtrip'">Returning on</h4>
+                    <input name="departure_to" type="date" ref="to" :min="from" @input="to = $event.target.value" v-if="this.triptype =='roundtrip'">
                 </li>
                 </ul>
             </div>
@@ -49,20 +52,27 @@
         </ul>
         <input type="hidden" name="is_roundtrip" :value="this.triptype == 'roundtrip'">
         </article>
+        </form>
 </template>
 
 <script>
+    import moment from "moment";
+
     export default {
         props: {
             destinations: {
                 type: Array
-            }
+            },
+            url: String
         },
         data(){
             return {
                 destination_from: '',
                 destination_to: '',
-                triptype: 'oneway'
+                triptype: 'oneway',
+                from: "",
+                to: "",
+                date_today: moment().format('YYYY-MM-DD')
             }
         },
         methods: {
@@ -72,6 +82,40 @@
                 }else{
                     this.triptype = 'oneway'
                 }
+            },
+            validateFields(e){
+
+                let is_oneway = this.triptype == 'oneway'
+                let is_roundtrip = this.triptype == 'roundtrip'
+
+                if(is_roundtrip && (this.from == '' || this.to == '')){
+                    alert('Please input a date');
+                    return -1;
+                }
+
+                if(is_oneway && this.from == ''){
+                    alert('Please input a date');
+                    return -1;
+                }
+
+                if(this.destination_from == ''){
+                    alert('Please select the origin')
+                    return -1;
+                }
+
+                if(this.destination_to == ''){
+                    alert('Please select the destination')
+                    return -1;
+                }
+
+                e.target.submit();
+            }
+        },
+        watch:{
+            from(){
+                let to_elem = this.$refs.to
+                this.to = ""
+                to_elem.value = ""
             }
         }
     }

@@ -1,163 +1,145 @@
 <?php
 
-use GuzzleHttp\Client;
+use PayPal\Api\Amount;
+use PayPal\Api\Details;
+use PayPal\Api\Item;
+use PayPal\Api\ItemList;
+use PayPal\Api\Payer;
+use PayPal\Api\Payment;
+use PayPal\Api\RedirectUrls;
+use PayPal\Api\Transaction;
+use PayPal\Api\PaymentExecution;
 
 class Paypal{
 
-    private $auth;
-    private $access_token;
-    protected $main_url;
-
-    protected $scope;
-
-    public function __construct(){
-
-        if(strtoupper(getenv('PAYPAL_MODE') == 'LIVE')){
-            $this->main_url = 'https://api.paypal.com';
-        }else{
-            $this->main_url = 'https://api.sandbox.paypal.com';
-        }
-
-        if(!$this->accessTokenExists()){
-            $this->setCredentials();
-            $data = $this->requestAccessToken();
-            foreach($data as $key => $value)
-            {
-                $this->{$key} = $value;
-            }
-            var_dump("1" . $this->auth); die();
-        }else{
-            $this->auth = "Bearer {$_SESSION['token']}";
-        }
-
-
-    }
-
-    public function accessTokenExists(){
-        return isset($_SESSION['token']);
-    }
-
-    public function setCredentials(){
-
-        $mode = strtoupper(getenv('PAYPAL_MODE'));
-
-        if(!$mode){
-            print('PAYPAL CREDENTIALS NOT CONFIGURED!');
-            return false;
-        }else{
-            $this->client_id = getenv("PAYPAL_{$mode}_CLIENT_ID");
-            $this->secret = getenv("PAYPAL_{$mode}_SECRET");
-            return true;
-        }
-
-    }
-
-
-    public function requestAccessToken()
+    public function __construct()
     {
-        $client = new Client();
 
-        $response = $client->request('POST', $this->main_url.'/v1/oauth2/token', [
-            'headers' => [
-                'Accept' => 'application/json',
-                'Accept-Language' => 'en_US',
-            ],
-            'auth' =>  [$this->client_id,$this->secret],
-            'form_params' => [
-                'grant_type' => 'client_credentials'
-            ]
-        ]);
+        $mode = getenv('PAYPAL_MODE');
+        $client_id = getenv("PAYPAL_{$mode}_CLIENT_ID");
+        $secret = getenv("PAYPAL_{$mode}_SECRET");
 
 
-        $data = json_decode($response->getBody());
-
-        $_SESSION['token'] = $data->access_token;
-
-        return $data;
-    }
-
-    private function isTokenExpired(){  return $this->expires_in == 0;  }
-
-    public function pay(){
-
-        $client = new Client();
-
-        $return_url = base_url('checkout/confirm');
-        // $return_url = "https://google.com";
-
-        $url = "{$this->main_url}/v1/payments/payment";
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $this->auth,
-            ],
-            'json' => [
-                "intent" => "sale",
-                "redirect_urls" => [
-                    "return_url" => $return_url,
-                    "cancel_url" => "https://youtube.com"
-                ],
-                "payer" => [
-                    "payment_method" => "paypal"
-                ],
-                "transactions" => [
-                    [
-                        "amount" => [
-                            "total" => 0.1,
-                            "currency" => "PHP"
-                        ]
-                    ]
-                ]
-            ]
-        ]);
-
-        
-
-        $data = json_decode($response->getBody());
-        
-        var_dump($data); die();
-
-
-
-        return $data->links[0]->href;
-
-
-    }
-
-    //
-    public function showPayment($payment_id)
-    {
-        $client = new Client;
-        $url = "{$this->main_url}/v1/payments/payment/{$payment_id}";
-        $response = $client->request('GET', $url, [
-            'headers' => [
-                'Authorization' => $this->auth,
-            ]
-        ]);
-
-        return json_decode($response->getBody());
-    }
+        $this->api_context = new \PayPal\Rest\ApiContext(
+            new \PayPal\Auth\OAuthTokenCredential(
+                $client_id,     // ClientID
+                $secret      // ClientSecret
+            )
+        );
     
-    public function executePayment($data){
-
-        $client = new Client;
-        $url = "{$this->main_url}/v1/payments/payment/{$data->paymentId}/execute";
-
-        $response = $client->request('POST', $url, [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => $this->auth,
-            ],
-            'json' => [
-                'payer_id' => $data->PayerID,
-            ]
-        ]);
-
-        var_dump(json_decode($response->getBody())); 
-        die();
-
-        return json_decode($response->getBody());
+        if(strtolower($mode) == "live"){
+            $this->api_context->setConfig(
+                ['mode' => 'live']
+            );
+        }
     }
 
 
+    public function pay($cart)
+    {
+
+        $payer = new Payer();
+        $payer->setPaymentMethod("paypal");
+
+
+        
+
+        $transactions = [];
+        $item_list = [];
+        $subtotal = 0;
+        $items = [];
+
+        foreach($cart as $item){
+            $total_items = 0;
+            foreach($item['items'] as $i){
+                $new_item = new Item();
+                $new_item->setName("{$item['short']} - {$item['departure_time']} - {$i['passenger']}")
+                         ->setCurrency("PHP")
+                         ->setQuantity(1)
+                         ->setSku("SEAT_#{$i['seatnum']}") // Similar to `item_number` in Classic API
+                         ->setPrice((float)$i['price']);
+
+                $subtotal += $i['price'];
+                $total_items++;
+                $items[] = $new_item;
+            }
+            
+
+            
+            
+        }
+        $itemList = new ItemList();
+        $itemList->setItems($items);
+        $details = new Details();
+        $details->setShipping(0)
+                ->setTax(0)
+                ->setSubtotal($subtotal);
+
+        $amount = new Amount();
+        $amount->setCurrency("PHP")
+               ->setTotal($subtotal)
+               ->setDetails($details);
+
+        
+        $transaction = new Transaction();
+        $transaction->setAmount($amount)
+                    ->setItemList($itemList)
+                    ->setDescription($item['name'])
+                    ->setInvoiceNumber(uniqid());
+ 
+            
+                   
+
+        $redirectUrls = new RedirectUrls();
+        $redirectUrls->setReturnUrl(base_url()."checkout/execute?success=true")
+            ->setCancelUrl(base_url()."checkout/execute?success=false");
+           
+    
+
+        $payment = new Payment();
+        $payment->setIntent("sale")
+                ->setPayer($payer)
+                ->setRedirectUrls($redirectUrls)
+                ->setTransactions([$transaction]);
+                
+                $request = clone $payment;
+                var_dump($payment->create($this->api_context)); die();
+
+        try {
+            $payment->create($this->api_context);
+        } catch (Exception $ex) {
+            // die('ye');
+            var_dump($ex->getData()); die();
+        }
+        
+    }
+
+    public function executePayment($transaction){
+
+        $paymentId = $_GET['paymentId'];
+        $payment = Payment::get($paymentId, $this->api_context);
+
+        $execution = new PaymentExecution();
+        $execution->setPayerId($_GET['PayerID']);
+
+        // $transaction = new Transaction();
+        // $amount = new Amount();
+        // $details = new Details();
+
+        $execution->addTransaction($transaction);
+
+        try {
+            $result = $payment->execute($execution, $this->api_context);
+        } catch (Exception $ex) {
+            echo $ex->getData();
+            die();
+        }
+
+    }
+
+    public function getPaymentDetails($id){
+        $payment = Payment::get($id, $this->api_context);
+
+        return $payment;
+    }
 }

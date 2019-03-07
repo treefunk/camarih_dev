@@ -18,11 +18,11 @@ class Migration_Create_rates_Table extends CI_Migration {
                             'constraint' => '100',
                             'unsigned' => TRUE,
                         ),
-                        'origin_id' => array(
-                                'type' => 'INT',
-                                'constraint' => '100',
-                                'unsigned' => TRUE
-                        ),
+                        // 'origin_id' => array(
+                        //         'type' => 'INT',
+                        //         'constraint' => '100',
+                        //         'unsigned' => TRUE
+                        // ),
                         'destination_id' => array(
                             'type' => 'INT',
                             'constraint' => '100',

@@ -68,7 +68,9 @@ class CMS_Model extends CI_Model
         // $config['max_width']            = 2000;
         // $config['max_height']           = 1000;
         $filename = $name !== null ? $name : $_FILES[$file]['name'];
+
         $config['file_name'] = $id."_".$filename;
+
         // $config['file_name']
 
         $this->load->library('upload', $config);

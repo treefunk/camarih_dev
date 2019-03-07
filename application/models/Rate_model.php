@@ -4,6 +4,7 @@ class Rate_model extends CMS_Model
 {
     public function __construct()
     {
+        parent::__construct();
         $this->load->database();
         $this->table = "rates";
     }
@@ -19,6 +20,7 @@ class Rate_model extends CMS_Model
 
         return explode(',',$seat_map);
     }
+
 
     
 }

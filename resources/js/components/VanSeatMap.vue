@@ -1,5 +1,6 @@
 <template>
-    <div>
+    <div>  
+        <h3>Seat plan</h3>
         <div v-for="(seat,index) in seats" :key="index">
 
             <label>Row {{ index + 1 }}</label>
@@ -47,7 +48,7 @@
         watch:{
             seats(newSeats,oldSeats,wat)
             {
-                if(newSeats[0] > 3){
+                if(newSeats[0] >= 3){
                     alert('You can only have 2 seats maximum in the first row')
                     newSeats[0] = 2
                     return;

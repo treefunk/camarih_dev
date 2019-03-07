@@ -70,10 +70,10 @@ input, select, textarea, button {
   width: 100%;
   float: left; }
 
-.fleft {
+.left {
   float: left; }
 
-.fright {
+.right {
   float: right; }
 
 .listn {
@@ -125,11 +125,27 @@ input, select, textarea, button {
 .pad-0 {
   padding: 0px; }
 
+.flex, .cart .sec-2 .main-hldr, .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent, .cart .sec-2 .main-hldr .checkout .main-list li .parent, .cart .sec-2 .main-hldr .checkout .btm-hldr .parent {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-flow: row wrap;
+  justify-content: flex-start;
+  flex-wrap: wrap; }
+
 /* Colors & Fonts */
 /* Colors */
 .cs-container {
   padding: 0px 60px;
   width: 100%;
+  box-sizing: border-box; }
+
+.container-cs {
+  max-width: 76%;
+  width: 100%;
+  margin: 0 auto;
   box-sizing: border-box; }
 
 .navbar-default .navbar-nav .open .dropdown-menu > li > a {
@@ -1599,5 +1615,193 @@ footer::after {
 .panel-cs {
   max-width: 650px;
   width: 100%; }
+
+.cart .sec-1 {
+  height: 340px;
+  background-image: url(../images/package-page.jpg);
+  background-size: cover; }
+  .cart .sec-1 .hero {
+    position: absolute;
+    left: 50%;
+    z-index: 2;
+    transform: translate(-50%, 0);
+    top: 166px;
+    text-align: center; }
+    .cart .sec-1 .hero h3 {
+      font-family: "Circular Std Black", Arial, sans-serif;
+      font-size: 60px;
+      color: #fff; }
+    .cart .sec-1 .hero p {
+      font-family: "Circular Std Medium", Arial, sans-serif;
+      font-size: 30px;
+      color: #fff;
+      text-align: center; }
+.cart .sec-2 {
+  padding: 40px 0px;
+  background: #f0f0f0; }
+  .cart .sec-2 .main-hldr .booking-part {
+    width: calc(100% - 395px);
+    padding-right: 20px; }
+    .cart .sec-2 .main-hldr .booking-part .booking-card {
+      background: #fff;
+      margin-bottom: 35px; }
+      .cart .sec-2 .main-hldr .booking-part .booking-card .top {
+        border-bottom: 3px solid #429e47; }
+        .cart .sec-2 .main-hldr .booking-part .booking-card .top .left {
+          position: relative;
+          padding: 15px 17px 15px 50px;
+          background: #429e47; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .top .left .input-hldr {
+            position: absolute;
+            padding: 11px 10px;
+            background: #2d8332;
+            top: 0;
+            left: 0; }
+            .cart .sec-2 .main-hldr .booking-part .booking-card .top .left .input-hldr input[type="checkbox"] {
+              width: 21px;
+              height: 21px;
+              opacity: 0;
+              position: relative;
+              z-index: 3;
+              margin: 0px; }
+            .cart .sec-2 .main-hldr .booking-part .booking-card .top .left .input-hldr .uncheck {
+              width: 21px;
+              height: 21px;
+              position: absolute;
+              top: 11px;
+              background: url(../images/uncheck.jpg); }
+            .cart .sec-2 .main-hldr .booking-part .booking-card .top .left .input-hldr input[type="checkbox"]:checked + .uncheck {
+              background: url(../images/check.jpg); }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .top .left h4 {
+            font-family: "Circular Std Black", Arial, sans-serif;
+            color: #fff;
+            font-size: 18px; }
+        .cart .sec-2 .main-hldr .booking-part .booking-card .top .right .icon-hldr {
+          padding: 9px 15px; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .top .right .icon-hldr a {
+            font-size: 18px;
+            color: #fff;
+            margin-right: 9px; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .top .right .icon-hldr a:last-of-type {
+            margin-right: 0px; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .top .right .icon-hldr i.fa-pencil {
+            background: #515151;
+            padding: 6px 7px;
+            border-radius: 5px; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .top .right .icon-hldr i.fa-close {
+            background: #f68000;
+            padding: 6px 7px;
+            border-radius: 5px; }
+      .cart .sec-2 .main-hldr .booking-part .booking-card .body {
+        padding: 15px 0px 0px; }
+        .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li {
+          margin-bottom: 10px; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent .children {
+            padding: 0px 20px; }
+            .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent .children p {
+              font-size: 18px;
+              color: #000;
+              word-break: break-word; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent .children:first-of-type {
+            width: 35%; }
+            .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent .children:first-of-type p {
+              font-family: "Circular Std Book", Arial, sans-serif; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent .children:last-of-type {
+            width: 65%;
+            padding-left: 40px; }
+            .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent .children:last-of-type p {
+              font-family: "Circular Std Medium", Arial, sans-serif; }
+        .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li:last-child {
+          margin-bottom: 0px;
+          padding: 15px 0px;
+          background: #515151; }
+          .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li:last-child .parent .children p {
+            color: #fff; }
+      .cart .sec-2 .main-hldr .booking-part .booking-card .body::after {
+        position: absolute;
+        left: 35%;
+        content: '';
+        top: 0;
+        bottom: 0;
+        width: 1px;
+        background: #f0f0f0; }
+    .cart .sec-2 .main-hldr .booking-part .booking-card:last-of-type {
+      margin-bottom: 0px; }
+  .cart .sec-2 .main-hldr .checkout {
+    padding: 10px 0px;
+    background: #fff;
+    width: 395px; }
+    .cart .sec-2 .main-hldr .checkout .white-bg {
+      position: absolute;
+      top: -40px;
+      background: #fff;
+      width: 100%;
+      bottom: -40px; }
+    .cart .sec-2 .main-hldr .checkout h4 {
+      font-family: "Circular Std Black", Arial, sans-serif;
+      color: #515151;
+      text-transform: uppercase;
+      font-size: 36px;
+      margin-bottom: 5px;
+      padding: 0px 20px; }
+    .cart .sec-2 .main-hldr .checkout .main-list {
+      padding: 0px 20px; }
+      .cart .sec-2 .main-hldr .checkout .main-list li {
+        padding-bottom: 20px;
+        border-bottom: 3px solid #f0f0f0;
+        padding-top: 20px; }
+        .cart .sec-2 .main-hldr .checkout .main-list li h5 {
+          font-family: "Circular Std Book", Arial, sans-serif;
+          font-size: 18px;
+          color: #429e47;
+          margin-bottom: 10px; }
+        .cart .sec-2 .main-hldr .checkout .main-list li .parent {
+          margin-bottom: 10px; }
+          .cart .sec-2 .main-hldr .checkout .main-list li .parent .children {
+            width: 50%; }
+            .cart .sec-2 .main-hldr .checkout .main-list li .parent .children p {
+              font-family: "Circular Std Book", Arial, sans-serif;
+              font-size: 18px; }
+          .cart .sec-2 .main-hldr .checkout .main-list li .parent .children:first-of-type {
+            padding-right: 10px; }
+          .cart .sec-2 .main-hldr .checkout .main-list li .parent .children:last-of-type {
+            padding-left: 10px;
+            text-align: right; }
+        .cart .sec-2 .main-hldr .checkout .main-list li .parent:last-of-type {
+          margin-bottom: 0px; }
+      .cart .sec-2 .main-hldr .checkout .main-list li:last-child {
+        border-bottom: 0px; }
+    .cart .sec-2 .main-hldr .checkout .btm-hldr {
+      margin-bottom: 20px; }
+      .cart .sec-2 .main-hldr .checkout .btm-hldr .parent {
+        margin-bottom: 10px;
+        background: #515151;
+        padding: 20px; }
+        .cart .sec-2 .main-hldr .checkout .btm-hldr .parent .children {
+          width: 50%; }
+          .cart .sec-2 .main-hldr .checkout .btm-hldr .parent .children h6 {
+            font-family: "Circular Std Medium", Arial, sans-serif;
+            font-size: 20px;
+            color: #fff; }
+        .cart .sec-2 .main-hldr .checkout .btm-hldr .parent .children:first-of-type {
+          padding-right: 10px; }
+        .cart .sec-2 .main-hldr .checkout .btm-hldr .parent .children:last-of-type {
+          padding-left: 10px;
+          text-align: right; }
+    .cart .sec-2 .main-hldr .checkout .checkout-btm {
+      text-align: center;
+      margin-top: 40px; }
+      .cart .sec-2 .main-hldr .checkout .checkout-btm a {
+        padding: 20px 40px;
+        background: #429e47;
+        color: #fff;
+        font-family: "Circular Std Medium", Arial, sans-serif;
+        font-size: 18px;
+        text-transform: uppercase;
+        text-decoration: none;
+        display: inline-block; }
+
+input[type="checkbox"] {
+  -webkit-appearance: checkbox; }
 
 /*# sourceMappingURL=main.css.map */

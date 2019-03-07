@@ -23,7 +23,8 @@ class Trip_availability extends Admin_Controller {
 
     public function create()
     {
-        $data['destinations'] = $this->destination_model->all();
+        $data['destinations'] = $this->destination_model->getAllEndpoints();
+        $data['origins'] = $this->destination_model->getAllOrigins();
         $data['vans'] = $this->van_model->all();
         $this->wrapper([
             'view' => 'admin/trip_availability/create',
@@ -67,24 +68,19 @@ class Trip_availability extends Admin_Controller {
         $selling_start = format_date_and_time_for_sql($raw_selling_start); // function is in helpers/custom_helper.php
         $selling_end = format_date_and_time_for_sql($raw_selling_end);
     
-        
         $data = [
             'van_id' => $post['van_id'],
-            'destination_from' => $post['destination_from'],
             'selling_start' => $selling_start,
             'selling_end' => $selling_end,
+            'destination_from' => $post['destination_from'],
             'departure_time' => $post['departure_time'],
             'rates' => $post['rates']
         ];
         
         $this->db->trans_begin();
 
-        if($post['is_roundtrip'] == 'false') // one-way trip
-        {
-            if(!$this->tripavailability_model->addTripWithRates($data)) $this->db->trans_rollback();
-        }else{ // roundtrip
-            if(!$this->tripavailability_model->addTripWithRates($data)) $this->db->trans_rollback();
-        }
+        if(!$this->tripavailability_model->addTripWithRates($data)) $this->db->trans_rollback();
+    
 
 
         $this->db->trans_complete();
@@ -109,7 +105,8 @@ class Trip_availability extends Admin_Controller {
 
     public function edit($id)
     {
-        $data['destinations'] = $this->destination_model->all();
+        $data['destinations'] = $this->destination_model->getAllEndpoints();
+        $data['origins'] = $this->destination_model->getAllOrigins();
         $data['vans'] = $this->van_model->all();
         $trip_availability = $this->tripavailability_model->findById($id);
 
@@ -128,7 +125,6 @@ class Trip_availability extends Admin_Controller {
         
         $trip_availability_in_post = $this->format_dates_in_post($post);
         $rates_in_post = $trip_availability_in_post['rates'];
-
         unset($trip_availability_in_post['rates']); // unset 'rates' cause update does not update relationships
 
         $trip_availability_in_db = $this->tripavailability_model->initRelations($this->tripavailability_model->findById($id));
@@ -145,7 +141,8 @@ class Trip_availability extends Admin_Controller {
 
 
         $rates_in_post_ids = [];
-        foreach($rates_in_post as $rate){    
+        foreach($rates_in_post as $rate){
+            $rate['departure_time'] = $post['departure_time'];
             //check if rate is already present in db
             $query = $this->db->get_where('rates', [
                 'trip_availability_id' => $trip_availability_in_db->id,
@@ -190,13 +187,6 @@ class Trip_availability extends Admin_Controller {
     {
         $dt = new DateTimeZone('Asia/Hong_Kong');
         /**
-         * DEPARTURE_DATE
-         * combine date and time input from post 
-         * */
-        $rawDeparture = "{$post['departure_date']} {$post['departure_time']}";
-        $departure_date = format_date_and_time_for_sql($rawDeparture); // function is in helpers/custom_helper.php
-
-        /**
          * format selling date range
          */
         $rawFrom = "{$post['selling_start']} 00:00:00";
@@ -204,65 +194,16 @@ class Trip_availability extends Admin_Controller {
         $selling_start = DateTime::createFromFormat('m/d/Y H:i:s',$rawFrom,$dt)->format(DateTime::ISO8601);
         $selling_end = DateTime::createFromFormat('m/d/Y H:i:s',$rawTo,$dt)->format(DateTime::ISO8601);
 
-        $rawArrival = "{$post['arrival_date']} 00:00:00";
-        $arrival_date = DateTime::createFromFormat('m/d/Y H:i:s',$rawArrival,$dt)->format(DateTime::ISO8601);
 
-        if($post['is_roundtrip'] == 'true'){
-            $data = [];
-            $data[] = [
-                'departure_date' => $departure_date,
-                'destination_from' => $post['destination_id'],
-                'selling_start' => $selling_start,
-                'selling_end' => $selling_end,
-                'arrival_date' => $arrival_date,
-                'is_roundtrip' => isset($post['is_roundtrip']) ? $post['is_roundtrip'] : 0,
-                'van_id' => $post['van_id'],
-                'rates' => $post['rates']
-            ];
 
-            $rawDeparture_to = "{$post['departure_date_to']} {$post['departure_time_to']}";
-            $departure_date_to = format_date_and_time_for_sql($rawDeparture_to);
+        $data = [
+            'destination_from' => $post['destination_from'],
+            'selling_start' => $selling_start,
+            'selling_end' => $selling_end,
+            'van_id' => $post['van_id'],
+            'rates' => $post['rates']
+        ];
 
-            $rawFrom_to = "{$post['selling_start_to']} 00:00:00";
-            $rawTo_to = "{$post['selling_end_to']} 23:59:59";
-            $selling_start_to = DateTime::createFromFormat('m/d/Y H:i:s',$rawFrom_to,$dt)->format(DateTime::ISO8601);
-            $selling_end_to = DateTime::createFromFormat('m/d/Y H:i:s',$rawTo_to,$dt)->format(DateTime::ISO8601);
-            
-            $rawArrival_to = "{$post['arrival_date_to']} 00:00:00";
-            $arrival_date = DateTime::createFromFormat('m/d/Y H:i:s',$rawArrival_to,$dt)->format(DateTime::ISO8601);
-    
-
-            foreach($post['rates'] as $rate){
-                $data[] = [
-                    'departure_date' => $departure_date_to,
-                    'destination_from' => $rate['destination_id'],
-                    'selling_start' => $selling_start_to,
-                    'selling_end' => $selling_end_to,
-                    'is_roundtrip' => isset($post['is_roundtrip']) ? $post['is_roundtrip'] : 0,
-                    'van_id' => $post['van_id'],
-                    'arrival_date' => $arrival_date,
-                    'rates' => []
-                ];
-
-                $data[count($data) - 1]['rates'][] = [
-                    'destination_id' => $post['destination_id'],
-                    'price' => $rate['price']
-                ];
-                
-            }
-
-        }else{
-            $data = [
-                'departure_date' => $departure_date,
-                'destination_from' => $post['destination_id'],
-                'selling_start' => $selling_start,
-                'selling_end' => $selling_end,
-                'arrival_date' => $arrival_date,
-                'is_roundtrip' => isset($post['is_roundtrip']) ? $post['is_roundtrip'] : 0,
-                'van_id' => $post['van_id'],
-                'rates' => $post['rates']
-            ];
-        }
 
 
         return $data;
@@ -270,6 +211,30 @@ class Trip_availability extends Admin_Controller {
 
     public function delete($id)
     {
+
+        $trip = $this->tripavailability_model->findById($id);
+        $this->tripavailability_model->initRelations($trip,['rates']);
+        $this->db->trans_begin();
+        if($this->tripavailability_model->delete($trip->id)){
+            foreach($trip->rates as $rate){
+                $this->rate_model->delete($rate->id);
+            }
+            $this->db->trans_complete();
+            $alert = [
+                "type" => 'success',
+                "message" => "Trip Availability Successfully Deleted."
+            ];
+        }else{
+            $this->db->trans_rollback();
+            $alert = [
+                "type" => 'danger',
+                "message" => "Oops! Something went wrong."
+            ];
+        }
+
+        $this->session->set_flashdata('alert',$alert);
+        return redirect(base_url('trip_availability/'));
+        
         
     }
 

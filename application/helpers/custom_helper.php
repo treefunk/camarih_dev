@@ -36,3 +36,64 @@ function ordinalSuffix( $n )
 {
   return date('S',mktime(1,1,1,1,( (($n>=10)+($n>=20)+($n==0))*10 + $n%10) ));
 }
+
+function isPageActive($page_name) // client side
+{
+    $ci =& get_instance();
+    if((strtolower($ci->uri->segment(1))) == (strtolower($page_name))){
+        return "active";
+    }
+    return "";
+}
+
+function isActive($uri_name){ //back end side
+    $ci =& get_instance();
+
+    if(is_array($uri_name)){
+       if(in_array($ci->uri->segment(1),$uri_name)){
+           return ['active','display: block;'];
+       }
+       return ["",""];
+    }
+
+
+    if($uri_name == $ci->uri->segment(1)){
+        return "active";
+    }
+}
+
+/** SOURCE: https://snippets.webaware.com.au/snippets/simple-url-cleanser-in-php/
+* reduce rich character set string to URL-compatible string
+* @param string $text original string
+* @return string
+*/
+function stringForURL($text) {
+    // replace accented characters with unaccented characters
+    $newText = iconv('UTF-8', 'ASCII//TRANSLIT', $text);
+ 
+    // remove unwanted punctuation, convert some to '-'
+    static $punc = array(
+        // remove
+        "'" => '', '"' => '', '`' => '', '=' => '', '+' => '', '*' => '', '&' => '', '^' => '', '' => '',
+        '%' => '', '$' => '', '#' => '', '@' => '', '!' => '', '<' => '', '>' => '', '?' => '',
+        // convert to minus
+        '[' => '-', ']' => '-', '{' => '-', '}' => '-', '(' => '-', ')' => '-',
+        ' ' => '-', ',' => '-', ';' => '-', ':' => '-', '/' => '-', '|' => '-'
+    );
+    $newText = strtr($newText, $punc);
+ 
+    // clean up multiple '-' characters
+    $newText = preg_replace('/-{2,}/', '-', $newText);
+ 
+    // remove trailing '-' character if string not just '-'
+    if ($newText != '-')
+        $newText = rtrim($newText, '-');
+ 
+    // return a URL-encoded string
+    return rawurlencode($newText);
+}
+
+function shortVer($string,$num_length)
+{
+    return strlen($string) > $num_length ? substr($string,0,$num_length)."..." : $string;
+}

@@ -28,6 +28,10 @@ class Destinations extends Admin_Controller {
     public function store()
     {
         $post = $this->input->post();
+        
+        if(!isset($post['is_origin'])){ $post['is_origin'] = 0; }
+        if(!isset($post['is_endpoint'])){ $post['is_endpoint'] = 0; }
+
         $this->db->trans_start();
         $this->load->library('form_validation');
 
@@ -69,6 +73,10 @@ class Destinations extends Admin_Controller {
     public function update($id)
     {
         $post = $this->input->post();
+        
+        if(!isset($post['is_origin'])){ $post['is_origin'] = 0; }
+        if(!isset($post['is_endpoint'])){ $post['is_endpoint'] = 0; }
+
         $changes = 0;
 
         $this->load->library('form_validation');
@@ -93,7 +101,7 @@ class Destinations extends Admin_Controller {
 
         $alert = [
 			'type' => 'success',
-			'message' => 'Package Successfully Updated!'
+			'message' => 'Destination Successfully Updated!'
 		];
 
         if($changes){

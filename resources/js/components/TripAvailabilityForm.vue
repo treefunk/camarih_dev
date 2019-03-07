@@ -16,9 +16,9 @@
             <div class="form-group">
                     <!-- origin selection -->
                         <label for="select_van">Select Origin</label>
-                        <select class="form-control input-lg m-bot15" name="destination_from" id="van">
+                        <select v-model="trip_availability.origin.destination_from" class="form-control input-lg m-bot15" name="destination_from" id="van">
                             <option value="">Select Origin</option>
-                            <option v-for="(destination,index) in destinations" :key="index" :value="destination.id">{{ destination.name }}</option> 
+                            <option v-for="(origin,index) in origins" :key="index" :value="origin.id">{{ origin.name }}</option> 
                         </select>
                 </div>
 
@@ -38,7 +38,7 @@
                 <!-- timepicker -->
                 <label for="departure_time">Departure Time</label>
                 <div class="input-group bootstrap-timepicker">
-                        <input readonly v-model="trip_availability.departure_time" name="departure_time" type="text" class="form-control timepicker-default" autocomplete="off">
+                        <input readonly ref="dep_time" name="departure_time" type="text" class="form-control timepicker-default" autocomplete="off">
                         <span class="input-group-btn" >
                             <button data-toggle="tooltip" data-placement="right" title="Click here to choose time" id="timepickr" class="btn btn-default" type="button"><i class="fa fa-clock-o"></i></button>
                         </span>
@@ -54,14 +54,17 @@
                 :key="index" 
                 :index="index" 
                 :rate="rate"
-                :destinations_data="destinations"
+                :destinations="destinations"
                 :rate_length="trip_availability.rates.length"
-                @removeRate="removeRate(index)">
+                :rates_taken="trip_availability.rates"
+                @removeRate="removeRate(index)"
+                >
+                
                 </rate>
             </div>
 
             <div>
-                <button type="button" class="btn_green" @click="addRate">Add Destinations</button>
+                <button v-if="trip_availability.rates.length != (this.destinations_data.length - 1)" type="button" class="btn_green" @click="addRate">Add Destinations</button>
                 <button v-if="this.trip_availability.rates.length > 0" type="submit" class="btn_orange right_btn">Submit</button>
             </div>
          </form>
@@ -89,7 +92,10 @@
                         selling_start:"",
                         selling_end: "",
                         departure_time: "",
-                        rates: []
+                        rates: [],
+                        origin: {
+                            destination_from: ""
+                        }
                     }
                 }
             },
@@ -98,6 +104,9 @@
                 default: () => []
             },
             destinations_data: {
+                type: Array
+            },
+            origins_data : {
                 type: Array
             }
         },
@@ -114,12 +123,18 @@
                 self.trip_availability.departure_time = e.target.value
                 return
             });
+
+            if(this.trip_availability.rates.length){
+                console.log(this.$refs['dep_time'].value = this.trip_availability.rates[0].departure_time)
+            }
         },
         data(){
             return {
                 trip_availability: this.trip_availability_data,
                 rates: this.rates_data,
-                destinations: this.destinations_data
+                otherOrigins: [],
+                destinations: this.destinations_data,
+                origins: this.origins_data
             }
         },
         /**
@@ -173,6 +188,15 @@
                     });
                 }
             })
+        },
+        watch: {
+            'trip_availability.origin.destination_from': function(newV){
+                if(newV != ""){
+                    this.destinations = this.destinations_data.filter(d => {
+                        return (d.id != newV)
+                    })
+                }
+            }
         }
         
     }

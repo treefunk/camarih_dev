@@ -20,7 +20,7 @@
 
     <!--common script for all pages-->
     <script src="<?=base_url('flatlab')?>/js/common-scripts.js"></script>
-
+    
     
     <script src="<?=base_url()?>/assets/js/app.js"></script>
 

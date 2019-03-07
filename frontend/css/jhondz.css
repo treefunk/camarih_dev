@@ -280,3 +280,12 @@
        padding-left: 1px;
        padding-right: 1px;
    }
+
+   .loading-dual {
+       width:100px;
+       height:100px;
+       background: url('../images/loading-orange.gif');
+       background-position: center; /* Center the image */
+         background-repeat: no-repeat; /* Do not repeat the image */
+        background-size: cover; /* Resize the background image to cover the entire container */
+   }

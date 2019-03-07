@@ -23,7 +23,15 @@
                                               <label for="short_name">Short Name</label>
                                               <input type="text" name="short_name" class="form-control" id="short_name"value="<?=set_value('short_name'); ?>" placeholder="Enter Short Name">
                                           </div>
-
+                                            <div class="form-group">
+                                                <label class="col-sm-2 control-label col-lg-2" for="inputSuccess">Scope</label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" id="inlineCheckbox1" value="1" name="is_origin">Origin
+                                                    </label>
+                                                    <label class="checkbox-inline">
+                                                        <input type="checkbox" id="inlineCheckbox2" value="1" name="is_endpoint">Passenger Drop off
+                                                    </label>
+                                            </div>
                                           <button type="submit" class="btn btn-info">Submit</button>
                                       </form>
         

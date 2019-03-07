@@ -23,7 +23,7 @@
                     <select v-model="rate.destination_id" class="form-control input-lg m-bot15" :name="`rates[${index}][destination_id]`"
                         id="destination">
                         <option value="">Select Destination</option>
-                        <option v-for="(destination,index) in destinations" :key="index" :value="destination.id">{{
+                        <option v-for="(destination,index) in destinations" v-show="(rates_taken.find(r => r.destination_id == destination.id) == undefined)" :key="index" :value="destination.id">{{
                             destination.name }}</option>
                     </select>
                 </div>
@@ -55,6 +55,9 @@
 <script>
     export default {
         props: {
+            rates_taken: {
+                type:Array
+            },
             index: {
                 type: Number
             },
@@ -68,14 +71,14 @@
                     }
                 }
             },
-            destinations_data: {
+            destinations: {
                 type: Array
             },
             rate_length: Number
         },
         data(){
             return {
-                destinations: this.destinations_data 
+
             }
         },
         methods: {
@@ -86,14 +89,23 @@
                 let s=["th","st","nd","rd"],
                     v=n%100;
                 return n+(s[(v-20)%10]||s[v]||s[0]);
-            },
+            }
+        },
+        watch: {
+
+            destinations: function (newV){
+                if(newV.find(d => d.id == this.rate.destination_id) == undefined){
+                    this.rate.destination_id = ""
+                }
+            }
+
         }
     }
 </script>
 
 <style scoped>
 .rate{
-    border: 1px solid rgb(199, 128, 81);
+    /* border: 1px solid rgb(199, 128, 81); */
     padding: 15px 25px;
     margin-bottom: 10px;
 }

@@ -1,7 +1,9 @@
 <footer>
         <div class="cs-container">
-              <aside class="footer_logo">
-                <img src="<?=base_url()?>frontend/images/logo.png">
+              <aside class="footer_logo" style="z-index:99">
+                <a href="<?=base_url()?>" >
+                    <img src="<?=base_url()?>frontend/images/logo.png" >
+                </a>
               </aside>
               <ul class="pad-0 listn footer_list">
               

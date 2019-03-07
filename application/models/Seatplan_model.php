@@ -157,6 +157,7 @@ class Seatplan_model extends CMS_Model
             // var_dump($cart); die();
             foreach($cart as $item)
             {
+                if($item['item_type'] == 'booking_van'){ continue; }
                 $to_add = false;
                 
                 $index = 0;

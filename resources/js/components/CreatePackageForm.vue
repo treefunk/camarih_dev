@@ -202,7 +202,7 @@
 				package: this.package_data,
 				uploaded_images: [],
 				file_list: [],
-				enable_preview: false,
+				enable_preview: true,
 				destinations: this.destinations_data
 			}
 		}

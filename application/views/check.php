@@ -59,61 +59,58 @@
                 </ul>
             </article>
     </div>
+    <?php
+    $book = true;
+    if(count($available_trips) == 1){
+        $book = false;
+        if(!count($available_trips[0])){
+            $errormessage = "No Available trips found";
+            require_once "partials/no_trips_found.php";
+        }
+    }
+
+    if(count($available_trips) == 2 && (!count($available_trips[0]) || !count($available_trips[1]))){
+        $book=false;
+        $when = [];
+        if(!count($available_trips[0])){
+            $when[] = "Departure";
+        }
+        if(!count($available_trips[1])){
+            $when[] = "Return";
+        }
+
+        $not_available = implode(" and ",$when);
+        $errormessage = "No Available trips found for {$not_available}";
+        require_once "partials/no_trips_found.php";
+    }
+    ?>
+
+
     <form action="<?=base_url('availability/book/')?>" method="post">
+    <?php if(count($available_trips[0]) && $book): ?>
     <div class="table-hldr">
-    
-        <table class="table" >
-            <thead>
-                <tr>
-                    <th>Time</th>
-                    <th>Vacancy</th>
-                    <th>Rate</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($available_trips[0] as $trip): ?>
-
-                <tr>
-                    <td><?=$trip->departure_time?></td>
-                    <td><?=$trip->occupied_seats?> / <?=$trip->total_seats?></td>
-                    <td>
-                        <?php if($trip->occupied_seats != $trip->total_seats): ?>
-                        <div class="radio"><label for=""><input type="radio" name="rate[0]" id="optionsRadios1" value="<?=$trip->rate_id?>" style="-webkit-appearance: radio;">PHP
-                                <?=$trip->rate_price?></label></div>
-                        <?php else: ?>
-                        FULL
-                        <?php endif;?>
-                        
-                    </td>
-                </tr>
-
-            <?php endforeach; ?>
-
-            </tbody>
-
-
-        </table>
+    <div class="text-center">
+        <h1>Departure trip</h1>
     </div>
-    <?php if(count($available_trips) == 2): ?>
-    <h1>Return Date</h1>
-    <div class="table-hldr">
         <table class="table" >
             <thead>
                 <tr>
                     <th>Time</th>
+                    <th>Van Name</th>
                     <th>Vacancy</th>
                     <th>Rate</th>
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($available_trips[1] as $trip): ?>
+                <?php $first=null; foreach($available_trips[0] as $trip): ?>
 
                 <tr>
                     <td><?=$trip->departure_time?></td>
+                    <td><?=$trip->van_name?></td>
                     <td><?=$trip->occupied_seats?> / <?=$trip->total_seats?></td>
                     <td>
-                    <?php if($trip->occupied_seats != $trip->total_seats): ?>
-                        <div class="radio"><label for=""><input type="radio" name="rate[1]" id="optionsRadios1" value="<?=$trip->rate_id?>" style="-webkit-appearance: radio;">PHP
+                        <?php if($trip->occupied_seats != $trip->total_seats):  ?>
+                        <div class="radio"><label for="rate_<?=$trip->id?>"><input type="radio" name="rate[0]" id="rate_<?=$trip->id?>" <?=$first!=true ? "checked" : null?> value="<?=$trip->rate_id?>" style="-webkit-appearance: radio;">PHP
                                 <?=$trip->rate_price?></label></div>
                         <?php else: ?>
                         FULL
@@ -122,7 +119,7 @@
                     </td>
                 </tr>
 
-            <?php endforeach; ?>
+            <?php $first=true; endforeach; ?>
 
             </tbody>
 
@@ -130,9 +127,58 @@
         </table>
     </div>
     <?php endif; ?>
-        <div class="text-center">
+    <?php if(count($available_trips) == 2): ?>
+    <?php if(count($available_trips[1]) && $book): ?>
+    <div class="text-center">
+        <h1>Return trip</h1>
+    </div>
+    <div class="table-hldr">
+        <table class="table" >
+            <thead>
+                <tr>
+                    <th>Time</th>
+                    <th>Van Name</th>
+                    <th>Vacancy</th>
+                    <th>Rate</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php $second=null; foreach($available_trips[1] as $trip): ?>
+
+                <tr>
+                    <td><?=$trip->departure_time?></td>
+                    <td><?=$trip->van_name?></td>
+                    <td><?=$trip->occupied_seats?> / <?=$trip->total_seats?></td>
+                    <td>
+                    <?php if($trip->occupied_seats != $trip->total_seats): ?>
+                        <div class="radio"><label for="rate_return_<?=$trip->id?>"><input type="radio" name="rate[1]" id="rate_return_<?=$trip->id?>" <?=$second!=true ? "checked" : null?> value="<?=$trip->rate_id?>" style="-webkit-appearance: radio;">PHP
+                                <?=$trip->rate_price?></label></div>
+                        <?php else: ?>
+                        FULL
+                        <?php endif;?>
+                        
+                    </td>
+                </tr>
+
+            <?php $second=true; endforeach; ?>
+
+            </tbody>
+
+
+        </table>
+    </div>
+    <?php endif; ?>
+    <?php endif; ?>
+
+    <div class="text-center">
+        <?php if($book): ?>
             <button type="submit" class="btn btn-primary">Book Now</button>
-        </div>
+        <?php endif; ?>
+            <a href="<?=base_url()?>">
+                <button class="btn btn-info" type="button">Back</button>
+            </a>
+    </div>
+    
     </form>
     
 </section>

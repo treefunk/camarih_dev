@@ -35,8 +35,8 @@
                     <tbody>
                     <?php foreach($trips as $trip_availability): ?>
                     <tr>
-                        <td><?=$trip_availability->origin->name?></td>
-                        <td><?=$trip_availability->van->name?></td>
+                        <td><?=$trip_availability->origin_name?></td>
+                        <td><?=$trip_availability->van_name?></td>
                         <td><?=format_datetime_string($trip_availability->selling_start,'M j Y')?> - <?=format_datetime_string($trip_availability->selling_end,'M j Y')?></td>
                         <td><?=$trip_availability->created_at?></td>
                         <td>
@@ -46,7 +46,7 @@
                             </a>
 
                             <a data-toggle="modal" href="#deleteTripAvailability"
-                            data-payload='<?=json_encode($trip_availability)?>'>
+                            data-payload='<?=json_encode(['id' =>$trip_availability->id])?>'>
                                 <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i> Delete </button>
                             </a>
                         </td>
@@ -61,4 +61,4 @@
 
 <?php //require_once "modals/add.php"; //Add modal here ?> 
 <?php //require_once "modals/edit.php"; //Edit modal here ?>
-<?php //require_once "modals/delete.php"; //Edit modal here ?>
+<?php require_once "modals/delete.php"; //Edit modal here ?>

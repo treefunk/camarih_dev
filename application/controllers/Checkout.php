@@ -7,12 +7,18 @@ class Checkout extends MY_Controller{
     public function __construct()
     {
         parent::__construct();
+        $this->load->model([
+            'cart_model'
+        ]);
     }
 
     public function index(){
         $paypal = new Paypal;
 
-        $data['paypal_link'] = $paypal->pay();
+        $formatted_cart = $this->cart_model->itemsWithPrices();
+
+
+        $data['paypal_link'] = $paypal->pay($formatted_cart);        
 
         $this->wrapper([
             'view' => 'checkout',
@@ -24,8 +30,8 @@ class Checkout extends MY_Controller{
     public function show($payment_id){
         $paypal = new Paypal;
 
-        $details = $paypal->showPayment($payment_id);
-
+        $details = $paypal->getPaymentDetails($payment_id);
+        var_dump($details->transactions[0]->amount->total);
         var_dump($details); die();
     }
 
@@ -48,7 +54,14 @@ class Checkout extends MY_Controller{
         $paypal = new Paypal();
 
         $paypal->executePayment($data);
+    }
 
+    public function execute()
+    {
+        $paypal = new Paypal();
+
+        $details = $paypal->getPaymentDetails($this->input->get('paymentId'));
+        var_dump($paypal->executePayment($details->transactions[0]));
     }
 
     

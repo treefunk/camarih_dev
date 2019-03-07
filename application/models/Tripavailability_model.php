@@ -10,7 +10,27 @@ class Tripavailability_model extends CMS_Model
 
     public function all()
     {
-        $trips = $this->initRelations_array(parent::all());
+
+        $query = $this->db->from('trip_availability');
+    
+        $query->select('
+        trip_availability.id,
+        trip_availability.selling_start,
+        trip_availability.selling_end,
+        trip_availability.created_at,
+        vans.name as van_name,
+        destinations.name as origin_name
+        ');
+        $query->join('vans','trip_availability.van_id = vans.id');
+        $query->join('destinations', 'trip_availability.destination_from = destinations.id');
+        $query->order_by('origin_name');
+
+        
+
+        $trips = $query->get()->result();
+        // var_dump($trips); die();
+
+        // $trips = $this->initRelations_array(parent::all()); //TODO: convert to join
         
         return $trips;
 
@@ -91,11 +111,11 @@ class Tripavailability_model extends CMS_Model
      */
     public function formatForEdit($trip_availability){
 
-        $rawDate = $trip_availability->departure_date;
+        // $rawDate = $trip_availability->departure_date;
 
         //replace departure_date and format
-        $trip_availability->departure_date = format_datetime_string($rawDate,'m/d/Y'); 
-        $trip_availability->departure_time = format_datetime_string($rawDate,'h:i A');
+        // $trip_availability->departure_date = format_datetime_string($rawDate,'m/d/Y'); 
+        // $trip_availability->departure_time = format_datetime_string($rawDate,'h:i A');
 
         //remove the time labels in selling_start and selling_end
         $trip_availability->selling_start = format_datetime_string($trip_availability->selling_start,'m/d/Y'); 
@@ -177,8 +197,7 @@ class Tripavailability_model extends CMS_Model
                     'trip_availability_id' => $id,
                     'destination_id' => $rate_from_post['destination_id'],
                     'price' => $rate_from_post['price'],
-
-                    'origin_id' => $data['destination_from'], // remove this if flow is changed
+                    // 'origin_id' => $data['destination_from'], // remove this if flow is changed
                     'departure_time' => $departure_time, // remove this if flow is changed
                 ]);
             }

@@ -15,7 +15,7 @@
                             <span class="icon-bar"></span>
                         </button>
                         <div class="nav-log">
-                            <a href="#" class="navbar-brand"><img src="<?=base_url()?>frontend/images/logo.png"></a>
+                            <a href="<?=base_url()?>" class="navbar-brand"><img src="<?=base_url()?>frontend/images/logo.png"></a>
                         </div>
                       
                     </div>
@@ -37,11 +37,11 @@
                         </ul> -->
                       
                         <ul class="nav navbar-nav navbar-right">
-                            <li class="active"><a href="<?=base_url()?>">Home</a></li>
-                            <li><a href="<?=base_url('aboutus')?>">About Us</a></li>
-                            <li><a href="<?=base_url('ourvans')?>">Our Vans</a></li>
-                            <li><a href="<?=base_url('schedule')?>">Trip schedule</a></li>
-                            <li><a href="<?=base_url('packages')?>">Tour packages</a></li>
+                            <li class="<?=isPageActive("")?>"><a href="<?=base_url()?>">Home</a></li>
+                            <li class="<?=isPageActive("aboutus")?>"><a href="<?=base_url('aboutus')?>">About Us</a></li>
+                            <li class="<?=isPageActive("ourvans")?>"><a href="<?=base_url('ourvans')?>">Our Vans</a></li>
+                            <li class="<?=isPageActive("schedule")?>"><a href="<?=base_url('schedule')?>">Trip schedule</a></li>
+                            <li class="<?=isPageActive("packages")?>"><a href="<?=base_url('packages')?>">Tour packages</a></li>
                             <li class="bg-orange"><a href="#">Contact Us</a></li>
                             <li class="acc dropdown">
                               <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account<b class="caret"></b></a>

@@ -16,7 +16,9 @@ import ShoppingCart from './components/ShoppingCart.vue'
 import BookATrip from './components/BookATrip.vue'
 import ScheduleForm from './components/ScheduleForm.vue'
 import VanGallery from './components/VanGallery.vue'
-
+import CreateVanForm from './components/CreateVanForm'
+import CreateVanRateForm from './components/CreateVanRateForm'
+import VanRentForm from './components/VanRentForm'
 
 // Vuex
 import { store } from './stores/store'
@@ -47,7 +49,10 @@ new Vue({
         'shopping-cart': ShoppingCart,
         'book-a-trip' : BookATrip,
         'schedule-form': ScheduleForm,
-        'van-gallery': VanGallery
+        'van-gallery': VanGallery,
+        'create-van-form': CreateVanForm,
+        'create-van-rate-form': CreateVanRateForm,
+        'van-rent-form': VanRentForm
     }   
 })
 

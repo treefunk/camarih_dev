@@ -25,8 +25,15 @@ class Admin_model extends CI_Model
 
     public function createAdmin($data)
     {
-        $data['password'] = password_hash($data['password'],PASSWORD_BCRYPT);
-        return $this->db->insert('admins', $data);
+        $exists = $this->db->get_where('admins',
+        [
+            'username' => $data['username']
+        ])->num_rows();
+        if(!$exists){
+            $data['password'] = password_hash($data['password'],PASSWORD_BCRYPT);
+            return $this->db->insert('admins', $data);
+        }
+        return false;
     }
 
     public function findById($id)
@@ -37,6 +44,8 @@ class Admin_model extends CI_Model
     public function updateAdmin($id,$data)
     {
         $admin = $this->findById($id);
+
+
         $changes = 0;
 
         foreach(array_keys($data) as $key){
@@ -47,14 +56,13 @@ class Admin_model extends CI_Model
                     return -1;
                 }
                 $data['password'] = password_hash($data['password'],PASSWORD_BCRYPT);
-            }else{
-                continue;
             }
 
             if($key == 'confirm_password')
             {
                 continue;
             }
+
             if($admin->{$key} != $data[$key])
             {
                 $this->db->set($key,$data[$key]);

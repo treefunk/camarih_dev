@@ -109,16 +109,20 @@ class Admin_Controller extends CI_Controller {
     {
         $post = $this->input->post();
         
-        if($this->admin_model->createAdmin($post)){
-
+        if(!$this->admin_model->createAdmin($post)){
+            $alert = [
+                "type" => 'danger',
+                "message" => "Username already exists."
+            ];
+            $this->session->set_flashdata('alert', $alert);
         }
-
         return redirect(base_url('admin/'));
     }
 
     public function editAdmin($id)
     {
         $post = $this->input->post();
+
         if($changes = $this->admin_model->updateAdmin($id,$post))
         {
             $alert = [
@@ -141,8 +145,19 @@ class Admin_Controller extends CI_Controller {
 
     public function deleteAdmin($id)
     {
+        $logout = false;
+
+        if($this->session->userdata('admin_id') == $id){
+            $logout = true;
+        }
+
+
         if($this->admin_model->deleteAdmin($id))
         {
+            if($logout){
+                $this->session->sess_destroy();
+                return redirect(base_url('admin'));
+            }
             $alert = [
                 "type" => 'success',
                 "message" => "Admin Successfully Deleted."

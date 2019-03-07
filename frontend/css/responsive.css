@@ -26,8 +26,8 @@
 
 
 	/*************START of  selected package*************/
-	.packages-selected .sec-1 .hero h3 { font-size: 50px!important;}
-	.packages-selected .sec-1 .hero p { font-size: 25px!important;}
+	.packages-selected .sec-1 .hero h3, .cart .sec-1 .hero h3 { font-size: 50px!important;}
+	.packages-selected .sec-1 .hero p, .cart .sec-1 .hero p { font-size: 25px!important;}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:first-child h4 { font-size: 30px!important}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:first-child h4 span { font-size: 20px!important;}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(2) span { font-size: 30px!important; margin-top: 10px!important;}
@@ -68,7 +68,7 @@
 	.book-trip > ul > li:last-child > div { padding: 30px 15px!important;}
 	.book-trip > ul > li:first-child > div h4 { font-size: 25px!important;}
 	.home .sec-2 .pckage_wrap { max-width: 1043px!important; padding: 0px 15px!important; padding-left: 50px!important;}
-	.packages-selected .sec-2 .itemhldr { max-width: 1043px!important; padding: 0px 15px!important;}
+	.packages-selected .sec-2 .itemhldr, .container-cs { max-width: 1043px!important; padding: 0px 15px!important;}
 	.packages-selected .sec-3 .item-hldr { max-width: 1043px!important; padding: 0px 15px!important;}
 	.vans .sec-2 .itm-hldr { max-width: 1245px!important;  padding-left: 140px!important;  }
 	.vans .sec-2 { padding: 190px 30px 100px!important;}
@@ -182,7 +182,7 @@
     .packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:first-child { width: 35%!important;}
     .packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(2) { width: 65%!important;}
     .packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(3) { width: 65%!important}
-    .packages-selected .sec-1 .hero { top: 100px!important;}
+    .packages-selected .sec-1 .hero, .cart .sec-1 .hero { top: 100px!important;}
     .packages-selected .sec-3 .item-hldr .slct-pckge .item article h4 { font-size: 20px!important;}
     
     /*************End  of  selected package*************/
@@ -211,6 +211,13 @@
 	.book .sec-2 { padding: 40px 15px!important; min-height: 1000px!important;}
 	.book .sec-2 .parent > li:first-child, .book .sec-2 .parent > li:nth-child(2) { width: 100%!important;}
 	.book .sec-2 .parent > li:first-child .item {     max-width: 250px; margin: 0 auto; margin-bottom: 25px;}
+
+
+	.cart .sec-2 .main-hldr .booking-part { width: 100%!important; padding-right: 0px!important;}
+	.cart .sec-2 .main-hldr .checkout .white-bg{ display: none!important;}
+
+	.cart .sec-2 .main-hldr .checkout { width: 100%!important; margin-top: 35px!important; padding: 30px 0px!important;}
+	.cart .sec-2 .main-hldr .checkout h4 {font-size: 30px!important;text-align: center; padding-left: 0px!important;}
 }
 
 
@@ -268,8 +275,8 @@
 
 
 	/*************START of  selected package*************/
-	.packages-selected .sec-1 .hero h3 { font-size: 40px!important}
-	.packages-selected .sec-1 .hero p { font-size: 20px!important;}
+	.packages-selected .sec-1 .hero h3, .cart .sec-1 .hero h3 { font-size: 40px!important}
+	.packages-selected .sec-1 .hero p, .cart .sec-1 .hero p { font-size: 20px!important;}
 	.packages-selected .sec-2 { padding: 40px 15px!important;}
 	 .packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(3) > ul > li { padding: 10px 15px!important;}
     .packages-selected .sec-2 .itemhldr > div.btm_sec > ul { padding-bottom: 55px!important;}
@@ -422,7 +429,7 @@
 
 
 	/*************START of  selected package*************/
-	.packages-selected .sec-1 .hero h3 { font-size: 35px!important}
+	.packages-selected .sec-1 .hero h3, .cart .sec-1 .hero h3 { font-size: 35px!important}
 	.packages-selected .sec-2 .itemhldr > article.dvider > aside { position: relative!important; width: 100%!important; height: 300px!important;}
 	.packages-selected .sec-2 .itemhldr > article.dvider > article { padding-left: 0px!important;}
 	.packages-selected .sec-2::after { display: none!important;}
@@ -431,9 +438,9 @@
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(3) > ul > li { width: 100%!important;}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(3) { position: relative!important; bottom: 0px!important;}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul { padding-bottom: 0px!important;}
-	.packages-selected .sec-1 { height: 135px!important;}
+	.packages-selected .sec-1, .cart .sec-1 { height: 135px!important;}
 	.packages-selected .sec-3 .item-hldr h3 { font-size: 30px!important; margin-bottom: 25px!important;} 
-	.packages-selected .sec-1 .hero { top: 45px!important; width: 100%;}
+	.packages-selected .sec-1 .hero, .cart .sec-1 .hero { top: 45px!important; width: 100%;}
 
 	/*************End of  selected package*************/
 
@@ -489,6 +496,30 @@
 
 }
 
+
+@media only screen and (max-width: 550px){
+	.cart .sec-2 .main-hldr .booking-part .booking-card .body::after { display: none!important;}
+	.cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent .children { width: 100%!important;}
+	.cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent .children:last-of-type { padding-left: 20px!important;}
+	.cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li { padding-bottom: 10px!important; border-bottom: 2px solid #f0f0f0;}
+	.cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li:nth-last-child(2) { border-bottom: 0px!important; padding-bottom: 0px!important;}
+	.cart .sec-2 .main-hldr .booking-part .booking-card .top .left{ width: 100%!important; float: none!important; }
+	.cart .sec-2 .main-hldr .booking-part .booking-card .top .right { float: none!important; position: absolute; width: 100%!important;  right: 0; top: 0;}
+	.cart .sec-2 .main-hldr .booking-part .booking-card .top .right .icon-hldr { text-align: right!important;}
+
+	.cart .sec-2 .main-hldr .checkout .checkout a { width: 90%!important; display: block!important; margin: 0 auto;}
+	.cart .sec-2 .main-hldr .checkout .main-list li .parent .children { width: 100%!important; }
+	.cart .sec-2 .main-hldr .checkout .main-list li .parent .children:first-of-type { padding-right: 0px!important;}
+	.cart .sec-2 .main-hldr .checkout .main-list li .parent .children:last-of-type { padding-left: 0px!important; text-align: left!important}
+	.cart .sec-2 .main-hldr .checkout .btm-hldr .parent .children { width: 100%!important; padding-left: 0px!important; padding-right: 0px!important;}
+	.cart .sec-2 .main-hldr .checkout .btm-hldr .parent .children:last-of-type { text-align: left!important;}
+	.cart .sec-2 .main-hldr .checkout .main-list li .parent {     padding-bottom: 10px;  border-bottom: 2px solid #f0f0f0;}
+	.cart .sec-2 .main-hldr .checkout .main-list li .parent:last-of-type { padding-bottom: 0px!important; border-bottom: 0px!important;}
+
+}
+
+
+
 @media only screen and (max-width: 450px){
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(2) span { position: absolute; top: 0; right: 15px;}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(2) h5 { margin-top: 0px!important;}
@@ -518,6 +549,9 @@
 	.nav-log { max-width: 95px!important; height: 70px!important;}
 	.top-list { top: 5px!important;}
 	.navbar-toggle { margin-top: 25px!important;}
+
+	.cart .sec-2 .main-hldr .booking-part .booking-card .top .left { margin-top: 48px!important;}
+
 
 }
 

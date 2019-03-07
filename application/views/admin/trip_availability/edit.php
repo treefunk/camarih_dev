@@ -16,9 +16,10 @@
                                         <?php //base_url/resources/js/components/TripAvailabilityForm.vue ?>
                                         <trip-availability-form
                                         :vans='<?=json_encode($vans)?>'
-                                        :destinations='<?=json_encode($destinations)?>'
+                                        :destinations_data='<?=json_encode($destinations)?>'
+                                        :origins_data='<?=json_encode($origins)?>'
                                         post_url='<?=base_url("trip_availability/update/{$trip_availability->id}")?>'
-                                        :tripavailability='<?=json_encode($trip_availability)?>'
+                                        :trip_availability_data='<?=json_encode($trip_availability)?>'
                                         />
                             </div>
 

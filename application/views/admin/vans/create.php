@@ -12,47 +12,9 @@
                   <div class="row">
                       <div class="col-md-12">
                           
-                          <div class="panel-body">
-                                      <form role="form" action="<?=base_url('vans/store')?>" method="POST" enctype="multipart/form-data">
-                                          
-                                          <div class="form-group">
-                                              <label for="header">Name</label>
-                                              <input type="text" name="name" class="form-control" id="header" value="<?=set_value('name'); ?>" placeholder="Enter Van Name">
-                                          </div>
-                                          <div class="form-group">
-                                          <label for="header">Description</label>
-                                          <textarea name="description" id="description" class="form-control" rows="3"><?=set_value('description')?></textarea>
-                                          </div>
-
-
-                                          <div class="form-group">
-                                              <label for="header">One-way trip Rate</label>
-                                              <input type="text" name="oneway_rate" class="form-control" id="oneway_rate" value="<?=set_value('oneway_rate'); ?>">
-                                          </div>
-                                          <div class="form-group">
-                                              <label for="header">Roundtrip Rate</label>
-                                              <input type="text" name="roundtrip_rate" class="form-control" id="roundtrip_rate" value="<?=set_value('roundtrip_rate'); ?>">
-                                          </div>
-      
-                                          <div class="form-group">
-                                            <van-seat-map
-                                            
-                                            ></van-seat-map>
-                                          </div>
-
-                                          <div class="form-group">
-                                            <van-gallery>
-                                                
-                                            </van-gallery>
-                                          </div>
-                                          
-
-
-                                          <button type="submit" class="btn_orange right_btn">Submit</button>
-
-                                      </form>
-        
-                            </div>
+                          <create-van-form
+                          create_van_url=<?=base_url('vans/store')?>
+                          />
 
                       </div>
                   </div>

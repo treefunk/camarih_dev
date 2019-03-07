@@ -13,7 +13,7 @@
                 <form method="POST" action="<?=base_url('testimonials/delete/')?>" role="form">
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-                    <button class="btn btn-danger" type="submit">DELETE</button>
+                    <button class="btn btn-danger" type="submit">Delete</button>
                 </div>
                 </form>
         </div>

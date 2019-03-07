@@ -35,11 +35,12 @@
 </section>
 
 
-<form action="<?=base_url()?>availability/check" method="POST">
+
   <book-a-trip
+  url='<?=base_url('availability/check')?>'
   :destinations='<?=json_encode($destinations)?>'
   > </book-a-trip>
-</form>
+
 
 <section class="sec-2">
     <article class="pckage_wrap clearfix">
@@ -87,6 +88,7 @@
     </article>
 </section>
 
+<?php if(count($testimonials)) : ?>
 <section class="sec-3">
     <div class="owl-carousel owl-theme testi-carou">
 
@@ -110,10 +112,11 @@
                       </article>
                     </div>      
       <?php endforeach; ?>
+      
 
     </div>
 </section>
-
+<?php endif; ?>
 
 
 </div>

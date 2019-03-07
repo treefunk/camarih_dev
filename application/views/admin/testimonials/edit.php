@@ -15,7 +15,7 @@
                           <div class="panel-body">
                                       <form role="form" action="<?=base_url('testimonials/update/').$testimonial->id?>" method="POST" enctype="multipart/form-data">
                                           
-                                        <img src="<?=base_url('/uploads/testimonials/').$testimonial->id.'_'.$testimonial->image_name?>" class="img-responsive" alt="Image">
+                                        <img src="<?=base_url('/uploads/testimonials/').$testimonial->id.'_'.urlencode($testimonial->image_name)?>" class="img-responsive" alt="Image">
                                             <div class="form-group">
                                               <label for="image_name">Image</label>
                                               <input name="image_name" type="file" id="image_name" value="<?=$testimonial->image_name?>" >

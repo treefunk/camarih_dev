@@ -1,7 +1,6 @@
 <div class="check">
     
     <section class="sec-1">
-        <article class="hero"><h3>About Us</h3></article>
         <div class="overlay">
             
         </div>
@@ -13,8 +12,8 @@
 
 <h1><?=$about->header?></h1>
 
-<div class="text">
-    <span class="white-text">
+<div class="text" >
+    <span class="white-text" style="line-height:2">
         <?=$about->body?>
     </span>
 

@@ -18,7 +18,8 @@ class Availability extends MY_Controller {
             'package_model',
             'van_model',
             'reservation_model',
-            'bookinginformation_model'
+            'bookinginformation_model',
+            'vanrent_model'
         ]);
 
     }
@@ -98,9 +99,9 @@ class Availability extends MY_Controller {
 
                     // get occupied and pending seats
                     $occupied = count(array_unique($this->seatplan_model->getOccupiedSeatsByRate($rate,$dates[$index])));
-                    $pending = count($this->seatplan_model->getPendingSeatsByRateAndDate($rate,$dates[$index]));
+                    $pending = count(array_unique($this->seatplan_model->getPendingSeatsByRateAndDate($rate,$dates[$index])));
                     $trip->pending = $this->seatplan_model->getPendingSeatsByRateAndDate($rate,$dates[$index]);
-                    $trip->occupied = $this->seatplan_model->getOccupiedSeatsByRate($rate,$dates[$index]);
+                    $trip->occupied = array_unique($this->seatplan_model->getOccupiedSeatsByRate($rate,$dates[$index]));
 
                     $trip->total_seats = $this->van_model->getTotalSeats($van);
                     $trip->departure_time = $rate->departure_time;
@@ -109,6 +110,7 @@ class Availability extends MY_Controller {
                 $index++;
             }
             
+        // var_dump($data['available_trips']); die();
 
         
         $this->wrapper([
@@ -277,8 +279,11 @@ class Availability extends MY_Controller {
         // die();
 
         foreach($post['selected'] as $selected){
-            $_SESSION['selected_seats'][] = $selected['selected'];
+            $new_seats = [];
+            foreach($selected['selected'] as $s){ $new_seats[] = $s; }
+            $_SESSION['selected_seats'][] = $new_seats;
             $_SESSION['booking_information'][] = $selected['booking_information'];
+           
         }
 
         $onewaytrip = count($this->session->userdata('selected_seats')) == 1;
@@ -313,12 +318,13 @@ class Availability extends MY_Controller {
     public function add_to_cart()
     {
         $data = $this->checkDataSess(6);
-
  
         if(!$this->session->has_userdata('cart')){
             $this->session->set_userdata('cart',[]);
         }
 
+        $data['booking_num'] = uniqid();
+        $data['item_type'] = 'booking_trip';
         $_SESSION['cart'][] = $data;
         
         $this->cart_model->clearCurrentCartSession();
@@ -328,18 +334,8 @@ class Availability extends MY_Controller {
 
     public function process_cart(){
         $post = $this->input->post();
-
-        //todo ---------------------sanitize input
         
-        // $reservation_data = [
-        //     'full_name' => $post['full_name'],
-        //     'email' => $post['email'],
-        //     'phone' => $post['phone'],
-        //     'pickup_location' => $post['pickup_location'],
-        //     'drop_location' => $post['drop_location'],
-        //     'active' => 1,
-        //     'status' => 'pending'
-        // ];
+        $checked_items = $post['booking_num'];
 
         $reservation_data = [
             'active' => 1,
@@ -349,15 +345,41 @@ class Availability extends MY_Controller {
         $this->db->trans_begin();
         if($cart = $this->session->userdata('cart')){
             $id = $this->reservation_model->add($reservation_data);
-            
-            foreach($cart as $item)
-            {
-                $item['reservation_id'] = $id;
-                for($x = 0; $x < count($item['selected']) ; $x++){
-                    $this->process_booking($item,$x); // todo run transaction here, if one query fails remove that item
-                }
-            }
 
+            $cart_count = count($cart);
+            foreach($cart as $index => $item)
+            {
+                if(!in_array($item['booking_num'],$checked_items)){
+                    continue;
+                }
+
+                $item['reservation_id'] = $id;
+
+                if($item['item_type'] == 'booking_trip'){ //booking trip
+
+                    for($x = 0; $x < count($item['selected']) ; $x++){
+                        $this->process_booking($item,$x);
+                    }
+
+                }elseif($item['item_type'] == 'booking_van'){ //booking van
+
+                    $data = [
+                        'reservation_id' => $item['reservation_id'],
+                        'van_id' => $item['van']->id,
+                        'departure_date' => $item['departure_date'],
+                        'trip_type' => $item['trip_type'],
+                        'origin_id' => $item['origin']->id,
+                        'destination_id' => $item['destination']->id,
+                        'price' => $item['price']
+                    ];
+
+                    $this->vanrent_model->add($data);
+                }
+                
+                array_splice($_SESSION['cart'], ($index - ($cart_count - count($_SESSION['cart']))),1);
+
+
+            }
             $this->db->trans_complete();
 
 
@@ -366,7 +388,9 @@ class Availability extends MY_Controller {
         }
 
         //clear current cart
-        unset($_SESSION['cart']);
+        // unset($_SESSION['cart']);
+
+        return redirect(base_url());
     }
 
 
@@ -391,7 +415,6 @@ class Availability extends MY_Controller {
 
         
         if($paid){
-           
             // Add Reservation
          
             $cart = [
@@ -414,7 +437,6 @@ class Availability extends MY_Controller {
 
                     $this->seatplan_model->add($seat_plan);
                 }
-
                 $bookinginfo = $data['booking_information'][$offset];
                 $bookinginfo['cart_id'] = $id;
                 $this->bookinginformation_model->add($bookinginfo);
@@ -453,6 +475,7 @@ class Availability extends MY_Controller {
             if($this->session->has_userdata('selected_seats')){ // seatplan
                 $data['selected_seats'] = $this->session->userdata('selected_seats');
                 $data['booking_information'] = $this->session->userdata('booking_information');
+                $data['type'] = 'booking_trip';
             }else{
                 return redirect(base_url("availability/book/{$data['selected']['rate_id']}"));
             }
@@ -489,7 +512,8 @@ class Availability extends MY_Controller {
             'destination' => $this->destination_model->findById($post_data['destination_to']),
             'rate_id' => $rate->id,
             'rate_price' => $rate->price,
-            'trip_availability_id' => $rate->trip_availability_id
+            'trip_availability_id' => $rate->trip_availability_id,
+            'departure_time' => $rate->departure_time
         ];
 
         if(isset($post_data['departure_to'])){
@@ -559,5 +583,9 @@ class Availability extends MY_Controller {
     public function viewCartSess(){
         var_dump($this->session->userdata('cart'));
         die();
+    }
+
+    public function generateCart(){
+        $this->cart_model->itemsWithPrices();
     }
 }

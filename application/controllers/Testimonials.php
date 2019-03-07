@@ -59,7 +59,7 @@ class Testimonials extends Admin_Controller {
         $id = $this->testimonial_model->add($post);
         
         $filename = $this->testimonial_model->handleUpload('image_name',$id,'./uploads/testimonials/');
-
+        
         if(is_array($filename))
         {
             $this->testimonial_model->delete($id);
@@ -79,7 +79,6 @@ class Testimonials extends Admin_Controller {
                 return;    
             }
         }else{
-
             $this->testimonial_model->update($id,['image_name' => $filename]);
             $this->db->trans_complete();
             $alert = [

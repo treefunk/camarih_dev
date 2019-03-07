@@ -12,7 +12,7 @@
                             <div class="form-group"><label for="header">Header</label> <input type="text" name="header" id="header"
                                     value="<?=$about->header?>" class="form-control"></div>
                             <div class="form-group"><label for="header">Description</label> <textarea name="body"
-                                    id="description" rows="3" class="form-control"><?=$about->body?></textarea></div>
+                                    id="description" rows="30" class="form-control" style="height:inherit"><?=$about->body?></textarea></div>
                            <button type="submit" class="btn_orange right_btn">Submit</button>
                         </form>
                     </div>

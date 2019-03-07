@@ -10,7 +10,8 @@ class Cart extends MY_Controller{
     {
         $data['cart'] = $this->session->has_userdata('cart') ? $this->session->userdata('cart') : [];
         $this->wrapper([
-            'data' => $data, 
+            'data' => $data,
+            
             'view' => 'cart'
         ]);
     }

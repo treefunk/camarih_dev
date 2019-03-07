@@ -36,18 +36,23 @@
                     <?php foreach($vans as $van): ?>
                     <tr>
                         <td><?=$van->name?></td>
-                        <td><?=$van->description?></td>
+                        <td style="max-width: 350px"><?=shortVer($van->description,200)?></td>
                         <td><?=$van->seat_map?></td>
                         <td><?=$van->created_at?></td>
                         <td>
                             <a href="<?=base_url('vans/edit/').$van->id?>">
                                 <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i> Edit </button>
                             </a>
+                            
+                            <a href="<?=base_url("vans/rates/{$van->id}")?>">
+                                <button class="btn btn-warning btn-s"><i class="fa fa-road"></i>Rates</button>                                
+                            </a>
 
                             <a data-toggle="modal" href="#deleteVan"
                             data-payload='<?=json_encode($van)?>'>
                                 <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i> Delete </button>
                             </a>
+
                         </td>
                     </tr>
                     <?php endforeach; ?>
