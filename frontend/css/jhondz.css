@@ -44,7 +44,7 @@
        width: 100%;
        height: 40px;
        background: #ccc;
-       margin: 26px 3px !important;
+       /* margin: 26px 3px !important; */
        text-align: center;
        border-radius: 1px;
        border-top-right-radius: 16px;
@@ -54,12 +54,13 @@
        -webkit-user-select: none;
        transform-style: preserve-3d;
        cursor: pointer;
+       display: block;
    }
 
    .outline .seat-after {
        width: 100%;
        height: 8px;
-       margin: -24px 3px 0 3px !important;
+       /* margin: -24px 3px 0 3px !important; */
        border-radius: 5px;
        border-top-right-radius: 3px;
        border-top-left-radius: 3px;
@@ -128,13 +129,14 @@
    }
 
    .outline .col-fixed-md {
-       position: relative;
-       width: 26.5%;
-       display: inline-block;
+       /*position: relative;
+       width: 50%;
+       display: inline-block;*/
+       padding-right: 20px;
    }
 
    .row {
-       margin-bottom: 20px;
+       /* margin-bottom: 20px; */
    }
 
    .outline .seat-spacing-sm {

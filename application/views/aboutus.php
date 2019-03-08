@@ -1,4 +1,4 @@
-<div class="check">
+<div class="check about-us">
     
     <section class="sec-1">
         <div class="overlay">
@@ -8,16 +8,16 @@
     </section>
 
 <section class="sec-2">
-<div class="text-center">
+	<div class="abt-hldr">
+		<h3><?=$about->header?></h3>
+		<p><?=$about->body?></p>
+	</div>
 
-<h1><?=$about->header?></h1>
 
-<div class="text" >
-    <span class="white-text" style="line-height:2">
-        <?=$about->body?>
-    </span>
 
-</div>
+
+
+
 
 </div>
 </section>

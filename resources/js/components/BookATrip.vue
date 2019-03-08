@@ -20,24 +20,28 @@
             <li>
             <div>
                 <ul class="pad-0 listn">
-                <li>
-                    <h5>From</h5>
-                    <select name="destination_from" v-model="destination_from">
-                    <option value="">Select Origin</option>
-                        <option v-for="(destination,index) in destinations" :key="index" v-show="destination_to != destination.id" :value="`${destination.id}`">{{ destination.name }}</option>
-                    </select>
-                    <h4 v-if="triptype == 'roundtrip'">Departing on</h4>
-                    <input name="departure_from" type="date" :min="date_today" @input="from = $event.target.value">
-                </li>
-                <li >
-                    <h5>To</h5>
-                    <select name="destination_to" v-model="destination_to">
-                    <option value="" >Select Destination</option>
-                        <option v-for="(destination,index) in destinations" v-show="destination_from != destination.id" :key="index" :value="`${destination.id}`">{{ destination.name }}</option>
-                    </select>
-                    <h4 v-if="triptype == 'roundtrip'">Returning on</h4>
-                    <input name="departure_to" type="date" ref="to" :min="from" @input="to = $event.target.value" v-if="this.triptype =='roundtrip'">
-                </li>
+                    <li>
+                        <h5>From</h5>
+                        <select name="destination_from" v-model="destination_from">
+                        <option value="">Select Origin</option>
+                            <option v-for="(destination,index) in destinations" :key="index" v-show="destination_to != destination.id" :value="`${destination.id}`">{{ destination.name }}</option>
+                        </select>
+                    </li>
+                    <li >
+                        <h5>To</h5>
+                        <select name="destination_to" v-model="destination_to">
+                        <option value="" >Select Destination</option>
+                            <option v-for="(destination,index) in destinations" v-show="destination_from != destination.id" :key="index" :value="`${destination.id}`">{{ destination.name }}</option>
+                        </select>
+                    </li>
+                    <li>
+                        <h5>Departing on</h5>
+                        <input name="departure_from" type="date" :min="date_today" @input="from = $event.target.value">
+                    </li>
+                    <li>
+                        <h5 v-if="triptype == 'roundtrip'">Returning on</h5>
+                        <input name="departure_to" type="date" ref="to" :min="from" @input="to = $event.target.value" v-if="this.triptype =='roundtrip'">
+                    </li>
                 </ul>
             </div>
             </li>

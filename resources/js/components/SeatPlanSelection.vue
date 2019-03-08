@@ -8,24 +8,31 @@
                 }]">
                     
                     <!-- driver -->
-                    <div class="col-fixed-md" v-if="index == 0">
-                        <input class="occupied" disabled id="driverseat" name="seat" type="checkbox"> 
-                        <label for="driverseat">
-                        <div class="seat z-depth-soft"> <span class="idx"> Driver </span> </div>
-                        <div class="seat-after z-depth-1"> </div>
-                        </label>
-                    </div>
+                    <div :class="['parent',{'ch3': (row.length  + (index == 0 ? 1 : 0)) == 3, 'ch4': row.length == 4}]">
+                        <div class="children" v-if="index == 0">
+                            <div class="col-fixed-md" >
+                                <input class="occupied" disabled id="driverseat" name="seat" type="checkbox"> 
+                                <label for="driverseat">
+                                <div class="seat z-depth-soft"> <span class="idx"> Driver </span> </div>
+                                <div class="seat-after z-depth-1"> </div>
+                                </label>
+                            </div>
+                        </div>
+                        
 
-                    <!-- seat input -->
-                    <div v-for="(seat,i) in row" :key="i"
-                    :style="`display:inline-block; width:calc(100% / ${index == 0 ? row.length + 1 : row.length});`"
-                    >
-                        <input 
-                        v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
-                        <label :for="`seat-${seat.seatnum}`">
-                        <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum }}</span> </div>
-                        <div class="seat-after z-depth-1"> </div>
-                        </label>
+                        <!-- seat input -->
+                        <div class="children" v-for="(seat,i) in row" :key="i">
+                            <!-- <div v-for="(seat,i) in row" :key="i" :style="`display:inline-block; width:calc(100% / ${index == 0 ? row.length + 1 : row.length});`"> -->
+
+
+
+                                <input 
+                            v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
+                                <label :for="`seat-${seat.seatnum}`">
+                                    <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum }}</span> </div>
+                                    <div class="seat-after z-depth-1"> </div>
+                                </label>
+                        </div>
                     </div>                  
                 </div>
                 

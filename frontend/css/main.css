@@ -125,7 +125,7 @@ input, select, textarea, button {
 .pad-0 {
   padding: 0px; }
 
-.flex, .cart .sec-2 .main-hldr, .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent, .cart .sec-2 .main-hldr .checkout .main-list li .parent, .cart .sec-2 .main-hldr .checkout .btm-hldr .parent {
+.flex, .book-trip > ul > li:first-child > div, .book-trip > ul > li:nth-child(2) > div > ul, .book-trip > ul > li:last-child > div, .cart .sec-2 .main-hldr, .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent, .cart .sec-2 .main-hldr .checkout .main-list li .parent, .cart .sec-2 .main-hldr .checkout .btm-hldr .parent, .van-hldr .parent.ch3 {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -357,27 +357,27 @@ input, select, textarea, button {
         .home .sec-2 .pckage_wrap > article > div > ul li h3 {
           font-family: "Circular Std Book", Arial, sans-serif;
           color: #000;
-          font-size: 50px;
-          margin-bottom: 30px;
-          padding-bottom: 30px;
+          font-size: 40px;
+          margin-bottom: 20px;
+          padding-bottom: 15px;
           position: relative; }
         .home .sec-2 .pckage_wrap > article > div > ul li h3::after {
           content: '';
           position: absolute;
           bottom: 0px;
           width: 148px;
-          height: 12px;
+          height: 6px;
           background: #429e47;
           left: 0; }
         .home .sec-2 .pckage_wrap > article > div > ul li h5 {
           font-family: "Circular Std Medium", Arial, sans-serif;
-          font-size: 30px;
+          font-size: 25px;
           color: #000;
           text-transform: capitalize;
           margin-bottom: 15px; }
         .home .sec-2 .pckage_wrap > article > div > ul li > h4 {
           font-family: "Circular Std Black", Arial, sans-serif;
-          font-size: 40px;
+          font-size: 35px;
           color: #000;
           font-style: italic; }
           .home .sec-2 .pckage_wrap > article > div > ul li > h4 span {
@@ -559,7 +559,9 @@ input, select, textarea, button {
       background: #429e47; }
       .book-trip > ul > li:first-child > div {
         padding: 30px;
-        text-align: center; }
+        text-align: center;
+        height: 100%;
+        align-items: center; }
         .book-trip > ul > li:first-child > div h4 {
           font-family: "Circular Std Black", Arial, sans-serif;
           font-size: 30px;
@@ -571,10 +573,9 @@ input, select, textarea, button {
       .book-trip > ul > li:nth-child(2) > div {
         padding: 15px 15px; }
         .book-trip > ul > li:nth-child(2) > div > ul > li {
-          width: 49.5%;
-          display: inline-block;
+          width: 50%;
           position: relative;
-          padding-left: 55px; }
+          padding-left: 0px; }
           .book-trip > ul > li:nth-child(2) > div > ul > li select {
             width: 100%;
             border: 1px solid #ccc;
@@ -591,18 +592,19 @@ input, select, textarea, button {
             color: #222f46;
             font-family: "Circular Std Book", Arial, sans-serif;
             font-weight: bold;
-            text-transform: uppercase;
-            position: absolute;
-            left: 5px;
-            top: 12px; }
-        .book-trip > ul > li:nth-child(2) > div > ul li:nth-child(2) h5 {
-          left: 15px; }
+            text-transform: uppercase; }
+        .book-trip > ul > li:nth-child(2) > div > ul > li:nth-child(odd) {
+          padding-right: 15px; }
+        .book-trip > ul > li:nth-child(2) > div > ul > li:nth-child(even) {
+          padding-left: 15px; }
     .book-trip > ul > li:last-child {
       width: 18.88%;
       background: #f68000;
       text-align: center; }
       .book-trip > ul > li:last-child > div {
-        padding: 33px; }
+        padding: 33px;
+        height: 100%;
+        align-items: center; }
         .book-trip > ul > li:last-child > div h5 {
           color: #fff;
           font-family: "Circular Std Black", Arial, sans-serif;
@@ -846,7 +848,7 @@ input, select, textarea, button {
       text-align: center;
       font-family: "Circular Std Black", Arial, sans-serif;
       color: #fff;
-      font-size: 48px;
+      font-size: 40px;
       color: #222f46;
       margin-bottom: 40px; }
     .packages-selected .sec-3 .item-hldr .slct-pckge .item aside {
@@ -863,7 +865,6 @@ input, select, textarea, button {
         font-size: 24px;
         margin-top: 15px; }
     .packages-selected .sec-3 .item-hldr .slct-pckge .owl-nav {
-      display: block;
       position: absolute;
       top: 30%;
       width: 100%; }
@@ -965,7 +966,11 @@ input, select, textarea, button {
     .vans .sec-2 .cars .item aside {
       max-width: 71.82%;
       width: 100%;
-      position: relative; }
+      position: relative;
+      height: 650px; }
+      .vans .sec-2 .cars .item aside img {
+        height: 100%;
+        object-fit: cover; }
     .vans .sec-2 .cars .item article {
       padding: 0px 20px;
       margin-top: 25px; }
@@ -1020,24 +1025,25 @@ input, select, textarea, button {
       background: #fff;
       position: relative;
       z-index: 3;
-      padding: 50px 30px;
+      padding: 30px;
       /* float: right; */
       margin-top: -150px;
       box-shadow: 0px -3px 15px #d8d8d8; }
       .vans .sec-2 .right_item .details h4 {
         font-family: "Circular Std Black", Arial, sans-serif;
         color: #000;
-        font-size: 48px; }
+        font-size: 35px; }
       .vans .sec-2 .right_item .details p {
         font-family: "Circular Std Book", Arial, sans-serif;
-        font-size: 36px;
-        color: #000; }
+        font-size: 30px;
+        color: #000;
+        line-height: 30px; }
       .vans .sec-2 .right_item .details > ul {
         position: relative;
-        padding-top: 30px;
-        margin-top: 30px; }
+        padding-top: 20px;
+        margin-top: 20px; }
         .vans .sec-2 .right_item .details > ul > li h6 {
-          font-size: 30px;
+          font-size: 20px;
           color: #000;
           font-family: "Circular Std Book", Arial, sans-serif;
           margin-bottom: 10px; }
@@ -1059,7 +1065,7 @@ input, select, textarea, button {
           height: 27px;
           margin-right: 10px; }
         .vans .sec-2 .right_item .details > ul > li label {
-          font-size: 30px;
+          font-size: 20px;
           font-family: "Circular Std Book", Arial, sans-serif;
           font-weight: normal; }
         .vans .sec-2 .right_item .details > ul > li > ul {
@@ -1089,16 +1095,16 @@ input, select, textarea, button {
               position: absolute;
               left: 0;
               top: 0;
-              width: 35px;
-              height: 35px;
+              width: 25px;
+              height: 25px;
               border: 1px solid #ddd;
               border-radius: 100%;
               background: #fff; }
             .vans .sec-2 .right_item .details > ul > li > ul li [type="radio"]:checked + label:after,
             .vans .sec-2 .right_item .details > ul > li > ul li [type="radio"]:not(:checked) + label:after {
               content: '';
-              width: 25px;
-              height: 25px;
+              width: 15px;
+              height: 15px;
               background: #429e47;
               position: absolute;
               top: 5px;
@@ -1118,7 +1124,7 @@ input, select, textarea, button {
           position: relative; }
           .vans .sec-2 .right_item .details > ul > li:last-child h5 {
             display: inline-block;
-            font-size: 30px;
+            font-size: 20px;
             color: #000;
             margin-right: 15px; }
           .vans .sec-2 .right_item .details > ul > li:last-child input[type="number"] {
@@ -1138,7 +1144,7 @@ input, select, textarea, button {
         content: '';
         background: #429e47;
         width: 148px;
-        height: 12px;
+        height: 6px;
         top: -6px; }
     .vans .sec-2 .right_item .btm_link {
       z-index: 2; }
@@ -1319,27 +1325,27 @@ footer::after {
       .pckage_wrap div.clearfix > article > div > ul li h3 {
         font-family: "Circular Std Book", Arial, sans-serif;
         color: #000;
-        font-size: 50px;
-        margin-bottom: 30px;
-        padding-bottom: 30px;
+        font-size: 40px;
+        margin-bottom: 20px;
+        padding-bottom: 15px;
         position: relative; }
       .pckage_wrap div.clearfix > article > div > ul li h3::after {
         content: '';
         position: absolute;
         bottom: 0px;
         width: 148px;
-        height: 12px;
+        height: 6px;
         background: #429e47;
         left: 0; }
       .pckage_wrap div.clearfix > article > div > ul li h5 {
         font-family: "Circular Std Medium", Arial, sans-serif;
-        font-size: 30px;
+        font-size: 25px;
         color: #000;
         text-transform: capitalize;
         margin-bottom: 15px; }
       .pckage_wrap div.clearfix > article > div > ul li > h4 {
         font-family: "Circular Std Black", Arial, sans-serif;
-        font-size: 40px;
+        font-size: 35px;
         color: #000;
         font-style: italic; }
         .pckage_wrap div.clearfix > article > div > ul li > h4 span {
@@ -1803,5 +1809,39 @@ footer::after {
 
 input[type="checkbox"] {
   -webkit-appearance: checkbox; }
+
+.about-us .sec-2 .abt-hldr {
+  max-width: 65%;
+  width: 100%;
+  margin: 0 auto;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: 0px 0px 20px #d5d5d5; }
+  .about-us .sec-2 .abt-hldr h3 {
+    font-family: "Circular Std Black", Arial, sans-serif;
+    font-size: 40px;
+    margin-bottom: 20px;
+    text-align: center; }
+  .about-us .sec-2 .abt-hldr p {
+    font-family: "Circular Std Book", Arial, sans-serif;
+    font-size: 18px;
+    line-height: 28px;
+    margin-bottom: 25px; }
+
+.check.schedule .sec-2 .hldr h3 {
+  font-family: "Circular Std Black", Arial, sans-serif;
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 25px; }
+.check.schedule .sec-2 .hldr .table-hldr {
+  max-width: 100%; }
+  .check.schedule .sec-2 .hldr .table-hldr table thead tr th {
+    text-align: center; }
+.check.schedule .sec-2 .hldr p {
+  font-family: "Circular Std Book", Arial, sans-serif;
+  font-size: 18px; }
+
+.van-hldr .parent.ch3 .children {
+  width: 33%; }
 
 /*# sourceMappingURL=main.css.map */

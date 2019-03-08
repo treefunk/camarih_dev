@@ -10,9 +10,10 @@
 	.home .sec-1 .home-carousel .item .right_car { max-width: 500px!important;}
 	.home .sec-1 .home-carousel .item .right_car aside { height: 500px!important;}
 
-	.home .sec-2 .pckage_wrap > article > div > ul li h3 { font-size: 40px!important;}
+	/*.home .sec-2 .pckage_wrap > article > div > ul li h3 { font-size: 40px!important;}*/
+	/*.home .sec-2 .pckage_wrap > article > div > ul li h5 { font-size: 25px!important}*/
 	.home .sec-2 .pckage_wrap > article > div > ul li > h4 { font-size: 30px!important;}
-	.home .sec-2 .pckage_wrap > article > div > ul li h5 { font-size: 25px!important}
+	
 
 
 	.home .sec-3 .testi-carou .text-hldr > h3 { font-size: 35px!important; margin-bottom: 40px!important;}
@@ -38,22 +39,24 @@
 
 	/*************START of  TEMPLATE*************/
 	.vans .sec-1 .hero h3 { font-size: 50px!important;}
-	.vans .sec-2 .right_item .details h4 { font-size: 40px!important;}
-	.vans .sec-2 .right_item .details p { font-size: 30px!important;}
 	.vans .sec-2 .right_item .details > ul { margin-top: 20px!important;}
-	.vans .sec-2 .right_item .details > ul > li h6 {font-size: 25px!important;}
-	.vans .sec-2 .right_item .details > ul > li label  {font-size: 25px!important;}
+	/*.vans .sec-2 .right_item .details h4 { font-size: 40px!important;}*/
+	/*.vans .sec-2 .right_item .details p { font-size: 30px!important;}*/
+	
+	/*.vans .sec-2 .right_item .details > ul > li h6 {font-size: 25px!important;}*/
+	/*.vans .sec-2 .right_item .details > ul > li label  {font-size: 25px!important;}
 	.vans .sec-2 .right_item .details > ul > li:last-child h5 { font-size: 25px!important;}
-	.vans .sec-2 .right_item .details > ul > li:last-child span { font-size: 25px!important;}
+	.vans .sec-2 .right_item .details > ul > li:last-child span { font-size: 25px!important;}*/
 
 	/*************End of  TEMPLATE*************/
 
 
 
 	.packages .sec-1 .hero h3 { font-size: 50px!important;}
-	.pckage_wrap div.clearfix > article > div > ul li h3 { font-size: 40px!important;}
-	.pckage_wrap div.clearfix > article > div > ul li h5 { font-size: 25px!important;}
 	.pckage_wrap div.clearfix > article > div > ul li > h4 { font-size: 30px!important;}
+	/*.pckage_wrap div.clearfix > article > div > ul li h3 { font-size: 40px!important;}*/
+	/*.pckage_wrap div.clearfix > article > div > ul li h5 { font-size: 25px!important;}*/
+	
 
 
 	.prcing_table-popup .item h4 { font-size: 40px!important;}
@@ -86,12 +89,14 @@
 	.home .sec-1 .home-carousel .item .right_car aside { height: 400px!important;}
 	.vans .sec-2 .right_item .details > ul > li:last-child h5 { font-size: 20px!important;}
 	.vans .sec-2 .right_item .details > ul > li:last-child span { font-size: 20px!important;}
-	.vans .sec-2 .right_item .details > ul > li > ul li [type="radio"]:checked + label, .vans .sec-2 .right_item .details > ul > li > ul li [type="radio"]:not(:checked) + label { font-size: 20px!important; padding-top: 5px!important;}
+	/*.vans .sec-2 .right_item .details > ul > li > ul li [type="radio"]:checked + label, .vans .sec-2 .right_item .details > ul > li > ul li [type="radio"]:not(:checked) + label { font-size: 20px!important; padding-top: 5px!important;}*/
 	.vans .sec-2 .right_item .details > ul > li h6{ font-size: 20px!important;}
 	.vans .sec-2 .right_item .details p { font-size: 25px!important;}
 	.vans .sec-2 .right_item .btm_link ul li a { font-size: 18px!important;}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(3) > ul > li a { font-size: 18px!important;}
 	.van-hldr .card { width: 100%!important;}
+	.vans .sec-2 .cars .item aside { height: 550px!important;}
+
 
 }
 
@@ -122,6 +127,9 @@
 	footer .footer_list > li:nth-child(2) > ul > li:nth-child(3) { padding-left: 0px!important;}
 	.home .sec-3 .testi-carou { max-width: 75%!important;}
 	.packages-selected .sec-2 .itemhldr > article.dvider > article > div > p, .packages-selected .sec-2 .itemhldr > article.dvider > article > div > ul > li > p { line-height: 26px!important;}
+	.vans .sec-2 .cars .item aside { height: 450px!important;}
+
+	.vans .sec-2 .cars .owl-nav .owl-prev, .vans .sec-2 .cars .owl-nav .owl-next { height: 40px!important; width: 54px!important; background-size: 54px 40px!important;}
 }
 
 
@@ -199,7 +207,7 @@
 	.vans .sec-2 .right_item { width: 100%!important;}
 	.vans .sec-2 .cars .item article { margin-bottom: 40px!important;}
 	.vans .sec-2 .cars .owl-nav { right: 0!important;}
-	.vans .sec-2 .cars .item aside { max-width: 100%!important;padding-right: 120px!important;}
+	.vans .sec-2 .cars .item aside { max-width: 100%!important;padding-right: 120px!important; height: auto!important}
 
 	/*************End of  TEMPLATE*************/
 
@@ -218,6 +226,15 @@
 
 	.cart .sec-2 .main-hldr .checkout { width: 100%!important; margin-top: 35px!important; padding: 30px 0px!important;}
 	.cart .sec-2 .main-hldr .checkout h4 {font-size: 30px!important;text-align: center; padding-left: 0px!important;}
+
+	.vans .sec-2 .right_item .details > ul > li > ul { justify-content: flex-start!important;}
+	.vans .sec-2 .right_item .details > ul > li > ul li { width: auto!important;  padding-right: 25px;}
+	.vans .sec-2 .right_item .details > ul > li > ul li:last-child{padding-right: 0px!important;}
+
+	.check.schedule .sec-2 .pckage_wrap { padding: 0px!important; }
+	
+
+
 }
 
 
@@ -239,9 +256,12 @@
 	.home .sec-1 .home-carousel .item .text-hldr > ul li a { font-size: 20px!important;}
 	.home .sec-1 .home-carousel .item .text-hldr{padding: 0px 15px!important; max-width: 100%!important; left: 0px!important; padding-right: 25%!important;}
 
-	.book-trip > ul > li:first-child { width: 50%!important; z-index: 2;}
+	.book-trip > ul > li:first-child { width: 100%!important; z-index: 2;}
 	.book-trip > ul { justify-content: flex-start!important;}
-	.book-trip > ul > li:last-child { width: 50%!important; position: absolute; right: 15px;}
+	.book-trip > ul > li:last-child { width: 100%!important;}
+	.book-trip > ul > li:first-child > div, .book-trip > ul > li:last-child > div { padding: 15px!important}
+	.book-trip > ul > li:first-child > div h4, .book-trip > ul > li:last-child > div h5 { width: 100%; text-align: center;}
+	.book-trip > ul > li:last-child > div button { width: 100%;}
 	.book-trip > ul > li:nth-child(2) { width: 100%!important;}
 	.book-trip > div > ul li:first-child { width: auto!important;}
 	.book-trip { position: relative!important;     margin-top: -58px!important;}
@@ -305,10 +325,10 @@
     /*************START of  TEMPLATE*************/
 	.vans .sec-1 .hero h3 { font-size: 40px!important;}
 	.vans .sec-2 { padding: 40px 15px!important}
-	.vans .sec-2 .cars .owl-nav .owl-prev {     background-size: 40px; background-repeat: no-repeat;}
-	.vans .sec-2 .cars .owl-nav .owl-next {     background-size: 40px; background-repeat: no-repeat;}
+	.vans .sec-2 .cars .owl-nav .owl-prev {     background-size: 40px!important; background-repeat: no-repeat!important;}
+	.vans .sec-2 .cars .owl-nav .owl-next {     background-size: 40px!important; background-repeat: no-repeat!important;}
 	.vans .sec-2 .cars .owl-nav { right: -40px!important;}
-	.vans .sec-2 .cars .item aside { padding-right: 60px!important; height: 350px;}
+	.vans .sec-2 .cars .item aside { padding-right: 60px!important; }
 	.vans .sec-2 .cars .item aside img { height: 100%; object-fit: cover;}
 	.vans .sec-2 .right_item .details { padding: 25px 15px!important;}
 	.vans .sec-2 .cars .item article { margin-bottom: 10px!important;}
@@ -327,7 +347,7 @@
 	.pckage_wrap div.clearfix > article > div > ul li h3 { font-size: 30px!important; padding-bottom: 15px!important; margin-bottom: 15px!important;}
 	.pckage_wrap div.clearfix > article > div > ul li h3::after { height: 6px!important;}
 	.packages .sec-2 { padding: 40px 15px!important;}
-/*
+	/*
 	.pckage_wrap div.clearfix aside.right, .pckage_wrap div.clearfix > aside { float: none!important; max-width: 100%!important; width: 100%!important;}
 	.pckage_wrap div.clearfix > article { position: relative!important;}
 	.pckage_wrap div.clearfix article.left { right: 0!important;}
@@ -361,7 +381,18 @@
 	.check .sec-2 .item .hldr ul li { text-align: center;}
 
 
+	.about-us .sec-2 .abt-hldr h3 { font-size: 30px!important;}
 
+	.about-us .sec-2 .abt-hldr { max-width: 85%!important;}
+
+	.about-us .sec-2 .abt-hldr p { margin-bottom: 15px!important;}
+
+	.check.schedule .sec-2 .hldr h3 { font-size: 30px!important;}
+
+	.check.schedule .sec-2 .table-hldr table tbody tr td:first-child::before { content: '';}
+	.check.schedule .sec-2 .table-hldr table tbody tr td:first-child { text-align: center;  text-transform: uppercase;     background: #429e47!important; color: #fff!important;}
+	.check .sec-2 .table-hldr table tbody tr:nth-child(even) { background: transparent!important;}
+	.check .sec-2 .table-hldr table tbody tr td:last-child::before { content: 'TIME:'}
 }
 
 
@@ -396,7 +427,7 @@
 	.book-trip > ul > li:last-child { position: relative; width: 100%!important; right: 0!important;}
 	.book-trip > ul > li:last-child > div { padding: 10px!important;}
 	.book-trip > ul > li:nth-child(2) > div > ul > li { width: 100%!important;}
-	.book-trip > ul > li:nth-child(2) > div > ul > li:first-child { margin-bottom: 15px!important;}
+	.book-trip > ul > li:nth-child(2) > div > ul > li { margin-bottom: 10px!important;}
 	.book-trip > ul > li:nth-child(2) > div > ul > li select { background-position: 99% center!important}
 	.book-trip > div > ul li:first-child, .book-trip > div > ul li:nth-child(2) { padding: 10px 20px!important;}
 	.home .sec-1 .home-carousel .item .text-hldr { top: 40px!important; left: 0px!important; max-width: 100%!important;}
@@ -494,6 +525,13 @@
 	.check .sec-1, .book .sec-1 { height: 135px!important;}
 
 
+	.book-trip > ul > li:nth-child(2) > div > ul > li:nth-child(odd) { padding-right: 0px!important;}
+	.book-trip > ul > li:nth-child(2) > div > ul > li:nth-child(even) { padding-left: 0px!important;}
+
+	.packages .sec-3 .pckage_wrap { padding-right: 0px!important;}
+
+	.about-us .sec-2 .abt-hldr h3, .check.schedule .sec-2 .hldr h3 { font-size: 25px!important;}
+
 }
 
 
@@ -516,6 +554,9 @@
 	.cart .sec-2 .main-hldr .checkout .main-list li .parent {     padding-bottom: 10px;  border-bottom: 2px solid #f0f0f0;}
 	.cart .sec-2 .main-hldr .checkout .main-list li .parent:last-of-type { padding-bottom: 0px!important; border-bottom: 0px!important;}
 
+	.book-trip > div > ul li:first-child, .book-trip > div > ul li:nth-child(2)  { width: 50%!important; text-align: center;}
+
+	.about-us .sec-2 .abt-hldr { max-width: 100%!important; padding: 25px 15px!important;}
 }
 
 
@@ -523,7 +564,7 @@
 @media only screen and (max-width: 450px){
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(2) span { position: absolute; top: 0; right: 15px;}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(2) h5 { margin-top: 0px!important;}
-	.vans .sec-2 .cars .item aside { height: 250px!important;}
+	/*.vans .sec-2 .cars .item aside { height: 250px!important;}*/
 	.vans .sec-2 .right_item .details > ul > li:last-child span { position: absolute; float: none!important; top: 0; padding-top: 0px!important; right: 0;}
 	.vans .sec-2 .right_item .details > ul > li:last-child input[type="number"] { display: block!important; max-width: 100%!important;}
 	.vans .sec-2 .right_item .details > ul > li:last-child h5 { margin-right: 0px!important; margin-bottom: 5px!important;}

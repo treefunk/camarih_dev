@@ -245,13 +245,13 @@ $lightorange : #f0bb02;
                 > div {
                     > ul { padding: 25px 35px; background: $white;
                         li{
-                            h3 { font-family: $fontmain; color: $black; font-size: 50px; margin-bottom: 30px; padding-bottom: 30px; position: relative;}
+                            h3 { font-family: $fontmain; color: $black; font-size: 40px; margin-bottom: 20px; padding-bottom: 15px; position: relative;}
 
-                            h3::after { content: ''; position: absolute; bottom: 0px; width: 148px; height: 12px; background: #429e47; left: 0;}
+                            h3::after { content: ''; position: absolute; bottom: 0px; width: 148px; height: 6px; background: #429e47; left: 0;}
 
-                            h5 { font-family: $fontmed; font-size: 30px; color: $black; text-transform: capitalize; margin-bottom: 15px;}
+                            h5 { font-family: $fontmed; font-size: 25px; color: $black; text-transform: capitalize; margin-bottom: 15px;}
 
-                            > h4 { font-family: $fonthead; font-size: 40px; color: $black; font-style: italic;
+                            > h4 { font-family: $fonthead; font-size: 35px; color: $black; font-style: italic;
                                 span { display: block;font-family: $fontmain; font-size: 25px; font-style: normal}
                             }
                         }
@@ -342,30 +342,29 @@ $lightorange : #f0bb02;
         > li { }
 
         > li:first-child { width: 15.72%; background: $green;
-            > div { padding: 30px; text-align: center;
+            > div { padding: 30px; text-align: center; @extend .flex; height: 100%; align-items: center;
                 h4 { font-family: $fonthead; font-size: 30px; color: $white; text-transform: uppercase;}
             }
         }
 
         > li:nth-child(2) { width: 65.38%; background: $white;
             > div { padding: 15px 15px;
-                > ul {
-                    > li { width: 49.5%; display: inline-block; position: relative; padding-left: 55px;
+                > ul { @extend .flex;
+                    > li { width: 50%;  position: relative; padding-left: 0px;
                         select { width: 100%;  border: 1px solid #ccc; height: 38px; padding-left: 15px; margin-bottom: 15px; background: url(../images/arrowdown.png) no-repeat 95% center;}
                         input[type="date"] { width: 100%; border: 1px solid #ccc; height: 38px; padding-left: 15px;}
                     
-                        h5 {color: #222f46; font-family: $fontmain; font-weight: bold; text-transform: uppercase; position: absolute; left: 5px;     top: 12px;}
+                        h5 {color: #222f46; font-family: $fontmain; font-weight: bold; text-transform: uppercase; }
                     }
 
-                    li:nth-child(2){
-                        h5 { left: 15px;}
-                    }
+                    > li:nth-child(odd){ padding-right: 15px;}
+                    > li:nth-child(even){ padding-left: 15px;}
                 }
             }
         }
 
         > li:last-child { width: 18.88%; background: $orange; text-align: center;
-            > div { padding: 33px;
+            > div { padding: 33px; height: 100%; align-items: center; @extend .flex;
                 h5 { color: $white; font-family: $fonthead; font-size: 25px;
                     i { margin-left: 15px;}
                 }
@@ -505,7 +504,7 @@ $lightorange : #f0bb02;
 
     .sec-3 { padding: 54px 0px 50px; background: #f9f9f9;
         .item-hldr { max-width: 76%; width: 100%; margin: 0 auto; box-sizing: border-box;
-            h3 { text-align: center; font-family: $fonthead; color: $white; font-size: 48px; color: $violet; margin-bottom: 40px;}
+            h3 { text-align: center; font-family: $fonthead; color: $white; font-size: 40px; color: $violet; margin-bottom: 40px;}
 
 
             .slct-pckge {
@@ -520,7 +519,7 @@ $lightorange : #f0bb02;
                 }
 
 
-                .owl-nav {  display: block; position: absolute; top: 30%;width: 100%;
+                .owl-nav {  position: absolute; top: 30%;width: 100%;
                     .owl-prev {    background-color: transparent; text-indent: -9999px; overflow: hidden; background-image: url(../images/arrow-left.png); height: 62px; width: 36px; margin: 0px; padding: 0px; position: absolute; left: -50px;}
                     .owl-next {    background-color: transparent; text-indent: -9999px; overflow: hidden; background-image: url(../images/arrow-right.png); height: 62px; width: 36px; margin: 0px; padding: 0px; position: absolute; right: -50px;}
                 }
@@ -567,7 +566,9 @@ $lightorange : #f0bb02;
 
         .cars { padding-left: 37px; position: relative; padding-top: 40px;
             .item { 
-                aside { max-width: 71.82%; width: 100%; position: relative;}
+                aside { max-width: 71.82%; width: 100%; position: relative; height: 650px;
+                    img { height: 100%; object-fit: cover;}
+                }
 
                 article { padding: 0px 20px; margin-top: 25px;
                     h4 { font-size: 24px; color: $black; font-family: $fontmain;}
@@ -588,18 +589,18 @@ $lightorange : #f0bb02;
 
         
         .right_item { float: right; min-width: 42.77%;
-            .details { background: $white; position: relative; z-index: 3; padding: 50px 30px;  /* float: right; */ margin-top: -150px; box-shadow: 0px -3px 15px #d8d8d8;
+            .details { background: $white; position: relative; z-index: 3; padding: 30px;  /* float: right; */ margin-top: -150px; box-shadow: 0px -3px 15px #d8d8d8;
            
-                h4 { font-family: $fonthead; color: $black;  font-size: 48px;}
-                p { font-family: $fontmain; font-size: 36px; color: $black;}
+                h4 { font-family: $fonthead; color: $black;  font-size: 35px;}
+                p { font-family: $fontmain; font-size: 30px; color: #000; line-height: 30px;}
 
-                > ul { position: relative; padding-top: 30px; margin-top: 30px; 
+                > ul { position: relative; padding-top: 20px; margin-top: 20px; 
                     > li { 
-                        h6 { font-size: 30px; color: $black; font-family: $fontmain; margin-bottom: 10px;}
+                        h6 { font-size: 20px; color: $black; font-family: $fontmain; margin-bottom: 10px;}
                         select { max-width: 290px; width: 100%; border: 2px solid #e1e1e1; height: 40px; padding-left: 15px; margin-bottom: 25px; background-image: url(../images/select-gray.png); background-repeat: no-repeat; background-position: 95% center; background-size: 15px; font-size: 18px;}
                     
                         input[type="radio"] { -webkit-appearance: radio; width: 27px; height: 27px; margin-right: 10px;}
-                        label { font-size: 30px; font-family: $fontmain; font-weight: normal;}
+                        label { font-size: 20px; font-family: $fontmain; font-weight: normal;}
 
                         > ul { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-flow: row wrap; justify-content: space-between; flex-wrap: wrap; margin-bottom: 25px;
                             li { width: 50%;
@@ -621,8 +622,8 @@ $lightorange : #f0bb02;
                                     position: absolute;
                                     left: 0;
                                     top: 0;
-                                    width: 35px;
-                                    height: 35px;
+                                    width: 25px;
+                                    height: 25px;
                                     border: 1px solid #ddd;
                                     border-radius: 100%;
                                     background: #fff;
@@ -630,8 +631,8 @@ $lightorange : #f0bb02;
                                 [type="radio"]:checked + label:after,
                                 [type="radio"]:not(:checked) + label:after {
                                     content: '';
-                                    width: 25px;
-                                    height: 25px;
+                                    width: 15px;
+                                    height: 15px;
                                     background: #429e47;
                                     position: absolute;
                                     top: 5px;
@@ -657,7 +658,7 @@ $lightorange : #f0bb02;
                     }
 
                     > li:last-child { position: relative;
-                        h5 { display: inline-block; font-size: 30px; color: $black; margin-right: 15px;}
+                        h5 { display: inline-block; font-size: 20px; color: $black; margin-right: 15px;}
                         input[type="number"] { display: inline-block; max-width: 137px; width: 100%; border: 2px solid #e1e1e1; padding-left: 15px; height: 40px;}
 
                         span { float: right; font-family: $fonthead; font-size: 36px; font-style: italic;}
@@ -665,7 +666,7 @@ $lightorange : #f0bb02;
 
                 }
 
-                > ul::after { position: absolute; content: ''; background: #429e47; width: 148px; height: 12px; top: -6px;}
+                > ul::after { position: absolute; content: ''; background: #429e47; width: 148px; height: 6px; top: -6px;}
             
             }   
 
@@ -773,13 +774,13 @@ footer::after { position: absolute; content: ''; left: 0; right: 0; height: 3px;
         > div {
             > ul { padding: 25px 35px; background: $white;
                 li{
-                    h3 { font-family: $fontmain; color: $black; font-size: 50px; margin-bottom: 30px; padding-bottom: 30px; position: relative;}
+                    h3 { font-family: $fontmain; color: $black; font-size: 40px; margin-bottom: 20px; padding-bottom: 15px; position: relative;}
 
-                    h3::after { content: ''; position: absolute; bottom: 0px; width: 148px; height: 12px; background: #429e47; left: 0;}
+                    h3::after { content: ''; position: absolute; bottom: 0px; width: 148px; height: 6px; background: #429e47; left: 0;}
 
-                    h5 { font-family: $fontmed; font-size: 30px; color: $black; text-transform: capitalize; margin-bottom: 15px;}
+                    h5 { font-family: $fontmed; font-size: 25px; color: $black; text-transform: capitalize; margin-bottom: 15px;}
 
-                    > h4 { font-family: $fonthead; font-size: 40px; color: $black; font-style: italic;
+                    > h4 { font-family: $fonthead; font-size: 35px; color: $black; font-style: italic;
                         span { display: block;font-family: $fontmain; font-size: 25px; font-style: normal}
                     }
                 }
@@ -1090,13 +1091,50 @@ input[type="checkbox"] { -webkit-appearance: checkbox;}
 
 
 
+.about-us {
+    .sec-2 {
+        .abt-hldr { max-width: 65%; width: 100%; margin: 0 auto; border-radius: 25px; padding: 25px; box-shadow: 0px 0px 20px #d5d5d5; 
+            h3 { font-family: $fonthead; font-size: 40px; margin-bottom: 20px; text-align: center;}
+            p { font-family: $fontmain; font-size: 18px; line-height: 28px; margin-bottom: 25px;}
+        }
+    }
+}
+
+
+.check.schedule {
+    .sec-2 {
+        .hldr{
+
+            h3 { font-family: $fonthead; font-size: 40px;  text-align: center; margin-bottom: 25px;}
+
+            .table-hldr { max-width: 100%;
+                table {
+                    thead {
+                        tr {
+                            th { text-align: center;}
+                        }
+                    }
+                }
+            }
+
+            p { font-family: $fontmain; font-size: 18px;}
+        }
+        
+    }
+}
 
 
 
 
 
 
+.van-hldr {
+    .parent.ch3 { @extend .flex;
+        .children { width: 33%;}
 
+        
+    }
+}
 
 
 
