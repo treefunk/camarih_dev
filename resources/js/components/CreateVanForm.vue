@@ -26,7 +26,7 @@
                     </van-seat-map>
                 </div>
 
-                <div :class="['form-group','has-error']">
+                <div :class="['form-group']">
                     <van-gallery
                     :van_gallery_existing="van_gallery_existing"
                     :van_gallery_url="van_gallery_url"

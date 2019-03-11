@@ -17,7 +17,7 @@ class Availability extends MY_Controller {
             'seatplan_model',
             'package_model',
             'van_model',
-            'reservation_model',
+            'checkout_model',
             'bookinginformation_model',
             'vanrent_model'
         ]);
@@ -333,18 +333,21 @@ class Availability extends MY_Controller {
     }
 
     public function process_cart(){
-        $post = $this->input->post();
+        $post = $this->input->post(null,true);
         
+
         $checked_items = $post['booking_num'];
 
-        $reservation_data = [
+        $checkout_data = [
             'active' => 1,
             'status' => 'pending'
-        ];
+        ] + $post['booking_information'];
 
         $this->db->trans_begin();
         if($cart = $this->session->userdata('cart')){
-            $id = $this->reservation_model->add($reservation_data);
+
+
+            $id = $this->checkout_model->add($checkout_data);
 
             $cart_count = count($cart);
             foreach($cart as $index => $item)
@@ -353,7 +356,7 @@ class Availability extends MY_Controller {
                     continue;
                 }
 
-                $item['reservation_id'] = $id;
+                $item['checkout_id'] = $id;
 
                 if($item['item_type'] == 'booking_trip'){ //booking trip
 
@@ -364,7 +367,7 @@ class Availability extends MY_Controller {
                 }elseif($item['item_type'] == 'booking_van'){ //booking van
 
                     $data = [
-                        'reservation_id' => $item['reservation_id'],
+                        'checkout_id' => $item['checkout_id'],
                         'van_id' => $item['van']->id,
                         'departure_date' => $item['departure_date'],
                         'trip_type' => $item['trip_type'],
@@ -380,13 +383,17 @@ class Availability extends MY_Controller {
 
 
             }
-            $this->db->trans_complete();
+           
 
 
         }else{
             //todo cart is empty
         }
 
+        
+
+
+        $this->db->trans_complete();
         //clear current cart
         // unset($_SESSION['cart']);
 
@@ -419,7 +426,7 @@ class Availability extends MY_Controller {
          
             $cart = [
                 'rate_id' => $rate->id,
-                'reservation_id' => $data['reservation_id'],
+                'checkout_id' => $data['checkout_id'],
                 'departure_date' => format_date_and_time_for_sql("{$data['selected'][$offset]['from']} {$rate->departure_time}",$format = "Y-m-d H:i A"),
                 'departure_time' => $rate->departure_time
             ];

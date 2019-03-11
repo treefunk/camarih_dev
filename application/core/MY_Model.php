@@ -25,9 +25,7 @@ class CMS_Model extends CI_Model
     {
         $single = $this->findById($id);
         $changes = 0;
-
         foreach(array_keys($data) as $key){
-
             if($single->{$key} != $data[$key])
             {
                 $this->db->set($key,$data[$key]);

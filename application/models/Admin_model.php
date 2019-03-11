@@ -47,15 +47,16 @@ class Admin_model extends CI_Model
 
 
         $changes = 0;
-
         foreach(array_keys($data) as $key){
             if($key == 'password' && trim($data['password']) != '') 
             {
                 if(trim($data['password']) !== trim($data['confirm_password']))
                 {
                     return -1;
-                }
+                }    
                 $data['password'] = password_hash($data['password'],PASSWORD_BCRYPT);
+            }elseif($key == 'password' && trim($data['password']) == ''){
+                continue;
             }
 
             if($key == 'confirm_password')

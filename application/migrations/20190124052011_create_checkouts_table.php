@@ -2,7 +2,7 @@
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 
-class Migration_Create_reservations_Table extends CI_Migration {
+class Migration_Create_checkouts_Table extends CI_Migration {
 
         public function up()
         {
@@ -12,6 +12,21 @@ class Migration_Create_reservations_Table extends CI_Migration {
                                 'constraint' => '255',
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
+                        ),
+                        'fullname' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '255',
+                                'null' => TRUE
+                            ),
+                        'email' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '255',
+                                'null' => TRUE
+                        ),
+                        'phone' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '255',
+                                'null' => TRUE
                         ),
                         'status' => array(
                             'type' => 'VARCHAR',
@@ -27,11 +42,11 @@ class Migration_Create_reservations_Table extends CI_Migration {
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
                 $this->dbforge->add_key('id', TRUE);
-                $this->dbforge->create_table('reservations');
+                $this->dbforge->create_table('checkouts');
         }
 
         public function down()
         {
-                $this->dbforge->drop_table('reservations');
+                $this->dbforge->drop_table('checkouts');
         }
 }

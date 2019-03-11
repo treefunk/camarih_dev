@@ -137,6 +137,9 @@
             trip: {},
             index: Number
         },
+        mounted(){
+          this.checked = true
+        },
         data(){
             return {
                 checked: false,

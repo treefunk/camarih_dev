@@ -13,9 +13,9 @@ class Migration_Create_van_rent_Table extends CI_Migration {
                                 'unsigned' => TRUE,
                                 'auto_increment' => TRUE
                         ),
-                        'reservation_id' => array(
+                        'checkout_id' => array(
                                 'type' => 'INT',
-                                'constraint' => '100',
+                                'constraint' => '255',
                                 'unsigned' => TRUE
                         ),
                         'van_id' => array(

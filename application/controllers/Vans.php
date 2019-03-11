@@ -34,7 +34,7 @@ class Vans extends Admin_Controller {
     public function store()
     {
         $post = $this->input->post();
- 
+
         $this->db->trans_start();
         $this->load->library('form_validation');
 
@@ -58,12 +58,13 @@ class Vans extends Admin_Controller {
 
         unset($post['seats']);
 
-        $van_rate = [
-            'oneway_rate' => $post['oneway_rate'],
-            'roundtrip_rate' => $post['roundtrip_rate']
-        ];
+        // unset($post['oneway_rate'],$post['roundtrip_rate']);
+        $van_gallery_titles = $post['van_gallery'];
+        unset($post['van_gallery']);
 
-        unset($post['oneway_rate'],$post['roundtrip_rate']);
+
+
+
 
         if($id = $this->van_model->add($post)){
             
@@ -81,7 +82,8 @@ class Vans extends Admin_Controller {
 
             // van gallery here
 			$image_errors = $this->vangallery_model->add([
-				'van_id' => $id
+                'van_id' => $id,
+                'image_title' => $van_gallery_titles
             ],$images);
             
         }else{
@@ -105,10 +107,10 @@ class Vans extends Admin_Controller {
         
         $post['seat_map'] = implode(',',$this->input->post('seats'));
         $van_gallery = isset($_FILES['van_gallery']) ? $_FILES['van_gallery'] : [];
-        $to_be_removed = $post['remove_images'];
+        $to_be_removed = isset($post['remove_images']) ? $post['remove_images'] : [];
 
         unset($post['remove_images']);
-        unset($post['van_gallery']);
+        // unset($post['van_gallery']);
         unset($post['seats']);
 
         $this->load->library('form_validation');
@@ -130,23 +132,41 @@ class Vans extends Admin_Controller {
 
         $van_details_in_db = $this->van_model->find($id)->van_details;
 
-        $van_details = [
-            'oneway_rate' => $post['oneway_rate'],
-            'roundtrip_rate' => $post['roundtrip_rate']
-        ];
-        
         unset($post['oneway_rate'],$post['roundtrip_rate']);
+        
+        $image_title = $post['image_title'];
 
+        foreach($post['image_title'] as $i => $val){
+            if($existing = $this->vangallery_model->findById($i)){
+                if($existing->image_title != $val){
+                    $updated = $this->db->set(
+                        'image_title'
+                    ,$val)->where([
+                        'id' => $i
+                    ])->update('van_gallery');
+                    if($updated)
+                        $changes++;
+                }
+            }
+        }
+
+        unset($post['image_title']);
+
+        $van_gallery_titles = ($post['van_gallery']) ? $post['van_gallery'] : [];
+        unset($post['van_gallery']);
+
+        // var_dump($post); die();
         $changes += $this->van_model->update($id,$post);
 
-        $changes += $this->vandetail_model->update($van_details_in_db->id,$van_details);
+        // $changes += $this->vandetail_model->update($van_details_in_db->id,$van_details);
 
         // add image
         if(count($van_gallery)){
             $images = format_multiple_files($van_gallery);
             // van gallery here
 			$image_errors = $this->vangallery_model->add([
-				'van_id' => $id
+                'van_id' => $id,
+                'image_title' => $van_gallery_titles
             ],$images);
         }
 

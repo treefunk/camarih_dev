@@ -19,6 +19,7 @@
             <aside class="equip-dnone">
                 <img src="images/horizontal-equip.png">
             </aside>
+            
 
     <?php foreach($vans as $van): ?>
             <div class="divider">
@@ -29,9 +30,9 @@
                         <aside>
                             <img src="<?=base_url("uploads/van_gallery/{$gallery->van_id}_{$gallery->image_name}")?>">
                         </aside>
-                        <!-- <article>
-                            <h4>sample1</h4>
-                        </article> -->
+                        <article>
+                            <h4><?=$gallery->image_title?></h4>
+                        </article>
                     </div>
                     <?php endforeach; ?>
                 </div>

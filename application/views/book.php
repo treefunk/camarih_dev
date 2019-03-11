@@ -7,7 +7,7 @@
     <div style="margin-bottom:100px">
     
         <h2><?=$labels[$offset]?></h2>
-        <p>To select a seat, click on the number of the seat:</p>
+        <p>Please tap or click your choice of seat:</p>
         <a href="<?=base_url('availability/check')?>">
                     <button class="btn btn-info"><< Back</button>
                 </a>           

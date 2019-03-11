@@ -23,21 +23,6 @@ class Migration_Create_booking_information_Table extends CI_Migration {
                             'constraint' => '255',
                             'unsigned' => TRUE
                         ),
-                        // 'fullname' => array(
-                        //     'type' => 'VARCHAR',
-                        //     'constraint' => '255',
-                        //     'null' => TRUE
-                        // ),
-                        // 'email' => array(
-                        //     'type' => 'VARCHAR',
-                        //     'constraint' => '255',
-                        //     'null' => TRUE
-                        // ),
-                        // 'phone' => array(
-                        //     'type' => 'VARCHAR',
-                        //     'constraint' => '255',
-                        //     'null' => TRUE
-                        // ),
                         'pickup_location' => array(
                             'type' => 'LONGTEXT',
                             'null' => TRUE
@@ -45,11 +30,7 @@ class Migration_Create_booking_information_Table extends CI_Migration {
                         'drop_location' => array(
                             'type' => 'LONGTEXT',
                             'null' => TRUE
-                        ),
-                        'flight_info' => array(
-                            'type' => 'LONGTEXT',
-                            'null' => TRUE
-                        ),
+                        )
                 ));
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");

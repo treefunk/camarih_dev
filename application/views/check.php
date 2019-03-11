@@ -176,7 +176,7 @@
             <button type="submit" class="btn btn-primary">Book Now</button>
         <?php endif; ?>
             <a href="<?=base_url()?>">
-                <button class="btn btn-info" type="button">Back</button>
+                <button class="btn btn-info" type="button">Book Another Trip</button>
             </a>
     </div>
     

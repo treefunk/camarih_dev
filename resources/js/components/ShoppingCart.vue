@@ -78,8 +78,44 @@
                         </div>
                     </div>
                   </div>
+
+
+                  <div  class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true"
+                        style="display: none;">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="z-index:99">×</button>
+                                    <h4 class="modal-title">Checkout Details</h4>
+                                    <div class="form-group"> <label for="fullname"> Fullname </label> <input name="booking_information[fullname]" class="form-control"
+                                        id="fullname" required="" type="text"> </div>
+
+
+                                    <div class="form-group"> <label for="email"> Email </label> <input name="booking_information[email]" class="form-control"
+                                        id="email" required="" type="email">
+                                    </div>
+
+                                    <div class="form-group"> <label for="phone"> Phone </label> <input name="booking_information[phone]" class="form-control"
+                                        id="phone" required="" type="text">
+                                    </div>
+
+                                </div>
+                                <div class="modal-body">
+                                        
+                   
+                                </div>
+                                <div class="modal-footer">
+                                    <!-- <button data-dismiss="modal" class="btn btn-default" type="button">Close</button> -->
+                                    <button type="submit" class="proceed-to-checkout">Checkout</button>
+                                </div>
+                                </div>
+                            </div>
+                    </div>
+
+
+
                   <div class="checkout-btm">
-                    <button class="proceed-to-checkout" type="submit" >Proceed to Checkout</button>
+                    <button type="button" @click="showCheckoutForm" class="proceed-to-checkout">Proceed to Checkout</button>
                   </div>
                   </form>
                 </div>
@@ -125,9 +161,12 @@
             }
         },
         methods: {
-            removeItems() {
-                // todo run ajax to delete item in session
-                
+            showCheckoutForm(){
+              if(this.checkout.length == 0){
+                alert('cart is empty')
+                return -1;
+              }
+                $('#checkoutModal').modal('show')   
             },
             addBookingTrip(payload){
                 let checkout_all_booking = this.checkout.map(c => {

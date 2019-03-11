@@ -79,9 +79,9 @@
                                             rows="3"> </textarea> </div>
 
 
-                                    <div class="form-group"> <label for="flight"> Flight Info </label> <textarea name="booking_information[flight_info]" class="form-control" id="flight" required=""
+                                    <!-- <div class="form-group"> <label for="flight"> Flight Info </label> <textarea name="booking_information[flight_info]" class="form-control" id="flight" required=""
                                             rows="3"> </textarea> </div>
-                                    
+                                     -->
                    
                                 </div>
                                 <div class="modal-footer">

@@ -10,7 +10,7 @@ class Vangallery_model extends CMS_Model
 
     public function add($data,$images = null) // override add function in cms_model
     {
-
+    
         $errors = [];
 
         for($i = 0 ; $i < count($images); $i++){
@@ -28,7 +28,7 @@ class Vangallery_model extends CMS_Model
                 parent::add([
                     'van_id' => $data['van_id'],
                     'image_name' => str_replace(' ','_',$filename),
-                    'image_title' => ''
+                    'image_title' => $data['image_title'][$i]
                 ]);
             }else{
                 $errors[] = $images[$i]['name'] . ": "  . $filename['error'];
