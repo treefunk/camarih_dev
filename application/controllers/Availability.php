@@ -255,61 +255,92 @@ class Availability extends MY_Controller {
 
     // }
 
+    public function book_departure($type = "oneway"){ //refactored version
+
+        //TODO: move to a function to be reused for book_return
+        $offset = ($type == "oneway" ? 0 : 1);
+
+        // clear booking data in session
+        if($type == "oneway"){
+            $_SESSION['current_booking_data'] = [
+                'post_data' => [],
+                'rate' => []
+            ];
+        }
+
+        // focus on the first element of the array
+        $rate_id = $this->input->post('rate')[$offset];
+
+        // get rate
+        $rate = $this->rate_model->findById($rate_id);
+        $_SESSION['current_booking_data']['rate'][] = $rate;
+
+        // get data
+        if($this->session->has_userdata('check_availability')){
+            if($offset == 0){
+                $post_data = $this->session->userdata('check_availability');
+            }elseif($offset == 1){
+                $post_data = $this->rev_from_to($this->session->userdata('check_availability'));
+            }
+            $_SESSION['current_booking_data']['post_data'][] = $post_data;
+        }
+
+        //get seatplan
+        $data = $this->getSeatPlan($rate,$post_data);
+        
+        $data['label'] = "Departure";
+        $data['offset'] = $offset;
+        $data['post_url'] = base_url('availability/summary');
+        
+        // OR GET DATA: [ $rate, $post_data, $offset] FROM SESSION?
+        
+
+        $this->wrapper([
+            'data' => $data,
+            'view' => 'book'
+        ]);
+        
+
+    }
+
+    public function book_return(){
+
+    }
+
     //step 4 - show summary
     public function summary(){
 
-        
-
+        //post containing the selected seats and booking information
         $post = $this->input->post();
 
-        // var_dump($post); die();
-        if(isset($post['is_roundtrip'])){
-            $_SESSION['bup_seats'] = $post;
-            $this->book(true);
-            return;
-        }else{
-            $selecteds = [];
-            if(isset($_SESSION['bup_seats'])){
-                $selecteds[] = $_SESSION['bup_seats'];
-            }
-            $selecteds[] = $post;
-            $post['selected'] = $selecteds;
+        //check if oneway or roundtrip
+        $oneway = count($_SESSION['current_booking_data']['post_data']) == 1;
 
+        $new_seats = [];
+        foreach($post['selected'] as $s){ $new_seats[] = $s; }
+
+        if($oneway){ //if oneway
+            $_SESSION['current_booking_data']['selected_seats'] = [$new_seats];
+            $_SESSION['current_booking_data']['booking_information'] = [$post['booking_information']];
+        }else{ // if roundtrip
+            $_SESSION['current_booking_data']['selected_seats'][] = $new_seats;
+            $_SESSION['current_booking_data']['booking_information'][] = $post['booking_information'];
         }
-
-        $_SESSION['selected_seats'] = [];
-        // die();
-
-        foreach($post['selected'] as $selected){
-            $new_seats = [];
-            foreach($selected['selected'] as $s){ $new_seats[] = $s; }
-            $_SESSION['selected_seats'][] = $new_seats;
-            $_SESSION['booking_information'][] = $selected['booking_information'];
-           
-        }
-
-        $onewaytrip = count($this->session->userdata('selected_seats')) == 1;
-
         
         $data = $this->checkDataSess(5);
         
         $regular_rate_per_header_price = 0;
-        if($onewaytrip){
-            $regular_rate_per_header_price =  ($data['selected'][0]['rate_price'] * count($data['selected_seats'][0]));
+
+
+        if($oneway){
+            $regular_rate_per_header_price =  ($data['selected'][0]->price * count($data['selected_seats'][0]));
         }else{
             for($x = 0; $x < count($data['selected']); $x++){
-                $regular_rate_per_header_price += ($data['selected'][$x]['rate_price'] * count($data['selected_seats'][$x]));
+                $regular_rate_per_header_price += ($data['selected'][$x]->price * count($data['selected_seats'][$x]));
             }
         }
 
         $data['final_price'] = $regular_rate_per_header_price;
-
-        // all required data is present
-
-        // $this->wrapper([
-        //     'data' => $data,
-        //     'view' => 'summary'
-        // ]);
 
         $this->add_to_cart();
 
@@ -321,6 +352,8 @@ class Availability extends MY_Controller {
 
     public function add_to_cart()
     {
+
+        
         $data = $this->checkDataSess(6);
  
         if(!$this->session->has_userdata('cart')){
@@ -475,17 +508,18 @@ class Availability extends MY_Controller {
         }
 
         if($step >= 3){
-            if($this->session->has_userdata('selected')){ // rate
-                $data['selected'] = $this->session->userdata('selected');
+            if($_SESSION['current_booking_data']['rate'] != []){ // rate
+                $origin = 
+                $data['selected'] = $_SESSION['current_booking_data']['rate'];
             }else{
                 return redirect(base_url('availability/check'));
             }
         }
 
         if($step >= 4){
-            if($this->session->has_userdata('selected_seats')){ // seatplan
-                $data['selected_seats'] = $this->session->userdata('selected_seats');
-                $data['booking_information'] = $this->session->userdata('booking_information');
+            if($_SESSION['current_booking_data']['selected_seats'] != []){ // seatplan
+                $data['selected_seats'] = $_SESSION['current_booking_data']['selected_seats'];
+                $data['booking_information'] = $_SESSION['current_booking_data']['booking_information'];
                 $data['type'] = 'booking_trip';
             }else{
                 return redirect(base_url("availability/book/{$data['selected']['rate_id']}"));

@@ -27,7 +27,7 @@
 
 
                                 <input 
-                            v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
+                            v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending"  :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
                                 <label :for="`seat-${seat.seatnum}`">
                                     <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum }}</span> </div>
                                     <div class="seat-after z-depth-1"> </div>

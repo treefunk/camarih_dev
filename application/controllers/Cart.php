@@ -8,6 +8,7 @@ class Cart extends MY_Controller{
 
     public function index()
     {
+        var_dump($_SESSION['cart']);
         $data['cart'] = $this->session->has_userdata('cart') ? $this->session->userdata('cart') : [];
         $this->wrapper([
             'data' => $data,
