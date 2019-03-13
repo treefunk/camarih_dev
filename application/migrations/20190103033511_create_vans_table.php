@@ -33,18 +33,6 @@ class Migration_Create_vans_Table extends CI_Migration {
                             'type' => 'INT',
                             'null' => true,
                             'constraint' => '255'
-                        ),
-                        'is_origin' => array(
-                            'type' => 'TINYINT',
-                            'constraint' => 3,
-                            'default' => 1,
-                            'comment' => '1 - true, 0 - false'
-                        ),
-                        'is_endpoint' => array(
-                            'type' => 'TINYINT',
-                            'constraint' => 3,
-                            'default' => 1,
-                            'comment' => '1 - true, 0 - false'
                         )
                 ));
 

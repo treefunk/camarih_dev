@@ -23,6 +23,11 @@ class Admin_model extends CI_Model
         return $query->get();
     }
 
+    public function getAllQuery()
+    {
+        return $this->db->select('id,username,created_at')->from('admins');
+    }
+
     public function createAdmin($data)
     {
         $exists = $this->db->get_where('admins',

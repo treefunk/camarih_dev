@@ -8,5 +8,10 @@ class Slider_model extends CMS_Model
         $this->table = "sliders";
     }
 
+    public function getAllQuery()
+    {
+        return $this->db->from('sliders');
+    }
+
     
 }

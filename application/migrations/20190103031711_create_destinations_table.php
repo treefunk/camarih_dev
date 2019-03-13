@@ -23,25 +23,25 @@ class Migration_Create_destinations_Table extends CI_Migration {
                         'is_origin' => array(
                                 'type' => 'TINYINT',
                                 'constraint' => 3,
-                                'default' => 1,
+                                'default' => 0,
                                 'comment' => '1 - true, 0 - false'
                         ),
-                        'is_endpoint' => array(
+                        'is_dropoff' => array(
                                 'type' => 'TINYINT',
                                 'constraint' => 3,
-                                'default' => 1,
+                                'default' => 0,
                                 'comment' => '1 - true, 0 - false'
                         ),
                         'is_vanrental_origin' => array(
                                 'type' => 'TINYINT',
                                 'constraint' => 3,
-                                'default' => 1,
+                                'default' => 0,
                                 'comment' => '1 - true, 0 - false'
                         ),
                         'is_vanrental_dropoff' => array(
                                 'type' => 'TINYINT',
                                 'constraint' => 3,
-                                'default' => 1,
+                                'default' => 0,
                                 'comment' => '1 - true, 0 - false'
                         )
                 ));

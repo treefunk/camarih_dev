@@ -110,6 +110,10 @@ class Van_model extends CMS_Model
         return $query->get()->result();
     }
 
+    public function getAllQuery(){
+        return $this->db->from('vans');
+    }
+
     
 
 

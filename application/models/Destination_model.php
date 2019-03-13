@@ -27,7 +27,7 @@ class Destination_model extends CMS_Model
     public function getAllEndpoints()
     {
         $query = $this->db->from('destinations');
-        $query->where('is_endpoint',1);
+        $query->where('is_dropoff',1);
         $query->order_by('name');
         return $query->get()->result();
     }

@@ -29,7 +29,7 @@
                                                         <input type="checkbox" id="inlineCheckbox1" value="1" name="is_origin">Origin
                                                     </label>
                                                     <label class="checkbox-inline">
-                                                        <input type="checkbox" id="inlineCheckbox2" value="1" name="is_endpoint">Passenger Drop off
+                                                        <input type="checkbox" id="inlineCheckbox2" value="1" name="is_dropoff">Passenger Drop off
                                                     </label>
                                             </div>
                                           <button type="submit" class="btn btn-info">Submit</button>

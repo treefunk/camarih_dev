@@ -18,11 +18,7 @@ class Migration_Create_package_details_Table extends CI_Migration {
                             'constraint' => '100',
                             'unsigned' => TRUE,
                         ),
-                        'num_of_days' => array(
-                                'type' => 'INT',
-                                'null' => TRUE
-                        ),
-                        'num_of_nights' => array(
+                        'minimum_count' => array(
                                 'type' => 'INT',
                                 'null' => TRUE
                         ),

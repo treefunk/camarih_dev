@@ -14,13 +14,6 @@
 	            <input v-model="package_data.name" type="text" class="form-control" id="name" placeholder="Enter name" name="name" />
 	        </div>
 
-			<div class="form-group">
-                <select class="form-control input-lg m-bot15" name="destination_id" id="destination" v-model="package_data.destination_id">
-                    <option value="">Select destination</option>
-                    <option v-for="(destination,index) in destinations" :key="index" :value="destination.id">{{ destination.name }}</option> 
-                </select>
-            </div>
-
 
 	        <div class="form-group">
 	            <label for="rate">Rate</label>
@@ -29,19 +22,11 @@
 
 			<div class="form-group">
 				
-				<label for="">Number of Days</label>
+				<label for="">Minimum Number of Persons</label>
 				<div>
-					<input name="num_of_days" v-model="package_data.package_details.num_of_days" min="0" type="number" class="form-control"> 
+					<input name="minimum_count" v-model="package_data.package_details.minimum_count" min="0" type="number" class="form-control"> 
 				</div>
 			</div>
-
-			<div class="form-group">
-				<label for="">Number of Nights</label>
-				<div>
-					<input name="num_of_nights" v-model="package_data.package_details.num_of_nights" min="0" type="number" class="form-control">
-				</div>
-			</div>
-
 
 	        <div class="form-group">
 
@@ -126,11 +111,9 @@
 					return {
 						name:'',
 						rate:'',
-						destination_id: '',
 						package_details:{
 							description:'',
-							num_of_days:0,
-							num_of_nights: 0
+							minimum_count:0,
 						}
 					}
 				}
@@ -172,15 +155,6 @@
 				}
 
 				
-			},
-			processCtr(data,mode){
-				if(mode == 'increment'){
-					this.package_data.package_details[`num_of_${data}`]++
-				}else{
-					if(this.package_data.package_details[`num_of_${data}`] != 0){
-						this.package_data.package_details[`num_of_${data}`]--
-					}
-				}				
 			},
 			deleteUploaded(index){
 				this.uploaded_images.splice(index,1)

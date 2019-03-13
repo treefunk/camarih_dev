@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 class Migrate extends CI_Controller
 {
@@ -34,9 +34,29 @@ class Migrate extends CI_Controller
         }else{
                 $this->seed();
 
-                
+                // this will iterate the uploads folder delete all subfolders contents 
+                $delete_content_directories = [
+                  'package_gallery',
+                  'sliders',
+                  'testimonials',
+                  'van_gallery'
+                ];
+
+                foreach($delete_content_directories as $d)
+                {
+                  $dir = new DirectoryIterator("uploads/{$d}");
+
+                  foreach($dir as $fileinfo)
+                  {
+                    if(!$fileinfo->isDot()){
+                      unlink($fileinfo->getPathname());
+                    }
+                  }
+                }
             
-                echo "Refreshed";
+                $result = require_once 'text_refreshed.php'; // ^_^V -jhondz
+                $result = str_replace("x","&nbsp;",$result);
+                echo $result;
         }
       }
 
@@ -105,19 +125,45 @@ class Migrate extends CI_Controller
 
     $this->db->insert('destinations',[
       'name' => 'Puerto Princesa',
-      'short_name' => "PPS"
+      'short_name' => "PPS",
+      'is_origin' => 1,
+      'is_dropoff' => 1,
+      'is_vanrental_origin' => 1
     ]);
     $this->db->insert('destinations',[
       'name' => 'Roxas',
-      'short_name' => "ROX"
+      'short_name' => "ROX",
+      'is_dropoff' => 1,
     ]);
     $this->db->insert('destinations',[
       'name' => 'Taytay',
-      'short_name' => "TTY"
+      'short_name' => "TTY",
+      'is_dropoff' => 1,
     ]);
     $this->db->insert('destinations',[
       'name' => 'El Nido',
-      'short_name' => "ELN"
+      'short_name' => "ELN",
+      'is_origin' => 1,
+      'is_dropoff' => 1,
+      'is_vanrental_dropoff' => 1
+    ]);
+
+    $this->db->insert('destinations',[
+      'name' => 'Sabang',
+      'short_name' => "Sabang",
+      'is_vanrental_dropoff' => 1
+    ]);
+
+    $this->db->insert('destinations',[
+      'name' => 'Narra',
+      'short_name' => "Narra",
+      'is_vanrental_dropoff' => 1
+    ]);
+
+    $this->db->insert('destinations',[
+      'name' => 'Port Barton',
+      'short_name' => "Narra",
+      'is_vanrental_dropoff' => 1
     ]);
 
 

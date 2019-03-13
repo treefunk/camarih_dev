@@ -3,14 +3,41 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Testimonials extends Admin_Controller {
 
+    const PER_PAGE = 10;
+
 	public function __construct(){
         parent::__construct();
         $this->load->model('testimonial_model');
     }
 
-    public function index() // CMS > Testimonials (index)
+    public function index($offset = 0) // CMS > Testimonials (index)
     {
-        $data['testimonials'] = $this->testimonial_model->all();
+        // $data['testimonials'] = $this->testimonial_model->all();
+        $query = $this->testimonial_model->getQueryAll();
+
+        $per_page = self::PER_PAGE;
+
+        $this->load->library('pagination');
+
+        $clone_query = clone $query;
+
+        $query->offset($offset);
+        $query->limit($per_page);
+
+        $config = [
+            'base_url' => base_url('testimonials'),
+            'total_rows' => $clone_query->get()->num_rows(),
+            'per_page' => $per_page,
+            // 'reuse_query_string' => TRUE
+        ];
+        
+        
+        $this->pagination->initialize($config);
+
+        $data['testimonials'] = $query->get()->result();
+        
+        $data['links'] = $this->pagination->create_links();
+
 
 		$this->wrapper([
 			'view' => 'admin/testimonials/index',

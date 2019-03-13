@@ -18,7 +18,8 @@ class Welcome extends MY_Controller {
 		$data = [
 			'sliders' => $this->slider_model->all(),
 			'testimonials' => $this->testimonial_model->all(),
-			'destinations' => $this->destination_model->all()
+			'destinations' => $this->destination_model->getAllEndpoints(),
+			'origins' => $this->destination_model->getAllOrigins()
 		];
 
 

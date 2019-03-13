@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Vans extends Admin_Controller {
 
+    const PER_PAGE = 10;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -15,9 +17,37 @@ class Vans extends Admin_Controller {
         ]);
     }
     
-    public function index()
+    public function index($offset = 0)
     {
-        $data['vans'] = $this->van_model->all();
+        $query = $this->van_model->getAllQuery();
+        $per_page = self::PER_PAGE;
+
+        $this->load->library('pagination');
+
+        $clone_query = clone $query;
+
+        $query->offset($offset);
+        $query->limit($per_page);
+
+        $config = [
+            'base_url' => base_url('vans'),
+            'total_rows' => $clone_query->get()->num_rows(),
+            'per_page' => $per_page,
+            // 'reuse_query_string' => TRUE
+        ];
+        
+        
+        $this->pagination->initialize($config);
+
+        $query->order_by('name');
+
+        $data['vans'] = $query->get()->result();
+        
+        $data['links'] = $this->pagination->create_links();
+
+
+
+
         return $this->wrapper([
             'view' => 'admin/vans/index',
             'data' => $data

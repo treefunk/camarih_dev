@@ -1,10 +1,10 @@
 <template>
     <div>
-         <form role="form" :action="post_url" method="POST" enctype="multipart/form-data">
+         <form role="form" :action="post_url" method="POST" enctype="multipart/form-data" @submit.prevent="validateFields">
             
             <!-- van selection -->
             <div class="form-group">
-                <label for="select_van">Select Van</label>
+                <label for="select_van">Select Van*</label>
                 <select class="form-control input-lg m-bot15" name="van_id" id="van" v-model="trip_availability.van_id">
                     <option value="">Select Van</option>
                     <option v-for="(van,index) in vans" :key="index" :value="van.id">{{ van.name }}</option> 
@@ -15,7 +15,7 @@
 
             <div class="form-group">
                     <!-- origin selection -->
-                        <label for="select_van">Select Origin</label>
+                        <label for="select_van">Select Origin*</label>
                         <select v-model="trip_availability.origin.destination_from" class="form-control input-lg m-bot15" name="destination_from" id="van">
                             <option value="">Select Origin</option>
                             <option v-for="(origin,index) in origins" :key="index" :value="origin.id">{{ origin.name }}</option> 
@@ -26,7 +26,7 @@
 
             <!-- selling date -->
             <div class="form-group" >
-                <label for="selling_date">Selling Date</label>
+                <label for="selling_date">Selling Date*</label>
                 <div class="input-group input-large" data-date-format="mm/dd/yyyy">
                     <input name="selling_start" v-model="trip_availability.selling_start" id="datepicker_sellingstart" type="text" class="form-control dpd1 default-date-picker" autocomplete="off">
                     <span class="input-group-addon">To</span>
@@ -36,7 +36,7 @@
 
             <div class="form-group">
                 <!-- timepicker -->
-                <label for="departure_time">Departure Time</label>
+                <label for="departure_time">Departure Time*</label>
                 <div class="input-group bootstrap-timepicker">
                         <input readonly ref="dep_time" name="departure_time" type="text" class="form-control timepicker-default" autocomplete="off">
                         <span class="input-group-btn" >
@@ -64,7 +64,7 @@
             </div>
 
             <div>
-                <button v-if="trip_availability.rates.length != (this.destinations_data.length - 1)" type="button" class="btn_green" @click="addRate">Add Destinations</button>
+                <button v-if="trip_availability.rates.length != destinationMaxCount" type="button" class="btn_green" @click="addRate">Add Destinations</button>
                 <button v-if="this.trip_availability.rates.length > 0" type="submit" class="btn_orange right_btn">Submit</button>
             </div>
          </form>
@@ -75,6 +75,7 @@
 
     import datepickersConfig from './datepickersConfig.js';
     import Rate from './Rate.vue';
+    import errorMessages from './error_messages/trip_availability_errors'
 
     export default {
         components: { Rate },
@@ -137,32 +138,83 @@
                 origins: this.origins_data
             }
         },
+        computed: {
+            destinationMaxCount(){
+                let maxCount = 0;
+                maxCount += this.destinations_data.length
+                let destination_ids = this.destinations_data.map(v => v.id)
+                let intersects = destination_ids.includes(this.trip_availability.origin.destination_from)
+                if(intersects){
+                    maxCount--
+                    this.trip_availability.rates.splice(maxCount,this.trip_availability.rates.length - maxCount)
+                }
+                return maxCount
+            }
+        },
         /**
          *  METHODS
          */
         methods: {
             addRate(){
-                // if(this.trip_availability.rates.length == 0 ){
                     this.trip_availability.rates.push({
-                        origin_id: "",
                         destination_id: "",
                         price: ""
                     })
 
                     return
-                // }
+            },
+            validateFields(e){
 
-                // if(this.trip_availability.rates[this.trip_availability.rates.length-1].origin_id != ""
-                // && this.trip_availability.rates[this.trip_availability.rates.length-1].destination_id != ""
-                // ){
-                //     this.trip_availability.rates.push({
-                //         origin_id: this.trip_availability.rates[this.trip_availability.rates.length-1].destination_id,
-                //         destination_id: "",
-                //         price: ""
-                //     })
+                let obj = this.trip_availability
+                let missingFields = 0
 
-                //     return
-                // }
+                let errorKeys = { required: [] };
+
+                function validate(obj){
+                    
+
+                    for(let key in obj){
+
+
+                        if(typeof obj[key] == 'boolean'){ continue; }
+
+                        if(Array.isArray(obj[key])){
+                            for(let x = 0; x < obj[key].length ; x++){
+                                for(let k in obj[key][x]){
+                                    if(obj[key][x][k] == ""){
+                                        errorKeys.required.push(k)
+                                        missingFields++;
+                                    }
+                                }
+                            }
+                            continue;
+                        }
+
+                        if(typeof obj[key] == 'object' && !Array.isArray(obj[key])){ // if its an object recurse in it
+                            validate(obj[key])
+                            continue;
+                        }
+
+                        if (obj[key] == "" && !Array.isArray(obj[key])) {
+                            errorKeys.required.push(key)
+                            missingFields++
+                            continue;
+                        }
+
+                    }
+
+                    return errorKeys
+                }
+
+                let errors = validate(obj);
+                if(errors.required.length){
+                    for(let val of errors.required){
+                        alert(errorMessages[val].required)
+                        return -1
+                    }
+                }else{
+                    e.target.submit()
+                }
             },
             timeFocused(){
                 //todo

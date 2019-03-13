@@ -2,6 +2,7 @@
 defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Tourpackages extends Admin_Controller {
+	const PER_PAGE = 10;
 
 	public function __construct()
 	{
@@ -13,10 +14,33 @@ class Tourpackages extends Admin_Controller {
 	}
 
 
-	public function index()
+	public function index($offset = 0)
 	{
 
-		$data['packages'] = $this->package_model->all();
+		$query = $this->package_model->getAllQuery();
+
+		$per_page = self::PER_PAGE;
+
+        $this->load->library('pagination');
+
+        $clone_query = clone $query;
+
+        $query->offset($offset);
+        $query->limit($per_page);
+
+        $config = [
+            'base_url' => base_url('tourpackages'),
+            'total_rows' => $clone_query->get()->num_rows(),
+            'per_page' => $per_page,
+            // 'reuse_query_string' => TRUE
+        ];
+        
+        
+        $this->pagination->initialize($config);
+
+        $data['packages'] = $query->get()->result();
+        
+        $data['links'] = $this->pagination->create_links();
 
 		
 		$this->wrapper([

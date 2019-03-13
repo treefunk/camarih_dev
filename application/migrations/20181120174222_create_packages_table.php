@@ -22,11 +22,6 @@ class Migration_Create_packages_Table extends CI_Migration {
                                 'constraint' => '100',
                                 'null' => true
                         ),
-                        'destination_id' => array(
-                                'type' => 'INT',
-                                'constraint' => '100',
-                                'unsigned' => TRUE,
-                        ),
                         'rate' => array(
                                 'type' => 'DOUBLE'
                         ),

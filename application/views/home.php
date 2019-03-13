@@ -38,7 +38,8 @@
 
   <book-a-trip
   url='<?=base_url('availability/check')?>'
-  :destinations='<?=json_encode($destinations)?>'
+  :destinations_data='<?=json_encode($destinations)?>'
+  :origins_data='<?=json_encode($origins)?>'
   > </book-a-trip>
 
 

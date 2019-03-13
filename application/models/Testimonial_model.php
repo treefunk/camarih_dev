@@ -8,5 +8,10 @@ class Testimonial_model extends CMS_Model
         $this->table = "testimonials";
     }
 
+    public function getQueryAll()
+    {
+        return $this->db->from('testimonials');
+    }
+
     
 }

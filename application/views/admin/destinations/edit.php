@@ -30,7 +30,7 @@
                                                         <input type="checkbox" id="inlineCheckbox1" value="1" name="is_origin" <?=$destination->is_origin ? "checked" : null ?>>Origin
                                                     </label>
                                                     <label class="checkbox-inline">
-                                                        <input type="checkbox" id="inlineCheckbox2" value="1" name="is_endpoint" <?=$destination->is_endpoint ? "checked" : null ?>>Passenger Drop off
+                                                        <input type="checkbox" id="inlineCheckbox2" value="1" name="is_dropoff" <?=$destination->is_dropoff ? "checked" : null ?>>Passenger Drop off
                                                     </label>
                                             </div>
 

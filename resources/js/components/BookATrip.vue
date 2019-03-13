@@ -24,7 +24,7 @@
                         <h5>From</h5>
                         <select name="destination_from" v-model="destination_from">
                         <option value="">Select Origin</option>
-                            <option v-for="(destination,index) in destinations" :key="index" v-show="destination_to != destination.id" :value="`${destination.id}`">{{ destination.name }}</option>
+                            <option v-for="(origin,index) in origins" :key="index" v-show="destination_to != origin.id" :value="`${origin.id}`">{{ origin.name }}</option>
                         </select>
                     </li>
                     <li >
@@ -64,13 +64,18 @@
 
     export default {
         props: {
-            destinations: {
+            origins_data: {
+                type: Array
+            },
+            destinations_data: {
                 type: Array
             },
             url: String
         },
         data(){
             return {
+                destinations: this.destinations_data,
+                origins: this.origins_data,
                 destination_from: '',
                 destination_to: '',
                 triptype: 'oneway',
@@ -120,7 +125,16 @@
                 let to_elem = this.$refs.to
                 this.to = ""
                 to_elem.value = ""
+            },
+            triptype(newVal){
+                if(newVal == 'roundtrip'){
+                    this.destinations = this.origins_data
+                    this.destination_to = ""
+                }else{
+                    this.destinations = this.destinations_data
+                }
             }
+
         }
     }
 </script>

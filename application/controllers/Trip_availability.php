@@ -3,17 +3,69 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Trip_availability extends Admin_Controller {
 
+    const PER_PAGE = 10;
+
 	public function __construct(){
         parent::__construct();
         $this->load->model('tripavailability_model');
         $this->load->model('destination_model');
         $this->load->model('van_model');
         $this->load->model('rate_model');
+
+        $this->load->library('paginator');
     }
 
-    public function index() 
+    public function index($offset = 0) 
     {
-        $data['trips'] = $this->tripavailability_model->all();
+        $data['origins'] = $this->destination_model->getAllOrigins();
+        $data['vans'] = $this->van_model->all();
+        $get = $data['get'] = $this->input->get(null,true);
+
+        
+        $per_page = self::PER_PAGE;
+  
+        $query = $this->tripavailability_model->getAllQuery();
+        
+        //FILTER ORIGIN
+        if(!empty($get['origin_id'])){
+            $this->tripavailability_model->filterOrigin($query,$get['origin_id']);
+        }
+
+        //FILTER VAN
+        if(!empty($get['van_id'])){
+            $this->tripavailability_model->filterVan($query,$get['van_id']);
+        }
+
+        //FILTER SELLING DATE RANGE
+        if(!empty($get['selling_start']) && !empty($get['selling_end'])){
+            $this->tripavailability_model->filterSellingDate($query,[
+                'from' => $get['selling_start'],
+                'to' => $get['selling_end']
+            ]);
+        }
+
+        $this->load->library('pagination');
+
+        $query->order_by('origin_name');
+        $clone_query = clone $query;
+        $num_rows = $clone_query->get()->num_rows();
+
+        $query->offset($offset);
+        $query->limit($per_page);
+
+        $config = [
+            'base_url' => base_url('trip_availability'),
+            'total_rows' => $num_rows,
+            'per_page' => $per_page,
+            'reuse_query_string' => TRUE
+        ];
+        
+        
+        $this->pagination->initialize($config);
+
+        $data['trips'] = $query->get()->result();
+        
+        $data['links'] = $this->pagination->create_links();
 
 		$this->wrapper([
 			'view' => 'admin/trip_availability/index',

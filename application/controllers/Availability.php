@@ -257,10 +257,12 @@ class Availability extends MY_Controller {
 
     //step 4 - show summary
     public function summary(){
+
         
 
         $post = $this->input->post();
 
+        // var_dump($post); die();
         if(isset($post['is_roundtrip'])){
             $_SESSION['bup_seats'] = $post;
             $this->book(true);
@@ -304,10 +306,12 @@ class Availability extends MY_Controller {
 
         // all required data is present
 
-        $this->wrapper([
-            'data' => $data,
-            'view' => 'summary'
-        ]);
+        // $this->wrapper([
+        //     'data' => $data,
+        //     'view' => 'summary'
+        // ]);
+
+        $this->add_to_cart();
 
 
         

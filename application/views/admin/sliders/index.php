@@ -61,6 +61,9 @@
                     <?php endforeach; ?>
                     </tbody>
                   </table>
+                  <div class="pagination">
+                      <?= $links ?>
+                  </div>
               </section>
               <!-- page end-->
           </section>

@@ -8,12 +8,9 @@ class Package_model extends CMS_Model
         $this->table = "packages";
     }
 
-    public function all_query()
-    {
-        $this->db->select('*');
-        $this->db->from('packages');
-        $this->db->join('package_details','packages.id = package_details.package_id');
-        return $this->db->get();
+    public function getAllQuery(){
+        return $this->db->from('packages')
+                        ->join('package_details', 'packages.id = package_details.package_id');
     }
 
     public function all()

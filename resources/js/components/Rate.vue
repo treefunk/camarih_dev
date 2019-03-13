@@ -10,7 +10,7 @@
             <div class="col-md-6" v-if="false">
                 <div class="form-group">
                     <!-- origin selection -->
-                        <label for="select_van">Select Origin</label>
+                        <label for="select_van">Select Origin*</label>
                         <select class="form-control input-lg m-bot15" name="destination_from" id="van" v-model="rate.origin_id">
                             <option value="">Select Origin</option>
                             <option v-for="(destination,index) in destinations" :key="index" :value="destination.id">{{ destination.name }}</option> 
@@ -19,7 +19,7 @@
             </div>
             <div class="col-md-12">
                 <div class="form-group">
-                    <label for="select_van">Select Destination</label>
+                    <label for="select_van">Select Destination*</label>
                     <select v-model="rate.destination_id" class="form-control input-lg m-bot15" :name="`rates[${index}][destination_id]`"
                         id="destination">
                         <option value="">Select Destination</option>
@@ -32,7 +32,7 @@
         
 
         <div class="form-group">
-            <label for="price">Price</label>
+            <label for="price">Price*</label>
             <input v-model="rate.price" type="text" class="form-control" :name="`rates[${index}][price]`" id=""
                 placeholder="Enter Price">
         </div>

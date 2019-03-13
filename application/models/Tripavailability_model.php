@@ -208,5 +208,49 @@ class Tripavailability_model extends CMS_Model
         }
     }
 
+    // functions for Retrieving data
+
+    /**
+     * returns the query of trip_availability with joins
+     */
+    public function getAllQuery(){
+        $query = $this->db->from('trip_availability');
+
+        $query->select('
+        trip_availability.id,
+        trip_availability.selling_start,
+        trip_availability.selling_end,
+        trip_availability.created_at,
+        vans.name as van_name,
+        destinations.name as origin_name
+        ');
+        $query->join('vans','trip_availability.van_id = vans.id');
+        $query->join('destinations', 'trip_availability.destination_from = destinations.id');
+
+        return $query;
+    }
+
+    public function filterOrigin(&$query,$origin_id)
+    {
+        $query->where(['trip_availability.destination_from' => $origin_id]);
+        return true;
+    }
+
+    public function filterVan(&$query,$van_id)
+    {
+        $query->where(['trip_availability.van_id' => $van_id]);
+        return true;        
+    }
+
+    public function filterSellingDate(&$query,$date_range)
+    {
+        $from = DateTime::createFromFormat("m/d/Y",$date_range['from'],new DateTimeZone('Asia/Hong_Kong'))->setTime(0,0,0)->format('Y-m-d H:i:s');;
+        $to = DateTime::createFromFormat("m/d/Y",$date_range['to'],new DateTimeZone('Asia/Hong_Kong'))->setTime(23,59,59)->format('Y-m-d H:i:s');;
+
+        $query->where('selling_start <=',$to);
+        $query->where('selling_end >=', $from);
+        return true;
+    }
+
     
 }
