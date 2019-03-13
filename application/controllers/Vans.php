@@ -70,7 +70,7 @@ class Vans extends Admin_Controller {
 
         if(count($post))
         {
-            $this->form_validation->set_rules('name','Name','required');
+            $this->form_validation->set_rules('name','Name','required|is_unique[vans.name]');
         }
 
         if($this->form_validation->run() == FALSE)
@@ -147,7 +147,7 @@ class Vans extends Admin_Controller {
 
         if(count($post))
         {
-            $this->form_validation->set_rules('name','Name','required');      
+            $this->form_validation->set_rules('name','Name','required|is_unique[vans.name]');      
         }
 
         if($this->form_validation->run() == FALSE)

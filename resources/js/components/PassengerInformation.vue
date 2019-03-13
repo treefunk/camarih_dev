@@ -1,7 +1,13 @@
 <template>
     
         <div class="col-md-12 card" v-if="passenger.selected && !passenger.isPending">
+            <!-- <button class="btn btn-danger" type="button" >dfsfsdfsdfsdfsX</button> -->
             <div class="card-holder">
+                <div class="pull-right" style="z-index:1039">
+                    <button type="button" class="btn btn-danger" @click="unselect(index,parentindex)">
+                        <i  class="fa fa-times fa-lg"></i>
+                    </button>
+                </div>
                 <h4 style="text-align: center;">
             Seat {{ passenger.seatnum }}
             </h4>
@@ -59,6 +65,9 @@
                         name: e.target.value
                     }
                     this.$emit('update-passenger-name',passenger)
+            },  
+            unselect(idx,parentindex){
+                this.$emit('unselectSeat', { index: idx, parentindex: parentindex })
             }
         }
     }

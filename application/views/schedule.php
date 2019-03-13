@@ -14,7 +14,7 @@
             <h3>Trip Schedule</h3>
 
             <div class="table-hldr">
-                
+                <?php if(count($schedules)): ?>
                 <table class="table" >
                     <thead>
                         <tr>
@@ -28,16 +28,27 @@
                     <?php foreach($schedules as $sched): ?>
                         <tr>
                             <td>
-                                <?=$sched->trip_num?><?=ordinalSuffix($sched->trip_num)?> Trip
+                                <div class="text-center">
+                                    <?=$sched->trip_num?><?=ordinalSuffix($sched->trip_num)?> Trip
+                                </div>
                             </td>
-                            <td><?=$sched->departure_time_pps?></td>
-                            <td><?=$sched->departure_time_eln?></td>
+                            <td>
+                                <div class="text-center">
+                                    <?=$sched->departure_time_pps?>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="text-center">
+                                    <?=$sched->departure_time_eln?>
+                                </div>
+                            </td>
                         </tr>
                     <?php endforeach; ?>
                     </tbody>
 
 
                 </table>
+                <?php endif; ?>
             </div>
 
             <p>We provide the most comfortable and relaxing experience for our valued customers with our brand new fully air-conditioned vans (TOYOTA GRANDIA). You can sit back and relax while travelling for we have neck pillow to make your trip more comfortable with matching harmonious and melodious music and complimentary snacks on board courtesy of&nbsp;<em>Baker's Hill Palawan</em> </p> 

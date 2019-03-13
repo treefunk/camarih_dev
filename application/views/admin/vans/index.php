@@ -36,7 +36,7 @@
                     <?php foreach($vans as $van): ?>
                     <tr>
                         <td><?=$van->name?></td>
-                        <td style="max-width: 350px"><?=shortVer($van->description,200)?></td>
+                        <td style="max-width: 350px; word-wrap: break-word"><?=shortVer($van->description,200)?></td>
                         <td><?=$van->seat_map?></td>
                         <td><?=$van->created_at?></td>
                         <td>

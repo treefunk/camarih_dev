@@ -43,7 +43,7 @@
             
             <div v-for="(row,i) in seats" :key="i">
 
-                <passenger-information v-for="(passenger,index) in row" :parentindex="i" :index="index" :key="index" :passenger="passenger" > </passenger-information>
+                <passenger-information v-for="(passenger,index) in row" @unselectSeat="unselectSeat" :parentindex="i" :index="index" :key="index" :passenger="passenger" > </passenger-information>
             </div>
 
             <div class="container">
@@ -176,6 +176,9 @@
         methods: {
             showInfoForm(){
                 $('#bookingInformation').modal('show')   
+            },
+            unselectSeat(payload){
+                this.seats[payload.parentindex][payload.index].selected = false
             }
         }
     }

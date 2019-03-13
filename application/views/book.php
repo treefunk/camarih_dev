@@ -6,8 +6,13 @@
 <section class="sec-2">
     <div style="margin-bottom:100px">
     
-        <h2><?=$labels[$offset]?></h2>
-        <p>Please tap or click your choice of seat:</p>
+            <div id="legend">
+                    <h2><?=$labels[$offset]?></h2>
+                <p>Please tap or click your choice of seat:</p>
+               <p class="available" data-badge="27"> Available </p>
+               <p class="occupied" data-badge="27"> Occupied </p>
+               <p class="selectedseat" data-badge="27"> Selected </p>
+            </div>
         <a href="<?=base_url('availability/check')?>">
                     <button class="btn btn-info"><< Back</button>
                 </a>           

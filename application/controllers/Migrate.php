@@ -1,5 +1,7 @@
 <?php 
 
+use GuzzleHttp\Client;
+
 class Migrate extends CI_Controller
 {
 
@@ -25,6 +27,7 @@ class Migrate extends CI_Controller
 
       case 'refresh':
 
+      
       if ($this->migration->current() === FALSE){
         show_error($this->migration->error_string());
       }else{
@@ -56,7 +59,12 @@ class Migrate extends CI_Controller
             
                 $result = require_once 'text_refreshed.php'; // ^_^V -jhondz
                 $result = str_replace("x","&nbsp;",$result);
+                $image = $this->giffy();
+                
+                $result.= $image;
+
                 echo $result;
+                $this->session->sess_destroy();
         }
       }
 
@@ -101,8 +109,6 @@ class Migrate extends CI_Controller
       $this->db->insert('package_details',[
         'package_id' => $this->db->insert_id(),
         'description' => 'Hotel + Tours + Transfers',
-        'num_of_days' => 3,
-				'num_of_nights' => 2
       ]);
 
       $this->db->insert('packages',[
@@ -114,8 +120,6 @@ class Migrate extends CI_Controller
       $this->db->insert('package_details',[
         'package_id' => $this->db->insert_id(),
         'description' => 'Hotel + Tours',
-        'num_of_days' => 6,
-				'num_of_nights' => 4
       ]);
 
 
@@ -180,8 +184,40 @@ class Migrate extends CI_Controller
       'roundtrip_rate' => 4000
     ]);
 
+    $schedule_time = [
+      ['6:00 am','6:00 am'],
+      ['8:00 am','8:00 am'],
+      ['10:00 am','10:00 am'],
+      ['12:00 pm','1:00 pm'],
+      ['1:30 pm','4:00 pm'],
+      ['3:30 pm','5:30 pm'],
+      ['6:00 pm','7:00 pm']
+    ];
+
+    for($x = 0  ; $x < count($schedule_time) ; $x++){
+      $this->db->insert('trip_schedule',[
+        'trip_num' => $x + 1,
+        'departure_time_pps' => $schedule_time[$x][0],
+        'departure_time_eln' => $schedule_time[$x][1]
+      ]);
+    }
 
 
+
+
+
+  }
+
+  public function giffy() {
+    $client = new Client;
+
+    $res = $client->request('GET', 'https://api.tenor.com/v1/random?client=%22C09V03CYQKH1%22&q=%22jisoo%22');
+
+    $gifs = (json_decode($res->getBody()));
+    $random_gif = $gifs->results[rand(0,5)]->media[0]->gif->url;
+    $image = "<img src='{$random_gif}' width='250' height='250'>";
+
+    return $image;
   }
 
 }

@@ -4,18 +4,18 @@
             <form @submit.prevent="validateVanForm" role="form" :action="create_van_url" method="POST" enctype="multipart/form-data">
 
                 <div :class="['form-group',{'has-error': !formNotSubmitted && van.name == ''}]">
-                    <label for="header">Name</label>
+                    <label for="header">Name*</label>
                     <input type="text" name="name" class="form-control" id="header" v-model="van.name"
                         placeholder="Enter Van Name">
                 </div>
 
                 <div :class="['form-group',{'has-error': !formNotSubmitted && van.num_of_vans == ''}]">
-                    <label for="num_of_vans">Number of Vans</label>
+                    <label for="num_of_vans">Number of Vans*</label>
                     <input type="number" name="num_of_vans" id="" class="form-control" v-model="van.num_of_vans">
                 </div>
 
                 <div :class="['form-group',{'has-error': !formNotSubmitted && van.description == ''}]">
-                    <label for="header">Description</label>
+                    <label for="header">Description*</label>
                     <textarea name="description" v-model="van.description" id="description" class="form-control" rows="3"></textarea>
                 </div>
 
