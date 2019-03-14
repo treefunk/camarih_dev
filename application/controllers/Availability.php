@@ -257,43 +257,13 @@ class Availability extends MY_Controller {
 
     public function book_departure($type = "oneway"){ //refactored version
 
-        //TODO: move to a function to be reused for book_return
-        $offset = ($type == "oneway" ? 0 : 1);
+        $args = [
+            'type' => 'oneway',
+            'rates' => $this->input->post('rate'), // TODO: OR USE RATE FROM SESSION
+            'label' => "Departure"
+        ];
 
-        // clear booking data in session
-        if($type == "oneway"){
-            $_SESSION['current_booking_data'] = [
-                'post_data' => [],
-                'rate' => []
-            ];
-        }
-
-        // focus on the first element of the array
-        $rate_id = $this->input->post('rate')[$offset];
-
-        // get rate
-        $rate = $this->rate_model->findById($rate_id);
-        $_SESSION['current_booking_data']['rate'][] = $rate;
-
-        // get data
-        if($this->session->has_userdata('check_availability')){
-            if($offset == 0){
-                $post_data = $this->session->userdata('check_availability');
-            }elseif($offset == 1){
-                $post_data = $this->rev_from_to($this->session->userdata('check_availability'));
-            }
-            $_SESSION['current_booking_data']['post_data'][] = $post_data;
-        }
-
-        //get seatplan
-        $data = $this->getSeatPlan($rate,$post_data);
-        
-        $data['label'] = "Departure";
-        $data['offset'] = $offset;
-        $data['post_url'] = base_url('availability/summary');
-        
-        // OR GET DATA: [ $rate, $post_data, $offset] FROM SESSION?
-        
+        $data = $this->getSeatplanDetails($args);
 
         $this->wrapper([
             'data' => $data,
@@ -305,6 +275,27 @@ class Availability extends MY_Controller {
 
     public function book_return(){
 
+        $post = $this->input->post();
+
+        $new_seats = [];
+        foreach($post['selected'] as $s){ $new_seats[] = $s; }
+
+        $_SESSION['current_booking_data']['selected_seats'][] = $new_seats;
+        $_SESSION['current_booking_data']['booking_information'][] = $post['booking_information'];
+
+        $args = [
+            'type' => 'roundtrip',
+            'rates' => $_SESSION['current_booking_data']['rate'], // TODO: OR USE RATE FROM SESSION,
+            'label' => 'Return'
+        ];
+
+        $data = $this->getSeatplanDetails($args);
+
+        $this->wrapper([
+            'data' => $data,
+            'view' => 'book'
+        ]);
+
     }
 
     //step 4 - show summary
@@ -314,8 +305,7 @@ class Availability extends MY_Controller {
         $post = $this->input->post();
 
         //check if oneway or roundtrip
-        $oneway = count($_SESSION['current_booking_data']['post_data']) == 1;
-
+        $oneway = count($_SESSION['current_booking_data']['selected']) == 1;
         $new_seats = [];
         foreach($post['selected'] as $s){ $new_seats[] = $s; }
 
@@ -333,18 +323,16 @@ class Availability extends MY_Controller {
 
 
         if($oneway){
-            $regular_rate_per_header_price =  ($data['selected'][0]->price * count($data['selected_seats'][0]));
+            $regular_rate_per_header_price =  ($data['selected'][0]['rate_price'] * count($data['selected_seats'][0]));
         }else{
             for($x = 0; $x < count($data['selected']); $x++){
-                $regular_rate_per_header_price += ($data['selected'][$x]->price * count($data['selected_seats'][$x]));
+                $regular_rate_per_header_price += ($data['selected'][$x]['rate_price'] * count($data['selected_seats'][$x]));
             }
         }
 
         $data['final_price'] = $regular_rate_per_header_price;
 
         $this->add_to_cart();
-
-
         
 
         // clear current selection if added to cart
@@ -355,6 +343,7 @@ class Availability extends MY_Controller {
 
         
         $data = $this->checkDataSess(6);
+        
  
         if(!$this->session->has_userdata('cart')){
             $this->session->set_userdata('cart',[]);
@@ -509,8 +498,7 @@ class Availability extends MY_Controller {
 
         if($step >= 3){
             if($_SESSION['current_booking_data']['rate'] != []){ // rate
-                $origin = 
-                $data['selected'] = $_SESSION['current_booking_data']['rate'];
+                $data['selected'] = $_SESSION['current_booking_data']['selected'];
             }else{
                 return redirect(base_url('availability/check'));
             }
@@ -525,6 +513,10 @@ class Availability extends MY_Controller {
                 return redirect(base_url("availability/book/{$data['selected']['rate_id']}"));
             }
         }
+
+        // var_dump($data); die();
+
+
         return $data;
     }
 
@@ -633,4 +625,57 @@ class Availability extends MY_Controller {
     public function generateCart(){
         $this->cart_model->itemsWithPrices();
     }
+
+    /**
+     * $args['type'] = "oneway" or "roundtrip"
+     * $args['rates'] = [[rate_for_departure],[rate_for_return]]
+     */
+    public function getSeatplanDetails($args){
+        $offset = ($args['type'] == "oneway" ? 0 : 1);
+
+
+
+        // focus on the first element of the array
+        $rate_id = $args['rates'][$offset];
+
+        // get rate
+        $rate = $this->rate_model->findById($rate_id);
+
+        // clear booking data in session
+        if($args['type'] == "oneway"){
+            $_SESSION['current_booking_data'] = [
+                'post_data' => [],
+                'rate' => []
+            ];
+        }
+
+        $_SESSION['current_booking_data']['rate'][] = $rate;
+
+        if(count($args['rates']) == 2){
+            $_SESSION['current_booking_data']['rate'][] = $args['rates'][1];
+        }
+
+
+        // get data
+        if($this->session->has_userdata('check_availability')){
+            if($offset == 0){
+                $post_data = $this->session->userdata('check_availability');
+            }elseif($offset == 1){
+                $post_data = $this->rev_from_to($this->session->userdata('check_availability'));
+            }
+        }
+
+        //get seatplan
+        $data = $this->getSeatPlan($rate,$post_data);
+
+
+        $_SESSION['current_booking_data']['selected'][] = $data['selected'];
+
+        $data['label'] = $args['label'];
+        $data['offset'] = $offset;
+        $data['post_url'] = count($args['rates']) == 1 || $offset == 1 ? base_url('availability/summary') : base_url('availability/book_return');
+
+        return $data;
+    }
+    
 }
