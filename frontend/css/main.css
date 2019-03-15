@@ -540,6 +540,8 @@ input, select, textarea, button {
           overflow: hidden;
           display: inline-block;
           vertical-align: text-top; }
+          .home .sec-3 .testi-carou .text-hldr > .img-hldr > aside img {
+            height: 100%; }
         .home .sec-3 .testi-carou .text-hldr > .img-hldr > article {
           display: inline-block;
           margin-left: 25px;
