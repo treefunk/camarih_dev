@@ -1,26 +1,31 @@
 <template>
-  <div>
-    <h4 v-if="(this.existing.length + this.van_gallery.length) > 0">Images:</h4>
-    <div v-for="(uploaded,ix) in existing" :key="ix">
+  <div class="main-images-up">
+
+    <label v-if="(this.existing.length + this.van_gallery.length) > 0">Images:</label>
+    <div v-for="(uploaded,ix) in existing" :key="ix" class="clearfix  hldr--image">
       <button type="button" @click="removeExisting(ix,uploaded.id)" class="btn btn-danger">X</button>
       <div class="form-group">
         <label for="">Title</label>
         <input type="text" class="form-control" :name="`image_title[${uploaded.id}]`" v-model="uploaded.image_title">
       </div>
       <div class="form-group">
-        <img :src="`${van_gallery_url}/${uploaded.van_id}_${uploaded.image_name}`" height="250" width="250">
+        <div class="img-holder">
+          <img :src="`${van_gallery_url}/${uploaded.van_id}_${uploaded.image_name}`">
+        </div>
       </div>
     </div>
-      <div v-for="(gallery,index) in van_gallery"  :key="index" >
-        <div v-if="gallery.uploadReady">
+
+
+    <div v-for="(gallery,index) in van_gallery"  :key="index" v-if="gallery.uploadReady" class="clearfix  hldr--image">
             <button type="button" @click="remove(index)" class="btn btn-danger">X</button>
               <div class="form-group">
               <label for="">Title</label>
                 <input type="text" class="form-control info" :name="`van_gallery[]`">
               </div>
               <input @change="uploadImage(index,$event)" :ref="`file_${index}`" type="file" :name="`van_gallery[]`" >
-            <img v-if="gallery.preview_image != ''" :src="gallery.preview_image" height="250" width="250">
-        </div>
+            <div :class="{'img-holder': gallery.preview_image != '' }">
+              <img v-if="gallery.preview_image != ''" :src="gallery.preview_image">
+            </div>
 
         </div>
       <button type="button" @click="addImage" class="btn btn-default">Add Image</button>
@@ -28,6 +33,7 @@
         <input type="hidden" name="remove_images[]" :value="r">
       </div>
   </div>
+
 </template>
 
 

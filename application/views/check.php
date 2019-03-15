@@ -1,4 +1,4 @@
-<div class="check">
+<div class="check departure-trip">
 
 <section class="sec-1">
       <div class="overlay"></div>
@@ -171,13 +171,14 @@
     <?php endif; ?>
     <?php endif; ?>
 
-    <div class="text-center">
+    <div class="btn-holder clearfix">
+        <a href="<?=base_url()?>" class="left">
+                <button class="btn-gray" type="button">Book Another Trip</button>
+        </a>
         <?php if($book): ?>
-            <button type="submit" class="btn btn-primary">Book Now</button>
+            <button type="submit" class="btn-green right">Book Now</button>
         <?php endif; ?>
-            <a href="<?=base_url()?>">
-                <button class="btn btn-info" type="button">Book Another Trip</button>
-            </a>
+            
     </div>
     
     </form>

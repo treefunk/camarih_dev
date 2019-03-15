@@ -2,10 +2,7 @@
     <div>
             <div class="outline">
                 
-                <div v-for="(row,index) in seats" :key="index" :class="['row',{
-                    'seat': row.length == index + 1,
-                    'seat-spacing-sm': row.length == index + 1
-                }]">
+                <div v-for="(row,index) in seats" :key="index" class="rowlines">
                     
                     <!-- driver -->
                     <div :class="['parent',{'ch3': (row.length  + (index == 0 ? 1 : 0)) == 3, 'ch4': row.length == 4}]">
@@ -46,7 +43,7 @@
                 <passenger-information v-for="(passenger,index) in row" @unselectSeat="unselectSeat" :parentindex="i" :index="index" :key="index" :passenger="passenger" > </passenger-information>
             </div>
 
-            <div class="container">
+            
                 <div class="row">
 
                     <div class="modal fade" id="bookingInformation" tabindex="-1" role="dialog" aria-labelledby="bookingInformationLabel" aria-hidden="true"
@@ -95,7 +92,7 @@
                     </div>
                     
                 </div>
-            </div>
+            
             
 
             <div class="btn-hldr" v-if="currentSeats.length">

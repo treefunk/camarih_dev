@@ -185,6 +185,13 @@ $lightorange : #f0bb02;
 .overlay {     position: absolute; background: rgba(0, 0, 0, 0.2); height: 100%; width: 100%; z-index: 1; top: 0;}
 .nav-log { position: relative; z-index: 6;}
 
+.btn-gray { padding: 10px 25px; background: #515151; color: $white; font-family: $fontmain; font-size: 16px; text-transform: uppercase; border-radius: 10px;transition: 0.3s ease-in-out;}
+.btn-orange {padding: 10px 25px; background: #f68000; color: $white; font-family: $fontmain; font-size: 16px; text-transform: uppercase; border-radius: 10px; transition: 0.3s ease-in-out;}
+
+.btn-green { padding: 10px 25px; background: #429e47; color: $white; font-family: $fontmain; font-size: 16px; text-transform: uppercase; border-radius: 10px;  transition: 0.3s ease-in-out;}
+
+.btn-green:hover, .btn-orange:hover, .btn-gray:hover, .btn-green:focus, .btn-orange:focus, .btn-gray:focus { color: $white; transition: 0.3s ease-in-out; }
+
 .home {
     .sec-1 {
         .home-carousel { 
@@ -338,7 +345,7 @@ $lightorange : #f0bb02;
 
 
 .book-trip {     max-width: 76%; width: 100%; left: 50%; position: absolute; transform: translate(-50%, 0); /* margin: 0 auto; */ margin-top: -112px; z-index: 5;
-    > ul { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-flow: row wrap; justify-content: space-around; flex-wrap: wrap; box-shadow: 0px -2px 20px #ccc;
+    > ul { display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-flow: row wrap; justify-content: space-around; flex-wrap: wrap; box-shadow: 0px -2px 20px #ccc; background: #fff;
         > li { }
 
         > li:first-child { width: 15.72%; background: $green;
@@ -690,7 +697,24 @@ $lightorange : #f0bb02;
 
 
 
+#legend { margin-bottom: 20px;
+    h2 {  font-family: $fonthead; font-size: 30px; text-transform: uppercase; margin-bottom: 5px;}
+    p { font-family: $fontmain; font-size: 16px; margin-bottom: 10px;}
+    h6 { position: relative; }
+    ul { @extend .flex; justify-content: center;
+        li { padding-right: 25px;
+            h6 { font-family: $fontmain; font-size: 16px;  padding-left: 20px; position: relative; display: block;}
+            h6::after { position: absolute; left: 0; top: 50%; transform: translate(0, -50%); height: 15px; width: 15px;}  
+            .selectedincart::after {    content: ' ';  background: #51ffb6;   border-radius: 50%; box-shadow: 0 0 1px #333;}
+        }
 
+        li:last-child { padding-right: 0px;}
+    }
+}
+
+#legend + a { margin-bottom: 15px; display: block;
+    i { margin-right: 10px;}
+}
 
 
 
@@ -919,14 +943,39 @@ footer::after { position: absolute; content: ''; left: 0; right: 0; height: 3px;
 }
 
 
+.check.about-us {
+
+    .sec-2 {
+        min-height: 39.7vh;
+    }
+}
+
+
+
+
+
+.check.departure-trip { 
+    .sec-2 {
+        .table-hldr { padding: 15px 0px; border-top: 1px solid #d5d5d5;
+            h1 { font-family: $fonthead; font-size: 30px; margin-bottom: 20px;}
+        }
+
+        .btn-holder { text-align: center; max-width: 80%; width: 100%; margin: 0 auto;
+            button { margin-right: 15px; }
+            button:last-of-type { margin-right: 0px;}
+        }
+    }
+}
+
 .book {
     .sec-1 {     height: 340px; background-image: url(../images/package-page.jpg); background-size: cover;}
 
 
     .sec-2 {  padding: 40px 50px; min-height: 700px;
-        .parent { display: -webkit-box;  display: -moz-box;  display: -ms-flexbox;  display: -webkit-flex;  display: flex;  -webkit-flex-flow: row wrap;  justify-content: flex-start;  flex-wrap: wrap;
+        .parent.mainlist {min-height: 540px;}
+        .parent { display: -webkit-box;  display: -moz-box;  display: -ms-flexbox;  display: -webkit-flex;  display: flex;  -webkit-flex-flow: row wrap;  justify-content: flex-start;  flex-wrap: wrap; 
             > li:first-child { width: 250px;
-                .item { background: #429e47; padding: 25px 15px;
+                .item { background: #429e47; padding: 25px 15px; height: 100%;
                     label { color: $white; font-family: $fontmain; font-size: 18px; letter-spacing: 1px; margin-bottom: 5px;}
                     p { font-family: $fontmain; font-size: 18px; color: $white;}
 
@@ -1129,10 +1178,17 @@ input[type="checkbox"] { -webkit-appearance: checkbox;}
 
 
 .van-hldr {
+
+    .rowlines { position: absolute; width: 100%; padding: 0px 45px 0px 40px; left: 0;}
+    .rowlines:first-of-type { top: 165px;}
+    .rowlines:nth-of-type(2) { top: 265px;}
+    .rowlines:nth-of-type(3) { top: 360px;}
+    .rowlines:nth-of-type(4) { top: 459px;}
     .parent.ch3 { @extend .flex;
         .children { width: 33%;}
-
-        
+    }
+    .parent.ch4 { @extend .flex;
+        .children { width: 25%;}
     }
 }
 
