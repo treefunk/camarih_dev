@@ -141,7 +141,7 @@ class Tourpackages extends Admin_Controller {
 
 	public function update($id){
 		$post = $this->input->post();
-		var_dump($post); die();
+		var_dump($_FILES); die();
 		$images = format_multiple_files($_FILES['images']);
 
 		$package = $this->package_model->find($id);

@@ -45,47 +45,17 @@
 		</div>
 
 
-
+		<!-- SECOND TAB!! -->
 		<div v-show="tab == 2" :class="{'active': tab == 2}">
 
-				<ul v-if="packagegallery.length > 0">
-					<li v-for="(gallery,index) in this.packagegallery" :key="index">
-						<button class="btn btn-danger" type="button" @click="removeImage(index,gallery.id)">
-							<i class="fa fa-trash-o"></i>
-						</button>
-						<figure>
-
-							<img :src="`${gallery_url}${gallery.package_id}_${gallery.image_name}`" alt="img04">
-							<figcaption> <input type="hidden" :name="`images[${index}][id]`" :value="gallery.id">
-								<input type="text" :name="`images[${index}][image_title]`" :id="`inputimage_gal_${gallery.id}`" :value="gallery.image_title"
-								style="color:black">
-
-
-								<a class="fancybox" rel="group" :href="`${gallery_url}${gallery.package_id}_${gallery.image_name}`"
-								:title="gallery.image_title">View</a>
-							</figcaption>
-						</figure>
-					</li>
-				</ul>	
-
-
-				<div class="form-group">
-	                <label for="gallery">Add Image/s</label>
-	                <input @change="uploadIm" type="file" name="images[]" id="add_images" multiple />
-	            </div>
-
-				<div v-if="enable_preview">
-					<ul>
-						<li v-for="(uploaded,index) in uploaded_images" :key="index">
-							<button type="button" class="btn btn-danger" @click="deleteUploaded(index)">X</button>
-							<div>
-								<img :src="uploaded.preview_image" alt="">
-								<input type="text" :name="`images[${index}][image_title]`" id="">
-							</div>
-
-						</li>
-					</ul>
+				<div v-for="(gallery,index) in packagegallery" :key="index">
+					<button class="btn btn-danger" type="button" @click="remove(index)">X</button>
+					<img :src="gallery.preview_image" alt="">
+					<input type="file" @change="loadPreview" :name="`gallery_${index}`" :ref="`gallery_${index}`">
 				</div>
+
+					<button type="button" class="btn btn-default" @click="addImage" for="gallery">Add Image</button>
+
 
 	            <div class="btn-hldr">
 	            	<button type="button" class="finish btn_green left_btn" @click="tab = 1">Previous</button>
@@ -131,31 +101,12 @@
 			}
 		},
 		methods: {
-			uploadIm(e){
-				let uploadElem = e.target
-				let files = uploadElem.files
-				this.file_list = files
-				let that = this
-
-				for(let x = 0 ; x < files.length; x++){
-					var reader = new FileReader();
-
-					reader.onload = function(e) {
-						let prev_image = e.target.result
-						let preview = {
-							preview_image: prev_image,
-							title: ''
-						}
-						console.log({
-							counter: x,
-							preview: preview
-						})
-						that.uploaded_images.push(preview);
-					}
-
-					
-				reader.readAsDataURL(files[x]);
-				}
+			addImage(e){
+				
+				this.packagegallery.push({
+					image_title: "",
+					preview_image: ""
+				});
 
 				
 			},
@@ -166,10 +117,40 @@
 				// console.log(this.file_list)
 				
 			},
-			removeImage(index,image_id){
-				this.packagegallery_data.splice(index,1)
-				//TODO: RUN AJAX HERE TO REMOVE IMAGE IN DB
-				console.log(`deleting ${image_id}... in db`)
+			remove: function(index){
+                if(index != this.packagegallery.length - 1){
+                    for(var x = index; x < this.packagegallery.length - 1; x++){
+                        let f = document.querySelector("input[name='gallery_" + x + "'");
+                        let next = document.querySelector("input[name='gallery_" + (x+1) + "'");
+                        let cl = next.cloneNode()
+                        cl.setAttribute("name","gallery_" + x)
+						f.replaceWith(cl);
+						this.packagegallery[x].preview_image = this.packagegallery[x + 1].preview_image;
+                    }
+                    this.packagegallery.splice(this.packagegallery.length - 1,1)
+                }else{
+                    this.packagegallery.splice(index,1)
+                }
+			},
+			loadPreview(){
+
+				
+				let preview = "";
+				let self = this;
+				//iterate all gallery
+				for(let x = 0; x < this.packagegallery.length ; x++){
+					let reader = new FileReader();
+					let elem = document.querySelector(`input[type="file"][name="gallery_${x}"]`).files[0]
+					
+					if(elem != undefined){
+						reader.onload = function(){
+							self.packagegallery[x].preview_image = reader.result
+						}
+						console.log(elem)
+						reader.readAsDataURL(elem)
+					}
+				}
+				// update all preview image elem
 			}
 		},
 		data(){
