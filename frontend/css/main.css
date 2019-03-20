@@ -125,7 +125,7 @@ input, select, textarea, button {
 .pad-0 {
   padding: 0px; }
 
-.flex, .book-trip > ul > li:first-child > div, .book-trip > ul > li:nth-child(2) > div > ul, .book-trip > ul > li:last-child > div, .cart .sec-2 .main-hldr, .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent, .cart .sec-2 .main-hldr .checkout .main-list li .parent, .cart .sec-2 .main-hldr .checkout .btm-hldr .parent, .van-hldr .parent.ch3 {
+.flex, .book-trip > ul > li:first-child > div, .book-trip > ul > li:nth-child(2) > div > ul, .book-trip > ul > li:last-child > div, #legend ul, .cart .sec-2 .main-hldr, .cart .sec-2 .main-hldr .booking-part .booking-card .body ul > li .parent, .cart .sec-2 .main-hldr .checkout .main-list li .parent, .cart .sec-2 .main-hldr .checkout .btm-hldr .parent, .van-hldr .parent.ch3, .van-hldr .parent.ch4 {
   display: -webkit-box;
   display: -moz-box;
   display: -ms-flexbox;
@@ -253,6 +253,40 @@ input, select, textarea, button {
 .nav-log {
   position: relative;
   z-index: 6; }
+
+.btn-gray {
+  padding: 10px 25px;
+  background: #515151;
+  color: #fff;
+  font-family: "Circular Std Book", Arial, sans-serif;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out; }
+
+.btn-orange {
+  padding: 10px 25px;
+  background: #f68000;
+  color: #fff;
+  font-family: "Circular Std Book", Arial, sans-serif;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out; }
+
+.btn-green {
+  padding: 10px 25px;
+  background: #429e47;
+  color: #fff;
+  font-family: "Circular Std Book", Arial, sans-serif;
+  font-size: 16px;
+  text-transform: uppercase;
+  border-radius: 10px;
+  transition: 0.3s ease-in-out; }
+
+.btn-green:hover, .btn-orange:hover, .btn-gray:hover, .btn-green:focus, .btn-orange:focus, .btn-gray:focus {
+  color: #fff;
+  transition: 0.3s ease-in-out; }
 
 .home .sec-1 .home-carousel .item > aside {
   height: 750px; }
@@ -506,6 +540,8 @@ input, select, textarea, button {
           overflow: hidden;
           display: inline-block;
           vertical-align: text-top; }
+          .home .sec-3 .testi-carou .text-hldr > .img-hldr > aside img {
+            height: 100%; }
         .home .sec-3 .testi-carou .text-hldr > .img-hldr > article {
           display: inline-block;
           margin-left: 25px;
@@ -553,7 +589,8 @@ input, select, textarea, button {
     -webkit-flex-flow: row wrap;
     justify-content: space-around;
     flex-wrap: wrap;
-    box-shadow: 0px -2px 20px #ccc; }
+    box-shadow: 0px -2px 20px #ccc;
+    background: #fff; }
     .book-trip > ul > li:first-child {
       width: 15.72%;
       background: #429e47; }
@@ -1181,6 +1218,50 @@ input, select, textarea, button {
   position: absolute;
   content: ''; }
 
+#legend {
+  margin-bottom: 20px; }
+  #legend h2 {
+    font-family: "Circular Std Black", Arial, sans-serif;
+    font-size: 30px;
+    text-transform: uppercase;
+    margin-bottom: 5px; }
+  #legend p {
+    font-family: "Circular Std Book", Arial, sans-serif;
+    font-size: 16px;
+    margin-bottom: 10px; }
+  #legend h6 {
+    position: relative; }
+  #legend ul {
+    justify-content: center; }
+    #legend ul li {
+      padding-right: 25px; }
+      #legend ul li h6 {
+        font-family: "Circular Std Book", Arial, sans-serif;
+        font-size: 16px;
+        padding-left: 20px;
+        position: relative;
+        display: block; }
+      #legend ul li h6::after {
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translate(0, -50%);
+        height: 15px;
+        width: 15px; }
+      #legend ul li .selectedincart::after {
+        content: ' ';
+        background: #51ffb6;
+        border-radius: 50%;
+        box-shadow: 0 0 1px #333; }
+    #legend ul li:last-child {
+      padding-right: 0px; }
+
+#legend + a {
+  margin-bottom: 15px;
+  display: block; }
+  #legend + a i {
+    margin-right: 10px; }
+
 footer {
   background: #ececec;
   padding-top: 4px; }
@@ -1549,6 +1630,26 @@ footer::after {
 .check .pckage_wrap::after {
   display: none; }
 
+.check.about-us .sec-2 {
+  min-height: 39.7vh; }
+
+.check.departure-trip .sec-2 .table-hldr {
+  padding: 15px 0px;
+  border-top: 1px solid #d5d5d5; }
+  .check.departure-trip .sec-2 .table-hldr h1 {
+    font-family: "Circular Std Black", Arial, sans-serif;
+    font-size: 30px;
+    margin-bottom: 20px; }
+.check.departure-trip .sec-2 .btn-holder {
+  text-align: center;
+  max-width: 80%;
+  width: 100%;
+  margin: 0 auto; }
+  .check.departure-trip .sec-2 .btn-holder button {
+    margin-right: 15px; }
+  .check.departure-trip .sec-2 .btn-holder button:last-of-type {
+    margin-right: 0px; }
+
 .book .sec-1 {
   height: 340px;
   background-image: url(../images/package-page.jpg);
@@ -1556,6 +1657,8 @@ footer::after {
 .book .sec-2 {
   padding: 40px 50px;
   min-height: 700px; }
+  .book .sec-2 .parent.mainlist {
+    min-height: 540px; }
   .book .sec-2 .parent {
     display: -webkit-box;
     display: -moz-box;
@@ -1569,7 +1672,8 @@ footer::after {
       width: 250px; }
       .book .sec-2 .parent > li:first-child .item {
         background: #429e47;
-        padding: 25px 15px; }
+        padding: 25px 15px;
+        height: 100%; }
         .book .sec-2 .parent > li:first-child .item label {
           color: #fff;
           font-family: "Circular Std Book", Arial, sans-serif;
@@ -1841,7 +1945,22 @@ input[type="checkbox"] {
   font-family: "Circular Std Book", Arial, sans-serif;
   font-size: 18px; }
 
+.van-hldr .rowlines {
+  position: absolute;
+  width: 100%;
+  padding: 0px 45px 0px 40px;
+  left: 0; }
+.van-hldr .rowlines:first-of-type {
+  top: 165px; }
+.van-hldr .rowlines:nth-of-type(2) {
+  top: 265px; }
+.van-hldr .rowlines:nth-of-type(3) {
+  top: 360px; }
+.van-hldr .rowlines:nth-of-type(4) {
+  top: 459px; }
 .van-hldr .parent.ch3 .children {
   width: 33%; }
+.van-hldr .parent.ch4 .children {
+  width: 25%; }
 
 /*# sourceMappingURL=main.css.map */

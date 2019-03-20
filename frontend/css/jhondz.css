@@ -139,9 +139,9 @@
        /* margin-bottom: 20px; */
    }
 
-   .outline .seat-spacing-sm {
+  /* .outline .seat-spacing-sm {
        margin-top: -20px !important;
-   }
+   }*/
 
    .radio {
        padding-left: 1px;
@@ -151,8 +151,6 @@
 
    #legend {
        text-align: center;
-       padding-left: 25px;
-       padding-right: 25px;
    }
 
    #legend h2 {

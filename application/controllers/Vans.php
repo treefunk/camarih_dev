@@ -145,9 +145,14 @@ class Vans extends Admin_Controller {
 
         $this->load->library('form_validation');
 
+        $van_from_db = $this->van_model->findById($id); 
+
+        $name_changed = strtolower($post['name']) != strtolower($van_from_db->name);
+
         if(count($post))
         {
-            $this->form_validation->set_rules('name','Name','required|is_unique[vans.name]');      
+            $unique_rule = $name_changed ? "|is_unique[vans.name]" : "";
+            $this->form_validation->set_rules('name','Name','required' . $unique_rule);      
         }
 
         if($this->form_validation->run() == FALSE)

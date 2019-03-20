@@ -153,3 +153,20 @@ src: local('Circular Std Black Italic'),
 .circle-btns li:last-child { margin-right: 0px;}
 
 
+.main-images-up {margin-top: 40px;} 
+.main-images-up .hldr--image button  { float: right;}
+.main-images-up .hldr--image .form-group label { width: 100%;}
+.main-images-up .hldr--image .img-holder { height: 200px; margin-bottom: 25px;}
+.main-images-up .hldr--image .img-holder img { height: 100%; object-fit: contain; max-width: 100%; }
+.main-images-up .hldr--image input[type="file"] { margin: 15px 0px;}
+
+
+
+
+
+
+
+
+
+
+

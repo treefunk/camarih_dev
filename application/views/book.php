@@ -9,14 +9,25 @@
             <div id="legend">
                     <h2><?=$labels[$offset]?></h2>
                 <p>Please tap or click your choice of seat:</p>
-               <p class="available" data-badge="27"> Available </p>
-               <p class="occupied" data-badge="27"> Occupied </p>
-               <p class="selectedseat" data-badge="27"> Selected </p>
+                <ul class="pad-0 listn">
+                    <li>
+                        <h6 class="available" data-badge="27"> Available </h6>
+                    </li>
+                    <li>
+                        <h6 class="occupied" data-badge="27"> Occupied </h6>
+                    </li>
+                    <li>
+                        <h6 class="selectedseat" data-badge="27"> Selected </h6>
+                    </li>
+                    <li>
+                        <h6 class="selectedincart" data-badge="27"> Selected in Cart</h6>
+                    </li>
+                </ul>
             </div>
         <a href="<?=base_url('availability/check')?>">
-                    <button class="btn btn-info"><< Back</button>
+                    <button class="btn btn-gray"><i class="fa fa-angle-left"></i>Back</button>
                 </a>           
-        <ul class="parent pad-0 listn">
+        <ul class="parent pad-0 listn mainlist">
             <book-summary
             :book_data='<?=json_encode($selected)?>'
             >
