@@ -187,6 +187,6 @@
 
 <style>
 .selected{
-	color:green;
+	background-color:#f68000 !important;
 }
 </style>

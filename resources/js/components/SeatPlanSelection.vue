@@ -27,7 +27,7 @@
 
 
                                 <input 
-                            v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending" name="seat[]" :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
+                            v-model="seats[index][i]['selected']" :value="seat" :disabled="seat.isOccupied || seat.isPending"  :class="{'occupied':seat.isOccupied,'pending':seat.isPending}"  :id="`seat-${seat.seatnum}`"  type="checkbox" > 
                                 <label :for="`seat-${seat.seatnum}`">
                                     <div class="seat z-depth-soft"> <span class="idx">{{ seat.seatnum }}</span> </div>
                                     <div class="seat-after z-depth-1"> </div>
@@ -71,11 +71,11 @@
                                     </div> -->
 
 
-                                    <div class="form-group"> <label for="pickup"> Pickup Location </label> <textarea name="booking_information[pickup_location]" class="form-control" id="pickup"
+                                    <div class="form-group"> <label for="pickup"> Pickup Location </label> <textarea v-model="booking_information['pickup_location']" name="booking_information[pickup_location]" class="form-control" id="pickup"
                                             required="" rows="3"> </textarea> </div>
 
 
-                                    <div class="form-group"> <label for="drop"> Drop Location </label> <textarea name="booking_information[drop_location]" class="form-control" id="drop" required=""
+                                    <div class="form-group"> <label for="drop"> Drop Location </label> <textarea v-model="booking_information['drop_location']" name="booking_information[drop_location]" class="form-control" id="drop" required=""
                                             rows="3"> </textarea> </div>
 
 
@@ -127,6 +127,14 @@
                 type: Array,
                 default: () => []
             },
+            booking_information_data: {
+                type: Object,
+                default: () => { return {
+                        pickup_location: "",
+                        drop_location: ""
+                    }
+                }
+            },
             current_seats_data:{
                 type: Array,
                 default: () => []
@@ -135,7 +143,8 @@
         data(){
             return {
                 seats: this.seats_data,
-                sels: this.sels_data
+                sels: this.sels_data,
+                booking_information: this.booking_information_data
             }
         },
         mounted(){

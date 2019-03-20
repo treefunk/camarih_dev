@@ -11,6 +11,7 @@
             :shopping_cart_data='<?=json_encode($cart)?>'
             item_remove_url='<?=base_url('cart/removeitem/')?>'
             checkout_url='<?=base_url('availability/process_cart')?>'
+            edit_base_url='<?=base_url('availability/book_departure')?>'
             >
             </shopping-cart>
 

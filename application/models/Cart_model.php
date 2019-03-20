@@ -23,8 +23,8 @@ class Cart_model extends CMS_Model
         unset($_SESSION['selected_rate']);
         unset($_SESSION['selected_package']);
         unset($_SESSION['selected_rate']);
-        unset($_SESSION['bup_seats']);
-        unset($_SESSION['bup_data']);
+        var_dump($_SESSION['current_booking_data']); die();
+        // unset($_SESSION['current_booking_data']);        
         return true;
     }
 

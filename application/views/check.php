@@ -87,7 +87,7 @@
     ?>
 
 
-    <form action="<?=base_url('availability/book/')?>" method="post">
+    <form action="<?=base_url('availability/book_departure/')?>" method="post">
     <?php if(count($available_trips[0]) && $book): ?>
     <div class="table-hldr">
     <div class="text-center">

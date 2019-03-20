@@ -9,6 +9,7 @@
                 <booking-trip 
                 :index="index" 
                 v-if="item.item_type == 'booking_trip'" 
+                :edit_base_url="edit_base_url"
                 :trip="item" 
                 v-model="item[index]" 
                 @addcheckout="addBookingTrip" 
@@ -152,6 +153,10 @@
             checkout_url: {
               type: String,
               default: 'youdidnotspecifythecheckouturlhehe'
+            },
+            edit_base_url: {
+              type: String,
+              default: "noediturl"
             }
         },
         data() {
