@@ -13,7 +13,7 @@
                     </div>
                     <div class="right">
                       <div class="icon-hldr">
-                        <!-- <a href=""><i class="fa fa-pencil"></i></a> -->
+                        <a :href="`${this.edit_base_url}/${booking_num}`"><i class="fa fa-pencil"></i></a>
                         <a href="" @click.prevent="remove"><i class="fa fa-close"></i></a>
                       </div>
                     </div>
@@ -135,7 +135,8 @@
         mixins: [ cart_item ],
         props: {
             trip: {},
-            index: Number
+            index: Number,
+            edit_base_url: String
         },
         mounted(){
           this.checked = true

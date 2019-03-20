@@ -8,7 +8,7 @@
     
         <h2><?=$label?></h2>
         <p>Please tap or click your choice of seat:</p>
-        <a href="<?=base_url('availability/check')?>">
+        <a href="<?=$back_url?>">
                     <button class="btn btn-info"><< Back</button>
                 </a>           
         <ul class="parent pad-0 listn">
@@ -24,6 +24,7 @@
                     :seats_data='<?=json_encode($seat_layout)?>'
                     :seat_map='<?=json_encode($seat_map)?>'
                     :sels_data='<?=json_encode([])?>'
+                    :booking_information_data='<?=json_encode($booking_information)?>'
                     key="<?=$offset?>"
                     ></seat-plan-selection>
 

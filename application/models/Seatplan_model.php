@@ -125,12 +125,11 @@ class Seatplan_model extends CMS_Model
     public function getCurrentSeatsByRateId($rate_id,$offset)
     {
         $current_seats = [];
+        if(isset($_SESSION['current_booking_data']['selected'][$offset])
+            && isset($_SESSION['current_booking_data']['selected_seats'][$offset])
+            && $rate_id == $_SESSION['current_booking_data']['selected'][$offset]['rate_id']){
 
-        if(isset($_SESSION['selected'][$offset])
-            && isset($_SESSION['selected_seats'][$offset])
-            && $rate_id == $_SESSION['selected'][$offset]['rate_id']){
-
-            $seats = $_SESSION['selected_seats'][$offset];
+            $seats = $_SESSION['current_booking_data']['selected_seats'][$offset];
 
             foreach($seats as $seat){
                 $current_seats[] = (object)[
@@ -146,7 +145,7 @@ class Seatplan_model extends CMS_Model
         return $current_seats;
     }
 
-    public function getPendingSeatsByRateAndDate($rate,$date){
+    public function getPendingSeatsByRateAndDate($rate,$date,$booking_num = null){
      
         $pending_seats = [];
 
@@ -168,6 +167,15 @@ class Seatplan_model extends CMS_Model
                         $return_index = $index;
                         $to_add = true;
                     }
+
+                    if($booking_num){
+                        if($item['booking_num'] == $booking_num){
+                            $to_add = false;
+                        }
+                    }
+
+
+
 
                     foreach($seat_group as $seat){
                         if($to_add){

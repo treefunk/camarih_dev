@@ -109,8 +109,14 @@ class Availability extends MY_Controller {
                 }
                 $index++;
             }
+
+        if(isset($_SESSION['current_booking_data']['selected_seats'])){
+            unset($_SESSION['current_booking_data']['selected_seats']);
+        }
+        if(isset($_SESSION['current_booking_data']['booking_information'])){
+            unset($_SESSION['current_booking_data']['booking_information']);
+        }
             
-        // var_dump($data['available_trips']); die();
 
         
         $this->wrapper([
@@ -255,15 +261,26 @@ class Availability extends MY_Controller {
 
     // }
 
-    public function book_departure($type = "oneway"){ //refactored version
+    public function book_departure($booking_num = null){ //refactored version
 
-        $args = [
+        if($booking_num){
+            if($current = $this->setCurrentDataByBookingNum($booking_num)){
+                $_SESSION['current_booking_data'] = $current;
+            }else{
+                die("Invalid Booking number");
+            }
+        }
+    
+        $args = [   
             'type' => 'oneway',
-            'rates' => $this->input->post('rate'), // TODO: OR USE RATE FROM SESSION
-            'label' => "Departure"
+            'rates' => $this->input->post('rate') ?: $_SESSION['current_booking_data']['rate'],
+            'label' => "Departure",
+            'booking_num' => $booking_num
         ];
 
         $data = $this->getSeatplanDetails($args);
+
+    
 
         $this->wrapper([
             'data' => $data,
@@ -273,23 +290,40 @@ class Availability extends MY_Controller {
 
     }
 
-    public function book_return(){
+    public function book_return($booking_num = null){
 
-        $post = $this->input->post();
+        $post = $this->input->post() ?: $_SESSION['current_booking_data']['selected_seats'][0];
+        $post['booking_information'] = $this->input->post('booking_information') ?: $_SESSION['current_booking_data']['booking_information'][0];
 
         $new_seats = [];
-        foreach($post['selected'] as $s){ $new_seats[] = $s; }
+        if(isset($post['selected'])){
+            foreach($post['selected'] as $s){ $new_seats[] = $s; }
+        }
+        
+        if(!isset($_SESSION['current_booking_data']['selected_seats']) ){
+            $_SESSION['current_booking_data']['selected_seats'] = [];
+            $_SESSION['current_booking_data']['selected_seats'][] = $new_seats; // create a new data
+        }else{
+            $_SESSION['current_booking_data']['selected_seats'][0] = $new_seats; // overwrite existing
+        }
 
-        $_SESSION['current_booking_data']['selected_seats'][] = $new_seats;
-        $_SESSION['current_booking_data']['booking_information'][] = $post['booking_information'];
+        if(!isset($_SESSION['current_booking_data']['booking_information'])){
+            $_SESSION['current_booking_data']['booking_information'] = [];
+            $_SESSION['current_booking_data']['booking_information'][] =  $post['booking_information']; // create a new data
+        }else{
+            $_SESSION['current_booking_data']['booking_information'][0] =  $post['booking_information']; // overwrite existing
+        }
 
         $args = [
             'type' => 'roundtrip',
             'rates' => $_SESSION['current_booking_data']['rate'], // TODO: OR USE RATE FROM SESSION,
-            'label' => 'Return'
+            'label' => 'Return',
+            'booking_num' => $booking_num
         ];
 
+
         $data = $this->getSeatplanDetails($args);
+
 
         $this->wrapper([
             'data' => $data,
@@ -529,7 +563,7 @@ class Availability extends MY_Controller {
         $this->session->sess_destroy();
     }
 
-    public function getSeatPlan($rate,$post_data){
+    public function getSeatPlan($rate,$post_data,$booking_num = null){
         //GET VAN LAYOUT
         $data['seat_map'] = $this->rate_model->getVanlayoutByRateId($rate->id);                
 
@@ -537,11 +571,10 @@ class Availability extends MY_Controller {
         $data['occupied_seat_map'] = $this->seatplan_model->getOccupiedSeatsByRate($rate,$post_data['departure_from']);
         
         //GET SELECTED SEATS IN CART
-        $data['pending_seat_map'] = $this->seatplan_model->getPendingSeatsByRateAndDate($rate,$post_data['departure_from']);
-
+        $data['pending_seat_map'] = $this->seatplan_model->getPendingSeatsByRateAndDate($rate,$post_data['departure_from'],$booking_num);
         //todo GET CURRENT SEATS IN SESSION
-        // $data['current_seat_map'] = $this->seatplan_model->getCurrentSeatsByRateId($rate->id,$offset)[$offset];
-        
+        $data['current_seat_map'] = $this->seatplan_model->getCurrentSeatsByRateId($rate->id,0);
+
         // SET SESSION
         $data['selected'] = [
             'from' => $post_data['departure_from'],
@@ -566,16 +599,18 @@ class Availability extends MY_Controller {
             for($x = 0 ; $x < (int)$row_length ; $x++)
             {
                 $found = false;
-                // foreach($data['current_seat_map'] as $current)
-                // {
-                //     if($current->seatnum == $index){
-                //         $s['bday'] = $current->bday;
-                //         $s['name'] = $current->name;
-                //         $found = true;
-                //     }
-                //     continue;
 
-                // }
+                foreach($data['current_seat_map'] as $current)
+                {
+                    if($current->seatnum == $index){
+                        $s['bday'] = $current->bday;
+                        $s['name'] = $current->name;
+                        $found = true;
+                    }
+                    continue;
+
+                }
+
                 $seat = (object)[
                     'seatnum' => $index,
                     'bday' => $found ? $s['bday'] : '',
@@ -632,27 +667,30 @@ class Availability extends MY_Controller {
      */
     public function getSeatplanDetails($args){
         $offset = ($args['type'] == "oneway" ? 0 : 1);
-
+        
 
 
         // focus on the first element of the array
-        $rate_id = $args['rates'][$offset];
+        $rate = $args['rates'][$offset];
+
+        
 
         // get rate
-        $rate = $this->rate_model->findById($rate_id);
+        $rate = !is_string($rate) ? $rate : $this->rate_model->findById($rate);
 
         // clear booking data in session
-        if($args['type'] == "oneway"){
-            $_SESSION['current_booking_data'] = [
-                'post_data' => [],
-                'rate' => []
-            ];
+        if($args['type'] == "oneway" && !isset($_SESSION['current_booking_data']['rate'])){
+            $_SESSION['current_booking_data']['post_data'] = [];
+            $_SESSION['current_booking_data']['rate'] = [];
         }
 
-        $_SESSION['current_booking_data']['rate'][] = $rate;
 
-        if(count($args['rates']) == 2){
-            $_SESSION['current_booking_data']['rate'][] = $args['rates'][1];
+        if(count($_SESSION['current_booking_data']['rate']) == 0){
+            $_SESSION['current_booking_data']['rate'][] = $rate;
+        }
+
+        if(count($args['rates']) == 2 && $offset == 0 && count($_SESSION['current_booking_data']['rate']) != 2){
+            $_SESSION['current_booking_data']['rate'][] = $this->rate_model->findById($args['rates'][1]);
         }
 
 
@@ -666,16 +704,53 @@ class Availability extends MY_Controller {
         }
 
         //get seatplan
-        $data = $this->getSeatPlan($rate,$post_data);
+        $data = $this->getSeatPlan($rate,$post_data,$args['booking_num']);
 
-
+        if($offset == 0){
+            $_SESSION['current_booking_data']['selected'] = [];
+        }
         $_SESSION['current_booking_data']['selected'][] = $data['selected'];
+    
+
+        $data['booking_information'] = isset($_SESSION['current_booking_data']['booking_information']) && $offset == 0 ? $_SESSION['current_booking_data']['booking_information'][$offset] : (object)['pickup_location' => "", 'drop_location' => ""];
+
+
+        $last_seat_selection = count($args['rates']) == 1 || $offset == 1;
 
         $data['label'] = $args['label'];
         $data['offset'] = $offset;
-        $data['post_url'] = count($args['rates']) == 1 || $offset == 1 ? base_url('availability/summary') : base_url('availability/book_return');
+        $data['post_url'] = $last_seat_selection ? base_url('availability/summary') : base_url('availability/book_return');
+        $data['back_url'] = $last_seat_selection ? base_url('availability/book_departure') : base_url('availability/check');
 
         return $data;
+    }
+
+    public function setCurrentDataByBookingNum($booking_num){
+        $cart = $_SESSION['cart'];
+
+        $data = [];
+        for($x = 0; $x < count($cart); $x++){
+            if($cart[$x]['booking_num'] == $booking_num){
+                $data = $cart[$x];
+                break;
+            }
+            $data = false;
+        }
+
+        if($data){
+
+            $res['rate'] = [];
+            foreach($data['selected'] as $selected){
+                $res['rate'][] = $this->rate_model->findById($selected['rate_id']);
+            }
+            $res['selected'] = $data['selected'];
+            $res['selected_seats'] = $data['selected_seats'];
+            $res['booking_information'] = $data['booking_information'];
+
+            return $res;
+        }else{
+            return false;
+        }
     }
     
 }
