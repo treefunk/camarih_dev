@@ -7,7 +7,7 @@
     <div style="margin-bottom:100px">
     
             <div id="legend">
-                    <h2><?=$labels[$offset]?></h2>
+                    <h2><?=$label?></h2>
                 <p>Please tap or click your choice of seat:</p>
                 <ul class="pad-0 listn">
                     <li>
@@ -24,7 +24,7 @@
                     </li>
                 </ul>
             </div>
-        <a href="<?=base_url('availability/check')?>">
+        <a href="<?=$back_url?>">
                     <button class="btn btn-gray"><i class="fa fa-angle-left"></i>Back</button>
                 </a>           
         <ul class="parent pad-0 listn mainlist">

@@ -17,6 +17,7 @@
             <package-list 
             :packages='<?=json_encode($packages)?>'
             single_url="<?=base_url('packages/selected')?>"
+            add_to_cart_url="<?=base_url('packages/add_to_cart')?>"
             >
           </package-list>
 

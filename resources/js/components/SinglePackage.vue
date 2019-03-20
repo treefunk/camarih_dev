@@ -21,10 +21,14 @@
                         </li>
                         <li>
                           <h6>Adults</h6>
-                          <input type="number" v-model="adult_count">
+                          <input type="number" v-model="adult_count" :min="item.package_details.minimum_count">
                         </li>
                     </ul>
                     <aside>
+                        <div class="text-center" style="margin-top:30px">
+                            <p :style="{ color: message_class }" :class="['msg-style']" v-if="message">{{ message }}</p>
+                            <div class="loading-dual" v-if="loading"></div>
+                        </div>
                       <ul class="pad-0 listn">
                         <li>
                           <a :href="`${this.single_url}/${item.id}`">View Details</a>
@@ -47,21 +51,43 @@
 </template>
 
 <script>
+    import axios from 'axios'
+
+
     export default {
         data(){
             return {
-                adult_count: 0,
+                adult_count: this.item.package_details.minimum_count,
                 isRight: ((this.index + 1) % 2 == 0) ,
-                in: this.index
+                in: this.index,
+                message: "",
+                message_class: "",
+                loading: false
             }
         },
-        props: [ 'item', 'index', 'single_url'],
+        props: [ 'item', 'index', 'single_url','add_to_cart_url'],
         methods: {
             addToCart: function() {
-
-                let new_item = Object.assign({},this.item,{ adult_count: this.adult_count })
-                this.$store.commit('addPackageToCart',{ item: new_item })
+              this.loading = true;
+              let new_item = Object.assign({},this.item,{ adult_count: this.adult_count })
+              axios.post(this.add_to_cart_url,new_item).then(res => {
+                let response = res.data
+                console.log(response)
+                this.loading = false
+                this.message = response.message
+                this.message_class = "green"
+              })
+              this.$store.commit('addPackageToCart',{ item: new_item })
             }
+        },
+        watch: {
+          adult_count(newV){
+            let min_count = this.item.package_details.minimum_count
+            if(parseInt(newV,10) < parseInt(min_count,10)){
+              alert(`Sorry, minimum count for this package is ${min_count}`)
+              this.adult_count = min_count
+            }
+          }
         }
     }
 </script>
@@ -79,6 +105,13 @@
 
 ul > li:nth-child(2) > button{
     background: #f68000
+}
+.msg-style{
+    font-family: "Circular Std Book", Arial, sans-serif;
+    font-size: 30px;
+    line-height: 30px;
+    margin-left: 30px;
+    margin-bottom: 22px;
 }
 
 </style>

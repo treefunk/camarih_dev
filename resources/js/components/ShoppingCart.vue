@@ -16,8 +16,12 @@
                 @removeMe="removeBookingItem(index)"
                 />
                 <booking-package 
-                :index="index" 
+                :index="index"
                 v-if="item.item_type == 'booking_package'"
+                :package_data="item"
+                v-model="item[index]"
+                @addcheckout="addBookingTrip" 
+                @removeMe="removeBookingItem(index)"
                 />
                 <booking-van 
                 :index="index" 
@@ -228,6 +232,9 @@
                     }else if(c.item_type == 'booking_van'){
                       total += parseFloat(c.total)
                       return total + accu
+                    }else if(c.item_type == 'booking_package'){
+                      total += parseFloat(c.total)
+                      return total + accu
                     }
                 },0)
               }
@@ -242,6 +249,7 @@
           formatType: (val) => {
             if(val == 'booking_trip'){ return "Trip Reservation" }
             if(val == 'booking_van'){ return "Van Rental" }
+            if(val == 'booking_package'){ return "Tour Package" }
           }
         }
           

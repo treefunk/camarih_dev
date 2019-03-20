@@ -19,7 +19,8 @@ class Availability extends MY_Controller {
             'van_model',
             'checkout_model',
             'bookinginformation_model',
-            'vanrent_model'
+            'vanrent_model',
+            'packagebooking_model'
         ]);
 
     }
@@ -392,7 +393,7 @@ class Availability extends MY_Controller {
         return redirect(base_url('cart'));
     }
 
-    public function process_cart(){
+    public function process_cart(){ //TODO: get price rate from database not from frontend!!!
         $post = $this->input->post(null,true);
         
 
@@ -426,9 +427,11 @@ class Availability extends MY_Controller {
 
                 }elseif($item['item_type'] == 'booking_van'){ //booking van
 
+                    $van = $this->van_model->find($item['van']->id);
+                    
                     $data = [
                         'checkout_id' => $item['checkout_id'],
-                        'van_id' => $item['van']->id,
+                        'van_id' => $van->id,
                         'departure_date' => $item['departure_date'],
                         'trip_type' => $item['trip_type'],
                         'origin_id' => $item['origin']->id,
@@ -437,6 +440,20 @@ class Availability extends MY_Controller {
                     ];
 
                     $this->vanrent_model->add($data);
+
+                }elseif($item['item_type'] == 'booking_package'){
+
+                    $package = $this->package_model->find($item['id']);
+                    $price = $package->rate * $item['adult_count'];
+
+                    $data = [
+                        'checkout_id' => $item['checkout_id'],
+                        'package_id' => $package->id,
+                        'adult_count' => $item['adult_count'],
+                        'price' => $price
+                    ];
+
+                    $this->packagebooking_model->add($data);
                 }
                 
                 array_splice($_SESSION['cart'], ($index - ($cart_count - count($_SESSION['cart']))),1);

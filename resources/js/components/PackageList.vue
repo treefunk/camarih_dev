@@ -5,6 +5,7 @@
         :key="index" 
         :index="index"
         :single_url="single_url"
+        :add_to_cart_url="add_to_cart_url"
         >
         </single-package>
     </div>
@@ -19,7 +20,11 @@
         components : {
             'single-package' : SinglePackage
         },
-        props: [ 'packages','single_url']
+        props: {
+            packages: Array,
+            single_url: String,
+            add_to_cart_url: String
+        }
     }
 </script>
 

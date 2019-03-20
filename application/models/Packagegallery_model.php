@@ -28,7 +28,7 @@ class Packagegallery_model extends CMS_Model
                 parent::add([
                     'package_id' => $data['package_id'],
                     'image_name' => str_replace(' ','_',$filename),
-                    'image_title' => ''
+                    'image_title' => $data['images'][$i]['image_title']
                 ]);
             }else{
                 $errors[] = $images[$i]['name'] . ": "  . $filename['error'];

@@ -10,7 +10,6 @@ import SeatPlanSelection from './components/SeatPlanSelection.vue'
 import VanSeatMap from './components/VanSeatMap.vue'
 import CreatePackageForm from './components/CreatePackageForm.vue'
 import BookSummary from './components/BookSummary.vue'
-import PackageSelection from './components/PackageSelection.vue'
 import FinalSummary from './components/FinalSummary.vue'
 import ShoppingCart from './components/ShoppingCart.vue'
 import BookATrip from './components/BookATrip.vue'
@@ -44,7 +43,6 @@ new Vue({
         'van-seat-map': VanSeatMap,
         'create-package-form': CreatePackageForm,
         'book-summary': BookSummary,
-        'package-selection': PackageSelection,
         'final-summary': FinalSummary,
         'shopping-cart': ShoppingCart,
         'book-a-trip' : BookATrip,

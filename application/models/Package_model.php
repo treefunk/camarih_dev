@@ -30,7 +30,7 @@ class Package_model extends CMS_Model
             ])->row();
             
             $package->package_details = $package_details;
-            $package->rate = number_format($package->rate,2,'.',',');
+            $package->rate = $package->rate;
             $package->image_path = base_url('frontend/images/')."package.jpg";
         }
         return $packages;

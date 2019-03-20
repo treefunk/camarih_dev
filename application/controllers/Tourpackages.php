@@ -65,26 +65,24 @@ class Tourpackages extends Admin_Controller {
 		
 		
 		$post = $this->input->post();
-
 		$this->db->trans_start();
 
 
 		if($package_id = $this->package_model->add([
 			'name' => $post['name'],
 			'rate' => $post['rate'],
-			'destination_id' => $post['destination_id']
 		])){
 			//package details
 			$this->packagedetail_model->add([
 				'package_id' => $package_id,
 				'description' => $post['description'],
-				'num_of_days' => $post['num_of_days'],
-				'num_of_nights' => $post['num_of_nights']
+				'minimum_count' => $post['minimum_count']
 			]);
 
 			//package gallery
 			$image_errors = $this->packagegallery_model->add([
-				'package_id' => $package_id
+				'package_id' => $package_id,
+				'images' => $post['images']
 			],$images);
 
 			$alert = [
@@ -143,7 +141,7 @@ class Tourpackages extends Admin_Controller {
 
 	public function update($id){
 		$post = $this->input->post();
-
+		var_dump($post); die();
 		$images = format_multiple_files($_FILES['images']);
 
 		$package = $this->package_model->find($id);
@@ -154,7 +152,6 @@ class Tourpackages extends Admin_Controller {
 		$changes += (int)$this->package_model->update($package->id, [
 			'name' => $post['name'],
 			'rate' => $post['rate'],
-			'destination_id' => $post['destination_id'] 
 		]);
 
 		$changes += (int)$this->packagedetail_model->update($package->package_details->id,[
@@ -214,4 +211,7 @@ class Tourpackages extends Admin_Controller {
 		return redirect(base_url('tourpackages'));
 
 	}
+
+
+	
 }

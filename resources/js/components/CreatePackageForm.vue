@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<form  role="form" method="POST" :action="form_url" enctype="multipart/form-data" class="form-horizontal" >
 		<ul class="circle-btns">
 			<li :class="{'selected': tab == 1}"  @click="tab = 1"><a>Overview</a></li>
 			<li :class="{'selected': tab == 2}" @click="tab = 2"><a>Gallery</a></li>
@@ -79,7 +80,7 @@
 							<button type="button" class="btn btn-danger" @click="deleteUploaded(index)">X</button>
 							<div>
 								<img :src="uploaded.preview_image" alt="">
-								<input type="text" name="" id="">
+								<input type="text" :name="`images[${index}][image_title]`" id="">
 							</div>
 
 						</li>
@@ -92,12 +93,14 @@
 	            </div>
 	            
 		</div>
+		</form>
 	</div>
 </template>
 
 <script>
 	export default {
 		props: {
+			form_url: String,
 			'packagegallery_data' : {
                 type: Array,
                 default: () => []
@@ -188,5 +191,7 @@
 <style>
 .selected{
 	background-color:#f68000 !important;
+	/* border: 2px solid black; */
+	box-shadow: 2px 2px 1px 1px;
 }
 </style>

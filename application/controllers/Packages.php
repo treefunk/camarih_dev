@@ -38,4 +38,24 @@ class Packages extends MY_Controller {
 			'data' => $data
 		]);
 	}
+
+	public function add_to_cart()
+	{
+			$data = json_decode(file_get_contents("php://input"));
+			$data = (array)$data;
+			if(!$this->session->has_userdata('cart')){
+				$this->session->set_userdata('cart',[]);
+			}
+	
+			$data['booking_num'] = uniqid();
+			$data['item_type'] = 'booking_package';
+	
+			$_SESSION['cart'][] = $data;
+
+			die(json_encode([
+				'message' => 'Package added to cart',
+				'code' => 200
+			]));
+			
+	}
 }

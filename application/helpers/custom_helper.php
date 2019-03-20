@@ -8,7 +8,9 @@ function format_multiple_files($files){
     $result = array(); 
     foreach($files as $key1 => $value1) 
         foreach($value1 as $key2 => $value2) 
-            $result[$key2][$key1] = $value2; 
+            $result[$key2][$key1] = $value2;
+
+    $result = array_reverse($result);
     return $result; 
 }
 
