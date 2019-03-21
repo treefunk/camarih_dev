@@ -4,6 +4,7 @@
 		<ul class="circle-btns">
 			<li :class="{'selected': tab == 1}"  @click="tab = 1"><a>Overview</a></li>
 			<li :class="{'selected': tab == 2}" @click="tab = 2"><a>Gallery</a></li>
+			<li :class="{'selected': tab == 3}" @click="tab = 3"><a>Inclusions</a></li>
 		</ul>
 
 
@@ -48,13 +49,21 @@
 		<!-- SECOND TAB!! -->
 		<div v-show="tab == 2" :class="{'active': tab == 2}">
 
-				<div v-for="(gallery,index) in packagegallery" :key="index">
-					<button class="btn btn-danger" type="button" @click="remove(index)">X</button>
-					<img :src="gallery.preview_image" alt="">
-					<input type="file" @change="loadPreview" :name="`gallery_${index}`" :ref="`gallery_${index}`">
+				<div v-for="(uploaded,index) in uploaded_images" :key="index">
+					<button class="btn btn-danger" type="button" @click="removeUploaded(index)">X</button>
+					<input type="hidden" :name="`uploaded_images[${index}][id]`" :value="uploaded.id">
+					<input type="text" class="form-control" v-model="uploaded_images[index].image_title" :name="`uploaded_images[${index}][image_title]`" v-if="uploaded.preview_image != ''">
+					<img class="preview" :src="`${gallery_url}/${package_.id}_${uploaded.image_name}`" alt="">
 				</div>
 
-					<button type="button" class="btn btn-default" @click="addImage" for="gallery">Add Image</button>
+				<div v-for="(gallery,index) in packagegallery" :key="index">
+					<button class="btn btn-danger" type="button" @click="remove(index)">X</button>
+					<input type="text" class="form-control" v-model="packagegallery[index].image_title" :name="`images[${index}][image_title]`" v-if="gallery.preview_image != ''">
+					<img :src="gallery.preview_image" alt="">
+					<input type="file" @change="loadPreview" :id="`gallery_${index}`" :name="`images[]`" :ref="`gallery_${index}`">
+				</div>
+				
+					<button  type="button" class="btn btn-default" @click="addImage" for="gallery">Add Image</button>
 
 
 	            <div class="btn-hldr">
@@ -62,6 +71,11 @@
 	            	<button type="submit" class="finish btn_orange right_btn">{{ finish_button }}</button>
 	            </div>
 	            
+		</div>
+
+		<!-- third tab -->
+		<div v-show="tab == 3" :class="{'active': tab == 3}">
+			inclusions
 		</div>
 		</form>
 	</div>
@@ -71,6 +85,10 @@
 	export default {
 		props: {
 			form_url: String,
+			'uploaded_images_data': {
+				type: Array,
+				default: () => []
+			},
 			'packagegallery_data' : {
                 type: Array,
                 default: () => []
@@ -100,6 +118,17 @@
 				default: []
 			}
 		},
+		data(){
+			return {
+				tab: 1,
+				packagegallery: this.packagegallery_data,
+				package_: this.package_data,
+				uploaded_images: this.uploaded_images_data,
+				file_list: [],
+				enable_preview: true,
+				destinations: this.destinations_data
+			}
+		},
 		methods: {
 			addImage(e){
 				
@@ -112,20 +141,22 @@
 			},
 			deleteUploaded(index){
 				this.uploaded_images.splice(index,1)
-				console.log(this.uploaded_images);
-				// delete this.file_list[index]
-				// console.log(this.file_list)
 				
 			},
 			remove: function(index){
                 if(index != this.packagegallery.length - 1){
                     for(var x = index; x < this.packagegallery.length - 1; x++){
-                        let f = document.querySelector("input[name='gallery_" + x + "'");
-                        let next = document.querySelector("input[name='gallery_" + (x+1) + "'");
-                        let cl = next.cloneNode()
-                        cl.setAttribute("name","gallery_" + x)
+                        let f = document.querySelector("input[id='gallery_" + x + "'");
+						let next = document.querySelector("input[id='gallery_" + (x+1) + "'");
+						console.log(next)
+						let cl = next.cloneNode()
+						cl.setAttribute("id","gallery_" + x)
 						f.replaceWith(cl);
+
+						this.packagegallery[x].image_title = this.packagegallery[x + 1].image_title
 						this.packagegallery[x].preview_image = this.packagegallery[x + 1].preview_image;
+						this.packagegallery[x].image_name = this.packagegallery[x + 1].image_name;
+
                     }
                     this.packagegallery.splice(this.packagegallery.length - 1,1)
                 }else{
@@ -140,7 +171,7 @@
 				//iterate all gallery
 				for(let x = 0; x < this.packagegallery.length ; x++){
 					let reader = new FileReader();
-					let elem = document.querySelector(`input[type="file"][name="gallery_${x}"]`).files[0]
+					let elem = document.querySelector(`input[type="file"][id="gallery_${x}"]`).files[0]
 					
 					if(elem != undefined){
 						reader.onload = function(){
@@ -151,17 +182,9 @@
 					}
 				}
 				// update all preview image elem
-			}
-		},
-		data(){
-			return {
-				tab: 1,
-				packagegallery: this.packagegallery_data,
-				package: this.package_data,
-				uploaded_images: [],
-				file_list: [],
-				enable_preview: true,
-				destinations: this.destinations_data
+			},
+			removeUploaded(index){
+				this.uploaded_images.splice(index,1)
 			}
 		}
 

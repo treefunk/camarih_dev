@@ -10,7 +10,6 @@ class Packagegallery_model extends CMS_Model
 
     public function add($data,$images = null) // override add function in cms_model
     {
-
         $errors = [];
 
         for($i = 0 ; $i < count($images); $i++){

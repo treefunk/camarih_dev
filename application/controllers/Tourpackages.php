@@ -141,8 +141,10 @@ class Tourpackages extends Admin_Controller {
 
 	public function update($id){
 		$post = $this->input->post();
-		var_dump($_FILES); die();
-		$images = format_multiple_files($_FILES['images']);
+
+
+		
+		$images = isset($_FILES['images']) ? format_multiple_files($_FILES['images']) : [];
 
 		$package = $this->package_model->find($id);
 
@@ -156,17 +158,43 @@ class Tourpackages extends Admin_Controller {
 
 		$changes += (int)$this->packagedetail_model->update($package->package_details->id,[
 			'description' => $post['description'],
-			'num_of_days' => $post['num_of_days'],
-			'num_of_nights' => $post['num_of_nights']
+			'minimum_count' => $post['minimum_count']
 		]);
 
 		//images
+		
+		//get all uploaded images in db
+		$uploaded_images_string_ids = $this->db->select('GROUP_CONCAT(id) as ids')->from('package_gallery')
+		->where(['package_id' => $package->id])
+		->get()->row();
 
-		foreach($post['images'] as $image){
-			$changes += (int)$this->packagegallery_model->update($image['id'],[
-				'image_title' => $image['image_title']
-			]);
+		$uploaded_images_ids = explode(",",$uploaded_images_string_ids->ids);
+		$uploaded_images_post_ids = [];
+		if(isset($post['uploaded_images'])){
+			foreach($post['uploaded_images'] as $image){
+				$uploaded_images_post_ids[] = $image['id'];
+				$changes += (int)$this->packagegallery_model->update($image['id'],[
+					'image_title' => $image['image_title']
+				]);
+			}
 		}
+
+		$to_be_deleted = array_values(array_diff($uploaded_images_ids,$uploaded_images_post_ids));		
+
+		
+		if($to_be_deleted){
+			$gallery_to_be_deleted = $this->db->from('package_gallery')->where_in('id',$to_be_deleted)->get()->result();
+			$this->db->from('package_gallery')->where_in('id',$to_be_deleted)->delete();
+			foreach($gallery_to_be_deleted as $gallery){
+				$file = "uploads/package_gallery/{$package->id}_{$gallery->image_name}";
+				if(file_exists($file)){
+					unlink($file);
+				}
+			}
+			$changes += 1;
+		}
+
+
 
 
 		$alert = [
@@ -177,7 +205,8 @@ class Tourpackages extends Admin_Controller {
 		// if there are uploaded images
 
 		$image_errors = $this->packagegallery_model->add([
-			'package_id' => $package->id
+			'package_id' => $package->id,
+			'images' => $post['images']
 		],$images);
 
 		// remove no uploaded file error in array
