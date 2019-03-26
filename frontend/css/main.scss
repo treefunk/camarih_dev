@@ -1195,8 +1195,20 @@ input[type="checkbox"] { -webkit-appearance: checkbox;}
 }
 
 
+.gal-tab {
+    .form-group {
+        .img-holder {
+            img { width: auto; max-width: 100%; }
+        }
+    }
+}
 
 
+.tour-package {
+    .img-holder { height: 200px; 
+        img { height: 100%; object-fit: contain; width: 100%;}
+    }
+}
 
 
 

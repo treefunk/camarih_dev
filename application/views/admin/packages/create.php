@@ -2,7 +2,7 @@
 <section id="main-content">
     <section class="wrapper site-min-height app">
         <div class="panel-cs">
-          <div class="panel-body">
+          <div class="panel-body tour-package">
                 <create-package-form
                 finish_button="Create"
                 :destinations_data='<?=json_encode($destinations)?>'

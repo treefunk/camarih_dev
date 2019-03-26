@@ -1963,4 +1963,15 @@ input[type="checkbox"] {
 .van-hldr .parent.ch4 .children {
   width: 25%; }
 
+.gal-tab .form-group .img-holder img {
+  width: auto;
+  max-width: 100%; }
+
+.tour-package .img-holder {
+  height: 200px; }
+  .tour-package .img-holder img {
+    height: 100%;
+    object-fit: contain;
+    width: 100%; }
+
 /*# sourceMappingURL=main.css.map */

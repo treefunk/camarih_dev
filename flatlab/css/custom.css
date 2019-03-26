@@ -160,10 +160,12 @@ src: local('Circular Std Black Italic'),
 .main-images-up .hldr--image .img-holder img { height: 100%; object-fit: contain; max-width: 100%; }
 .main-images-up .hldr--image input[type="file"] { margin: 15px 0px;}
 
+.tour-package .img-holder { height: 200px; margin: 15px 0px; }
+.tour-package .img-holder img { height: 100%; object-fit: contain; width: 100%; object-position: left;} 
+.tour-package .form-control, .tour-package  input[type=file] { margin: 15px 0px;}
 
-
-
-
+.tour-package .full-tab-img img { width: 100%; height: 100%; object-fit: contain;  }
+.tour-package .full-tab-img { height: 200px; }
 
 
 

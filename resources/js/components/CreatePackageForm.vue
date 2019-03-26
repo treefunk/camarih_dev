@@ -8,7 +8,7 @@
 		</ul>
 
 
-		<div v-show="tab == 1" :class="{'active': tab == 1}">
+		<div v-show="tab == 1" :class="[{'active': tab == 1},'gal-tab']">
 
 			<div class="form-group">
 				<label for="is_featured">Featured? </label>
@@ -18,7 +18,7 @@
 
 			<div class="form-group">
 				<label for="main_image">Image</label>
-				<div>
+				<div class="full-tab-img" v-if="main_preview != ''">
 					<img v-if="main_preview != ''" :src="main_preview" class="preview" alt="">
 				</div>
 				<input type="file" name="main_image" @change="uploadMainImage" ref="main_image">
@@ -61,19 +61,23 @@
 
 
 		<!-- SECOND TAB!! -->
-		<div v-show="tab == 2" :class="{'active': tab == 2}">
+		<div v-show="tab == 2" :class="[{'active': tab == 2},'gal-tab']">
 
 				<div v-for="(uploaded,index) in uploaded_images" :key="index">
 					<button class="btn btn-danger" type="button" @click="removeUploaded(index)">X</button>
 					<input type="hidden" :name="`uploaded_images[${index}][id]`" :value="uploaded.id">
 					<input type="text" class="form-control" v-model="uploaded_images[index].image_title" :name="`uploaded_images[${index}][image_title]`" v-if="uploaded.preview_image != ''">
-					<img class="preview" :src="`${gallery_url}/${package_.id}_${uploaded.image_name}`" alt="">
+					<div class="img-holder">
+						<img class="preview" :src="`${gallery_url}/${package_.id}_${uploaded.image_name}`" alt="">
+					</div>
 				</div>
 
 				<div v-for="(gallery,index) in packagegallery" :key="index">
 					<button class="btn btn-danger" type="button" @click="remove(index)">X</button>
 					<input type="text" class="form-control" v-model="packagegallery[index].image_title" :name="`images[${index}][image_title]`" v-if="gallery.preview_image != ''">
-					<img :src="gallery.preview_image" alt="">
+					<div class="img-holder" v-if="gallery.preview_image">
+						<img :src="gallery.preview_image" alt="">
+					</div>
 					<input type="file" @change="loadPreview" :id="`gallery_${index}`" :name="`images[]`" :ref="`gallery_${index}`">
 				</div>
 				
@@ -89,7 +93,7 @@
 		</div>
 
 		<!-- third tab -->
-		<div v-show="tab == 3" :class="{'active': tab == 3}">
+		<div v-show="tab == 3" :class="[{'active': tab == 3},'gal-tab']">
 					<div v-if="this.package_.package_download">
 						File Name:<p>{{ package_.package_download.file_name }}</p>
 						Link:
