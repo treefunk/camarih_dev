@@ -23,5 +23,13 @@ export const package_common = {
             this.adult_count = min_count
           }
         }
+    },
+    filters: {
+      formatNum: (value) => {
+        if(typeof value == "string"){ value = parseInt(value,10) }
+        return value.toLocaleString(undefined,{
+           minimumFractionDigits: 2,
+        })
       }
+    }
 }

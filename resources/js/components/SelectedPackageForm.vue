@@ -7,14 +7,14 @@
         <ul class="pad-0 listn">
 
             <li>
-                <h4>php {{ package_.rate }}
+                <h4>php {{ package_.rate | formatNum }}
                     <span>per person</span>
                 </h4>
             </li>
             <li>
                 <h5>Adults</h5>
                 <input type="number" v-model="adult_count" :min="package_data.package_details.minimum_count">
-                <span>Php {{ package_.rate * adult_count || 0 }}</span>
+                <span>Php {{ ( package_.rate * adult_count || 0 ) | formatNum }}</span>
             </li>
             <li>
 

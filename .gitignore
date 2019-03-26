@@ -19,8 +19,10 @@ node_modules
 assets/*
 .env
 
+# 1
 uploads/sliders/*
 uploads/testimonials/*
 uploads/package_gallery/*
 uploads/van_gallery/*
 uploads/package_image/*
+uploads/package_download/*

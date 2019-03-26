@@ -18,7 +18,7 @@
                         <!-- <h5>Hotel + Tours + transfers</h5> -->
                       </li>
                       <li>
-                        <h4>Php {{ package_.rate }} <span>per person</span></h4>
+                        <h4>Php {{ package_.rate | formatNum }} <span>per person</span></h4>
                       </li>
                       <li>
                         <h6>Adults</h6>

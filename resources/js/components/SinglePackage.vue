@@ -17,7 +17,7 @@
                           <h5>{{ item.package_details.description }}</h5>
                         </li> -->
                         <li>
-                          <h4>Php {{ item.rate }} <span>per person</span></h4>
+                          <h4>Php {{ item.rate | formatNum }} <span>per person</span></h4>
                         </li>
                         <li>
                           <h6>Adults</h6>
