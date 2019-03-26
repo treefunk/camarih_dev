@@ -43,7 +43,8 @@ class Migrate extends CI_Controller
                   'sliders',
                   'testimonials',
                   'van_gallery',
-                  'package_download'
+                  'package_download',
+                  'package_image'
                 ];
 
                 foreach($delete_content_directories as $d)
