@@ -36,8 +36,11 @@ class Cart_model extends CMS_Model
         $cart = $this->session->userdata('cart');
 
         $items = [];
+
+        
         foreach($cart as $item)
         {
+
             $index = 0;
             foreach($item['selected'] as $selected){
                 $trip_name = "{$selected['origin']->name} TO {$selected['destination']->name}";

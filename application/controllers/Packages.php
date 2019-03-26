@@ -8,7 +8,9 @@ class Packages extends MY_Controller {
 		parent::__construct();
 		$this->load->model([
 			'package_model',
-			'destination_model'
+			'destination_model',
+			'packagedownload_model',
+			'packageimage_model'
 		]);
 	}
 
@@ -29,6 +31,8 @@ class Packages extends MY_Controller {
 	public function selected($id)
 	{
 		$data['package'] = $this->package_model->find($id);
+		$data['downloads_url'] = $this->packagedownload_model->upload_path;
+		$data['dummy_doc'] = getenv("ENABLE_DUMMY_DOC_PREVIEW") == "true" ? true : false;
 		$data['destinations'] = $this->destination_model->all();
 
 		// var_dump($data); die();

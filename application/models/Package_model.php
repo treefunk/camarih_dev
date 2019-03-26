@@ -32,18 +32,29 @@ class Package_model extends CMS_Model
             $package->package_details = $package_details;
             $package->rate = $package->rate;
             $package->image_path = base_url('frontend/images/')."package.jpg";
+
+            $package_image = $this->db->get_where('package_main_image',[
+                'package_id' => $package->id
+            ])->row();
+            $package->package_image = $package_image;
         }
         return $packages;
     }
 
-    public function find($id){
+    public function find($id,$featured = false){
 
         //sanitize input
         $id = htmlspecialchars_decode($id);
 
-        $package = $this->db->get_where('packages',[
-            'id' => $id
-        ])->row();
+        if(!$featured){
+            $package = $this->db->get_where('packages',[
+                'id' => $id
+            ])->row();
+        }else{
+            $package = $this->db->get_where('packages',[
+                'is_featured' => 1
+            ])->row();
+        }
 
 
         $package_details = $this->db->get_where('package_details', [
@@ -58,7 +69,28 @@ class Package_model extends CMS_Model
 
         $package->package_gallery = $package_gallery;
         
+        $package_download = $this->db->get_where('package_downloads',[
+            'package_id' => $package->id
+        ])->row();
+        $package->package_download = $package_download;
+
+        $package_image = $this->db->get_where('package_main_image',[
+            'package_id' => $package->id
+        ])->row();
+        $package->package_image = $package_image;
+
+        
+
+
+        $package->image_path = base_url('frontend/images/')."package.jpg";
+
+
+
         return $package;
+    }
+
+    public function getFeaturedPackage(){
+        return $this->find(0,true);
     }
 
     public function getByDestinationId($id)

@@ -14,7 +14,7 @@ class Checkout extends MY_Controller{
 
     public function index(){
         $paypal = new Paypal;
-
+        
         $formatted_cart = $this->cart_model->itemsWithPrices();
 
 

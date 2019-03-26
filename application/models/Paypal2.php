@@ -115,7 +115,6 @@ class Paypal{
 
         $data = json_decode($response->getBody());
         
-        var_dump($data); die();
 
 
 

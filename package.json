@@ -25,6 +25,7 @@
   },
   "dependencies": {
     "axios": "^0.18.0",
+    "ckeditor": "^4.11.3",
     "moment": "^2.24.0",
     "vuex": "^3.0.1"
   }

@@ -25,6 +25,10 @@ class Migration_Create_packages_Table extends CI_Migration {
                         'rate' => array(
                                 'type' => 'DOUBLE'
                         ),
+                        'is_featured' => array(
+                                'type' => 'boolean',
+                                'default' => false,
+                        ),
                         'status' => array(
                                 'type' => 'VARCHAR',
                                 'constraint' => '100',

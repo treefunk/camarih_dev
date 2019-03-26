@@ -1,5 +1,6 @@
 <div class="packages-selected">
 
+
         <section class="sec-1">
           <article class="hero">
               <h3><?=$package->name?></h3>
@@ -8,6 +9,7 @@
           <div class="overlay"></div>
 
         </section>
+          
 
 
         <form action="<?=base_url()?>availability/check" method="POST">
@@ -18,58 +20,38 @@
 
         <section class="sec-2">
           <div class="itemhldr">
+            
             <article class="dvider">
               <aside>
-                  <img src="<?=base_url('frontend')?>/images/rocks.jpg">
+              <!-- <?php //base_url('frontend')?>/images/rocks.jpg -->
+              <?php if($package->package_image): ?>
+                <img src="<?=base_url("uploads/package_image/{$package->package_image->id}_{$package->package_image->image_name}")?>">
+              
+              <?php else: ?>
+                <img src=" <?= base_url('frontend')?>/images/rocks.jpg" alt="">
+              <?php endif; ?>
               </aside>
+              
               <article>
-                  <div>
-                    <p><?=$package->package_details->description?></p>
-  
-                    <h5>Package Inclusions</h5>
-  
-                    <ul class="pad-0 listn">
-                      <li><p>Lorem ipsum dolor sit amet</p> </li>
-                      <li><p>Consectetur adipiscing elit</p></li>
-                      <li><p>Fusce ac nisl eros</p></li>
-                      <li><p>Curabitur nunc orci, feugiat </p></li>
-                      <li><p>Ac gravida id, feugiat et sem </p></li>
-                      <li><p>In augue risus, viverra a ante vel</p></li>
-                      <li><p>In augue risus, viverra a ante vel</p></li>
-                    </ul>
+                  <div class="pad-0">
+                    <?=$package->package_details->description?>
                   </div>
               </article>
+              
             </article>
-            <div class="btm_sec">
-                <ul class="pad-0 listn">
-                  <li>
-                    <h4>Php <?=number_format($package->rate)?>
-                      <span>per person</span>
-                    </h4>
-                  </li>
-                  <li>
-                    <h5>Adults</h5>
-                    <input type="number">
-                    <span>Php 7,500</span>
-                  </li>
-                  <li>
-                    <ul class="pad-0 listn">
-                      <li>
-                        <a href="">Add to Cart</a>
-                      </li>
-                      <li>
-                        <a href="">Add to Checkout</a>
-                      </li>
-                    </ul>
-                  </li>
-                </ul>
-              </div>
+            
+              <selected-package-form
+              :package_data='<?=json_encode($package)?>'
+              add_to_cart_url='<?=base_url('packages/add_to_cart')?>  '
+              ></selected-package-form>
+
             </div>
+            
           
         </section>
 
 
-
+<?php if(count($package->package_gallery)): ?>
 <section class="sec-3">
     <article class="item-hldr">
         <h3>Tourist Attractions</h3>
@@ -87,8 +69,10 @@
         </div>
     </article>
 </section>
+<?php endif; ?>
     
-
+<?php if($package->package_download){
+  require_once("package_view_download_modal.php");
+} ?>
         
-
-      </div>
+</div>

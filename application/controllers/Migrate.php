@@ -42,12 +42,20 @@ class Migrate extends CI_Controller
                   'package_gallery',
                   'sliders',
                   'testimonials',
-                  'van_gallery'
+                  'van_gallery',
+                  'package_download'
                 ];
 
                 foreach($delete_content_directories as $d)
                 {
-                  $dir = new DirectoryIterator("uploads/{$d}");
+                  $folder_path = "uploads/{$d}";
+
+                  if(!file_exists($folder_path) && !is_dir($folder_path)){
+                    mkdir($folder_path,0775,true);
+                  }
+
+                  $dir = new DirectoryIterator($folder_path);
+                  
 
                   foreach($dir as $fileinfo)
                   {
@@ -56,12 +64,13 @@ class Migrate extends CI_Controller
                     }
                   }
                 }
-            
-                $result = require_once 'text_refreshed.php'; // ^_^V -jhondz
-                $result = str_replace("x","&nbsp;",$result);
-                $image = $this->giffy();
                 
-                $result.= $image;
+                $result = require_once 'text_refreshed.php'; // ^_^V -jhondz
+                if(getenv("ENABLE_JISOO") == "true"){
+                  $result = str_replace("x","&nbsp;",$result);
+                  $image = $this->giffy();
+                  $result.= $image;
+                }
 
                 echo $result;
                 $this->session->sess_destroy();

@@ -18,7 +18,8 @@ import VanGallery from './components/VanGallery.vue'
 import CreateVanForm from './components/CreateVanForm'
 import CreateVanRateForm from './components/CreateVanRateForm'
 import VanRentForm from './components/VanRentForm'
-
+import SelectedPackageForm from './components/SelectedPackageForm'
+import FeaturedPackage from './components/FeaturedPackage'
 // Vuex
 import { store } from './stores/store'
 
@@ -50,7 +51,9 @@ new Vue({
         'van-gallery': VanGallery,
         'create-van-form': CreateVanForm,
         'create-van-rate-form': CreateVanRateForm,
-        'van-rent-form': VanRentForm
+        'van-rent-form': VanRentForm,
+        'selected-package-form': SelectedPackageForm,
+        'featured-package': FeaturedPackage
     }   
 })
 

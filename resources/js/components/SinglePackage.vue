@@ -5,7 +5,7 @@
             <article class="pckage_wrap clearfix">
               <div class="clearfix">
                 <aside :class="isRight ? 'right' : 'left'">
-                  <img :src="item.image_path">
+                  <img :src="main_image">
                 </aside>
                 <article :class="!isRight ? 'right' : 'left'">
                   <div>
@@ -13,9 +13,9 @@
                         <li>
                           <h3>{{ item.name }}</h3>
                         </li>
-                        <li>
+                        <!-- <li>
                           <h5>{{ item.package_details.description }}</h5>
-                        </li>
+                        </li> -->
                         <li>
                           <h4>Php {{ item.rate }} <span>per person</span></h4>
                         </li>
@@ -51,10 +51,11 @@
 </template>
 
 <script>
-    import axios from 'axios'
 
+    import { package_common } from './../mixins/package_common'
 
     export default {
+        mixins: [ package_common ],
         data(){
             return {
                 adult_count: this.item.package_details.minimum_count,
@@ -62,30 +63,17 @@
                 in: this.index,
                 message: "",
                 message_class: "",
-                loading: false
+                loading: false,
+                package_:this.item
             }
         },
-        props: [ 'item', 'index', 'single_url','add_to_cart_url'],
-        methods: {
-            addToCart: function() {
-              this.loading = true;
-              let new_item = Object.assign({},this.item,{ adult_count: this.adult_count })
-              axios.post(this.add_to_cart_url,new_item).then(res => {
-                let response = res.data
-                console.log(response)
-                this.loading = false
-                this.message = response.message
-                this.message_class = "green"
-              })
-              this.$store.commit('addPackageToCart',{ item: new_item })
-            }
-        },
-        watch: {
-          adult_count(newV){
-            let min_count = this.item.package_details.minimum_count
-            if(parseInt(newV,10) < parseInt(min_count,10)){
-              alert(`Sorry, minimum count for this package is ${min_count}`)
-              this.adult_count = min_count
+        props: [ 'item', 'index', 'single_url','add_to_cart_url', 'main_image_url'],
+        computed: {
+          main_image(){
+            if(this.item.package_image != null){
+              return `${this.main_image_url}/${this.item.package_image.id}_${this.item.package_image.image_name}`
+            }else{
+              return  this.item.image_path
             }
           }
         }

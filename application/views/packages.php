@@ -18,6 +18,7 @@
             :packages='<?=json_encode($packages)?>'
             single_url="<?=base_url('packages/selected')?>"
             add_to_cart_url="<?=base_url('packages/add_to_cart')?>"
+            main_image_url="<?=base_url($this->packageimage_model->upload_path)?>"
             >
           </package-list>
 

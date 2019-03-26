@@ -44,49 +44,23 @@
 
 
 <section class="sec-2">
-    <article class="pckage_wrap clearfix">
-      <aside>
-        <img src="<?=base_url()?>frontend/images/package.jpg">
-      </aside>
 
-      <article>
-        <h4>Tour Package</h4>
-
-        <div>
-          <ul class="pad-0 listn">
-              <li>
-                <h3>3D2N El Nido</h3>
-              </li>
-              <li>
-                <h5>Hotel + Tours + transfers</h5>
-              </li>
-              <li>
-                <h4>Php 2,790 <span>per person</span></h4>
-              </li>
-              <li>
-                <h6>Adults</h6>
-                <input type="number">
-              </li>
-          </ul>
-          <aside>
-            <ul class="pad-0 listn">
-              <li>
-                <a href="">View Details</a>
-              </li>
-              <li>
-                <a href="">Add to cart</a>
-              </li>
-            </ul>
-          </aside>
-
-        </div>
-
-      </article>
-
-      <div class="view_all">
-        <a href="<?=base_url('packages')?>">View All Packages</a>
-      </div>
-    </article>
+        <!-- <div class="packages"> -->
+          <!-- <single-package
+          :item='<?php //json_encode($featured_package)?>'
+          :key="1" 
+          :index="1"
+          single_url="<?php //base_url('packages/selected')?>"
+          add_to_cart_url="<?php //base_url('packages/add_to_cart')?>"
+          ></single-package>
+           -->
+        <!-- </div> -->
+        <featured-package
+        :package_data='<?=json_encode($featured_package)?>'
+        single_url="<?=base_url('packages/selected')?>"
+        add_to_cart_url="<?=base_url('packages/add_to_cart')?>"
+        view_all_url="<?=base_url('packages')?>"
+        ></featured-package>
 </section>
 
 <?php if(count($testimonials)) : ?>

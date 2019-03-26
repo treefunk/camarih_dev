@@ -1,3 +1,4 @@
+<script src="<?=base_url('node_modules/ckeditor/ckeditor.js')?>"></script>
 <section id="main-content">
     <section class="wrapper site-min-height app">
         <div class="panel-cs">

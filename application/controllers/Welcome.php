@@ -9,6 +9,7 @@ class Welcome extends MY_Controller {
 		$this->load->model('slider_model');
 		$this->load->model('testimonial_model');
 		$this->load->model('destination_model');
+		$this->load->model('package_model');
 	}
 
 
@@ -19,8 +20,11 @@ class Welcome extends MY_Controller {
 			'sliders' => $this->slider_model->all(),
 			'testimonials' => $this->testimonial_model->all(),
 			'destinations' => $this->destination_model->getAllEndpoints(),
-			'origins' => $this->destination_model->getAllOrigins()
+			'origins' => $this->destination_model->getAllOrigins(),
+			'featured_package' => $this->package_model->getFeaturedPackage()
 		];
+
+		
 
 
 		$this->wrapper([

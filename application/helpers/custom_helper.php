@@ -99,3 +99,26 @@ function shortVer($string,$num_length)
 {
     return strlen($string) > $num_length ? substr($string,0,$num_length)."..." : $string;
 }
+
+
+/**
+ * removes blank uploads and formats $_FILES array
+ */
+function cleanMultipleFilesArray($field){
+
+    if($hasfiles = isset($_FILES[$field]) && ($_FILES[$field]['name'] != '')){
+        $files = format_multiple_files($_FILES[$field]);
+        
+        $x = 0;
+        for(; $x < count($files); $x++){
+            if($files[$x]['size'] == 0){
+                array_splice($files,$x,1);
+                $x--;
+            }
+        }
+    }else{
+        $hasfiles = false;
+    }
+
+    return $files;
+}
