@@ -203,6 +203,7 @@ class Vans extends Admin_Controller {
                 'van_id' => $id,
                 'image_title' => $van_gallery_titles
             ],$images);
+            $changes++;
         }
 
         //delete image if there's any
@@ -294,8 +295,8 @@ class Vans extends Admin_Controller {
     public function rates($id)
     {
         $data['van'] = $this->van_model->find($id);
-        $data['destinations'] = $this->destination_model->getAllEndpoints();
-        $data['origins'] = $this->destination_model->getAllOrigins();
+        $data['destinations'] = $this->destination_model->getAllVanRentDropoff();
+        $data['origins'] = $this->destination_model->getAllVanRentOrigins();
 
         $this->wrapper([
             'view' => 'admin/vans/rates',

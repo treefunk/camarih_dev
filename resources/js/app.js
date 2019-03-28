@@ -20,6 +20,8 @@ import CreateVanRateForm from './components/CreateVanRateForm'
 import VanRentForm from './components/VanRentForm'
 import SelectedPackageForm from './components/SelectedPackageForm'
 import FeaturedPackage from './components/FeaturedPackage'
+
+
 // Vuex
 import { store } from './stores/store'
 
@@ -53,7 +55,7 @@ new Vue({
         'create-van-rate-form': CreateVanRateForm,
         'van-rent-form': VanRentForm,
         'selected-package-form': SelectedPackageForm,
-        'featured-package': FeaturedPackage
+        'featured-package': FeaturedPackage,
     }   
 })
 

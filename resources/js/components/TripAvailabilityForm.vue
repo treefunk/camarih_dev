@@ -209,7 +209,7 @@
                 let errors = validate(obj);
                 if(errors.required.length){
                     for(let val of errors.required){
-                        alert(errorMessages[val].required)
+                        this.$store.dispatch("showToastr", { message: errorMessages[val].required, type: "error"})
                         return -1
                     }
                 }else{

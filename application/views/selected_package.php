@@ -12,11 +12,11 @@
           
 
 
-        <form action="<?=base_url()?>availability/check" method="POST">
-            <book-a-trip
-            :destinations='<?=json_encode($destinations)?>'
-            > </book-a-trip>
-        </form>
+        <book-a-trip
+        url='<?=base_url('availability/check')?>'
+        :destinations_data='<?=json_encode($destinations)?>'
+        :origins_data='<?=json_encode($origins)?>'
+        > </book-a-trip>
 
         <section class="sec-2">
           <div class="itemhldr">

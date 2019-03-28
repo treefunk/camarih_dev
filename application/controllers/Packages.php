@@ -19,7 +19,8 @@ class Packages extends MY_Controller {
 	{
 		$data = [
 			'packages' => $this->package_model->all(),
-			'destinations' => $this->destination_model->all()
+			'destinations' => $this->destination_model->getAllEndpoints(),
+			'origins' => $this->destination_model->getAllOrigins(),
 		];
 
 		$this->wrapper([
@@ -33,8 +34,8 @@ class Packages extends MY_Controller {
 		$data['package'] = $this->package_model->find($id);
 		$data['downloads_url'] = $this->packagedownload_model->upload_path;
 		$data['dummy_doc'] = getenv("ENABLE_DUMMY_DOC_PREVIEW") == "true" ? true : false;
-		$data['destinations'] = $this->destination_model->all();
-
+		$data['destinations'] = $this->destination_model->getAllEndpoints();
+		$data['origins'] = $this->destination_model->getAllOrigins();
 		// var_dump($data); die();
 
 		$this->wrapper([

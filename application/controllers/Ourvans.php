@@ -16,8 +16,11 @@ class Ourvans extends MY_Controller{
     public function index()
     {
         $data['vans'] = $this->van_model->allWithRates();
-        $data['destinations'] = $this->destination_model->all();
-
+        $data['origins'] = $this->destination_model->getAllOrigins();
+        $data['destinations'] = $this->destination_model->getAllEndpoints();
+        $data['destinations_vanrent'] = $this->destination_model->getAllVanRentDropoff();
+        $data['origins_vanrent'] = $this->destination_model->getAllVanRentOrigins();
+        $data['minDate'] = (new DateTime('now',new DateTimeZone('Asia/Hong_Kong')))->format('Y-m-d');
         $this->wrapper([
             'data' => $data,
             'view' => 'our_vans'
@@ -76,7 +79,7 @@ class Ourvans extends MY_Controller{
                 if($item['van']->id == $van_id &&
                 $item['origin']->id == $post->origin_id &&
                 // $item['destination']->id == $post->destination_id &&
-                $item['departure_date'] == $post->date ){ $van_in_cart++; }
+                $item['departure_date'] == $post->date){ $van_in_cart++; }
             }
         }
 
@@ -91,6 +94,7 @@ class Ourvans extends MY_Controller{
             'origin_id' => $post->origin_id,
             'van_id' => $van_id
         ])->num_rows();
+
 
         $available_count = ($van->num_of_vans - $van_rents) - $van_in_cart;
 

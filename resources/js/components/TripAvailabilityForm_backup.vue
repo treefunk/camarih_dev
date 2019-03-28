@@ -132,7 +132,7 @@
         methods: {
             addRate(){
                 if(this.trip_availability.destination_from == ''){
-                    alert('Please select an origin destination first.');
+                    this.$store.dispatch("showToastr", { message: "Please select an origin destination first.", type: "error"})
                     return;
                 }
                 // todo if all destinations are covered add rate button must be hidden!

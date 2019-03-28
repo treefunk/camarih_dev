@@ -31,6 +31,12 @@ class Van_model extends CMS_Model
         foreach($vans as $van){
             $van->van_gallery = $this->db->get_where('van_gallery',['van_id' => $van->id])->result();
             $van->van_rates = $this->db->get_where('van_rate',['van_id' => $van->id])->result();
+            if(count($van->van_rates)){
+                foreach($van->van_rates as &$r){
+                    $r->destination = $this->db->get_where('destinations',['id' => $r->destination_id])->row();
+                    $r->origin = $this->db->get_where('destinations',['id' => $r->origin_id])->row();
+                }
+            }
         }
         return $vans;
     }

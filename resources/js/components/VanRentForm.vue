@@ -1,16 +1,18 @@
 <template>
 <div class="clearfix">
     <div class="right_item">
+        
         <form :action="form_url" method="POST" ref="detailsForm">
         <article class="details">
+            
             <h4>{{ van_data.name }}</h4>
             <p>{{ seatsNum }} - Seater</p>
 
-            <ul class="pad-0 listn">
+            <ul class="pad-0 listn" v-if="this.rates.length">
                 
                 <li>
                     <h6>Date</h6>
-                    <input type="date" name="" id="" v-model="selectedDate">
+                    <input type="date" name="" id="" v-model="selectedDate" :min="minDate">
                 </li>
 
                 <li>
@@ -30,12 +32,12 @@
                 <li>
                     <ul class="pad-0 listn">
                         <li>
-                            <input type="radio" id="test1" name="trip_type" value="oneway_trip" v-model="tripType">
-                            <label for="test1">One-way</label>
+                            <input type="radio" :id="`oneway_${van_data.id}`" name="trip_type" value="oneway_trip" v-model="tripType">
+                            <label :for="`oneway_${van_data.id}`">One-way</label>
                         </li>
                         <li>
-                            <input type="radio" id="test2" name="trip_type" value="round_trip" v-model="tripType">
-                            <label for="test2">Round Trip</label>
+                            <input type="radio" :id="`roundtrip${van_data.id}`" name="trip_type" value="round_trip" v-model="tripType">
+                            <label :for="`roundtrip${van_data.id}`">Round Trip</label>
                         </li>
                     </ul>
                 </li>
@@ -46,24 +48,63 @@
                     <span>{{ ratePrice }}</span>
                 </li>
             </ul>
-                <div class="text-center" style="margin-top:30px">
+                <div class="text-center" style="margin-top:30px" v-show="!noRate">
                     <p :style="{ color: message_class }" v-if="message">{{ message }}</p>
                     <div class="loading-dual" v-if="loading"></div>
                 </div>
         </article>
         <div class="btm_link">
             <ul class="pad-0 listn">
-                <li>
-                    <a href="#prcing_table" class="popup-with-form">Pricing Table</a>
+                <li v-if="this.rates.length">
+                    <a href="#prcing_table" class="popup-with-form" @click.prevent="showPricingTable">Pricing Table</a>
                 </li>
                     
-                <li v-if="valid">
-                    <a @click.prevent="addToCart" v-if="!loading" >Add to Cart</a>
+                <li v-if="valid" v-show="!noRate">
+                    <a @click.prevent="addToCart" v-if="!loading"  >Add to Cart</a>
                 </li>
             </ul>
+
+            
         </div>
         </form>
+        <div class="modal fade" :id="`pricingTableModal_${this.van_data.id}`" tabindex="-1" role="dialog"
+            aria-labelledby="pricingTableModalLabel" aria-hidden="true" style="display: none; z-index: 99999999999">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                            style="z-index:99">×</button>
+                        <h4 class="modal-title">Pricing Table</h4>
+                        <div class="modal-body">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Destination</th>
+                                        <th>One-way Rate</th>
+                                        <th>Roundtrip Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr v-for="(rate,index) in rates" :key="index">
+                                        <td>{{ rate.destination.name }}</td>
+                                        <td>{{ rate.oneway_rate || "N/A" }}</td>
+                                        <td>{{ rate.roundtrip_rate || "N/A" }}</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="modal-footer">
+                            <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
+                            <!-- <button type="submit" class="proceed-to-checkout">Checkout</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
     </div>
+
+        
 </div>
 
 </template>
@@ -73,6 +114,7 @@
 
     export default {
         props: {
+            minDate: String,
             form_url: String,
             check_url: String,
             destinations_data:Array,
@@ -94,7 +136,8 @@
                 adultCount: 1,
                 loading: false,
                 message: "",
-                valid: false
+                valid: false,
+                isNA: false
             }
         },
         computed: {
@@ -131,6 +174,9 @@
                 }
 
                 let price = this.tripType == 'oneway_trip' ? rate.oneway_rate : rate.roundtrip_rate
+                if(price == ""){
+                    return "N/A"
+                }
                 return 'PHP ' + (price).toLocaleString(undefined, {minimumFractionDigits: 2,maximumFractionDigits: 2})
                 
             },
@@ -151,16 +197,22 @@
                     date: this.selectedDate,
                     origin_id: this.selectedOrigin,
                     destination_id: this.selectedDestination,
+                    trip_type: this.trip_type,
                 }                
+            },
+            noRate(){
+                return this.ratePrice == "N/A"
             }
         },
         methods: {
             getDestinationById(id){
+                console.log(id)
                 for(let x = 0; x < this.destinations.length ; x++){
                     if(this.destinations[x].id == id){
                         return this.destinations[x]
                     }
                 }
+
             },
             addToCart(){
                 this.loading = true
@@ -168,13 +220,24 @@
                     this.selectedOrigin = ""
                     this.selectedDestination = ""
                     this.selectedDate = ""
-                    this.$nextTick(() => {
-                        this.message = res.data.message
+                    // this.$nextTick(() => {
+                    //     this.message = res.data.message
+                    // })
+                    this.$store.dispatch('showToastr',{
+                        message:res.data.message,
+                        type:"success"
                     })
+                    this.$store.commit('incrementCartNum');
+                    
                     this.loading = false
                 })
 
                 
+            },
+            showPricingTable(){
+                if(this.rates.length){
+                    $(`#pricingTableModal_${this.van_data.id}`).modal('show')
+                }
             }
            
         },
@@ -182,11 +245,21 @@
             selectedOrigin(){
                 this.selectedDestination = ""
             },
+            tripType(newV){
+                if(ratePrice == "N/A"){
+                    this.isNA = true
+                }else{
+                    this.isNA = false
+                }
+            },
             impt: {
                 handler: function(newV,oldV){
+
+                    newV = Object.assign({},newV,{ trip_type: this.tripType }) 
                     if(Object.values(newV).every((x) => x != "")){
                         this.loading = true;
                         axios.post(this.check_url,newV).then((res) => {
+                            console.log(res.data)
                             if(res.data.available){
                                 this.valid = true;
                                 this.loading = false;
@@ -205,6 +278,14 @@
                     }
                 },
                 deep: true
+            },
+            adultCount(newV,oldV){
+                if(parseInt(newV,10) < 0){
+                    this.adultCount = 0
+                }
+                if(isNaN(newV)){
+                    this.adultCount = 0
+                }
             }
         }
     }

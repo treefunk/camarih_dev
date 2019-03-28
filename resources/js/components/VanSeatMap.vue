@@ -34,7 +34,7 @@
             removeRow(index){
 
                 if(this.seats.length == 1){
-                    alert('Seat plan must have at least 1 row.');
+                    this.$store.commit("showToastr", {message: "Seat plan must have at least 1 row.",type: "error"})
                     return -1;
                 }
 
@@ -49,14 +49,14 @@
             seats(newSeats,oldSeats,wat)
             {
                 if(newSeats[0] >= 3){
-                    alert('You can only have 2 seats maximum in the first row')
+                    this.$store.dispatch("showToastr", { message: 'You can only have 2 seats maximum in the first row',type: "error"})
                     newSeats[0] = 2
                     return;
                 }
                 for(let x = 1 ; x <= newSeats.length; x++)
                 {
                     if(newSeats[x] > 4){
-                        alert('You can only have 4 seats maximum in a row')
+                        this.$store.dispatch("showToastr", { message: 'You can only have 4 seats maximum in a row',type: "error"})
                         newSeats[x] = 4
                     }
                 }

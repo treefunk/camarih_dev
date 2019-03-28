@@ -2,7 +2,7 @@
     <div>
 <article class="pckage_wrap clearfix">
               <aside>
-                <img src="frontend/images/package.jpg">
+                <img :src="main_image">
               </aside>
 
               <article>
@@ -26,16 +26,16 @@
                       </li>
                   </ul>
                   <aside>
-                      <div class="text-center" style="margin-top:30px">
+                       <!-- <div class="text-center" style="margin-top:30px">
                             <p :style="{ color: message_class }" :class="['msg-style']" v-if="message">{{ message }}</p>
                             <div class="loading-dual" v-if="loading"></div>
-                        </div>
+                        </div> -->
                     <ul class="pad-0 listn">
                       <li>
                         <a :href="`${this.single_url}/${package_.id}`">View Details</a>
                       </li>
                       <li>
-                        <a href="" @click.prevent="addToCart">Add to cart</a>
+                        <a ref="addButton" href="" @click.prevent="addToCart">Add to cart</a>
                       </li>
                     </ul>
                   </aside>
@@ -66,8 +66,7 @@
             return {
                 package_ : this.package_data,
                 adult_count: parseInt(this.package_data.package_details.minimum_count,10),
-                message: "",
-                message_class: "",
+                modal_container: "",
                 loading: false
             }
         }

@@ -20,7 +20,7 @@
 
                 <ul class="pad-0 listn">
                     <li v-if="package_.package_download != null">
-                        <a data-target="#viewDownloadModal" data-toggle="modal">More Details</a>
+                        <a data-target="#viewDownloadModal" data-toggle="modal">View Attached File</a>
                     </li>
                     <li>
                         <a @click.prevent="addToCart">Add to Cart</a>

@@ -80,6 +80,18 @@
                       </ul>
                     </li>
 
+                <?php $reservation_sub_items = ['booking_reservations','van_reservations','package_reservations']; $reservation = isActive($reservation_sub_items); ?>
+                  <li class="sub-menu dcjq-parent-li">
+                      <a href="javascript:;" class="dcjq-parent <?=$reservation[0]?>">
+                          <span>Reservations</span> 
+                      <span class="dcjq-icon"></span></a>
+                      <ul class="sub" style="<?=$reservation[1]?>">
+                          <li class="<?=isActive('booking_reservations')?>"><a href="<?=base_url('booking-reservations')?>">Booking</a></li>
+                          <li class="<?=isActive('van_reservations')?>"><a href="<?=base_url('van-reservations')?>" >Van Hire</a></li>
+                          <li class="<?=isActive('package_reservations')?>"><a href="<?=base_url('package_reservations')?>" >Package</a></li>
+                      </ul>
+                    </li>
+
                     <li class="sub-menu">
                       <a href="<?=base_url('tourpackages')?>" class="<?=isActive("tourpackages")?>">
                           <i class="fa fa-truck"></i>
@@ -94,12 +106,12 @@
                         </a>
                     </li>
 
-                  <li class="sub-menu">
-                      <a href="<?=base_url('destinations')?>" class="<?=isActive("destinations")?>">
+                  <!-- <li class="sub-menu">
+                      <a href="<?php // base_url('destinations')?>" class="<?php //isActive("destinations")?>">
                           <i class="fa fa-building-o"></i>
                           <span>Destinations</span>
                       </a>
-                  </li>
+                  </li> -->
 
                   <li class="sub-menu">
                       <a href="<?=base_url('vans')?>" class="<?=isActive("vans")?>">

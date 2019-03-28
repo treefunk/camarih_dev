@@ -261,15 +261,21 @@
 			validatePackageForm(e){
 				let form = e.target
 
+				let validationScope = Object.keys(package_form_errors);
 
 				let errorBag = {};
 
 				function validateObject(obj)
 				{
 					for(let key in obj){
+						
+
 						if(typeof obj[key] == 'object'){
 							validateObject(obj[key])
 						}else if(typeof obj[key] != 'boolean'){
+							if(!validationScope.includes(key)){
+								continue;
+							}
 							if(obj[key] === ""){
 								if(!errorBag.hasOwnProperty(key)){
 									errorBag[key] = []
@@ -290,7 +296,7 @@
 				validateObject(this.package_)
 
 				for(let prop in errorBag){
-					alert(package_form_errors[prop][errorBag[prop]])
+					this.$store.dispatch("showToastr", { message: package_form_errors[prop][errorBag[prop]], type: "error"})
 					return -1
 				}
 				form.submit()

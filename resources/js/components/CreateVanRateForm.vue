@@ -87,8 +87,11 @@
             },
             validateForms(e){
                 for(let x =0 ; x < this.van_rates.length; x++){
+                    let van_rate = this.van_rates[x];
+                    delete van_rate.roundtrip_rate
+                    delete van_rate.oneway_rate
                     if(Object.values(this.van_rates[x]).includes("")){
-                        alert("Please fill in all the required fields.")
+                        this.$store.dispatch("showToastr", { message: "Please fill in all the required fields.", type: "error"})
                         return -1;
                     }
                 }

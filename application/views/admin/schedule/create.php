@@ -17,19 +17,18 @@
                       <div class="col-md-12">
                           
                           <div class="panel-body">
-                                      <form role="form" action="<?=base_url('tripschedule/update')?>" method="POST" enctype="multipart/form-data">
+                                      
                                           
                                         <schedule-form
                                         :schedules_data='<?=json_encode($schedules)?>'
+                                        action_url='<?=base_url('tripschedule/update')?>'
                                         >
 
                                         </schedule-form>
                                           
 
 
-                                    <button type="submit" class="btn_orange right_btn">Save Changes</button>
-
-                                      </form>
+                                    
         
                             </div>
 

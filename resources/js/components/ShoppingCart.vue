@@ -172,7 +172,7 @@
         methods: {
             showCheckoutForm(){
               if(this.checkout.length == 0){
-                alert('cart is empty')
+                this.$store.dispatch("showToastr", { message: "Cart is empty.", type: "error"})
                 return -1;
               }
                 $('#checkoutModal').modal('show')   
@@ -209,7 +209,7 @@
             validateCheckout(e){
     
               if(this.checkout.length == 0){
-                alert('cart is empty')
+                this.$store.dispatch("showToastr", { message: "Cart is empty.", type: "error"})
                 return -1;
               }
 

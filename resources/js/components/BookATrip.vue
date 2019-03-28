@@ -98,22 +98,22 @@
                 let is_roundtrip = this.triptype == 'roundtrip'
 
                 if(is_roundtrip && (this.from == '' || this.to == '')){
-                    alert('Please input a date');
+                    this.$store.dispatch("showToastr", { message: "You did not specify the date.", type: "error"})
                     return -1;
                 }
 
                 if(is_oneway && this.from == ''){
-                    alert('Please input a date');
+                    this.$store.dispatch("showToastr", { message: "You did not specify the date.", type: "error"})
                     return -1;
                 }
 
                 if(this.destination_from == ''){
-                    alert('Please select the origin')
+                    this.$store.dispatch("showToastr", { message: "Please select the origin", type: "error"})
                     return -1;
                 }
 
                 if(this.destination_to == ''){
-                    alert('Please select the destination')
+                    this.$store.dispatch("showToastr", { message: "Please select the destination", type: "error"})
                     return -1;
                 }
 

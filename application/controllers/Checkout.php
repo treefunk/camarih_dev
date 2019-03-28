@@ -16,9 +16,14 @@ class Checkout extends MY_Controller{
         $paypal = new Paypal;
         
         $formatted_cart = $this->cart_model->itemsWithPrices();
-
-
-        $data['paypal_link'] = $paypal->pay($formatted_cart);        
+    
+        
+        if($payment = $paypal->pay($formatted_cart)){
+            header("Location: {$payment->links[1]->href}");
+        }else{
+            // TODO: RETURN ERROR
+            $data['paypal_link'] = "#";
+        }
 
         $this->wrapper([
             'view' => 'checkout',
@@ -61,7 +66,9 @@ class Checkout extends MY_Controller{
         $paypal = new Paypal();
 
         $details = $paypal->getPaymentDetails($this->input->get('paymentId'));
-        var_dump($paypal->executePayment($details->transactions[0]));
+        var_dump($details);
+        $paypal->executePayment($details->transactions[0]);
+        d(['after' => $paypal->getPaymentDetails($this->input->get('paymentId'))]);
     }
 
     

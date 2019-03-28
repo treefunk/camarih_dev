@@ -12,6 +12,8 @@ use PayPal\Api\PaymentExecution;
 
 class Paypal{
 
+    const PAYPAL_DESCRIPTION = "Camarih Transport Line Services Inc.";
+
     public function __construct()
     {
 
@@ -41,33 +43,67 @@ class Paypal{
         $payer = new Payer();
         $payer->setPaymentMethod("paypal");
 
-
-        
-
         $transactions = [];
         $item_list = [];
         $subtotal = 0;
         $items = [];
+        //BOOKING TRIP
+        if(array_key_exists('booking_trip',$cart)){
+            foreach($cart['booking_trip'] as $item){
 
-        foreach($cart as $item){
-            $total_items = 0;
-            foreach($item['items'] as $i){
-                $new_item = new Item();
-                $new_item->setName("{$item['short']} - {$item['departure_time']} - {$i['passenger']}")
-                         ->setCurrency("PHP")
-                         ->setQuantity(1)
-                         ->setSku("SEAT_#{$i['seatnum']}") // Similar to `item_number` in Classic API
-                         ->setPrice((float)$i['price']);
 
-                $subtotal += $i['price'];
-                $total_items++;
-                $items[] = $new_item;
-            }
-            
-
-            
-            
+                    foreach($item['items'] as $i){
+                        $new_item = new Item();
+                        $new_item->setName("{$item['short']} - {$item['departure_time']} - {$i['passenger']}")
+                                 ->setCurrency("PHP")
+                                 ->setQuantity(1)
+                                 ->setSku("SEAT_#{$i['seatnum']}") // Similar to `item_number` in Classic API
+                                 ->setPrice((float)$i['price']);
+        
+                        $subtotal += $i['price'];
+                        $items[] = $new_item;
+                    }
+                }
         }
+
+
+        // BOOKING VAN
+        if(array_key_exists('booking_van',$cart)){
+            foreach($cart['booking_van'] as $van_id){
+                foreach($van_id as $item){
+
+                    $new_item = new Item();
+                    $new_item->setName("{$item['date']} {$item['van_name']} - {$item['trip_type']}")
+                    ->setCurrency("PHP")
+                    ->setQuantity(1)
+                    ->setSku($item['description']) // Similar to `item_number` in Classic API
+                    ->setPrice((float)$item['price']);
+                    
+                    $subtotal += $item['price'];
+                    $items[] = $new_item;
+                }
+            }
+        }
+
+        //BOOKING PACKAGE
+
+        if(array_key_exists('booking_package',$cart)){
+            $total = 0;
+            foreach($cart['booking_package'] as $item){
+
+                    $new_item = new Item();
+                    $new_item->setName("Package - {$item['package_name']}")
+                    ->setCurrency("PHP")
+                    ->setQuantity($item['adult_count'])
+                    // ->setSku($item['']) // Similar to `item_number` in Classic API
+                    ->setPrice((float)$item['rate']);
+                    $total += ((float)($item['rate'])) * $item['adult_count'];
+                    $items[] = $new_item;
+            }
+
+            $subtotal += $total;
+        }
+        
         $itemList = new ItemList();
         $itemList->setItems($items);
         $details = new Details();
@@ -84,7 +120,7 @@ class Paypal{
         $transaction = new Transaction();
         $transaction->setAmount($amount)
                     ->setItemList($itemList)
-                    ->setDescription($item['name'])
+                    ->setDescription(Paypal::PAYPAL_DESCRIPTION)
                     ->setInvoiceNumber(uniqid());
  
             
@@ -103,13 +139,16 @@ class Paypal{
                 ->setTransactions([$transaction]);
                 
                 $request = clone $payment;
-                var_dump($payment->create($this->api_context)); die();
 
         try {
-            $payment->create($this->api_context);
+            $paymentObject = $payment->create($this->api_context);
+            return $paymentObject;
         } catch (Exception $ex) {
-            // die('ye');
-            var_dump($ex->getData()); die();
+            if($ex->getCode() == 6){
+                echo $ex->getMessage() . "<br />";
+                echo "internet connection is required.";
+            }
+            // var_dump($ex->getCode()." ".$ex->getMessage()); die();
         }
         
     }
@@ -118,18 +157,18 @@ class Paypal{
 
         $paymentId = $_GET['paymentId'];
         $payment = Payment::get($paymentId, $this->api_context);
-
         $execution = new PaymentExecution();
         $execution->setPayerId($_GET['PayerID']);
 
         // $transaction = new Transaction();
         // $amount = new Amount();
         // $details = new Details();
-
+    
         $execution->addTransaction($transaction);
-
+    
         try {
             $result = $payment->execute($execution, $this->api_context);
+
         } catch (Exception $ex) {
             echo $ex->getData();
             die();

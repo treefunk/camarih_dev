@@ -14,7 +14,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/bootstrap.min.css">
-  <link href='https://fonts.googleapis.com/css?family=Lato:400,100,300,700,900' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/font-awesome.min.css">
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/owl.carousel.min.css">
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/owl.theme.default.min.css">
@@ -22,6 +21,9 @@
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/responsive.css">
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/main.css">
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/jhondz.css">
+  <!-- toastr -->
+  <link href="<?=base_url('flatlab')?>/assets/toastr-master/toastr.css" rel="stylesheet" type="text/css">
+
 
   <link href="<?=base_url()?>assets/css/app.css" rel="stylesheet" />
 

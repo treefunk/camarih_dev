@@ -55,12 +55,15 @@
           ></single-package>
            -->
         <!-- </div> -->
-        <featured-package
-        :package_data='<?=json_encode($featured_package)?>'
-        single_url="<?=base_url('packages/selected')?>"
-        add_to_cart_url="<?=base_url('packages/add_to_cart')?>"
-        view_all_url="<?=base_url('packages')?>"
-        ></featured-package>
+        <?php if($featured_package): ?>
+          <featured-package
+          :package_data='<?=json_encode($featured_package)?>'
+          single_url="<?=base_url('packages/selected')?>"
+          add_to_cart_url="<?=base_url('packages/add_to_cart')?>"
+          view_all_url="<?=base_url('packages')?>"
+          main_image_url="<?=base_url($this->packageimage_model->upload_path)?>"
+          ></featured-package>
+        <?php endif; ?>
 </section>
 
 <?php if(count($testimonials)) : ?>

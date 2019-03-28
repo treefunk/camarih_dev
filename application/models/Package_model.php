@@ -55,6 +55,9 @@ class Package_model extends CMS_Model
                 'is_featured' => 1
             ])->row();
         }
+        if(!$package){
+            return false;
+        }
 
 
         $package_details = $this->db->get_where('package_details', [

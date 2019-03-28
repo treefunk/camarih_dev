@@ -100,17 +100,17 @@
                     if(typeof val == 'object'){ return false }
                         return val == ""
                 }) || this.van_seats.some(v => v == "")){
-                    alert("Please fill in all the required fields.")
+                    this.$store.dispatch("showToastr", { message: "Please fill in all the required fields.", type: "error"})
                     return -1;
                 }
 
                 if(this.van_seats.length <= 0){
-                    alert('Please add a row for the seat plan.')
+                    this.$store.dispatch("showToastr", { message: "Please add a row for the seat plan.", type: "error"})
                     return -1
                 }
 
                 if(this.gallery_count <= 0){
-                    alert('at least one image is required')
+                    this.$store.dispatch("showToastr", { message: "Please upload at least one image.", type: "error"})
                     return -1
                 }
                 e.target.submit();

@@ -311,3 +311,9 @@
     transition: 0.25s ease-out;
     -webkit-backface-visibility: hidden;
 }
+
+.sa-gitna {
+    top: 50%;
+    right: 0;
+    width: 50%;
+  }

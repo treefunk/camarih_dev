@@ -144,6 +144,7 @@
                     .attr('id', options.containerId)
                     .addClass(options.positionClass)
                     .attr('aria-live', 'polite')
+                    .attr('style',options.customStyles) //Jhondz
                     .attr('role', 'alert');
 
                 $container.appendTo($(options.target));
@@ -175,6 +176,7 @@
                     },
                     iconClass: 'toast-info',
                     positionClass: 'toast-top-right',
+                    customStyles: '',
                     timeOut: 5000, // Set timeOut and extendedTimeOut to 0 to make it sticky
                     titleClass: 'toast-title',
                     messageClass: 'toast-message',

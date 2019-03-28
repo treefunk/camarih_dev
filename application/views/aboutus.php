@@ -13,12 +13,6 @@
 		<p><?=$about->body?></p>
 	</div>
 
-
-
-
-
-
-
 </div>
 </section>
 </div>

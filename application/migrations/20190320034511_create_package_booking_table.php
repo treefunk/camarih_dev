@@ -30,7 +30,13 @@ class Migration_Create_package_booking_Table extends CI_Migration {
                         ),
                         'price' => array(
                             'type' => 'DOUBLE',
+                        ),
+                        'status' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '200',
+                                'default' => 'pending'
                         )
+    
                 ));
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");

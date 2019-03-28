@@ -10,8 +10,10 @@
 
 
     <book-a-trip
-    :destinations='<?=json_encode($destinations)?>'
-    ></book-a-trip>
+  url='<?=base_url('availability/check')?>'
+  :destinations_data='<?=json_encode($destinations)?>'
+  :origins_data='<?=json_encode($origins)?>'
+  > </book-a-trip>
 
 
     <section class="sec-2">
@@ -37,9 +39,10 @@
                     <?php endforeach; ?>
                 </div>
                 <van-rent-form
+                minDate='<?=$minDate?>'
                 :van_data='<?=json_encode($van)?>'
-                :origins_data='<?=json_encode($destinations)?>'
-                :destinations_data='<?=json_encode($destinations)?>'
+                :origins_data='<?=json_encode($origins_vanrent)?>'
+                :destinations_data='<?=json_encode($destinations_vanrent)?>'
                 form_url="<?=base_url("ourvans/rent/{$van->id}")?>"
                 check_url="<?=base_url("ourvans/check_van_availability/{$van->id}")?>"
                 >

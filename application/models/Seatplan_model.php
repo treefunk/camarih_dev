@@ -160,29 +160,30 @@ class Seatplan_model extends CMS_Model
                 $to_add = false;
                 
                 $index = 0;
-                
-                foreach($item['selected_seats'] as $seat_group)
-                {
-                    if($item['selected'][$index]['from'] == $date && $rate->trip_availability_id == $item['selected'][$index]['trip_availability_id']){
-                        $return_index = $index;
-                        $to_add = true;
-                    }
 
-                    if($booking_num){
-                        if($item['booking_num'] == $booking_num){
-                            $to_add = false;
+
+                if($item['item_type'] == 'booking_trip'){
+                    foreach($item['selected_seats'] as $seat_group)
+                    {
+                        if($item['selected'][$index]['from'] == $date && $rate->trip_availability_id == $item['selected'][$index]['trip_availability_id']){
+                            $return_index = $index;
+                            $to_add = true;
                         }
-                    }
-
-
-
-
-                    foreach($seat_group as $seat){
-                        if($to_add){
-                            $pending_seats[$index][] = (int)$seat['seatnum'];
+    
+                        if($booking_num){
+                            if($item['booking_num'] == $booking_num){
+                                $to_add = false;
+                            }
                         }
+    
+                        foreach($seat_group as $seat){
+                            if($to_add){
+                                $pending_seats[$index][] = (int)$seat['seatnum'];
+                            }
+                        }
+                        $index++;
                     }
-                    $index++;
+                    
                 }
                 
                 

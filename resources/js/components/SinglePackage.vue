@@ -25,10 +25,6 @@
                         </li>
                     </ul>
                     <aside>
-                        <div class="text-center" style="margin-top:30px">
-                            <p :style="{ color: message_class }" :class="['msg-style']" v-if="message">{{ message }}</p>
-                            <div class="loading-dual" v-if="loading"></div>
-                        </div>
                       <ul class="pad-0 listn">
                         <li>
                           <a :href="`${this.single_url}/${item.id}`">View Details</a>
@@ -61,22 +57,12 @@
                 adult_count: this.item.package_details.minimum_count,
                 isRight: ((this.index + 1) % 2 == 0) ,
                 in: this.index,
-                message: "",
-                message_class: "",
                 loading: false,
                 package_:this.item
             }
         },
-        props: [ 'item', 'index', 'single_url','add_to_cart_url', 'main_image_url'],
-        computed: {
-          main_image(){
-            if(this.item.package_image != null){
-              return `${this.main_image_url}/${this.item.package_image.id}_${this.item.package_image.image_name}`
-            }else{
-              return  this.item.image_path
-            }
-          }
-        }
+        props: [ 'item', 'index', 'single_url','add_to_cart_url'],
+        
     }
 </script>
 

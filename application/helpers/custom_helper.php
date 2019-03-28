@@ -122,3 +122,10 @@ function cleanMultipleFilesArray($field){
 
     return $files;
 }
+
+function d(){
+    foreach(func_get_args() as $arg){
+        var_dump($arg);
+    }
+    die();
+}

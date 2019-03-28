@@ -6,10 +6,10 @@ export default {
         required: "Please select the origin."
     },
     selling_start: {
-        required: "Please set the selling start date."
+        required: "Please set the start selling date."
     },
     selling_end: {
-        required: "Please set the selling end date."
+        required: "Please set the end selling date."
     },
     departure_time: {
         required: "Please set the departure time."

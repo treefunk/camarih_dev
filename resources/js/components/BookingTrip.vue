@@ -13,7 +13,8 @@
                     </div>
                     <div class="right">
                       <div class="icon-hldr">
-                        <a :href="`${this.edit_base_url}/${booking_num}`"><i class="fa fa-pencil"></i></a>
+                        <!-- TODO: EDIT BOOKING TRIP -->
+                        <!-- <a :href="`${this.edit_base_url}/${booking_num}`"><i class="fa fa-pencil"></i></a> -->
                         <a href="" @click.prevent="remove"><i class="fa fa-close"></i></a>
                       </div>
                     </div>

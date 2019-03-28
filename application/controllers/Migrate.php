@@ -118,7 +118,8 @@ class Migrate extends CI_Controller
 
       $this->db->insert('package_details',[
         'package_id' => $this->db->insert_id(),
-        'description' => 'Hotel + Tours + Transfers',
+        'description' => '<h1>Hotel + Tours + Transfers</h1>',
+        'minimum_count' => 3
       ]);
 
       $this->db->insert('packages',[
@@ -129,7 +130,8 @@ class Migrate extends CI_Controller
 
       $this->db->insert('package_details',[
         'package_id' => $this->db->insert_id(),
-        'description' => 'Hotel + Tours',
+        'description' => '<h1>Hotel + Tours</h1>',
+        'minimum_count' => 2
       ]);
 
 
@@ -219,13 +221,18 @@ class Migrate extends CI_Controller
   }
 
   public function giffy() {
-    $client = new Client;
+    try{
+      $client = new Client;
+  
+      $res = $client->request('GET', 'https://api.tenor.com/v1/random?client=%22C09V03CYQKH1%22&q=%22jisoo%22');
+  
+      $gifs = (json_decode($res->getBody()));
+      $random_gif = $gifs->results[rand(0,5)]->media[0]->gif->url;
+      $image = "<img src='{$random_gif}' width='250' height='250'>";
 
-    $res = $client->request('GET', 'https://api.tenor.com/v1/random?client=%22C09V03CYQKH1%22&q=%22jisoo%22');
-
-    $gifs = (json_decode($res->getBody()));
-    $random_gif = $gifs->results[rand(0,5)]->media[0]->gif->url;
-    $image = "<img src='{$random_gif}' width='250' height='250'>";
+    }catch(Exception $e){
+      $image = "No internet, No Jisoo"; 
+    }
 
     return $image;
   }

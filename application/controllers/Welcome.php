@@ -10,6 +10,7 @@ class Welcome extends MY_Controller {
 		$this->load->model('testimonial_model');
 		$this->load->model('destination_model');
 		$this->load->model('package_model');
+		$this->load->model('packageimage_model');
 	}
 
 

@@ -21,7 +21,9 @@
     <!--common script for all pages-->
     <script src="<?=base_url('flatlab')?>/js/common-scripts.js"></script>
     
-    
+      <!-- toastr -->
+  <script src="<?=base_url()?>flatlab/assets/toastr-master/toastr.js"></script>
+
     <script src="<?=base_url()?>/assets/js/app.js"></script>
 
     <script>

@@ -1,8 +1,8 @@
 <template>
     <div class="rate">
-        <h3>
+        <!-- <h3>
                     {{ getOrdinal(index + 1) }} Destination
-        </h3>
+        </h3> -->
         <div class="clearfix">
         <button type="button" class="btn btn-danger right_btn" @click="removeMe(index)"><i class="fa fa-times"></i></button>
         </div>
