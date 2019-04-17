@@ -93,22 +93,25 @@
                         <td><?=format_datetime_string($trip_availability->selling_start,'M j Y')?> - <?=format_datetime_string($trip_availability->selling_end,'M j Y')?></td>
                         <td><?=$trip_availability->created_at?></td>
                         <td>
-                            <a href="<?=base_url("trip_availability/rates/").$trip_availability->id?>"><button class="btn btn-info">View Rates</button></a>
+                            <a href="<?=base_url("trip_availability/rates/").$trip_availability->id?>"><button class="btn btn-default"><i class="fa fa-eye"></i></button></a>
                             <a href="<?=base_url("trip_availability/edit/").$trip_availability->id?>">
-                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i> Edit </button>
+                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i></button>
                             </a>
 
                             <a data-toggle="modal" href="#deleteTripAvailability"
-                            data-payload='<?=json_encode(['id' =>$trip_availability->id])?>'>
-                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i> Delete </button>
+                            data-payload='<?=json_encode(['id' =>$trip_availability->id])?>'
+                            data-url='<?=base_url('trip_availability/delete/')?>'>
+                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i></button>
                             </a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
                     </tbody>
                   </table>
-                  <div class="pagination">
-                      <?=$links?>
+                  <div class="text-center">
+                      <div class="pagination">
+                          <?=$links ?>
+                      </div>
                   </div>
               </section>
               <!-- page end-->

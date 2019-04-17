@@ -46,7 +46,7 @@
                         <p>Rate</p>
                     </div>
                     <div class="children">
-                        <p>{{ package_.rate }}</p>
+                        <p>{{ package_.rate | formatNum }}</p>
                     </div>
                 </div>
             </li>

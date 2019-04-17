@@ -33,12 +33,17 @@ class Migration_Create_carts_Table extends CI_Migration {
                         'status' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '200',
-                            'default' => 'pending'
+                            'default' => 'reserved'
                         ),
                         'active' => array(
                             'type' => 'TINYINT',
                             'constraint' => '10',
                             'default' => 1
+                        ),
+                        'destination_id' => array(
+                            'type' => 'INT',
+                            'constraint' => '255',
+                            'unsigned' => TRUE
                         )
                 ));
 

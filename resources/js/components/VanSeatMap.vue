@@ -19,7 +19,7 @@
         props: {
             seats_data: {
                 type: Array,
-                default: () => ['1']
+                default: () => ['2']
             }
         },
         data(){
@@ -29,18 +29,20 @@
         },
         methods: {
             addRow(){
-                this.seats.push('')
+                let seatCount = "3";
+                if(this.seats.length == 0){ seatCount = "2"}
+                this.seats.push("" + seatCount)
             },
             removeRow(index){
 
                 if(this.seats.length == 1){
-                    this.$store.commit("showToastr", {message: "Seat plan must have at least 1 row.",type: "error"})
+                    this.$store.dispatch("showToastr", {message: "Seat plan must have at least 1 row.",type: "error"})
                     return -1;
                 }
 
                 this.seats.splice(index,1)
-                if(this.seats[0] > 3){
-                    this.seats[0] = 2
+                if(parseInt(this.seats[0],10) > 3){
+                    this.seats[0] = "2"
                     return;
                 }
             }
@@ -48,19 +50,28 @@
         watch:{
             seats(newSeats,oldSeats,wat)
             {
-                if(newSeats[0] >= 3){
+                if(parseInt(newSeats[0],10) >= 3){
                     this.$store.dispatch("showToastr", { message: 'You can only have 2 seats maximum in the first row',type: "error"})
-                    newSeats[0] = 2
+                    newSeats[0] = '2'
                     return;
                 }
-                for(let x = 1 ; x <= newSeats.length; x++)
-                {
-                    if(newSeats[x] > 4){
-                        this.$store.dispatch("showToastr", { message: 'You can only have 4 seats maximum in a row',type: "error"})
-                        newSeats[x] = 4
-                    }
+                if(parseInt(newSeats[0],10) <= 1){
+                    this.$store.dispatch("showToastr", { message: 'Minimum count of seat in the first row is 2',type: "error"})
+                    newSeats[0] = '2'
                 }
 
+                for(let x = 1 ; x <= newSeats.length; x++)
+                {
+                    if(parseInt(newSeats[x],10) < 3){
+                            this.$store.dispatch("showToastr", { message: 'Minimum count of seat per row is 3',type: "error"})
+                            newSeats[x] = '3'
+                    }
+                    if(parseInt(newSeats[x],10) > 4){
+                        this.$store.dispatch("showToastr", { message: 'You can only have 4 seats maximum in a row',type: "error"})
+                        newSeats[x] = '4'
+                    }
+                }
+                
                 // if(newSeats.length == oldSeats.length && newSeats[newSeats.length - 1] > 4){
                 //     alert('You can only have 4 seats maximum in a row')
                 //     newSeats[newSeats.length - 1] = 4

@@ -20,6 +20,9 @@ import CreateVanRateForm from './components/CreateVanRateForm'
 import VanRentForm from './components/VanRentForm'
 import SelectedPackageForm from './components/SelectedPackageForm'
 import FeaturedPackage from './components/FeaturedPackage'
+import ContactForm from './components/ContactForm'
+import CreateSliderForm from './components/CreateSliderForm'
+import TestimonialForm from './components/TestimonialForm'
 
 
 // Vuex
@@ -28,6 +31,20 @@ import { store } from './stores/store'
 
 
 Vue.config.productionTip = false
+
+Vue.mixin({
+    filters: {
+        formatNum: (value) => {
+
+          if(isNaN(value)){ return "N/A" }
+          if(typeof value == "string"){ value = parseInt(value,10) }
+          return value.toLocaleString(undefined,{
+             minimumFractionDigits: 2,
+          })
+          
+        }
+      }
+})
 
 new Vue({
     el: ".app",
@@ -56,8 +73,14 @@ new Vue({
         'van-rent-form': VanRentForm,
         'selected-package-form': SelectedPackageForm,
         'featured-package': FeaturedPackage,
+        'contact-form': ContactForm,
+        'create-slider-form': CreateSliderForm,
+        'testimonial-form': TestimonialForm
     }   
 })
+
+
+
 
 
 

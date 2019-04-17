@@ -16,6 +16,28 @@ class CMS_Model extends CI_Model
         return $this->db->from($this->table)->get()->result();
     }
 
+    public function allWithFeaturedOffset()
+    {
+        $offset = 0;
+        $found = false;
+
+        $data = $this->db->from($this->table)->get()->result();
+
+        foreach($data as $row){
+            if(!$row->is_featured){ $offset++; }
+            if($row->is_featured){
+                $found = true;
+                break; 
+            }
+        }
+        if(!$found){ $offset = 0; }
+
+        return [
+            'result' => $data,
+            'offset' => $offset
+        ];
+    }
+
     public function findById($id)
     {
         return $this->db->get_where($this->table,['id' => $id])->row();

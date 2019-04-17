@@ -21,6 +21,11 @@ class Booking_reservations extends Admin_Controller {
         $get = $this->input->get(null,true);
         $query = $this->bookingreservation_model->getAllQuery();
 
+        //FILTER SEARCH
+        if(!empty($get['search'])){
+            $this->bookingreservation_model->filterSearch($query,$get['search']);
+        }
+
         //FILTER ORIGIN
         if(!empty($get['origin_id'])){
             $this->bookingreservation_model->filterOrigin($query,$get['origin_id']);
@@ -51,15 +56,14 @@ class Booking_reservations extends Admin_Controller {
 
 
         $status_types = [
-            'completed',
+            'reserved',
             'cancelled',
-            'pending'
         ];
 
 
         $this->load->library('pagination');
 
-        $query->order_by('origin_name');
+        $query->order_by('created_at','DESC');
         $clone_query = clone $query;
         $num_rows = $clone_query->get()->num_rows();
 
@@ -73,6 +77,7 @@ class Booking_reservations extends Admin_Controller {
             'reuse_query_string' => TRUE
         ];
         
+        setPaginationStyle($config);
         
         $this->pagination->initialize($config);
 
@@ -98,7 +103,53 @@ class Booking_reservations extends Admin_Controller {
         $post = $this->input->post(null,true);
         $changes = 0;
 
-        if($booking_reservation){
+        if($post['status'] == 'reserved'){
+            $seat_num_ids = [];
+            $seat_num_ids_db = [];
+            //BEFORE UPDATE CHECK IF IT'S STILL AVAILABLE
+            $seat_plans = $this->db->select('seat_plan.seat_num')
+                                        ->from('seat_plan')
+                                            ->join('carts','carts.id = seat_plan.cart_id')
+                                            ->join('trip_availability', 'trip_availability.id = seat_plan.trip_availability_id')
+                                            ->where('carts.id', $booking_reservation->id)->get()->result();
+            foreach($seat_plans as $seat_plan){
+                $seat_num_ids[] = $seat_plan->seat_num;
+            }
+
+            $seats_taken = $this->db->select('seat_plan.seat_num')
+                                    ->from('seat_plan')
+                                    ->join('carts','seat_plan.cart_id = carts.id')
+                                    ->join('checkouts','checkouts.id = carts.checkout_id')
+                                    ->join('rates','carts.rate_id = rates.id')
+                                    ->join('trip_availability','trip_availability.id = seat_plan.trip_availability_id')
+                                    ->where('carts.departure_date',$booking_reservation->departure_date)
+                                    ->where('carts.departure_time',$booking_reservation->departure_time)
+                                    //   ->where('trip_availability.destination_from', $seat_plans[0]->destination_from)
+                                    //   ->where('trip_availability.id',$seat_plans[0]->trip_availability_id)
+                                    ->where('carts.id <>',$booking_reservation->id)
+                                    ->where('carts.status','reserved')
+                                    ->get()->result();
+            foreach($seats_taken as $taken){
+                $seat_num_ids_db[] = $taken->seat_num;
+            }
+                            
+            $seats_taken = count(array_intersect($seat_num_ids,$seat_num_ids_db));
+            
+            if($seats_taken){
+                $alert = [
+                    'type' => 'danger',
+                    'message' => "Cannot update status. Maximum number of seats already taken."
+                ];
+
+                
+                $this->session->set_flashdata('alert',$alert);
+            }
+
+        }
+        
+        
+
+        if($booking_reservation && !$seats_taken){
 
             if($booking_reservation->status != $post['status']){
                 $changes += $this->bookingreservation_model->update($booking_reservation->id,[
@@ -106,19 +157,62 @@ class Booking_reservations extends Admin_Controller {
                 ]);
             }
 
+            if($changes){
+                $alert = [
+                    'type' => 'success',
+                    'message' => 'Status Successfully Updated.'
+                ];
+    
+                
+                $this->session->set_flashdata('alert',$alert);
+            }
+
         }
 
-        if($changes){
-            $alert = [
-                'type' => 'success',
-                'message' => 'Status Successfully Updated.'
-            ];
-
-            
-            $this->session->set_flashdata('alert',$alert);
-        }
+       
 
         return redirect(base_url("booking_reservations"));
+    }
+
+    public function getBookingDetails(){
+        $post = $this->input->post(null,true);
+
+        $booking = $post['booking'];
+
+        $booking_info = $this->db->get_where('booking_information',[
+            'cart_id' => $booking['id']
+        ])->row();
+
+        $data['seat_plan'] = $this->db->get_where('seat_plan',[
+            'cart_id' => $booking['id']
+        ])->result();
+
+
+
+
+
+
+        $data['details'] = [
+            'User Information' => [
+                'Full Name' => $booking['fullname'],
+                'Email' => $booking['email'],
+                'Phone' => $booking['phone'],
+            ],
+            'Booking Details' => [
+                'Origin' => $booking['origin_name'],
+                'Destination' => $booking['destination_name'],
+                'Departure date' => $booking['departure_date'],
+                'Departure time' => $booking['departure_time'],
+                'Van' => $booking['van_name'],
+                'Total' => "PHP " . number_format($booking['price'] * count($data['seat_plan']),2)
+            ],
+            'Booking Information' => [
+                'Pickup Location' => $booking_info->pickup_location,
+                'Drop Location' => $booking_info->drop_location
+            ]
+        ];
+
+        die(json_encode($data));
     }
 
 

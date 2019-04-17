@@ -35,6 +35,9 @@ export const store = new Vuex.Store({
         },
         incrementCartNum: (state) => {
             state.shoppingCartNum++
+        },
+        decrementCartNum: (state) => {
+            state.shoppingCartNum--
         } 
     },
     actions: {

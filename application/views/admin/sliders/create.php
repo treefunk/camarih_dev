@@ -1,7 +1,8 @@
 <section id="main-content" class="app">
           <section class="wrapper site-min-height">
+              
               <!-- page start-->
-              <section class="panel">
+              <section class="panel-cs">
                   <header class="panel-heading">
                       Create Slider
                       <span class="pull-right">
@@ -13,43 +14,17 @@
                       <div class="col-md-6">
                           
                           <div class="panel-body">
-                                      <form role="form" action="<?=base_url('sliders/store')?>" method="POST" enctype="multipart/form-data">
-                                          <div class="form-group">
-                                              <label for="image_name">Image</label>
-                                              <input name="image_name" type="file" id="image_name" value="<?=set_value('image_name'); ?>" >
-                                              <!-- <p class="help-block">Example block-level help text here.</p> -->
-                                          </div>
-                                          <div class="form-group">
-                                              <label for="header">Header</label>
-                                              <input type="text" name="header" class="form-control" id="header" value="<?=set_value('header'); ?>" placeholder="Enter Header">
-                                          </div>
-                                          <div class="form-group">
-                                              <label for="sub_header">Sub Header</label>
-                                              <input type="text" name="sub_header" class="form-control" id="sub_header"value="<?=set_value('sub_header'); ?>" placeholder="Enter Sub Header">
-                                          </div>
 
-                                          <div class="form-group">
-                                              <label for="button_text_first">First Button Text</label>
-                                              <input type="text" name="button_text_first" class="form-control" value="<?=set_value('button_text_first'); ?>" id="button_text_first">
-                                          </div>
-
-                                          <div class="form-group">
-                                              <label for="button_link_first">First Button Link</label>
-                                              <input type="text" name="button_link_first" class="form-control" value="<?=set_value('button_link_first'); ?>" id="button_link_first">
-                                          </div>
-
-                                          <div class="form-group">
-                                              <label for="button_text_second">Second Button Text</label>
-                                              <input type="text" name="button_text_second" class="form-control" value="<?=set_value('button_text_second'); ?>" id="button_text_second">
-                                          </div>
-
-                                          <div class="form-group">
-                                              <label for="button_link_second">Second Button Link</label>
-                                              <input type="text" name="button_link_second" class="form-control" value="<?=set_value('button_link_second'); ?>" id="button_link_second">
-                                          </div>
-
-                                          <button type="submit" class="btn btn-info">Submit</button>
-                                      </form>
+                                      <create-slider-form
+                                      form_url='<?=base_url('sliders/store')?>'
+                                      init_header='<?=set_value('header')?>'
+                                      init_sub_header='<?=set_value('sub_header')?>'
+                                      init_button_text_first='<?=set_value('button_text_first')?>'
+                                      init_button_link_first='<?=set_value('button_link_first')?>'
+                                      init_button_text_second='<?=set_value('button_text_second')?>'
+                                      init_button_link_second='<?=set_value('button_link_second')?>'
+                                      init_is_featured='<?=(boolean)set_checkbox('is_featured', 0);?>'
+                                      ></create-slider-form>
         
                             </div>
 

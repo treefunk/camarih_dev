@@ -4,7 +4,7 @@
 		<ul class="circle-btns">
 			<li :class="{'selected': tab == 1}"  @click="tab = 1"><a>Overview</a></li>
 			<li :class="{'selected': tab == 2}" @click="tab = 2"><a>Gallery</a></li>
-			<li :class="{'selected': tab == 3}" @click="tab = 3"><a>Downloads</a></li>
+			<li :class="{'selected': tab == 3}" @click="tab = 3"><a>File Preview</a></li>
 		</ul>
 
 
@@ -12,8 +12,9 @@
 
 			<div class="form-group">
 				<label for="is_featured">Featured? </label>
-				<input type="checkbox" name="is_featured" v-model="package_.is_featured" :value="package_.is_featured" id="">
+				<input :disabled='package_data.status != "active"' type="checkbox" name="is_featured" v-model="package_.is_featured" :value="package_.is_featured" id="">
 				<p style="color:red; font-size: 80%;">NOTE: only 1 featured package is allowed</p>
+				<p v-if='package_data.status != "active"' style="color:red; font-size: 80%;">Package must be active</p>
 			</div>
 
 			<div class="form-group">
@@ -39,7 +40,7 @@
 				
 				<label for="">*Minimum Number of Persons</label>
 				<div>
-					<input name="minimum_count" v-model="package_.package_details.minimum_count" min="0" type="number" class="form-control"> 
+					<input name="minimum_count" v-model="package_.package_details.minimum_count" min="1" type="number" class="form-control"> 
 				</div>
 			</div>
 
@@ -94,6 +95,10 @@
 
 		<!-- third tab -->
 		<div v-show="tab == 3" :class="[{'active': tab == 3},'gal-tab']">
+					<label for="">Document for Preview</label>
+					<div style="font-size:80%">
+						Preferred file formats: doc,docx
+					</div>
 					<div v-if="this.package_.package_download">
 						File Name:<p>{{ package_.package_download.file_name }}</p>
 						Link:
@@ -110,7 +115,7 @@
 			<div class="btn-hldr">
 					<input type="hidden" name="description" :value="package_data.package_details.description">
 	            	<button type="button" class="finish btn_green left_btn" @click="tab = 2">Previous</button>
-					<button class="btn_orange right_btn" type="button" @click="tab = 3">Next</button>
+					<!-- <button class="btn_orange right_btn" type="button" @click="tab = 3">Next</button> -->
 	        </div>
 		</div>
 		<button type="submit" class="finish btn_orange right_btn">{{ finish_button }}</button>
@@ -163,7 +168,7 @@
 						rate:'',
 						package_details:{
 							description:'',
-							minimum_count:0,
+							minimum_count:1,
 						}
 					}
 				}
@@ -300,6 +305,14 @@
 					return -1
 				}
 				form.submit()
+			}
+		},
+		watch: {
+			"package_.package_details.minimum_count": function(newV,oldV){
+				if(newV < 1){
+					this.$store.dispatch("showToastr",{ type:"error", message: "Minimum count is 1"})
+					this.package_.package_details.minimum_count = 1
+				}
 			}
 		}
 

@@ -62,7 +62,6 @@
     <?php
     $book = true;
     if(count($available_trips) == 1){
-        
         if(!count($available_trips[0])){
             $book = false;
             $errormessage = "No Available trips found";
@@ -71,6 +70,7 @@
     }
 
     if(count($available_trips) == 2 && (!count($available_trips[0]) || !count($available_trips[1]))){
+
         $book= false;
         $when = [];
         if(!count($available_trips[0])){
@@ -130,10 +130,10 @@
     <?php endif; ?>
     <?php if(count($available_trips) == 2): ?>
     <?php if(count($available_trips[1]) && $book): ?>
+    <div class="table-hldr">
     <div class="text-center">
         <h1>Return trip</h1>
     </div>
-    <div class="table-hldr">
         <table class="table" >
             <thead>
                 <tr>

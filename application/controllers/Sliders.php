@@ -31,7 +31,7 @@ class Sliders extends Admin_Controller {
             // 'reuse_query_string' => TRUE
         ];
         
-        
+        setPaginationStyle($config);
         $this->pagination->initialize($config);
 
         $data['sliders'] = $query->get()->result();
@@ -56,7 +56,10 @@ class Sliders extends Admin_Controller {
     public function store()
     {
         $this->db->trans_start();
-        $post = $this->input->post();
+        $post = $this->input->post(NULL,true);
+
+
+        $this->sliderIsFeatured($post['is_featured']);
 
         //validation
 
@@ -156,7 +159,10 @@ class Sliders extends Admin_Controller {
     {
         $data['slider'] = $slider =  $this->slider_model->findById($id);
 
-        $post = $this->input->post();
+        $post = $this->input->post(null,TRUE);
+
+
+        $this->sliderIsFeatured($post['is_featured']);
 
         //validation
 
@@ -270,7 +276,16 @@ class Sliders extends Admin_Controller {
     }
 
     
-    
+    public function sliderIsFeatured(&$isFeatured){
+		if(!isset($isFeatured)){
+			$isFeatured = 0;
+		}else{
+			$isFeatured = 1;
+			$this->db->set(['is_featured' => 0 ])
+								->where(['is_featured' => 1])
+								->update('sliders');
+		}
+	}
 
 
 

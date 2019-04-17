@@ -28,9 +28,9 @@
             <div class="form-group" >
                 <label for="selling_date">Selling Date*</label>
                 <div class="input-group input-large" data-date-format="mm/dd/yyyy">
-                    <input name="selling_start" v-model="trip_availability.selling_start" id="datepicker_sellingstart" type="text" class="form-control dpd1 default-date-picker" autocomplete="off">
+                    <input readonly="true" name="selling_start" v-model="trip_availability.selling_start" id="sell_start" type="text" class="form-control" autocomplete="off">
                     <span class="input-group-addon">To</span>
-                    <input name="selling_end" v-model="trip_availability.selling_end" id="datepicker_sellingend" type="text" class="form-control dpd2 default-date-picker" autocomplete="off">
+                    <input readonly="true" name="selling_end" v-model="trip_availability.selling_end" id="sell_end" type="text" class="form-control" autocomplete="off">
                 </div>                                        
             </div>
 
@@ -128,6 +128,20 @@
             if(this.trip_availability.rates.length){
                 console.log(this.$refs['dep_time'].value = this.trip_availability.rates[0].departure_time)
             }
+
+            if(this.trip_availability.destination_from != ""){
+                this.destinations = this.destinations_data.filter(d => {
+                    return (d.id != (this.trip_availability.destination_from))
+                })
+
+            }
+            
+
+            $('#sell_start').datepicker().on('changeDate', function(e) {
+                self.trip_availability.selling_start = e.target.value
+            })
+
+
         },
         data(){
             return {
@@ -248,6 +262,16 @@
                         return (d.id != newV)
                     })
                 }
+            },
+            'trip_availability.selling_start': function(newV){
+                let self = this
+                self.trip_availability.selling_end = ""
+
+                $('#sell_end').datepicker().on('changeDate',function(e){
+                    self.trip_availability.selling_end = e.target.value
+                })
+
+                $('#sell_end').datepicker('setStartDate',$('#sell_start').datepicker('getDate'));
             }
         }
         

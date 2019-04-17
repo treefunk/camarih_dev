@@ -68,7 +68,7 @@
             },
             van_seats_data: {
                 type: Array,
-                default: () => ['1']
+                default: () => ['2']
             },
             van_gallery_existing: {
                 type: Array,

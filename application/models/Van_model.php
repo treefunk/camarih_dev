@@ -24,13 +24,19 @@ class Van_model extends CMS_Model
     public function allWithRates(){
         $q = $this->db->select('vans.*,van_details.oneway_rate,van_details.roundtrip_rate')
                       ->from('vans')
-                      ->join('van_details','vans.id = van_details.van_id');
+                      ->join('van_details','vans.id = van_details.van_id')
+                      ->order_by('vans.name');
 
         $vans = $q->get()->result();
 
         foreach($vans as $van){
             $van->van_gallery = $this->db->get_where('van_gallery',['van_id' => $van->id])->result();
-            $van->van_rates = $this->db->get_where('van_rate',['van_id' => $van->id])->result();
+            $van->van_rates = $this->db->from('van_rate')
+                                       ->join('destinations','van_rate.destination_id = destinations.id')
+                                       ->where(['van_id' => $van->id])
+                                       ->order_by('name','ASC')
+                                       ->get()
+                                       ->result();
             if(count($van->van_rates)){
                 foreach($van->van_rates as &$r){
                     $r->destination = $this->db->get_where('destinations',['id' => $r->destination_id])->row();
@@ -118,6 +124,15 @@ class Van_model extends CMS_Model
 
     public function getAllQuery(){
         return $this->db->from('vans');
+    }
+
+    public function getVanByRateId($rate_id){
+        return $this->db->select('vans.*')
+                        ->from('rates')
+                        ->join('trip_availability','rates.trip_availability_id = trip_availability.id')
+                        ->join('vans','vans.id = trip_availability.van_id')
+                        ->where('rates.id',$rate_id)
+                        ->get()->row();
     }
 
     

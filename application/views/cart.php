@@ -10,8 +10,9 @@
             <shopping-cart
             :shopping_cart_data='<?=json_encode($cart)?>'
             item_remove_url='<?=base_url('cart/removeitem/')?>'
-            checkout_url='<?=base_url('availability/process_cart')?>'
+            checkout_url='<?=base_url('checkout')?>'
             edit_base_url='<?=base_url('availability/book_departure')?>'
+            :item_conflicts='<?=json_encode($conflicts)?>'
             >
             </shopping-cart>
 

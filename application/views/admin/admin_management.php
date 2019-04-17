@@ -36,13 +36,15 @@
                         <td>
                             <a data-toggle="modal" href="#editAdmin"
                             data-payload='<?=json_encode($admin)?>'
+                            data-url='<?=base_url('admin/editAdmin/')?>'
                             >
-                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i> Edit </button>
+                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i></button>
                             </a>
 
                             <a data-toggle="modal" href="#deleteAdmin"
-                            data-payload='<?=json_encode($admin)?>'>
-                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i> Delete </button>
+                            data-payload='<?=json_encode($admin)?>'
+                            data-url='<?=base_url('admin/deleteAdmin/')?>'>
+                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i></button>
                             </a>
 
 
@@ -53,8 +55,10 @@
                     <?php endforeach; ?>
                     </tbody>
                   </table>
-                  <div class="pagination">
-                      <?=$links?>
+                  <div class="text-center">
+                      <div class="pagination">
+                          <?=$links ?>
+                      </div>
                   </div>
               </section>
               <!-- page end-->

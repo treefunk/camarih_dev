@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="panel-body">
-                    <form method="POST" id="editAdminForm" action="<?=base_url('admin/editAdmin/')?>" role="form">
+                    <form method="POST" id="editAdminForm" action="" role="form">
 
                         <div class="form-group">
                             <label for="username">Username</label>
@@ -46,7 +46,7 @@ $('#editAdmin').on('show.bs.modal',function(e){
     var data = button.data('payload');
 
     modal.find('#username').val(data.username);
-    var editurl = modal.find('form').attr('action');
+    var editurl = button.data('url');
 
     modal.find('form').attr('action',editurl + data.id);
 

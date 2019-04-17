@@ -31,7 +31,7 @@ class Testimonials extends Admin_Controller {
             // 'reuse_query_string' => TRUE
         ];
         
-        
+        setPaginationStyle($config);
         $this->pagination->initialize($config);
 
         $data['testimonials'] = $query->get()->result();

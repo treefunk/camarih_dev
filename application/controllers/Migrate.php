@@ -8,6 +8,9 @@ class Migrate extends CI_Controller
   public function __construct()
   {
           parent::__construct();
+          if(strtolower(getenv("ENABLE_MIGRATION") == 'false')){
+            die("Migration has been disabled!");
+          }
   }
 
 
@@ -113,7 +116,8 @@ class Migrate extends CI_Controller
       $this->db->insert('packages',[
         'name' => '3D2N El Nido',
         'rate' => 2790,
-        'status' => 'active'
+        'status' => 'active',
+        'is_featured' => 1
       ]);
 
       $this->db->insert('package_details',[
@@ -211,6 +215,25 @@ class Migrate extends CI_Controller
         'trip_num' => $x + 1,
         'departure_time_pps' => $schedule_time[$x][0],
         'departure_time_eln' => $schedule_time[$x][1]
+      ]);
+    }
+
+
+    $footer_details = [
+      ['header','About Camarih Palawan Shuttle Transport Services'],
+      ['body','CAMARIH Transport is the best in providing convenient and safe yet affordable transportation for locals and tourists who are drawn to explore the beauty of Northern Palawan.'],
+      ['address','Mitra Rd Puerto Princesa City, Puerto Princesa, Philippines'],
+      ['phone_1','+63 917 849 7646'],
+      ['phone_2','+63 939 933 7002'],
+      ['email','camarihtransport@gmail.com'],
+      ['facebook_link','https://web.facebook.com/camarihtours/'],
+      ['messenger_link','https://m.me/camarihtours']
+    ];
+
+    for($x = 0  ; $x < count($footer_details) ; $x++){
+      $this->db->insert('footer_details',[
+        'type' => $footer_details[$x][0],
+        'value' => $footer_details[$x][1]
       ]);
     }
 

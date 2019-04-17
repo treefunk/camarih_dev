@@ -15,9 +15,11 @@ class Bookingreservation_model extends CMS_Model
     }
 
     public function getAllQuery($getResult = false){
-
         $booking_reservations = $this->db->select("
         carts.id,
+        checkouts.fullname,
+        checkouts.email,
+        checkouts.phone,
         trip_availability.destination_from as origin_id,
         trip_availability.van_id as van_id,
         carts.departure_date,
@@ -29,16 +31,18 @@ class Bookingreservation_model extends CMS_Model
         tr.name as origin_name,
         r.name as destination_name,
         vans.name as van_name,
-        carts.created_at
+        carts.created_at,
         ")
         ->from('carts')
         ->join('rates','rates.id = carts.rate_id')
         ->join('trip_availability','trip_availability.id = rates.trip_availability_id')
         //get destination names
         ->join('destinations as tr','tr.id = trip_availability.destination_from')
-        ->join('destinations as r', 'r.id = rates.destination_id')
+        ->join('destinations as r', 'r.id = carts.destination_id')
         //get van name
-        ->join('vans','vans.id = trip_availability.van_id');
+        ->join('vans','vans.id = trip_availability.van_id')
+        //get user info
+        ->join('checkouts', 'checkouts.id = carts.checkout_id');
 
 
         if($getResult){
@@ -60,7 +64,7 @@ class Bookingreservation_model extends CMS_Model
 
     public function filterDestination(&$query,$destination_id)
     {
-        $query->where('destination_id',$destination_id);
+        $query->where('carts.destination_id',$destination_id);
         return true;
     }
 
@@ -90,7 +94,21 @@ class Bookingreservation_model extends CMS_Model
     }
 
     public function filterStatus(&$query , $status){
-        $query->where('status',$status);
+        $query->where('carts.status',$status);
+        return true;
+    }
+
+    public function filterSearch(&$query, $search){
+        
+        $query->like('
+        CONCAT(checkouts.fullname,
+        tr.name,r.name,
+        vans.name,
+        carts.departure_date,
+        carts.departure_time,
+        carts.status
+        )',$search);
+
         return true;
     }
 

@@ -52,15 +52,21 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'welcome';
 
 $route['trip_availability/(:num)'] = "trip_availability/index/$1";
+
+
 $route['admin/(:num)'] = "admin/index/$1";
 $route['sliders/(:num)'] = "sliders/index/$1";
 $route['testimonials/(:num)'] = "testimonials/index/$1";
+
 $route['tourpackages/(:num)'] = "tourpackages/index/$1";
+$route['packages/(:num)'] = "packages/index/$1";
 
 $route['booking-reservations'] = "booking_reservations/index";
-$route['booking_reservations/(:num)'] = "booking_reservations/index/$1";
+$route['booking-reservations/(:num)'] = "booking_reservations/index/$1";
 $route['van-reservations'] = "van_reservations/index";
 $route['van-reservations/(:num)'] = "van_reservations/index/$1";
+$route['package-reservations'] = "package_reservations/index";
+$route['package-reservations/(:num)'] = "package_reservations/index/$1";
 
 $route['vans/(:num)'] = "vans/index/$1";
 

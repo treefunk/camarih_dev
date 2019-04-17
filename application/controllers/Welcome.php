@@ -17,12 +17,15 @@ class Welcome extends MY_Controller {
 	public function index()
 	{
 
+		$slider_data = $this->slider_model->allWithFeaturedOffset();
+
 		$data = [
-			'sliders' => $this->slider_model->all(),
+			'sliders' => $slider_data['result'],
 			'testimonials' => $this->testimonial_model->all(),
 			'destinations' => $this->destination_model->getAllEndpoints(),
 			'origins' => $this->destination_model->getAllOrigins(),
-			'featured_package' => $this->package_model->getFeaturedPackage()
+			'featured_package' => $this->package_model->getFeaturedPackage(),
+			'default_slider' => $slider_data['offset']
 		];
 
 		

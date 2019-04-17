@@ -47,7 +47,8 @@ class Ourvans extends MY_Controller{
             'trip_type' => $post->trip_type,
             'origin' => $origin,
             'destination' => $destination,
-            'price' => $post->trip_type == 'oneway_trip' ? $van_rate->oneway_rate : $van_rate->roundtrip_rate
+            'price' => $post->trip_type == 'oneway_trip' ? $van_rate->oneway_rate : $van_rate->roundtrip_rate,
+            'adult_count' => $post->adult_count
         ];
 
 
@@ -92,6 +93,7 @@ class Ourvans extends MY_Controller{
             'departure_date' => $post->date,
             // 'destination_id' => $post->destination_id,
             'origin_id' => $post->origin_id,
+            'status' => 'reserved',
             'van_id' => $van_id
         ])->num_rows();
 

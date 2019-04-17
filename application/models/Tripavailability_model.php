@@ -154,7 +154,9 @@ class Tripavailability_model extends CMS_Model
         //     $post['departure_to'] = $departure_to_datetime->format('Y-m-d') . " 23:59:59";
         // }
 
-        $today = (new DateTime('now',$dt))->format('Y-m-d H:i:s');
+        $today = (new DateTime('now',$dt))->format('Y-m-d');
+
+        $today .= " 00:00:00";
 
         $available_trips = $this->db->select('trip_availability.*, 
                                     vans.name as van_name,
@@ -165,15 +167,15 @@ class Tripavailability_model extends CMS_Model
                                     ->join('rates','trip_availability.id = rates.trip_availability_id')
                                     ->from('trip_availability')
                                     // check if today's date is in selling date range
-                                    ->where("trip_availability.selling_start <=", $today)
-                                    ->where("trip_availability.selling_end >=", $today)
+                                    // ->where("trip_availability.selling_start <=", $today)
+                                    // ->where("trip_availability.selling_end >=", $today)
                                     // only to this origin
                                     ->where("trip_availability.destination_from",$post['destination_from'])
                                     // only to this destination
                                     ->where("rates.destination_id",$post['destination_to'])
                                     // check if departure date is in selling range
-                                    ->where('trip_availability.selling_start <=',$departure_from_datetime->format('Y-m-d H:i:s'))
-                                    ->where('trip_availability.selling_end >=',$departure_from_datetime->format('Y-m-d H:i:s'))
+                                    ->where('trip_availability.selling_start <=',$post['departure_from'])
+                                    ->where('trip_availability.selling_end >=',$post['departure_from'])
                                     ->get()->result();
 
         return $available_trips;

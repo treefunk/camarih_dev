@@ -48,9 +48,12 @@ class Paypal{
         $subtotal = 0;
         $items = [];
         //BOOKING TRIP
+        if(!$cart){
+            return "You did not select any items in the cart. Please try again.";
+        }
+
         if(array_key_exists('booking_trip',$cart)){
             foreach($cart['booking_trip'] as $item){
-
 
                     foreach($item['items'] as $i){
                         $new_item = new Item();
@@ -127,8 +130,8 @@ class Paypal{
                    
 
         $redirectUrls = new RedirectUrls();
-        $redirectUrls->setReturnUrl(base_url()."checkout/execute?success=true")
-            ->setCancelUrl(base_url()."checkout/execute?success=false");
+        $redirectUrls->setReturnUrl(base_url()."availability/process_cart?success=true")
+            ->setCancelUrl(base_url()."checkout/cancel?success=false");
            
     
 
@@ -144,9 +147,8 @@ class Paypal{
             $paymentObject = $payment->create($this->api_context);
             return $paymentObject;
         } catch (Exception $ex) {
-            if($ex->getCode() == 6){
-                echo $ex->getMessage() . "<br />";
-                echo "internet connection is required.";
+            if($ex->getCode()){
+                return $ex->getMessage();
             }
             // var_dump($ex->getCode()." ".$ex->getMessage()); die();
         }
@@ -170,14 +172,23 @@ class Paypal{
             $result = $payment->execute($execution, $this->api_context);
 
         } catch (Exception $ex) {
-            echo $ex->getData();
-            die();
+            // $result  = $ex->getCode();
+            $result = $ex->getMessage();
+            if($ex->getCode() == 400){
+                $result = "Insufficient Funds";
+            }           
         }
+
+        return $result;
 
     }
 
     public function getPaymentDetails($id){
-        $payment = Payment::get($id, $this->api_context);
+        try {
+            $payment = Payment::get($id, $this->api_context);
+        } catch (Exception $e) {
+            $payment = $e->getMessage();
+        }
 
         return $payment;
     }

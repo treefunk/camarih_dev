@@ -40,7 +40,11 @@ class Migration_Create_sliders_Table extends CI_Migration {
                         'button_link_second' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '500',
-                        )
+                        ),
+                        'is_featured' => array(
+                                'type' => 'boolean',
+                                'default' => false,
+                        ),
                 ));
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");

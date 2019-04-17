@@ -12,6 +12,23 @@ class Package_model extends CMS_Model
         return $this->db->from('packages')
                         ->join('package_details', 'packages.id = package_details.package_id');
     }
+    
+    public function getQuery() { // refactor attempt
+
+        $query = $this->db->select("
+            packages.*,
+            package_details.id as package_detail_id,
+            package_details.minimum_count as package_detail_minimum_count,
+            package_details.description as package_detail_description,
+            package_main_image.id as package_image_id,
+            package_main_image.image_title as package_image_title,
+            package_main_image.image_name as package_image_name
+        ")->from('packages')
+        ->join('package_details','packages.id = package_details.package_id','left')
+        ->join('package_main_image','packages.id = package_main_image.package_id','left');
+
+        return $query;
+    }
 
     public function all()
     {
@@ -38,6 +55,7 @@ class Package_model extends CMS_Model
             ])->row();
             $package->package_image = $package_image;
         }
+
         return $packages;
     }
 

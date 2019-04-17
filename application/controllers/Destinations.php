@@ -66,7 +66,7 @@ class Destinations extends Admin_Controller {
         }
 
 
-        $this->session->set_flashdata($alert);
+        $this->session->set_flashdata('alert',$alert);
         return redirect('destinations');
     }
 

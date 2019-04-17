@@ -6,6 +6,7 @@ class Packagegallery_model extends CMS_Model
     {
         $this->load->database();
         $this->table = "package_gallery";
+        $this->upload_path = 'uploads/package_gallery';
     }
 
     public function add($data,$images = null) // override add function in cms_model

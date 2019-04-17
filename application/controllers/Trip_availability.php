@@ -60,7 +60,7 @@ class Trip_availability extends Admin_Controller {
             'reuse_query_string' => TRUE
         ];
         
-        
+        setPaginationStyle($config);
         $this->pagination->initialize($config);
 
         $data['trips'] = $query->get()->result();
@@ -133,7 +133,10 @@ class Trip_availability extends Admin_Controller {
 
         if(!$this->tripavailability_model->addTripWithRates($data)) $this->db->trans_rollback();
     
-
+        $alert = [
+            'type' => 'success',
+            'message' => 'Trip Availability added.'
+        ];
 
         $this->db->trans_complete();
         

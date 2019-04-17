@@ -34,7 +34,7 @@ class Migration_Create_package_booking_Table extends CI_Migration {
                         'status' => array(
                                 'type' => 'VARCHAR',
                                 'constraint' => '200',
-                                'default' => 'pending'
+                                'default' => 'reserved'
                         )
     
                 ));

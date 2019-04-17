@@ -3,6 +3,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Packages extends MY_Controller {
 
+	const PER_PAGE = 5;
+
 	public function __construct()
 	{
 		parent::__construct();
@@ -15,12 +17,43 @@ class Packages extends MY_Controller {
 	}
 
 
-	public function index()
+	public function index($offset = 0)
 	{
+
+		$query = $this->package_model->getQuery();
+
+        $per_page = self::PER_PAGE;
+
+        $this->load->library('pagination');
+
+        $clone_query = clone $query;
+
+		$query->order_by("created_at",'DESC');
+		$query->where('status','active');
+        $query->offset($offset);
+        $query->limit($per_page);
+
+		
+        $config = [
+            'base_url' => base_url('packages'),
+            'total_rows' => $clone_query->get()->num_rows(),
+			'per_page' => $per_page,
+		];
+
+		setPaginationStyle($config);
+        
+        $this->pagination->initialize($config);
+
+        
+		$default_image = base_url('frontend/images/')."package.jpg";
+		
+		
 		$data = [
-			'packages' => $this->package_model->all(),
+			'packages' => $query->get()->result(),
 			'destinations' => $this->destination_model->getAllEndpoints(),
 			'origins' => $this->destination_model->getAllOrigins(),
+			'default_image' => $default_image,
+			'links' => $this->pagination->create_links()
 		];
 
 		$this->wrapper([
@@ -61,6 +94,8 @@ class Packages extends MY_Controller {
 				'message' => 'Package added to cart',
 				'code' => 200
 			]));
-			
 	}
+
+	
+	
 }

@@ -40,17 +40,18 @@
                         <td><?=$van->seat_map?></td>
                         <td><?=$van->created_at?></td>
                         <td>
+                            <a href="<?=base_url("vans/rates/{$van->id}")?>">
+                                <button class="btn btn-default btn-s">Rates <i class="fa fa-road"></i></button>                                
+                            </a>
                             <a href="<?=base_url('vans/edit/').$van->id?>">
-                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i> Edit </button>
+                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i></button>
                             </a>
                             
-                            <a href="<?=base_url("vans/rates/{$van->id}")?>">
-                                <button class="btn btn-warning btn-s"><i class="fa fa-road"></i>Rates</button>                                
-                            </a>
 
                             <a data-toggle="modal" href="#deleteVan"
-                            data-payload='<?=json_encode($van)?>'>
-                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i> Delete </button>
+                            data-payload='<?=json_encode($van)?>'
+                            data-url='<?=base_url('vans/delete/')?>'>
+                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i></button>
                             </a>
 
                         </td>
@@ -58,8 +59,10 @@
                     <?php endforeach; ?>
                     </tbody>
                   </table>
-                  <div class="pagination">
-                      <?=$links?>
+                  <div class="text-center">
+                      <div class="pagination">
+                          <?=$links ?>
+                      </div>
                   </div>
               </section>
               <!-- page end-->

@@ -1,7 +1,8 @@
 <template>
   <div class="main-images-up">
 
-    <label v-if="(this.existing.length + this.van_gallery.length) > 0">Images:</label>
+    <!-- <label v-if="(this.existing.length + this.van_gallery.length) > 0">Images:</label> -->
+    <h3>Images</h3>
     <div v-for="(uploaded,ix) in existing" :key="ix" class="clearfix  hldr--image">
       <button type="button" @click="removeExisting(ix,uploaded.id)" class="btn btn-danger">X</button>
       <div class="form-group">

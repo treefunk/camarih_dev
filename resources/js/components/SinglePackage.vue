@@ -1,13 +1,13 @@
 <template>
     <div>
-        <section :class="{ 'sec-3': isRight ,
-         'clearfix':isRight, 'sec-2': !isRight}">
+        <section :class="{ 'sec-3': !isLeft ,
+         'clearfix':isLeft, 'sec-2': isLeft}">
             <article class="pckage_wrap clearfix">
               <div class="clearfix">
-                <aside :class="isRight ? 'right' : 'left'">
+                <aside :class="isLeft ? 'right' : 'left'">
                   <img :src="main_image">
                 </aside>
-                <article :class="!isRight ? 'right' : 'left'">
+                <article :class="!isLeft ? 'right' : 'left'">
                   <div>
                     <ul class="pad-0 listn">
                         <li>
@@ -20,8 +20,14 @@
                           <h4>Php {{ item.rate | formatNum }} <span>per person</span></h4>
                         </li>
                         <li>
+                          <br>
+                          <h6>Minimum Count: {{ package_.package_details.minimum_count }}</h6>
+                        </li>
+                        <li>
+                          
                           <h6>Adults</h6>
                           <input type="number" v-model="adult_count" :min="item.package_details.minimum_count">
+                          
                         </li>
                     </ul>
                     <aside>
@@ -55,7 +61,7 @@
         data(){
             return {
                 adult_count: this.item.package_details.minimum_count,
-                isRight: ((this.index + 1) % 2 == 0) ,
+                isLeft: !((this.index + 1) % 2 == 0) ,
                 in: this.index,
                 loading: false,
                 package_:this.item

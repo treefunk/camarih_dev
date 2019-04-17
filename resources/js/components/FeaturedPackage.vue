@@ -21,6 +21,10 @@
                         <h4>Php {{ package_.rate | formatNum }} <span>per person</span></h4>
                       </li>
                       <li>
+                          <br>
+                          <h6>Minimum Count: {{ package_.package_details.minimum_count }}</h6>
+                        </li>
+                      <li>
                         <h6>Adults</h6>
                         <input type="number" v-model="adult_count" :min="package_data.package_details.minimum_count">
                       </li>

@@ -6,12 +6,16 @@ export const package_common = {
     methods: {
         addToCart: function() {
             this.loading = true;
+
+            // if(this.adult_count < this.package_.package_details.minimum_count){
+            //   this.adult_count = this.package_.package_details.minimum_count
+            // }
+
             let new_item = Object.assign({},this.package_,{ adult_count: this.adult_count })
+            
+
             axios.post(this.add_to_cart_url,new_item).then(res => {
               let response = res.data
-              // console.log(response)
-              // this.loading = false
-              // toastr['success']("", response.message)
               this.$store.dispatch('showToastr',{
                  message:response.message,
                  type:"success",
@@ -30,14 +34,6 @@ export const package_common = {
             this.adult_count = min_count
           }
         }
-    },
-    filters: {
-      formatNum: (value) => {
-        if(typeof value == "string"){ value = parseInt(value,10) }
-        return value.toLocaleString(undefined,{
-           minimumFractionDigits: 2,
-        })
-      }
     },
     computed: {
       main_image(){

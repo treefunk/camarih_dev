@@ -10,7 +10,7 @@
                 :index="index" 
                 v-if="item.item_type == 'booking_trip'" 
                 :edit_base_url="edit_base_url"
-                :trip="item" 
+                :trip="item"
                 v-model="item[index]" 
                 @addcheckout="addBookingTrip" 
                 @removeMe="removeBookingItem(index)"
@@ -111,11 +111,31 @@
                                 </div>
                                 <div class="modal-footer">
                                     <!-- <button data-dismiss="modal" class="btn btn-default" type="button">Close</button> -->
-                                    <button type="submit" class="proceed-to-checkout">Checkout</button>
+                                    <button type="submit" class="proceed-to-checkout" >Checkout</button>
                                 </div>
                                 </div>
                             </div>
                     </div>
+
+                    <div class="modal fade" id="confirmRemoveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+                          <div class="modal-dialog modal-sm">
+                              <div class="modal-content">
+                                  <div class="modal-header">
+                                      <button style="z-index:9999" type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
+                                      <h4 class="modal-title">Confirm</h4>
+                                  </div>
+                                  <div class="modal-body">
+
+                                      Are you sure you want to remove this item?
+
+                                  </div>
+                                  <div class="modal-footer">
+                                      <button class="proceed-to-checkout" type="button" style="padding:10px 20px; background-color:#7A0000" @click="confirmRemove(toBeRemovedIndex)">Yes</button>
+                                      <button class="proceed-to-checkout" type="button" style="padding:10px 20px;" @click="hideRemove()">No</button>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
 
 
 
@@ -161,12 +181,17 @@
             edit_base_url: {
               type: String,
               default: "noediturl"
+            },
+            item_conflicts: {
+              type: Array,
+              default: () => []
             }
         },
         data() {
             return {
-                shopping_cart: this.shopping_cart_data,
-                checkout: []
+                shopping_cart: this.shopping_cart_data.map(v => { v.has_conflict = false; return v; }),
+                checkout: [],
+                toBeRemovedIndex: ""
             }
         },
         methods: {
@@ -179,9 +204,15 @@
             },
             addBookingTrip(payload){
                 let checkout_all_booking = this.checkout.map(c => {
+                    if(this.item_conflicts.includes(c.booking_num)){
+                      c.has_conflict = true;
+                    }
                     return c.booking_num
                 })
                 if(payload.checked && !checkout_all_booking.includes(payload.booking_num)){
+                    if(this.item_conflicts.includes(payload.booking_num)){
+                      payload.has_conflict = true;
+                    }
                     this.checkout.push(payload)
                 }else{
                     this.checkout = this.checkout.filter(c => {
@@ -189,7 +220,7 @@
                     })
                 }
             },
-            removeBookingItem(index){
+            confirmRemove(index){
                 let that = this
                 axios({
                     method: 'post',
@@ -201,13 +232,51 @@
                     // if successfully removed in session splice data in vue
                     that.checkout = that.checkout.filter((c) => c.booking_num != that.shopping_cart[index].booking_num)
                     that.shopping_cart.splice(index, 1)
+                    that.$store.commit('decrementCartNum');
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+                $('#confirmRemoveModal').modal("hide");
+            },
+            removeBookingItem(index){
+              this.toBeRemovedIndex = index
+              $('#confirmRemoveModal').modal("show");
+            },
+            hideRemove(){
+              $('#confirmRemoveModal').modal("hide");
             },
             validateCheckout(e){
-    
+
+              // let conflicts = 0;
+
+              
+              let conflicts = 0;
+              for(let y = 0 ; y < this.checkout.length; y++){
+                if(this.checkout[y].hasOwnProperty('has_conflict') && this.checkout[y].has_conflict){
+                  conflicts++;
+                }
+              }
+
+              if(conflicts > 0){
+                this.shopping_cart = this.shopping_cart.map(v => {
+                    if(this.item_conflicts.includes(v.booking_num)){
+                      v.has_conflict = true;
+                    }else{
+                      v.has_conflict = false;
+                    }
+                    return v
+              })
+                this.$store.dispatch("showToastr", { 
+                  message: `Sorry, ${conflicts} item${conflicts == 1 ? "" : "s"} in the cart can't be processed due to conflict.`, 
+                  type: "error"
+                  }
+                )
+                $('#checkoutModal').modal('hide')
+                return -1;
+              }
+
+
               if(this.checkout.length == 0){
                 this.$store.dispatch("showToastr", { message: "Cart is empty.", type: "error"})
                 return -1;
@@ -240,12 +309,6 @@
               }
         },
         filters: {
-          formatNum: (value) => {
-              if(typeof value == "string"){ value = parseInt(value,10) }
-              return value.toLocaleString(undefined,{
-                 minimumFractionDigits: 2,
-              })
-          },
           formatType: (val) => {
             if(val == 'booking_trip'){ return "Trip Reservation" }
             if(val == 'booking_van'){ return "Van Rental" }

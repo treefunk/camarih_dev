@@ -6,7 +6,7 @@
         <article class="details">
             
             <h4>{{ van_data.name }}</h4>
-            <p>{{ seatsNum }} - Seater</p>
+            <p>{{ seatsNum + 1 }} - Seater</p>
 
             <ul class="pad-0 listn" v-if="this.rates.length">
                 
@@ -44,7 +44,7 @@
 
                 <li>
                     <h5>Adults</h5>
-                    <input type="number" v-model="adultCount" name="adultCount">
+                    <input type="number" v-model="adultCount" name="adult_count">
                     <span>{{ ratePrice }}</span>
                 </li>
             </ul>
@@ -56,7 +56,7 @@
         <div class="btm_link">
             <ul class="pad-0 listn">
                 <li v-if="this.rates.length">
-                    <a href="#prcing_table" class="popup-with-form" @click.prevent="showPricingTable">Pricing Table</a>
+                    <a :href="`#pricingTableModal_${this.van_data.id}`" class="popup-with-form">Pricing Table</a>
                 </li>
                     
                 <li v-if="valid" v-show="!noRate">
@@ -67,40 +67,49 @@
             
         </div>
         </form>
-        <div class="modal fade" :id="`pricingTableModal_${this.van_data.id}`" tabindex="-1" role="dialog"
-            aria-labelledby="pricingTableModalLabel" aria-hidden="true" style="display: none; z-index: 99999999999">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                            style="z-index:99">×</button>
-                        <h4 class="modal-title">Pricing Table</h4>
-                        <div class="modal-body">
-                            <table class="table">
-                                <thead>
-                                    <tr>
-                                        <th>Destination</th>
-                                        <th>One-way Rate</th>
-                                        <th>Roundtrip Rate</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(rate,index) in rates" :key="index">
-                                        <td>{{ rate.destination.name }}</td>
-                                        <td>{{ rate.oneway_rate || "N/A" }}</td>
-                                        <td>{{ rate.roundtrip_rate || "N/A" }}</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
-                            <!-- <button type="submit" class="proceed-to-checkout">Checkout</button> -->
-                        </div>
-                    </div>
+        <div :id="`pricingTableModal_${this.van_data.id}`" class="mfp-hide white-popup-block prcing_table-popup">
+        <div class="clearfix">
+          <article class="item">
+            <h4>{{ van_data.name }}</h4>
+
+            <ul class="pad-0 listn">
+              <li>
+                <div class="parent">
+                  <div class="children">
+                    <h5>Destination</h5>
+                  </div>
+                  <div class="children ">
+                    <h5>One-way Rate (PhP)</h5>
+                  </div>
+                  <div class="children">
+                    <h5>Round Trip Rate (PhP)</h5>
+                  </div>
                 </div>
-            </div>
+              </li>
+
+              <li v-for="(rate,index) in rates" :key="index">
+                  <div class="parent">
+
+                  <div class="children clearfix">
+                    <span>Destination:</span>
+                    <p>{{ rate.destination.name }}</p>
+                  </div>
+                  <div class="children clearfix">
+                    <span>One-way Rate (PhP):</span>
+                    <p>{{ (rate.oneway_rate || "N/A") | formatNum }}</p>
+                  </div>
+                  <div class="children clearfix">
+                    <span>Round Trip Rate (PhP):</span>
+                    <p>{{ (rate.roundtrip_rate || "N/A") | formatNum}}</p>
+                  </div>
+                  </div>
+                </li>
+
+
+            </ul>
+          </article>
         </div>
+    </div>
         
     </div>
 
@@ -113,6 +122,11 @@
     import axios from 'axios'
 
     export default {
+        mounted(){
+                  $('.popup-with-form').magnificPopup({
+                    type: 'inline'
+                    });
+        },
         props: {
             minDate: String,
             form_url: String,
@@ -236,7 +250,8 @@
             },
             showPricingTable(){
                 if(this.rates.length){
-                    $(`#pricingTableModal_${this.van_data.id}`).modal('show')
+                    $(`#pricingTableModal_${this.van_data.id}`).magnificPopup.open()
+
                 }
             }
            

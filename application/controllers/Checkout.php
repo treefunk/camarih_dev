@@ -13,16 +13,30 @@ class Checkout extends MY_Controller{
     }
 
     public function index(){
+
+        $post = $this->input->post(null,true);
+
+        $_SESSION['payment_details'] = $post;
+
         $paypal = new Paypal;
+
+        $cart = $this->session->userdata('cart');
         
-        $formatted_cart = $this->cart_model->itemsWithPrices();
-    
-        
-        if($payment = $paypal->pay($formatted_cart)){
+        $filtered_items = $this->cart_model->filterChecked($cart,$post['booking_num']);
+
+        $formatted_cart = $this->cart_model->itemsWithPrices($filtered_items);
+        $payment = $paypal->pay($formatted_cart);
+        if(is_object($payment)){
             header("Location: {$payment->links[1]->href}");
+            return;
         }else{
-            // TODO: RETURN ERROR
-            $data['paypal_link'] = "#";
+            $data['errormsg'] = $payment;
+            $this->wrapper([
+                'view' => 'errorpage',
+                'data' => $data
+            ]);
+
+            return -1;
         }
 
         $this->wrapper([
@@ -66,10 +80,25 @@ class Checkout extends MY_Controller{
         $paypal = new Paypal();
 
         $details = $paypal->getPaymentDetails($this->input->get('paymentId'));
-        var_dump($details);
         $paypal->executePayment($details->transactions[0]);
-        d(['after' => $paypal->getPaymentDetails($this->input->get('paymentId'))]);
     }
 
+    public function thankyou()
+    {
+        $this->wrapper([
+            'view' => 'thankyou'
+        ]);
+        return ;
+
+    }
+
+    public function cancel()
+    {
+        unset($_SESSION['payment_details']);
+        $this->wrapper([
+            'view' => 'cancel'
+        ]);
+        return ;
+    }
     
 }

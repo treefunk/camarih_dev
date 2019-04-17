@@ -1,6 +1,10 @@
 <div class="home">
 
 <section class="sec-1">
+  <?php if(isset($_SESSION['alert'])): ?>
+    
+  <?php endif; ?>
+
   <div class="owl-carousel owl-theme home-carousel">
     <?php foreach($sliders as $slider): ?>
     <div class="item">
@@ -10,7 +14,7 @@
       </aside>
 
       <article class="text-hldr">
-        <h3><?=$slider->header?></h3>
+      <h3><?=$slider->header?></h3>
         <p><?=$slider->sub_header?></p>
 
         <ul class="pad-0 listn">
@@ -98,3 +102,27 @@
 
 
 </div>
+
+<script>
+  $(function(){
+    $('.home-carousel').owlCarousel({
+      loop:true,
+      margin:10,
+      startPosition: <?=$default_slider?>,
+      nav:true,
+      responsive:{
+          0:{
+              items:1
+          },
+          600:{
+              items:1
+          },
+          1000:{
+              items:1
+          }
+      }
+    });
+
+  })
+
+</script>

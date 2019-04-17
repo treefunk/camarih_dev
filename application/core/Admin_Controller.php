@@ -131,6 +131,13 @@ class Admin_Controller extends CI_Controller {
             ];
         }
 
+        if($changes == -2){
+            $alert = [
+                "type" => 'danger',
+                "message" => "Username already exists."
+            ];
+        }
+
         if($changes == -1)
         {
             $alert = [

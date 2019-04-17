@@ -13,11 +13,10 @@ class Seatplan_model extends CMS_Model
         $rate_id = $rate->id;
         $rate_datetime = DateTime::createFromFormat("H:i A",$rate->departure_time, new DateTimeZone('Asia/Hong_Kong'));
         $rate_string = $rate_datetime->format(DateTime::ISO8601);
+        $rate_string_formatted = $rate_datetime->format("Y-m-d H:i:s");
         $rate_time = $rate_datetime->format('h:i A');
-    
-        $occupied_seat_map = [];
 
-        
+        $occupied_seat_map = [];
 
         $occupied_seats = $this->db->select('seat_plan.*')
                                     ->from('seat_plan')
@@ -25,7 +24,9 @@ class Seatplan_model extends CMS_Model
                                     ->join('rates', 'carts.rate_id = rates.id')
                                     ->join('trip_availability', 'trip_availability.id = rates.trip_availability_id')
                                     ->where('carts.departure_time',$rate_time)
+                                    ->where('carts.departure_date',"{$date} {$rate_datetime->format("H:i:s")}")
                                     ->where('rates.trip_availability_id',$rate->trip_availability_id)
+                                    ->where('carts.status','reserved')
                                     ->get()->result();
     
         

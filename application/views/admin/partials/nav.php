@@ -1,6 +1,6 @@
 <section id="container" class="">
       <!--header start-->
-      <header class="header white-bg">
+      <header class="header dark-bg">
           <div class="sidebar-toggle-box">
               <i class="fa fa-bars"></i>
           </div>
@@ -55,7 +55,7 @@
 
                   <li class="sub-menu">
                       <a href="<?=base_url('admin')?>" class="<?=isActive('admin')?>">
-                          <i class="fa fa-laptop"></i>
+                          <i class="fa fa-group"></i>
                           <span>Admin Management</span>
                       </a>
                       <!-- <ul class="sub">
@@ -68,7 +68,7 @@
                       </ul> -->
                   </li>
 
-                  <?php $cms_sub_items = ['about','sliders','testimonials']; $cms = isActive($cms_sub_items); ?>
+                  <?php $cms_sub_items = ['about','sliders','testimonials','footer_details']; $cms = isActive($cms_sub_items); ?>
                   <li class="sub-menu dcjq-parent-li">
                       <a href="javascript:;" class="dcjq-parent <?=$cms[0]?>">
                           <span>CMS</span> 
@@ -77,24 +77,25 @@
                           <li class="<?=isActive('about')?>"><a href="<?=base_url('about/edit')?>" >About</a></li>
                           <li class="<?=isActive('sliders')?>"><a href="<?=base_url('sliders')?>" >Sliders</a></li>
                           <li class="<?=isActive('testimonials')?>"><a href="<?=base_url('testimonials')?>" >Testimonials</a></li>
+                          <li class="<?=isActive('footer_details')?>"><a href="<?=base_url('footer_details')?>" >Footer Details</a></li>
                       </ul>
                     </li>
 
-                <?php $reservation_sub_items = ['booking_reservations','van_reservations','package_reservations']; $reservation = isActive($reservation_sub_items); ?>
+                <?php $reservation_sub_items = ['booking-reservations','van-reservations','package-reservations']; $reservation = isActive($reservation_sub_items); ?>
                   <li class="sub-menu dcjq-parent-li">
                       <a href="javascript:;" class="dcjq-parent <?=$reservation[0]?>">
                           <span>Reservations</span> 
                       <span class="dcjq-icon"></span></a>
                       <ul class="sub" style="<?=$reservation[1]?>">
-                          <li class="<?=isActive('booking_reservations')?>"><a href="<?=base_url('booking-reservations')?>">Booking</a></li>
-                          <li class="<?=isActive('van_reservations')?>"><a href="<?=base_url('van-reservations')?>" >Van Hire</a></li>
-                          <li class="<?=isActive('package_reservations')?>"><a href="<?=base_url('package_reservations')?>" >Package</a></li>
+                          <li class="<?=isActive('booking-reservations')?>"><a href="<?=base_url('booking-reservations')?>">Booking</a></li>
+                          <li class="<?=isActive('van-reservations')?>"><a href="<?=base_url('van-reservations')?>" >Van Hire</a></li>
+                          <li class="<?=isActive('package-reservations')?>"><a href="<?=base_url('package-reservations')?>" >Package</a></li>
                       </ul>
                     </li>
 
                     <li class="sub-menu">
                       <a href="<?=base_url('tourpackages')?>" class="<?=isActive("tourpackages")?>">
-                          <i class="fa fa-truck"></i>
+                          <i class="fa fa-archive"></i>
                           <span>Tour Packages</span>
                       </a>
                     </li>
@@ -122,8 +123,15 @@
 
                   <li class="sub-menu">
                       <a href="<?=base_url('tripschedule')?>" class="<?=isActive("tripschedule")?>">
-                            <i class="fa fa-truck"></i>
+                            <i class="fa fa-calendar"></i>
                           <span>Schedule</span>
+                      </a>
+                  </li>
+
+                  <li class="sub-menu">
+                      <a href="<?=base_url('contactus')?>" class="<?=isActive("contactus")?>">
+                            <i class="fa fa-envelope-o"></i>
+                          <span>Contact Details</span>
                       </a>
                   </li>
 

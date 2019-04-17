@@ -10,7 +10,7 @@
                 <div class="panel-body">
                     Are you sure you want to do this?
                 </div>
-                <form method="POST" action="<?=base_url('trip_availability/delete/')?>" role="form">
+                <form method="POST" action="" role="form">
                 <div class="modal-footer">
                     <button data-dismiss="modal" class="btn btn-default" type="button">Close</button>
                     <button class="btn btn-danger" type="submit">Delete</button>
@@ -29,7 +29,7 @@ $('#deleteTripAvailability').on('show.bs.modal',function(e){
     var button = $(e.relatedTarget);
     var data = button.data('payload');
 
-    var url = modal.find('form').attr('action');
+    var url = button.data('url');
     modal.find('form').attr('action',url + data.id);
 
 })

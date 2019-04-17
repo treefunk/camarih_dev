@@ -54,6 +54,16 @@
                       <li>
                         <div class="parent">
                           <div class="children">
+                            <p>Trip type:</p>
+                          </div>
+                          <div class="children">
+                            <p>{{ van_rent.trip_type | filterTripType }}</p>
+                          </div>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="parent">
+                          <div class="children">
                             <p>Total</p>
                           </div>
                           <div class="children">
@@ -92,11 +102,15 @@
         methods: {
         },
         filters: {
-            formatNum: (value) => {
-              if(typeof value == "string"){ value = parseFloat(value) }
-              return value.toLocaleString(undefined,{
-                 minimumFractionDigits: 2,
-              })
+          filterTripType: (trip) => {
+            switch(trip){
+              case "round_trip":
+                return "Round Trip"
+              case "oneway_trip":
+                return "One-way Trip"
+              default:
+                return "Unknown Trip"
+            }
           }
         }
     }

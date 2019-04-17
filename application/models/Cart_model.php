@@ -30,19 +30,17 @@ class Cart_model extends CMS_Model
         return true;
     }
 
-    public function itemsWithPrices()
+    public function itemsWithPrices($cart)
     {
 
         
-        if(!$this->session->has_userdata('cart')){ // cart is empty
+        if(!$cart){ // cart is empty
             return false;
         }
 
-        $cart = $this->session->userdata('cart');
 
         $items = [];
 
-        
         foreach($cart as $item)
         {
             $index = 0;
@@ -68,13 +66,14 @@ class Cart_model extends CMS_Model
 
     private function formatBookingTrip($item,$index,&$items)
     {
+
             $booking_key = "booking_trip";
 
             if(!array_key_exists($booking_key,$items)){
                 $items[$booking_key] = [];
             }
 
-            foreach($item['selected'] as $selected){
+            foreach($item['selected'] as $i => $selected){
 
                 $datetime_from = DateTime::createFromFormat('Y-m-d',$selected['from'],$this->dt);
                 $date = $datetime_from->format('m/d/y');
@@ -90,7 +89,10 @@ class Cart_model extends CMS_Model
                 ];
 
                 $trip['items'] = [];
-                foreach($item['selected_seats'][$index] as $seat){
+
+                $test = [];
+                foreach($item['selected_seats'][$i] as $seat){
+                    // $test[] = $seat;
                     $trip['items'][] = [
                         'name' => $seat['seatnum'],
                         'passenger' => $seat['name'],
@@ -101,6 +103,19 @@ class Cart_model extends CMS_Model
                         'price' => $selected['rate_price']
                     ];
                 }
+                // for($x = 0; $x < count($item['selected_seats']); $x++){
+                //         for($y = 0; $y < count($item['selected_seats'][$x]); $y++){
+                //             $trip['items'][] = [
+                //                 'name' => $item['selected_seats'][$x][$y]['seatnum'],
+                //                 'passenger' => $item['selected_seats'][$x][$y]['name'],
+                //                 'description' => $trip_name,
+                //                 'quantity' => 1,
+                //                 'currency' => "PHP",
+                //                 'seatnum' => $item['selected_seats'][$x][$y]['seatnum'],
+                //                 'price' => $selected['rate_price']
+                //             ];
+                //         }
+                // }
 
                 $items[$booking_key][] = $trip;
             }
@@ -151,6 +166,19 @@ class Cart_model extends CMS_Model
 
         $items[$package_key][] = $package_trip;
 
+    }
+
+    function filterChecked($cart,$booking_array){
+        
+        $result = [];
+
+        foreach($cart as $item){
+            if(in_array($item['booking_num'],$booking_array)){
+                $result[] = $item;
+            }
+        }
+
+        return $result;
     }
     
 }

@@ -1,6 +1,6 @@
 <template>
 <form :action="url" method="POST" @submit.prevent="validateFields">
-        <article class="book-trip">
+        <article class="book-trip" style="z-index:2">
         <div class='first_div'>
             <ul class="pad-0 listn">
             <li @click="updateTripType('roundtrip')" :class="{'active':this.triptype == 'roundtrip'}">

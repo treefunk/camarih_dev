@@ -49,20 +49,22 @@
                         </td>
                         <td>
                             <a href="<?=base_url('sliders/edit/').$slider->id?>">
-                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i> Edit </button>
+                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i></button>
                             </a>
 
                             <a data-toggle="modal" href="#deleteSlider"
-                            data-payload='<?=json_encode($slider)?>'>
-                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i> Delete </button>
+                            data-payload='<?=json_encode(array_merge((array)$slider,['url' => base_url('sliders/delete/')]))?>'>
+                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i></button>
                             </a>
                         </td>
                     </tr>
                     <?php endforeach; ?>
                     </tbody>
                   </table>
-                  <div class="pagination">
-                      <?= $links ?>
+                  <div class="text-center">
+                      <div class="pagination">
+                          <?=$links ?>
+                      </div>
                   </div>
               </section>
               <!-- page end-->

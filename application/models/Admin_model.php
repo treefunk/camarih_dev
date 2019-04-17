@@ -50,9 +50,19 @@ class Admin_model extends CI_Model
     {
         $admin = $this->findById($id);
 
-
         $changes = 0;
         foreach(array_keys($data) as $key){
+            if($key == "username" && $admin->{$key} != $data['username']){
+                $exists = $this->db->get_where('admins',
+                [
+                    'username' => $data[$key]
+                ])->num_rows();
+                if($exists){
+                    return -2;
+                }
+            }
+
+
             if($key == 'password' && trim($data['password']) != '') 
             {
                 if(trim($data['password']) !== trim($data['confirm_password']))

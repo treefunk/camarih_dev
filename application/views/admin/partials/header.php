@@ -69,3 +69,53 @@
 
     <script type="text/javascript" src="<?=base_url('flatlab')?>/assets/bootstrap-datepicker/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="<?=base_url('flatlab')?>/assets/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
+
+
+
+    <script>
+      // custom functions
+    // function createInfoList(elem,obj){
+    //     for(var header_name in obj){
+    //       $('<h3>' + header_name + "</h3>").appendTo(elem)
+    //        $('<ul>').appendTo(elem)
+    //        for(var key in obj[header_name]){
+    //            console.log(obj[header_name][key])
+    //            var li = "<li style='list-style:none;'>" +
+    //            "<label><h4>"+ key +":</h4></label>" +
+    //            "<div>" +
+    //             obj[header_name][key] +
+    //            "</div>"
+    //            "</li>"
+    //            $(li).appendTo(elem)
+    //        }
+    //        $('</ul>').appendTo(elem)
+    //    }
+    // }
+
+    function createInfoList(elem,obj){
+      // <div class="form-group">
+      //   <label for="inputEmail1" class="col-lg-2 col-sm-2 control-label">Email</label>
+      //   <div class="col-lg-10">
+      //     <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+      //   </div>
+      // </div>
+        for(var header_name in obj){
+          $('<h3>' + header_name + "</h3>").appendTo(elem)
+           $('<div class="form-horizontal" role="form">').appendTo(elem)
+           for(var key in obj[header_name]){
+               var li = 
+               '<div class="form-group">' +
+                  '<label class="col-lg-3 col-sm-3 control-label">'+ key +"</label>" +
+                '<div class="col-lg-9">' + 
+                    '<input type="text" class="form-control" disabled value="' + obj[header_name][key] +'">'
+                 +
+               "</div>"
+               "</div>"
+               $(li).appendTo(elem)
+           }
+           $('</div>').appendTo(elem)
+       }
+    }
+    </script>
+    
+    

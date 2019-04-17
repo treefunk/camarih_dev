@@ -42,8 +42,8 @@
                             <li class="<?=isPageActive("ourvans")?>"><a href="<?=base_url('ourvans')?>">Our Vans</a></li>
                             <li class="<?=isPageActive("schedule")?>"><a href="<?=base_url('schedule')?>">Trip schedule</a></li>
                             <li class="<?=isPageActive("packages")?>"><a href="<?=base_url('packages')?>">Tour packages</a></li>
-                            <li class="bg-orange"><a href="#">Contact Us</a></li>
-                            <li class="acc dropdown">
+                            <li class="bg-orange"><a class="<?=isPageActive("contact")?>" href="<?=base_url('contact')?>">Contact Us</a></li>
+                            <!-- <li class="acc dropdown">
                               <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account<b class="caret"></b></a>
                               <ul role="menu" class="dropdown-menu">
                                   <li><a href="#">Inbox</a></li>
@@ -52,7 +52,7 @@
                                   <li class="divider"></li>
                                   <li><a href="#">Trash</a></li>
                               </ul>
-                            </li>
+                            </li> -->
                         </ul>
 
                         

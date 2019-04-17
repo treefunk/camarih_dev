@@ -43,13 +43,18 @@ class Migration_Create_van_rent_Table extends CI_Migration {
                                 'unsigned' => TRUE,
                                 'comment' => 'destination ID'
                         ),
+                        'adult_count' => array(
+                                'type' => 'INT',
+                                'constraint' => '255',
+                                'unsigned' => TRUE
+                        ),
                         'price' => array(
                                 'type' => 'DOUBLE',
                         ),
                         'status' => array(
                                 'type' => 'VARCHAR',
                                 'constraint' => '200',
-                                'default' => 'pending'
+                                'default' => 'reserved'
                         ),
     
                 ));

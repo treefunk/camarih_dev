@@ -317,3 +317,30 @@
     right: 0;
     width: 50%;
   }
+
+.pagination>li>a {
+    background-color:#515151 !important;
+    border:none;
+    color:white;
+    padding: 9px 19px 9px 19px;
+    border:1px solid white;
+    border-color: white !important;
+}
+
+.pagination>li>a:hover {
+    color: white !important;
+    border:1px solid black;
+}
+
+
+.pagination > .active > a {
+    background-color : #f68000 !important;
+    padding: 9px 19px 9px 19px;
+    border:1px solid white;
+}
+
+.contact-message {
+    font-family: "Circular Std Book", Arial, sans-serif;
+    color: #429e47;
+    font-size: 21px;
+}

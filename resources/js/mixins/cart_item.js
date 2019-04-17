@@ -10,12 +10,6 @@ export const cart_item = {
           if (value) {
               return moment(String(value)).format('MMMM D, YYYY')
           }
-        },
-        formatNum: (value) => {
-            if(typeof value == "string"){ value = parseInt(value,10) }
-            return value.toLocaleString(undefined,{
-               minimumFractionDigits: 2,
-            })
         }
     },
     watch: {

@@ -32,6 +32,8 @@ class Admin extends Admin_Controller {
         ];
         
         
+        setPaginationStyle($config);
+        
         $this->pagination->initialize($config);
 
         $data['admins'] = $query->get()->result();

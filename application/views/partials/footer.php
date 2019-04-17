@@ -8,29 +8,29 @@
               <ul class="pad-0 listn footer_list">
               
               <li>
-                <h5>About Camarih Palawan Shuttle Transport Services</h5>
-                <p>CAMARIH Transport is the best in providing convenient and safe yet affordable transportation for locals and tourists who are drawn to explore the beauty of Northern Palawan.</p>
+                <h5><?=$footer_data['header']?></h5>
+                <p><?=$footer_data['body']?></p>
               </li>
               <li>
                 <h5>Contact Information</h5>
                 <ul class="pad-0 listn">
                     <li> 
-                      <p><i class="fa fa-map-marker" aria-hidden="true"></i> Mitra Rd Puerto Princesa City, Puerto Princesa, Philippines</p> 
+                      <p><i class="fa fa-map-marker" aria-hidden="true"></i><?=$footer_data['address']?></p> 
                     </li>
                     <li>
-                      <p><i class="fa fa-mobile"></i>+63 917 849 7646</p>
+                      <p><i class="fa fa-mobile"></i><?=$footer_data['phone_1']?></p>
                     </li>
                     <li>
-                      <p><i class="fa fa-mobile"></i>+63 939 933 7002</p>
+                      <p><i class="fa fa-mobile"></i><?=$footer_data['phone_2']?></p>
                     </li>
                     <li>
-                      <p><i class="fa fa-envelope"></i> camarihtransport@gmail.com</p>
+                      <p><i class="fa fa-envelope"></i><?=$footer_data['email']?></p>
                     </li>
                 </ul>
               </li>
               <li>
-                <a href=""><img src="<?=base_url()?>frontend/images/footer-fb.png"></a>
-                <a href=""><img src="<?=base_url()?>frontend/images/footer-messenger.png"></a>
+                <a href="<?=$footer_data['facebook_link']?>"><img src="<?=base_url()?>frontend/images/footer-fb.png"></a>
+                <a href="<?=$footer_data['messenger_link']?>"><img src="<?=base_url()?>frontend/images/footer-messenger.png"></a>
               </li>
               </ul>
 
@@ -38,9 +38,9 @@
 
         <div class="btm-list">
           <ul class="pad-0 listn">
-            <li><a href="">CAMARIH © 2017</a></li>
-            <li><a href="">Privacy Policy</a></li>
-            <li><a href="">Terms & Conditions</a></li>
+            <li><a href="">CAMARIH © <?=date('Y')?></a></li>
+            <!-- <li><a href="">Privacy Policy</a></li>
+            <li><a href="">Terms & Conditions</a></li> -->
           </ul>
         </div>
 
@@ -48,31 +48,15 @@
       
   </div>
 </div>
-  <script src="<?=base_url()?>frontend/js/vendor/jquery-v3.2.1.min.js"></script>
+  <!-- <script src="<?php //base_url()?>frontend/js/vendor/jquery-v3.2.1.min.js"></script> -->
   <script src="<?=base_url()?>frontend/js/vendor/bootstrap.min.js"></script>
   <script src="<?=base_url()?>frontend/js/owl.carousel.min.js"></script>
   <!-- toastr -->
   <script src="<?=base_url()?>flatlab/assets/toastr-master/toastr.js"></script>
   <script src="<?=base_url()?>frontend/js/main.js"></script>
-
+  <script src="<?=base_url()?>frontend/js/jquery.magnific-popup.min.js"></script>
       <script src="<?=base_url()?>/assets/js/app.js"></script>
   <script type="text/javascript">
-    $('.home-carousel').owlCarousel({
-      loop:true,
-      margin:10,
-      nav:true,
-      responsive:{
-          0:{
-              items:1
-          },
-          600:{
-              items:1
-          },
-          1000:{
-              items:1
-          }
-      }
-    });
 
     
     $('.testi-carou').owlCarousel({
@@ -92,6 +76,7 @@
           }
       }
     });
+    
 
     
     $('.slct-pckge').owlCarousel({

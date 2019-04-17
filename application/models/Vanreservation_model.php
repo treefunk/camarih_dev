@@ -17,6 +17,9 @@ class Vanreservation_model extends CMS_Model
     {
         $query = $this->db
         ->select("
+        checkouts.fullname,
+        checkouts.email,
+        checkouts.phone,
         van_rent.*,
         origin_destination.name as origin_name,
         destinations.name as destination_name,
@@ -25,7 +28,8 @@ class Vanreservation_model extends CMS_Model
         ->from('van_rent')
         ->join('destinations as origin_destination','van_rent.origin_id = origin_destination.id')
         ->join('destinations','van_rent.destination_id = destinations.id')
-        ->join('vans', 'vans.id = van_rent.van_id');
+        ->join('vans', 'vans.id = van_rent.van_id')
+        ->join('checkouts', 'checkouts.id = van_rent.checkout_id');
 
         if($getResult){
             return $query->get()->result();
@@ -80,7 +84,21 @@ class Vanreservation_model extends CMS_Model
     }
 
     public function filterStatus(&$query,$status){
-        $query->where('status',$status);
+        $query->where('van_rent.status',$status);
+        return true;
+    }
+
+    public function filterSearch(&$query,$search){
+        $query->like('CONCAT(
+        checkouts.fullname,
+        vans.name,
+        origin_destination.name,
+        destinations.name,
+        van_rent.price,
+        van_rent.departure_date,
+        van_rent.status,
+        van_rent.trip_type
+        )',$search);
         return true;
     }
 

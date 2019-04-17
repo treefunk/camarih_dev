@@ -9,14 +9,19 @@ class MY_Controller extends CI_Controller {
     {
         parent::__construct();
         $this->load->model('admin_model');
+        $this->load->model('footer_model');
     }
 
     public function wrapper($data = null)
     {
+        $fd['footer_data'] = $this->footer_model->getAll();
+
+
+
         $this->load->view('partials/header.php',@$data['title']);
         $this->load->view('partials/nav.php');
         $this->load->view($data['view'],@$data['data']);
-        $this->load->view('partials/footer.php');
+        $this->load->view('partials/footer.php',$fd);
         
         if(getenv('DEBUG') == 'true')
         {
