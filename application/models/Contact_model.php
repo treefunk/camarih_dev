@@ -2,9 +2,9 @@
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
-require APPPATH.'PHPMailer/src/Exception.php';
-require APPPATH.'PHPMailer/src/PHPMailer.php';
-require APPPATH.'PHPMailer/src/SMTP.php';
+// require APPPATH.'PHPMailer/src/Exception.php';
+// require APPPATH.'PHPMailer/src/PHPMailer.php';
+// require APPPATH.'PHPMailer/src/SMTP.php';
 
 class Contact_model extends CMS_Model
 {
@@ -18,14 +18,14 @@ class Contact_model extends CMS_Model
     }
 
     public function getRecipient($get_object = false){
-        $recipient = $this->db->get_where('contact_settings',['type' => SELF::TYPE_RECIPIENT])->row();
+        $recipient = $this->db->get_where('contact_settings',['type' => self::TYPE_RECIPIENT])->row();
         
         if($get_object){ return $recipient; }
         return $recipient ? $recipient->value : "";
     }
 
     public function getSubject($get_object = false){
-       $subject =  $this->db->get_where('contact_settings',['type' => SELF::TYPE_SUBJECT])->row();
+       $subject =  $this->db->get_where('contact_settings',['type' => self::TYPE_SUBJECT])->row();
       
        if($get_object){ return $subject; }
        return $subject ? $subject->value : "";

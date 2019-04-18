@@ -42,14 +42,14 @@ class Footer_model extends CMS_Model
     protected function getAllTypes(){
 
         return [
-            SELF::TYPE_ADDRESS,
-            SELF::TYPE_HEADER,
-            SELF::TYPE_BODY,
-            SELF::TYPE_PHONE_1,
-            SELF::TYPE_PHONE_2,
-            SELF::TYPE_EMAIL,
-            SELF::TYPE_FACEBOOK,
-            SELF::TYPE_MESSENGER
+            self::TYPE_ADDRESS,
+            self::TYPE_HEADER,
+            self::TYPE_BODY,
+            self::TYPE_PHONE_1,
+            self::TYPE_PHONE_2,
+            self::TYPE_EMAIL,
+            self::TYPE_FACEBOOK,
+            self::TYPE_MESSENGER
         ];
 
     }

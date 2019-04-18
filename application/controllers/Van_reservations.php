@@ -78,12 +78,12 @@ class Van_reservations extends Admin_Controller {
         $num_rows = $clone_query->get()->num_rows();
 
         $query->offset($offset);
-        $query->limit(SELF::PER_PAGE);
+        $query->limit(self::PER_PAGE);
 
         $config = [
             'base_url' => base_url('van-reservations'),
             'total_rows' => $num_rows,
-            'per_page' => SELF::PER_PAGE,
+            'per_page' => self::PER_PAGE,
             'reuse_query_string' => TRUE
         ];
         

@@ -95,7 +95,7 @@ class Tourpackages extends Admin_Controller {
 			]);
 
 			//package gallery
-			if(count($images)){
+			if(isset($post['images']) && count($images)){
 				$post['images'] = array_values($post['images']); //reset array keys
 				$image_errors = $this->packagegallery_model->add([
 					'package_id' => $package_id,
@@ -119,14 +119,16 @@ class Tourpackages extends Admin_Controller {
 						$alert['message'] .= " {$error}";
 					}
 				}
+			}else{
+				$image_errors = false;
 			}
 			if($hasDownloads = isset($_FILES['package_download']) && $_FILES['package_download']['name'] != ""){
 				$file = $_FILES['package_download'];
 				$name = str_replace(' ','_',$file['name']);
 				if($download_id = $this->packagedownload_model->add([
 					'package_id' => $package_id,
-					'file_name' => $name,
-					'file_title' => $file['name'],
+					'file_name' => str_replace(' ','_',$name),
+					'file_title' => str_replace(' ','_',$file['name']),
 					'type' => "",
 				])){
 					
@@ -270,7 +272,7 @@ class Tourpackages extends Admin_Controller {
 		];
 
 		// if there are uploaded images
-		if(count($images)){
+		if(isset($post['images']) && count($images)){
 
 			$post['images'] = array_values($post['images']);
 
@@ -286,6 +288,8 @@ class Tourpackages extends Admin_Controller {
 					array_splice($image_errors,$x,1);
 				}
 			}
+		}else{
+			$image_errors = false;
 		}
 
 		if($hasDownloads = isset($_FILES['package_download']) && $_FILES['package_download']['name'] != ""){
@@ -297,8 +301,8 @@ class Tourpackages extends Admin_Controller {
 			$file = $_FILES['package_download'];
 			if($download_id = $this->packagedownload_model->add([
 				'package_id' => $package->id,
-				'file_name' => $file['name'],
-				'file_title' => $file['name'],
+				'file_name' => str_replace(' ','_',$file['name']),
+				'file_title' => str_replace(' ','_',$file['name']),
 				'type' => "",
 			])){
 				
@@ -310,10 +314,12 @@ class Tourpackages extends Admin_Controller {
 						unlink($this->packagedownload_model->upload_path . "/{$existing->id}_{$existing->file_name}");
 					}
 
-					$alert = [
-						'type' => 'warning',
-						'message' => 'Package added but file upload failed: <br>' . implode("<br>",$errors)
-					];
+					if(is_array($errors)){
+						$alert = [
+							'type' => 'warning',
+							'message' => 'Package added but file upload failed: <br>' . implode("<br>",$errors)
+						];
+					}
 				}
 			}
 		}
