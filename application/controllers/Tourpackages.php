@@ -343,7 +343,7 @@ class Tourpackages extends Admin_Controller {
 
 					if($existing){
 						$this->packageimage_model->delete($existing->id);
-						unlink($this->packageimage_model->upload_path . "/{$existing->id}_{$existing->file_name}");
+						unlink($this->packageimage_model->upload_path . "/{$existing->id}_{$existing->image_name}");
 					}
 					if(is_array($errors)){
 						$alert = [
