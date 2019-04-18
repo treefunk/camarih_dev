@@ -145,6 +145,8 @@ class Booking_reservations extends Admin_Controller {
                 $this->session->set_flashdata('alert',$alert);
             }
 
+        }else{
+            $seats_taken = false;
         }
         
         
