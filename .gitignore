@@ -13,6 +13,7 @@ yarn-error.log*
 *.sw*
 application/vendor
 application/about.json
+application/ci_sessions
 
 .DS_Store
 node_modules
