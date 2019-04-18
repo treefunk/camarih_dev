@@ -345,11 +345,12 @@ class Tourpackages extends Admin_Controller {
 						$this->packageimage_model->delete($existing->id);
 						unlink($this->packageimage_model->upload_path . "/{$existing->id}_{$existing->file_name}");
 					}
-
-					$alert = [
-						'type' => 'warning',
-						'message' => 'Package added but file upload failed: <br>' . implode("<br>",$errors)
-					];
+					if(is_array($errors)){
+						$alert = [
+							'type' => 'warning',
+							'message' => 'Package added but file upload failed: <br>' . implode("<br>",$errors)
+						];
+					}
 				}
 			}
 		}
