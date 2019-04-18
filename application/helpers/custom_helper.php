@@ -117,7 +117,7 @@ function cleanMultipleFilesArray($field){
             }
         }
     }else{
-        $hasfiles = false;
+        $files = false;
     }
 
     return $files;
