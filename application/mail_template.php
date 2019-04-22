@@ -3,134 +3,383 @@
     // $item_list , $total_price
 ?>
 
-<ul class="main">
+<div class="booking-part">
+
+
+<ul>
     <?php foreach($item_list as $item): ?>
         <?php if(isset($item[0]) && is_array($item[0])): // trip ?> 
             <?php if(count($item) == 1): // oneway trip ?>
-                <ul>
-                    <li>
-                        <label for="trip_type">Trip Type</label>
-                        <p>One-way Trip</p>
-                    </li>
-                    <li>
-                        <label for="van_name">Van Name</label>
-                        <p><?=$item[0]['van_name']?></p>
-                    </li>
-                    <li>
-                        <label for="seats">Seats</label>
-                        <p><?=$item[0]['seats']?></p>
-                    </li>
-                    <li>
-                        <label for="destination">Destination</label>
-                        <p><?=$item[0]['destination']?></p>
-                    </li>
-                    <li>
-                        <label for="departure_date">Departure Date & Time:</label>
-                        <p><?=$item[0]['departure_date']?></p>
-                    </li>
-                    <li>
-                        <label for="pickup_location">Pickup Location</label>
-                        <p><?=$item[0]['pickup_location']?></p>
-                    </li>
-                    <li>
-                        <label for="drop_location">Drop Location</label>
-                        <p><?=$item[0]['drop_location']?></p>
-                    </li>
-                    <li>
-                        <label for="price">Price</label>
-                        <p><?=$item[0]['price']?></p>
-                    </li>
-                    <li>
-                        <label for="seat_num"># of seats</label>
-                        <p><?=$item[0]['num_of_seats']?></p>
-                    </li>
-                </ul>
+                <li class="booking-card">
+                    <div>
+                        <div class="body">
+                            <ul class="pad-0 listn">
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Trip Type:</p>
+                                        </div>
+                                        <div class="children">
+                                            <p>One-way</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Van: </p>
+                                        </div>
+                                        <div class="children">
+                                            <!---->
+                                            <p><?=$item[0]['van_name']?></p>
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Seats:</p>
+                                        </div>
+                                        <div class="children">
+                                            <!---->
+                                            <p><?=$item[0]['seats']?></p>
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Destination/Return Location:</p>
+                                        </div>
+                                        <div class="children">
+                                            <!---->
+                                            <p><?=$item[0]['destination']?></p>
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Departure Date &amp; Time:</p>
+                                        </div>
+                                        <div class="children">
+                                            <p><?=$item[0]['departure_date']?></p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Pickup Location: </p>
+                                        </div>
+                                        <div class="children">
+                                            <!---->
+                                            <p><?=$item[0]['pickup_location']?></p>
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Drop Location: </p>
+                                        </div>
+                                        <div class="children">
+                                            <!---->
+                                            <p><?=$item[0]['drop_location']?></p>
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Price: </p>
+                                        </div>
+                                        <div class="children">
+                                            <!---->
+                                            <p><?=$item[0]['price']?></p>
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p># of Seats:</p>
+                                        </div>
+                                        <div class="children">
+                                            <!---->
+                                            <p><?=$item[0]['num_of_seats']?></p>
+                                            <!---->
+                                        </div>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    
+                    </div>
+                </li>
             <?php else: ?>
-                <ul>
-                    <li>
-                        <label for="trip_type">Trip Type</label>
-                        <p>Roundtrip</p>
-                    </li>
-                    <li>
-                        <label for="van_name">Van Name</label>
-                        <p>Departure: <?=$item[0]['van_name']?></p>
-                        <p>Return: <?=$item[1]['van_name']?></p>
-                    </li>
-                    <li>
-                        <label for="seats">Seats</label>
-                        <p>Departure: <?=$item[0]['seats']?></p>
-                        <p>Return: <?=$item[1]['seats']?></p>
-                    </li>
-                    <li>
-                        <label for="destination">Destination</label>
-                        <p>Departure: <?=$item[0]['destination']?></p>
-                        <p>Return: <?=$item[1]['destination']?></p>
-                    </li>
-                    <li>
-                        <label for="departure_date">Departure Date & Time:</label>
-                        <p>Departure: <?=$item[0]['departure_date']?></p>
-                        <p>Return: <?=$item[1]['departure_date']?></p>
-                    </li>
-                    <li>
-                        <label for="pickup_location">Pickup Location</label>
-                        <p>Departure: <?=$item[0]['pickup_location']?></p>
-                        <p>Return: <?=$item[1]['pickup_location']?></p>
-                    </li>
-                    <li>
-                        <label for="drop_location">Drop Location</label>
-                        <p>Departure: <?=$item[0]['drop_location']?></p>
-                        <p>Return: <?=$item[1]['drop_location']?></p>
-                    </li>
-                    <li>
-                        <label for="price">Price</label>
-                        <p>Departure: <?=$item[0]['price']?></p>
-                        <p>Return: <?=$item[1]['price']?></p>
-                    </li>
-                    <li>
-                        <label for="seat_num"># of seats</label>
-                        <p>Departure: <?=$item[0]['price']?></p>
-                        <p>Return: <?=$item[1]['price']?></p>
-                    </li>
-                </ul>
+                <li class="booking-card"> 
+                    <div>
+                        <div class="body">
+                            <ul class="pad-0 listn">
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Trip Type:</p>
+                                        </div>
+                                        <div class="children">
+                                            <p>Round-trip</p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Van: </p>
+                                        </div>
+                                        <div class="children"><span>Departure:</span>
+                                            <p><?=$item[0]['van_name']?></p>
+                                            <div>
+                                                Return:
+                                                <p><?=$item[1]['van_name']?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Seats:</p>
+                                        </div>
+                                        <div class="children"><span>Departure:</span>
+                                            <p><?=$item[0]['seats']?></p>
+                                            <div>
+                                                Return:
+                                                <p class="return"><?=$item[1]['seats']?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Destination/Return Location:</p>
+                                        </div>
+                                        <div class="children"><span>Departure:</span>
+                                            <p><?=$item[0]['destination']?></p>
+                                            <div>
+                                                Return:
+                                                <p>Return: <?=$item[1]['destination']?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Departure Date &amp; Time:</p>
+                                        </div>
+                                        <div class="children">
+                                            <p><?=$item[0]['departure_date']?></p>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Return Date &amp; Time:</p>
+                                        </div>
+                                        <div class="children">
+                                            <p><?=$item[1]['departure_date']?></p>
+                                        </div>
+                                    </div>
+                                </li>
+
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Pickup Location: </p>
+                                        </div>
+                                        <div class="children"><span>
+                                                Departure:
+                                            </span>
+                                            <p><?=$item[0]['pickup_location']?></p>
+                                            <div>
+                                                Return:
+                                                <p><?=$item[1]['pickup_location']?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Drop Location: </p>
+                                        </div>
+                                        <div class="children"><span>
+                                                Departure:
+                                            </span>
+                                            <p><?=$item[0]['drop_location']?></p>
+                                            <div>
+                                                Return:
+                                                <p><?=$item[1]['drop_location']?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p>Price: </p>
+                                        </div>
+                                        <div class="children"><span>
+                                                Departure:
+                                            </span>
+                                            <p>Departure: <?=$item[0]['price']?></p>
+                                            <div>
+                                                Return:
+                                                <p>Return: <?=$item[1]['price']?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="parent">
+                                        <div class="children">
+                                            <p># of Seats:</p>
+                                        </div>
+                                        <div class="children"><span>
+                                                Departure:
+                                            </span>
+                                            <p><?=$item[0]['price']?></p>
+                                            <div>
+                                                Return:
+                                                <p><?=$item[1]['price']?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    
+                </li>
             <?php endif; ?>
         <?php elseif($item['type'] == 'van'): //van rent ?>
-            <ul>
-                <li>
-                    <label for="van_name">Van</label>
-                    <p><?=$item['van_name']?></p>
-                </li>
-                <li>
-                    <label for="departure">Departure date</label>
-                    <p><?=$item['departure_date']?></p>
-                </li>
-                <li>
-                    <label for="destination">Destination</label>
-                    <p><?=$item['destination']?></p>
-                </li>
-                <li>
-                    <label for="trip_type">Trip Type</label>
-                    <p><?=$item['trip_type']?></p>
-                </li>
-                <li>
-                    <label for="price">Price</label>
-                    <p><?=$item['price']?></p>
-                </li>
-            </ul>
+            <li class="booking-card">
+                <div>
+                    <div class="body">
+                        <ul class="pad-0 listn">
+                            <li>     
+                                <div class="parent">
+                                    <div class="children">
+                                        <p>Van Type</p>
+                                    </div>
+                                    <div class="children">
+                                        <p><?=$item['van_name']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="parent">
+                                    <div class="children">
+                                        <p>Departure Date</p>
+                                    </div>
+                                    <div class="children">
+                                        <p><?=$item['departure_date']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="parent">
+                                    <div class="children">
+                                        <p>Destination:</p>
+                                    </div>
+                                    <div class="children">
+                                        <p><?=$item['destination']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="parent">
+                                    <div class="children">
+                                        <p>Trip type:</p>
+                                    </div>
+                                    <div class="children">
+                                        <p><?=$item['trip_type']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="parent">
+                                    <div class="children">
+                                        <p>Total</p>
+                                    </div>
+                                    <div class="children">
+                                        <p><?=$item['price']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
         <?php elseif($item['type'] == 'package'): // package ?>
-            <ul>
-                <li>
-                    <label for="package_name">Package Name</label>
-                    <p><?=$item['package_name']?></p>
-                </li>
-                <li>
-                    <label for="adult_count">Adult Count</label>
-                    <p><?=$item['adult_count']?></p>
-                </li>
-                <li>
-                    <label for="price">Price</label>
-                    <p><?=$item['price']?></p>
-                </li>
-            </ul>
+            <li class="booking-card">
+                <div>
+                    <div class="body">
+                        <ul class="pad-0 listn">
+                            <li>
+                                <div class="parent">
+                                    <div class="children">
+                                        <p>Package Name</p>
+                                    </div>
+                                    <div class="children">
+                                        <p><?=$item['package_name']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="parent">
+                                    <div class="children">
+                                        <p>Adult Count</p>
+                                    </div>
+                                    <div class="children">
+                                        <p><?=$item['adult_count']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div  class="parent">
+                                    <div  class="children">
+                                        <p >Rate</p>
+                                    </div>
+                                    <div  class="children">
+                                        <p ><?=$item['rate']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <div class="parent">
+                                    <div class="children">
+                                        <p>Total</p>
+                                    </div>
+                                    <div class="children">
+                                        <p><?=$item['price']?></p>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </li>
         <?php endif; ?>
     <?php endforeach; ?>
 </ul>
@@ -139,4 +388,5 @@
     <p>
         Total: PHP <?=$total_price?>
     </p>
+</div>
 </div>

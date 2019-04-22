@@ -588,6 +588,7 @@ class Availability extends MY_Controller {
                     'type' => 'package',
                     'package_name' => $item['name'],
                     'adult_count' => $item['adult_count'],
+                    'rate' => $item['rate'],
                     'price' => number_format($price,2)
                 ];
 
