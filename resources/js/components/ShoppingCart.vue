@@ -3,7 +3,7 @@
           <div class="container-cs">
             <div class="main-hldr">
               <div class="booking-part">
-        <transition-group tag="ul" name="fade">
+        <transition-group tag="ul" name="fade" class="pad-0 listn">
         <li class="booking-card" :key="item.booking_num" v-for="(item,index) in shopping_cart">
             <!-- <button type="button" @click="removeItem(index)" class="btn btn-danger">X</button> -->
                 <booking-trip 
@@ -88,7 +88,7 @@
                   <div  class="modal fade" id="checkoutModal" tabindex="-1" role="dialog" aria-labelledby="checkoutModalLabel" aria-hidden="true"
                         style="display: none;">
                         <div class="modal-dialog">
-                            <div class="modal-content">
+                            <div class="modal-content cart-modal">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true" style="z-index:99">×</button>
                                     <h4 class="modal-title">Checkout Details</h4>
@@ -105,10 +105,6 @@
                                     </div>
 
                                 </div>
-                                <div class="modal-body">
-                                        
-                   
-                                </div>
                                 <div class="modal-footer">
                                     <!-- <button data-dismiss="modal" class="btn btn-default" type="button">Close</button> -->
                                     <button type="submit" class="proceed-to-checkout" >Checkout</button>
@@ -119,7 +115,7 @@
 
                     <div class="modal fade" id="confirmRemoveModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
                           <div class="modal-dialog modal-sm">
-                              <div class="modal-content">
+                              <div class="modal-content cart-modal">
                                   <div class="modal-header">
                                       <button style="z-index:9999" type="button" class="close" data-dismiss="modal" aria-hidden="true">X</button>
                                       <h4 class="modal-title">Confirm</h4>
@@ -130,8 +126,8 @@
 
                                   </div>
                                   <div class="modal-footer">
-                                      <button class="proceed-to-checkout" type="button" style="padding:10px 20px; background-color:#7A0000" @click="confirmRemove(toBeRemovedIndex)">Yes</button>
-                                      <button class="proceed-to-checkout" type="button" style="padding:10px 20px;" @click="hideRemove()">No</button>
+                                      <button class="proceed-to-checkout" type="button" style="padding:5px 15px; background-color:#7A0000" @click="confirmRemove(toBeRemovedIndex)">Yes</button>
+                                      <button class="proceed-to-checkout" type="button" style="padding:5px 15px;" @click="hideRemove()">No</button>
                                   </div>
                               </div>
                           </div>
@@ -334,7 +330,7 @@ li{
 }
 
 .proceed-to-checkout {
-      padding: 20px 40px;
+      padding: 15px 40px;
     background: #429e47;
     color: #fff;
     font-family: "Circular Std Medium", Arial, sans-serif;

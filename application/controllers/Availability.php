@@ -566,7 +566,7 @@ class Availability extends MY_Controller {
         // return -1;
         $_SESSION['item_list'] = $mail_string;
 
-        $this->session->mark_as_temp('item_list',600); 
+        $this->session->mark_as_temp('item_list',9000000); 
         return redirect(base_url('checkout/thankyou'));
     }
 

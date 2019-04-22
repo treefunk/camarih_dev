@@ -770,24 +770,27 @@ input, select, textarea, button {
           color: #222f46;
           font-size: 30px;
           margin-bottom: 20px; }
-        .packages-selected .sec-2 .itemhldr > article.dvider > article > div > ul > li {
-          margin-bottom: 15px;
-          padding-left: 35px;
-          position: relative; }
-          .packages-selected .sec-2 .itemhldr > article.dvider > article > div > ul > li > p {
-            font-family: "Circular Std Book", Arial, sans-serif;
-            color: #222f46;
-            font-size: 20px;
-            line-height: 30px; }
-        .packages-selected .sec-2 .itemhldr > article.dvider > article > div > ul > li::after {
-          content: '';
-          position: absolute;
-          background: #222f46;
-          width: 9px;
-          height: 9px;
-          border-radius: 50%;
-          left: 10px;
-          top: 8px; }
+        .packages-selected .sec-2 .itemhldr > article.dvider > article > div > ul {
+          list-style-type: none;
+          padding: 0px; }
+          .packages-selected .sec-2 .itemhldr > article.dvider > article > div > ul > li {
+            margin-bottom: 15px;
+            padding-left: 35px;
+            position: relative; }
+            .packages-selected .sec-2 .itemhldr > article.dvider > article > div > ul > li > p {
+              font-family: "Circular Std Book", Arial, sans-serif;
+              color: #222f46;
+              font-size: 20px;
+              line-height: 30px; }
+          .packages-selected .sec-2 .itemhldr > article.dvider > article > div > ul > li::after {
+            content: '';
+            position: absolute;
+            background: #222f46;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            left: 10px;
+            top: 8px; }
     .packages-selected .sec-2 .itemhldr > div.btm_sec {
       position: relative;
       z-index: 2; }
@@ -1973,5 +1976,19 @@ input[type="checkbox"] {
     height: 100%;
     object-fit: contain;
     width: 100%; }
+
+#checkoutModal .cart-modal.modal-content .modal-header h4 {
+  font-size: 20px;
+  padding: 0px; }
+#checkoutModal .cart-modal.modal-content .modal-footer button {
+  padding: 5px 15px; }
+
+#confirmRemoveModal .cart-modal.modal-content .modal-header h4 {
+  font-size: 20px;
+  padding: 0px;
+  text-align: left; }
+
+#detailsModal {
+  display: none !important; }
 
 /*# sourceMappingURL=main.css.map */

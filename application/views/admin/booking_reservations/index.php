@@ -1,7 +1,7 @@
 <section id="main-content">
           <section class="wrapper site-min-height">
               <!-- page start-->
-              <section class="panel">
+              <section class="panel panel-pad">
                   <header class="panel-heading">
                       Booking Reservations
                   </header>

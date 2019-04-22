@@ -459,7 +459,7 @@ $lightorange : #f0bb02;
 
                         > h5 { font-family: $fonthead; color: $violet; font-size: 30px; margin-bottom: 20px;}
 
-                        > ul {
+                        > ul { list-style-type: none; padding: 0px;
                             > li { margin-bottom: 15px; padding-left: 35px; position: relative;
                                 > p { font-family: $fontmain; color: $violet; font-size: 20px; line-height: 30px;  }
                             }
@@ -1213,6 +1213,29 @@ input[type="checkbox"] { -webkit-appearance: checkbox;}
 
 
 
+#checkoutModal .cart-modal.modal-content  { 
+    .modal-header {
+        h4 { font-size: 20px; padding: 0px; }
+    }
+
+    .modal-footer {
+        button { padding: 5px 15px; }
+    }
+
+
+}
+
+
+#confirmRemoveModal .cart-modal.modal-content  { 
+    .modal-header {
+        h4 { font-size: 20px; padding: 0px; text-align: left;}
+    }
+}
+
+
+#detailsModal { display: none!important;
+
+}
 
 
 

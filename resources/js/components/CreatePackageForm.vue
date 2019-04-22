@@ -63,19 +63,24 @@
 
 		<!-- SECOND TAB!! -->
 		<div v-show="tab == 2" :class="[{'active': tab == 2},'gal-tab']">
+			<div class="form-group">
+				<h3>Images</h3>
+				
 
-				<div v-for="(uploaded,index) in uploaded_images" :key="index">
+				<div v-for="(uploaded,index) in uploaded_images" :key="index" style="text-align: right;">
 					<button class="btn btn-danger" type="button" @click="removeUploaded(index)">X</button>
+					<label style="width: 100%; margin-top: 15px; text-align: left;">Title</label>
 					<input type="hidden" :name="`uploaded_images[${index}][id]`" :value="uploaded.id">
-					<input type="text" class="form-control" v-model="uploaded_images[index].image_title" :name="`uploaded_images[${index}][image_title]`" v-if="uploaded.preview_image != ''">
+					<input type="text" class="form-control" v-model="uploaded_images[index].image_title" :name="`uploaded_images[${index}][image_title]`" v-if="uploaded.preview_image != ''" style="margin-top: 0px; margin-bottom: 15px; ">
 					<div class="img-holder">
 						<img class="preview" :src="`${gallery_url}/${package_.id}_${uploaded.image_name}`" alt="">
 					</div>
 				</div>
 
-				<div v-for="(gallery,index) in packagegallery" :key="index">
+				<div v-for="(gallery,index) in packagegallery" :key="index" style="text-align: right;">
 					<button class="btn btn-danger" type="button" @click="remove(index)">X</button>
-					<input type="text" class="form-control" v-model="packagegallery[index].image_title" :name="`images[${index}][image_title]`" v-if="gallery.preview_image != ''">
+					<label style="width: 100%; margin-top: 15px; text-align: left;">Title</label>
+					<input type="text" class="form-control" v-model="packagegallery[index].image_title" :name="`images[${index}][image_title]`" v-if="gallery.preview_image != ''" style="margin-top: 0px; margin-bottom: 15px; ">
 					<div class="img-holder" v-if="gallery.preview_image">
 						<img :src="gallery.preview_image" alt="">
 					</div>
@@ -83,13 +88,14 @@
 				</div>
 				
 					<button  type="button" class="btn btn-default" @click="addImage" for="gallery">Add Image</button>
-
+			</div>
 
 	            <div class="btn-hldr">
 					<input type="hidden" name="description" :value="package_data.package_details.description">
 	            	<button type="button" class="finish btn_green left_btn" @click="tab = 1">Previous</button>
 					<button class="btn_orange right_btn" type="button" @click="tab = 3">Next</button>
 	            </div>
+
 	            
 		</div>
 

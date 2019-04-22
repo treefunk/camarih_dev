@@ -105,11 +105,13 @@
            for(var key in obj[header_name]){
                var li = 
                '<div class="form-group">' +
-                  '<label class="col-lg-3 col-sm-3 control-label">'+ key +"</label>" +
-                '<div class="col-lg-9">' + 
-                    '<input type="text" class="form-control" disabled value="' + obj[header_name][key] +'">'
-                 +
-               "</div>"
+                '<div class="row">' +
+                  '<div class="col-lg-3"><label>'+ key +"</label></div>" +
+                  '<div class="col-lg-9">' + 
+                      '<input type="text" class="form-control" disabled value="' + obj[header_name][key] +'">'
+                   +
+                  "</div>" +
+                  "</div>" +
                "</div>"
                $(li).appendTo(elem)
            }
@@ -118,4 +120,13 @@
     }
     </script>
     
-    
+    <!-- <div class="row">
+  <div class="col-lg-3">
+    <label>a12321</label>
+  </div>
+  <div class="col-lg-9">
+      
+  </div>
+
+</div>    
+     -->
