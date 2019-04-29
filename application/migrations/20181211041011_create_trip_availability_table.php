@@ -34,7 +34,7 @@ class Migration_Create_trip_availability_Table extends CI_Migration {
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
                 $this->dbforge->add_key('id', TRUE);
-                $this->dbforge->create_table('trip_availability');
+                $this->dbforge->create_table('trip_availability',TRUE,['ENGINE' => 'InnoDB']);
         }
 
         public function down()

@@ -29,7 +29,7 @@ class Migration_Create_package_details_Table extends CI_Migration {
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
                 $this->dbforge->add_key('id', TRUE);
-                $this->dbforge->create_table('package_details');
+                $this->dbforge->create_table('package_details',TRUE,['ENGINE' => 'InnoDB']);
         }
 
         public function down()

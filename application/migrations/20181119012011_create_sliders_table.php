@@ -49,7 +49,7 @@ class Migration_Create_sliders_Table extends CI_Migration {
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
                 $this->dbforge->add_key('id', TRUE);
-                $this->dbforge->create_table('sliders');
+                $this->dbforge->create_table('sliders',TRUE,['ENGINE' => 'InnoDB']);
         }
 
         public function down()

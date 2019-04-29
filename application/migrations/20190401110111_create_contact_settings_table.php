@@ -24,7 +24,7 @@ class Migration_Create_contact_settings_Table extends CI_Migration {
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
                 $this->dbforge->add_key('id', TRUE);
-                $this->dbforge->create_table('contact_settings');
+                $this->dbforge->create_table('contact_settings',TRUE,['ENGINE' => 'InnoDB']);
         }
 
         public function down()

@@ -41,18 +41,18 @@
                         <td><?=$package->created_at?></td>
                         <td>
                             <a href="<?=base_url('tourpackages/edit/').$package->id?>">
-                                <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i></button>
+                                <button title="Edit Status" class="btn btn-info btn-s"><i class="fa fa-pencil"></i></button>
                             </a>
 
                             <a data-toggle="modal" href="#statusPackage"
                             data-payload='<?=json_encode($package)?>'
                             data-url='<?=base_url('tourpackages/status/')?>'>
-                                <button class="btn btn-warning btn-s"><i class="fa fa-unlock"></i></button>
+                                <button title="Update Status" class="btn btn-warning btn-s"><i class="fa fa-unlock"></i></button>
                             </a>
                             <a data-toggle="modal" href="#deletePackage"
                             data-payload='<?=json_encode($package)?>'
                             data-url='<?=base_url('tourpackages/delete/')?>'
-                                <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i></button>
+                                <button title="Delete Package" class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i></button>
                             </a>
 
                         </td>

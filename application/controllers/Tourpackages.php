@@ -445,7 +445,7 @@ class Tourpackages extends Admin_Controller {
 			$this->db->trans_complete();
             $alert = [
                 "type" => 'success',
-                "message" => "Slider Successfully Deleted."
+                "message" => "Package Successfully Deleted."
             ];
         }else{
             $this->db->trans_rollback();

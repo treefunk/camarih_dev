@@ -24,7 +24,7 @@ class Migration_Create_footer_details_Table extends CI_Migration {
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
                 $this->dbforge->add_key('id', TRUE);
-                $this->dbforge->create_table('footer_details');
+                $this->dbforge->create_table('footer_details',TRUE,['ENGINE' => 'InnoDB']);
         }
 
         public function down()

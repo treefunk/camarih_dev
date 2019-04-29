@@ -40,7 +40,7 @@ class Migration_Create_van_hire_Table extends CI_Migration {
 
                 $this->dbforge->add_field("`created_at` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP");
                 $this->dbforge->add_key('id', TRUE);
-                $this->dbforge->create_table('van_hire');
+                $this->dbforge->create_table('van_hire',TRUE,['ENGINE' => 'InnoDB']);
         }
 
         public function down()
