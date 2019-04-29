@@ -42,6 +42,7 @@ class Contactus extends Admin_Controller{
                 'type' => "recipient",
                 'value' => $post['recipient']
             ]);
+            $changes++;
         }
 
         $subject = $this->contact_model->getSubject(true);
@@ -55,6 +56,7 @@ class Contactus extends Admin_Controller{
                 'type' => "subject",
                 'value' => $post['subject']
             ]);
+            $changes++;
         }
 
         if($changes){
