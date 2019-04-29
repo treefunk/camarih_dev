@@ -24,14 +24,14 @@
                         <h5>From</h5>
                         <select name="destination_from" v-model="destination_from">
                         <option value="">Select Origin</option>
-                            <option v-for="(origin,index) in origins" :key="index" v-show="destination_to != origin.id" :value="`${origin.id}`">{{ origin.name }}</option>
+                            <option v-for="(origin,index) in origins" :key="index" v-if="destination_to != origin.id" :value="`${origin.id}`">{{ origin.name }}</option>
                         </select>
                     </li>
                     <li >
                         <h5>To</h5>
                         <select name="destination_to" v-model="destination_to">
                         <option value="" >Select Destination</option>
-                            <option v-for="(destination,index) in destinations" v-show="destination_from != destination.id" :key="index" :value="`${destination.id}`">{{ destination.name }}</option>
+                            <option v-for="(destination,index) in destinations" v-if="destination_from != destination.id" :key="index" :value="`${destination.id}`">{{ destination.name }}</option>
                         </select>
                     </li>
                     <li>
