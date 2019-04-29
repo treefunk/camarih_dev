@@ -106,7 +106,7 @@ class Testimonials extends Admin_Controller {
                 return;    
             }
         }else{
-            $this->testimonial_model->update($id,['image_name' => $filename]);
+            $this->testimonial_model->update($id,['image_name' =>  str_replace(' ','_',$filename)]);
             $this->db->trans_complete();
             $alert = [
                 'type' => 'success',
@@ -196,7 +196,7 @@ class Testimonials extends Admin_Controller {
             {
                 unlink($currentfile);
             }
-            $post['image_name'] = $filename;
+            $post['image_name'] =  str_replace(' ','_',$filename);
         }
 
         // end of validate image
