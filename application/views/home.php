@@ -6,6 +6,8 @@
   <?php endif; ?>
 
   <div class="owl-carousel owl-theme home-carousel">
+
+    <?php if(count($sliders)): ?>
     <?php foreach($sliders as $slider): ?>
     <div class="item">
       <div class="overlay"></div>
@@ -34,6 +36,26 @@
       
     </div>
   <?php endforeach; ?>
+  <?php else: ?>
+  <div class="item">
+      <div class="overlay"></div>
+      <aside>
+        <img src="<?=base_url('frontend/images/island.jpg')?>">
+      </aside>
+
+      <article class="text-hldr">
+      <h3>Explore</h3>
+        <p>The beauty of Northern Palawan with Camarih Transport</p>
+
+        <ul class="pad-0 listn">
+          <li>
+            <a href="<?=base_url('packages')?>">Check Our Tour Packages</a>
+          </li>
+        </ul>
+      </article>
+      
+    </div>
+  <?php endif; ?>
   </div>
 
 </section>
