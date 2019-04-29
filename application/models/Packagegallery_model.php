@@ -27,7 +27,7 @@ class Packagegallery_model extends CMS_Model
             if(!is_array($filename)){
                 parent::add([
                     'package_id' => $data['package_id'],
-                    'image_name' => str_replace(' ','_',$filename),
+                    'image_name' => preg_replace('/\s+/', '_', $filename),
                     'image_title' => $data['images'][$i]['image_title']
                 ]);
             }else{

@@ -27,7 +27,7 @@ class Vangallery_model extends CMS_Model
             if(!is_array($filename)){
                 parent::add([
                     'van_id' => $data['van_id'],
-                    'image_name' => str_replace(' ','_',$filename),
+                    'image_name' => preg_replace('/\s+/', '_', $filename),
                     'image_title' => $data['image_title'][$i]
                 ]);
             }else{

@@ -127,7 +127,7 @@ class Sliders extends Admin_Controller {
                 return;
             }
         }else{
-            $this->slider_model->update($id,['image_name' => str_replace(' ','_',$filename)]);
+            $this->slider_model->update($id,['image_name' => preg_replace('/\s+/', '_', $filename)]);
 
             $alert = [
                 'type' => 'success',
@@ -204,6 +204,13 @@ class Sliders extends Admin_Controller {
         // validate image
         if($_FILES['image_name']['name'])
         {
+
+            $currentfile =  'uploads/sliders/'.$slider->id. '_' . $slider->image_name;
+            if(file_exists($currentfile))
+            {
+                unlink($currentfile);
+            }
+
             $filename = $this->slider_model->handleUpload('image_name',$slider->id,'./uploads/sliders');
 
             if(is_array($filename))
@@ -223,12 +230,8 @@ class Sliders extends Admin_Controller {
                     return;
                 }
             }
-            $currentfile =  'uploads/sliders/'.$slider->id. '_' . $slider->image_name;
-            if(file_exists($currentfile))
-            {
-                unlink($currentfile);
-            }
-            $post['image_name'] = $filename;
+            
+            $post['image_name'] = preg_replace('/\s+/', '_', $filename);
         }
 
         // end of validate image

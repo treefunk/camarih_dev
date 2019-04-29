@@ -179,7 +179,7 @@ class Vans extends Admin_Controller {
                 if($existing->image_title != $val){
                     $updated = $this->db->set(
                         'image_title'
-                    ,$val)->where([
+                    ,preg_replace('/\s+/', '_', $val))->where([
                         'id' => $i
                     ])->update('van_gallery');
                     if($updated)
@@ -198,17 +198,6 @@ class Vans extends Admin_Controller {
 
         // $changes += $this->vandetail_model->update($van_details_in_db->id,$van_details);
 
-        // add image
-        if(count($van_gallery)){
-            $images = format_multiple_files($van_gallery);
-            // van gallery here
-			$image_errors = $this->vangallery_model->add([
-                'van_id' => $id,
-                'image_title' => $van_gallery_titles
-            ],$images);
-            $changes++;
-        }
-
         //delete image if there's any
         if(count($to_be_removed)){
             $deleted = $this->db->from('van_gallery')
@@ -223,6 +212,20 @@ class Vans extends Admin_Controller {
                 $changes++;
             }
         }
+
+
+        // add image
+        if(count($van_gallery)){
+            $images = format_multiple_files($van_gallery);
+            // van gallery here
+			$image_errors = $this->vangallery_model->add([
+                'van_id' => $id,
+                'image_title' => $van_gallery_titles
+            ],$images);
+            $changes++;
+        }
+
+        
 
         $alert = [
 			'type' => 'success',

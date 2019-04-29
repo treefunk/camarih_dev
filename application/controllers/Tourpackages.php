@@ -124,11 +124,11 @@ class Tourpackages extends Admin_Controller {
 			}
 			if($hasDownloads = isset($_FILES['package_download']) && $_FILES['package_download']['name'] != ""){
 				$file = $_FILES['package_download'];
-				$name = str_replace(' ','_',$file['name']);
+				$name = preg_replace('/\s+/', '_', $file['name']);
 				if($download_id = $this->packagedownload_model->add([
 					'package_id' => $package_id,
-					'file_name' => str_replace(' ','_',$name),
-					'file_title' => str_replace(' ','_',$file['name']),
+					'file_name' => $name,
+					'file_title' => $name,
 					'type' => "",
 				])){
 					
@@ -147,11 +147,11 @@ class Tourpackages extends Admin_Controller {
 
 			if($hasMainImage = isset($_FILES['main_image']) && $_FILES['main_image']['name'] != ""){
 				$file = $_FILES['main_image'];
-				$name = str_replace(' ','_',$file['name']);
+				$name = preg_replace('/\s+/', '_', $file['name']);
 				if($main_image_id = $this->packageimage_model->add([
 					'package_id' => $package_id,
 					'image_name' => $name,
-					'image_title' => $file['name'],
+					'image_title' => $name,
 					'type' => "",
 				])){
 					
@@ -243,7 +243,7 @@ class Tourpackages extends Admin_Controller {
 			foreach($post['uploaded_images'] as $image){
 				$uploaded_images_post_ids[] = $image['id'];
 				$changes += (int)$this->packagegallery_model->update($image['id'],[
-					'image_title' => $image['image_title']
+					'image_title' =>  preg_replace('/\s+/', '_', $image['image_title'])
 				]);
 			}
 		}
@@ -299,10 +299,11 @@ class Tourpackages extends Admin_Controller {
 
 
 			$file = $_FILES['package_download'];
+			$file_download_name = preg_replace('/\s+/', '_', $file['name']);
 			if($download_id = $this->packagedownload_model->add([
 				'package_id' => $package->id,
-				'file_name' => str_replace(' ','_',$file['name']),
-				'file_title' => str_replace(' ','_',$file['name']),
+				'file_name' => $file_download_name,
+				'file_title' => $file_download_name,
 				'type' => "",
 			])){
 				
@@ -333,8 +334,8 @@ class Tourpackages extends Admin_Controller {
 			$file = $_FILES['main_image'];
 			if($download_id = $this->packageimage_model->add([
 				'package_id' => $package->id,
-				'image_name' => $file['name'],
-				'image_title' => $file['name'],
+				'image_name' =>preg_replace('/\s+/', '_', $file['name']),
+				'image_title' => preg_replace('/\s+/', '_', $file['name']),
 				'type' => "",
 			])){
 				
