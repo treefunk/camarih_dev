@@ -9,6 +9,7 @@
 
 <section class="sec-2">
 	<div class="abt-hldr">
+    <?php require_once __DIR__. "/../partials/alert.php"; ?> 
 
         <contact-form
         site_key='<?=getenv("CAPTCHA_SITE_KEY")?>'

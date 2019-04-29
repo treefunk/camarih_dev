@@ -6,7 +6,7 @@
         <article class="details">
             
             <h4>{{ van_data.name }}</h4>
-            <p>{{ seatsNum + 1 }} - Seater</p>
+            <p>{{ seatsNum }} - Seater</p>
 
             <ul class="pad-0 listn" v-if="this.rates.length">
                 

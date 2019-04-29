@@ -20,6 +20,12 @@
             </div>
             <button type="button" class="btn_green" @click="addRow">Add Schedule</button>
         </div>
+
+        <div class="form-group" style="margin-top:20px">
+            <label for="Body">Body</label>
+            <textarea name="body" id="description" rows="3"
+                class="form-control" style="height:inherit" v-model="schedule_text"></textarea>
+        </div>
         <button type="submit" class="btn_orange right_btn">Save Changes</button>
 
     </form>
@@ -32,7 +38,8 @@
                 type: Array,
                 default: () => []
             },
-            action_url: String
+            action_url: String,
+            schedule_text: String
         },
         data(){
             return {

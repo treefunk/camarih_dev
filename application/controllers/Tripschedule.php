@@ -5,13 +5,16 @@ class Tripschedule extends Admin_Controller {
     public function __construct(){
         parent::__construct();
         $this->load->model([
-            'tripschedule_model'
+            'tripschedule_model',
+            'scheduledetails_model'
         ]);
     }
 
     public function index(){
 
         $data['schedules'] = $this->tripschedule_model->allByTripNum();
+        $data['body'] = is_object($this->scheduledetails_model->getBody()) ? $this->scheduledetails_model->getBody()->value : "";
+        
 
         $this->wrapper([
             'data' => $data,
@@ -20,7 +23,9 @@ class Tripschedule extends Admin_Controller {
     }
 
     public function update(){
-        $post = $this->input->post('schedules');
+
+        $post = $this->input->post('schedules',true);
+        $body = $this->input->post('body',true);
 
         //get count of schedules in database
         $schedule_count_db = $this->tripschedule_model->count();
@@ -59,6 +64,8 @@ class Tripschedule extends Admin_Controller {
         if(is_array($post)){
             $schedules = $this->tripschedule_model->allByTripNum();
             for($x = 0 ; $x < count($post); $x++){
+
+
                 $update = false;
                 if($post[$x]['departure_time_pps'] != $schedules[$x]->departure_time_pps ||
                    $post[$x]['departure_time_eln'] != $schedules[$x]->departure_time_eln
@@ -69,6 +76,8 @@ class Tripschedule extends Admin_Controller {
                 if($update){
                     $this->db->update('trip_schedule',$post[$x],['trip_num' => $post[$x]['trip_num']]);
                 }
+
+
             }
 
             $alert = [
@@ -76,6 +85,10 @@ class Tripschedule extends Admin_Controller {
                 'message' => 'Schedule successfully updated.'
             ];
             
+        }
+
+        if(isset($body)){
+            $this->scheduledetails_model->addOrUpdate($body);
         }
 
         if(isset($alert)){
