@@ -15,11 +15,11 @@
                 <textarea class="form-control" v-model="message" id="message" rows="12" name="message" placeholder="Message" style="margin-top: 0px; margin-bottom: 0px; height: 100px;"></textarea>
             </div>
             
-            <div class="col-md-offset-4" style="margin-bottom:10px; margin-top:10px;">
+            <div class="capt-holder" style="margin-bottom:10px; margin-top:10px;">
                 <div class="g-recaptcha" :data-sitekey="site_key"></div>
             </div>
 
-            <div class="form-group text-center">
+            <div class="form-group text-right">
                  <button class="btn btn-default" type="submit" :disabled="disableSend">Send</button>
             </div>
             

@@ -38,7 +38,7 @@
 
 
 	/*************START of  TEMPLATE*************/
-	.vans .sec-1 .hero h3 { font-size: 50px!important;}
+	.vans .sec-1 .hero h3, .check.schedule .sec-1 .hero h3, .about-us .sec-1 .hero h3 { font-size: 50px!important;}
 	.vans .sec-2 .right_item .details > ul { margin-top: 20px!important;}
 	/*.vans .sec-2 .right_item .details h4 { font-size: 40px!important;}*/
 	/*.vans .sec-2 .right_item .details p { font-size: 30px!important;}*/
@@ -59,7 +59,7 @@
 	
 
 
-	.prcing_table-popup .item h4 { font-size: 40px!important;}
+	/*.prcing_table-popup .item h4 { font-size: 40px!important;}*/
 	.prcing_table-popup .item > ul li > div.parent div.children h5, .prcing_table-popup .item > ul li > div.parent div.children p { font-size: 25px!important;}
 
 }
@@ -133,6 +133,9 @@
 	.vans .sec-2 .cars .item aside { height: 450px!important;}
 
 	.vans .sec-2 .cars .owl-nav .owl-prev, .vans .sec-2 .cars .owl-nav .owl-next { height: 40px!important; width: 54px!important; background-size: 54px 40px!important;}
+
+	.top-list { right: 15px!important;}
+
 }
 
 
@@ -166,7 +169,7 @@
 
     .top-list li p { color: #000!important;}
     .top-list li:last-child select { color: #000!important; background-image: url(../images/globe-black.png)!important;     border: 1px solid #d5d5d5;     background-position: 2% center!important; padding-left: 40px!important;}
-    .top-list { right: 32px!important; }
+    .top-list { right: 38px!important; }
 
     .nav-log { max-width: 125px; width: 100%; height: 80px;}
     .nav-log a img { height: 100%;}
@@ -203,7 +206,7 @@
 
 
     /*************START of  TEMPLATE*************/
-	.vans .sec-1 .hero { top: 100px!important;}
+	.vans .sec-1 .hero, .check.schedule .sec-1 .hero, .about-us .sec-1 .hero { top: 100px!important;}
 	.vans .sec-2 .cars::after { display: none!important;}
 	.vans .sec-2 .cars { padding-left: 0px!important; padding-top: 0px!important;}
 	.vans .sec-2 .right_item .details { margin-top: 0px!important;}
@@ -327,8 +330,8 @@
 
 
     /*************START of  TEMPLATE*************/
-	.vans .sec-1 .hero h3 { font-size: 40px!important;}
-	.vans .sec-2 { padding: 40px 15px!important}
+	.vans .sec-1 .hero h3, .check.schedule .sec-1 .hero h3, .about-us .sec-1 .hero h3 { font-size: 40px!important;}
+	.vans .sec-2, .check .sec-2 { padding: 40px 15px!important}
 	.vans .sec-2 .cars .owl-nav .owl-prev {     background-size: 40px!important; background-repeat: no-repeat!important;}
 	.vans .sec-2 .cars .owl-nav .owl-next {     background-size: 40px!important; background-repeat: no-repeat!important;}
 	.vans .sec-2 .cars .owl-nav { right: -40px!important;}
@@ -395,7 +398,7 @@
 
 	.check.schedule .sec-2 .table-hldr table tbody tr td:first-child::before { content: '';}
 	.check.schedule .sec-2 .table-hldr table tbody tr td:first-child { text-align: center;  text-transform: uppercase;     background: #429e47!important; color: #fff!important;}
-	.check .sec-2 .table-hldr table tbody tr:nth-child(even) { background: transparent!important;}
+	/*.check .sec-2 .table-hldr table tbody tr:nth-child(even) { background: transparent!important;}*/
 	.check .sec-2 .table-hldr table tbody tr td:last-child::before { content: 'TIME:'}
 }
 
@@ -474,19 +477,20 @@
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul > li:nth-child(3) { position: relative!important; bottom: 0px!important;}
 	.packages-selected .sec-2 .itemhldr > div.btm_sec > ul { padding-bottom: 0px!important;}
 	.packages-selected .sec-1, .cart .sec-1 { height: 135px!important;}
-	.packages-selected .sec-3 .item-hldr h3 { font-size: 30px!important; margin-bottom: 25px!important;} 
+	.packages-selected .sec-3 .item-hldr h3, .packages-selected .sec-2 .itemhldr > h3 { font-size: 30px!important; margin-bottom: 25px!important;} 
 	.packages-selected .sec-1 .hero, .cart .sec-1 .hero { top: 45px!important; width: 100%;}
+
 
 	/*************End of  selected package*************/
 
 
 	/*************START of  TEMPLATE*************/
-	.vans .sec-1 .hero h3 { font-size: 35px!important;}
-	.vans .sec-1 { height: 135px!important;}
+	.vans .sec-1 .hero h3, .check.schedule .sec-1 .hero h3, .about-us .sec-1 .hero h3 { font-size: 35px!important;}
+	.vans .sec-1, .check .sec-1 { height: 135px!important;}
 	.equip-dnone { display: block!important;}
 	.vans .sec-2 .cars .item aside { padding-right: 0px!important;}
 	.vans .sec-2 .cars .owl-nav {right: 0!important; width: 100%; transform: translate(0, 0)!important;}
-	.vans .sec-1 .hero { top: 50px!important}
+	.vans .sec-1 .hero, .check.schedule .sec-1 .hero, .about-us .sec-1 .hero { top: 50px!important}
 	.vans .sec-2 .cars .owl-nav .owl-prev { position: absolute; left: 0;}
 	.vans .sec-2 .cars .owl-nav .owl-next { position: absolute; right: 0; width: 40px!important;}
 	.vans .sec-2 .right_item .btm_link ul li { padding: 10px 15px!important;}
@@ -560,7 +564,7 @@
 
 	.book-trip > div > ul li:first-child, .book-trip > div > ul li:nth-child(2)  { width: 50%!important; text-align: center;}
 
-	.about-us .sec-2 .abt-hldr { max-width: 100%!important; padding: 25px 15px!important;}
+	.about-us .sec-2 .abt-hldr { max-width: 100%!important; padding: 25px 15px!important; overflow: hidden;}
 
 	.check.departure-trip .sec-2 .btn-holder a { display: block; width: 100%;} 
 	.check.departure-trip .sec-2 .btn-holder a button { width: 100%; }
@@ -571,6 +575,9 @@
 
 	.booking-part li.booking-card .body ul li .parent .children { width: 100%!important; padding-left: 0px!important;  padding: 0px!important;}
 	.total-price .parent .children { padding: 0px 15px!important; width: 100%!important; }
+	.capt-holder .g-recaptcha { position: relative!important; right: auto!important;}
+	.capt-holder .g-recaptcha > div { margin: 0 auto;}
+
 }
 
 

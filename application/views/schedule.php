@@ -1,7 +1,7 @@
 <div class="check schedule">
     
     <section class="sec-1">
-        <article class="hero"><h3>About Us</h3></article>
+        <article class="hero"><h3>Trip Schedule</h3></article>
         <div class="overlay">
             
         </div>
@@ -11,7 +11,7 @@
 <section class="sec-2">
     <div class="pckage_wrap">
         <div class="hldr">
-            <h3>Trip Schedule</h3>
+            
 
             <div class="table-hldr">
                 <?php if(count($schedules)): ?>
