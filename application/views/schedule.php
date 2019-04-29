@@ -51,7 +51,7 @@
                 <?php endif; ?>
             </div>
 
-            <p>We provide the most comfortable and relaxing experience for our valued customers with our brand new fully air-conditioned vans (TOYOTA GRANDIA). You can sit back and relax while travelling for we have neck pillow to make your trip more comfortable with matching harmonious and melodious music and complimentary snacks on board courtesy of&nbsp;<em>Baker's Hill Palawan</em> </p> 
+            <p><?=$body?></p> 
         </div>
 
 

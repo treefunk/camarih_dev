@@ -17,11 +17,11 @@
                       <div class="col-md-12">
                           
                           <div class="panel-body">
-                                      
                                           
                                         <schedule-form
                                         :schedules_data='<?=json_encode($schedules)?>'
                                         action_url='<?=base_url('tripschedule/update')?>'
+                                        schedule_text="<?=$body?>"
                                         >
 
                                         </schedule-form>

@@ -53,7 +53,8 @@ class Contact_model extends CMS_Model
 
             foreach($post_data as $key => $val){
                 if(in_array($key,$valid_keys)){
-                    $mail->Body .= "<b>{$key}</b>: {$val}";
+                    $key = ucfirst($key);
+                    $mail->Body .= "<b>{$key}</b>: <br>{$val}";
                     $mail->Body .= "<br>";
                 }
             }
