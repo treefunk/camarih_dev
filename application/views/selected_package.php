@@ -3,8 +3,8 @@
 
         <section class="sec-1">
           <article class="hero">
-              <h3><?=$package->name?></h3>
-              <p>Tour Package</p>
+              
+              <h3>Tour Package</h3>
           </article>
           <div class="overlay"></div>
 
@@ -19,8 +19,9 @@
         > </book-a-trip>
 
         <section class="sec-2">
+          
           <div class="itemhldr">
-            
+            <h3><?=$package->name?></h3>
             <article class="dvider">
               <aside>
               <!-- <?php //base_url('frontend')?>/images/rocks.jpg -->
@@ -57,7 +58,7 @@
         <h3>Tourist Attractions</h3>
         <div class="owl-carousel owl-theme slct-pckge owl-loaded owl-drag">
             <?php foreach($package->package_gallery as $image): ?>
-            <div>
+            <div class="item">
                 <aside>
                     <img src="<?=base_url("uploads/package_gallery/{$package->id}_{$image->image_name}")?>">
                 </aside>

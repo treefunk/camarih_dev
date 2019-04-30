@@ -195,8 +195,9 @@ input, select, textarea, button {
   z-index: 3; }
   .top-list li {
     display: inline-block;
-    padding-right: 15px;
-    width: 49%; }
+    padding-right: 0px;
+    width: 100%;
+    text-align: right; }
     .top-list li p {
       color: #fff;
       font-family: "Circular Std Book", Arial, sans-serif;
@@ -210,7 +211,7 @@ input, select, textarea, button {
         position: relative; }
       .top-list li a i {
         color: #fff;
-        font-size: 20px;
+        font-size: 24px;
         position: relative; }
         .top-list li a i > div.qntity {
           position: absolute;
@@ -227,7 +228,8 @@ input, select, textarea, button {
             font-family: "Circular Std Book", Arial, sans-serif;
             display: block; }
   .top-list li:last-child {
-    padding-right: 0px; }
+    padding-right: 0px;
+    display: none; }
     .top-list li:last-child select {
       width: 100%;
       background-color: transparent;
@@ -744,6 +746,14 @@ input, select, textarea, button {
     width: 100%;
     margin: 0 auto;
     box-sizing: border-box; }
+    .packages-selected .sec-2 .itemhldr > h3 {
+      text-align: center;
+      font-family: "Circular Std Black", Arial, sans-serif;
+      color: #fff;
+      font-size: 40px;
+      color: #222f46;
+      margin-bottom: 40px;
+      margin-top: 20px; }
     .packages-selected .sec-2 .itemhldr > article.dvider > aside {
       width: 50%;
       position: absolute;
@@ -1507,11 +1517,11 @@ footer::after {
   .prcing_table-popup .text_center {
     text-align: center; }
   .prcing_table-popup .item h4 {
-    font-size: 48px;
+    font-size: 35px;
     color: #222f46;
     font-family: "Circular Std Black", Arial, sans-serif;
     text-align: center;
-    margin-bottom: 35px; }
+    margin-bottom: 25px; }
   .prcing_table-popup .item > ul li {
     display: block;
     padding: 15px 15px;
@@ -1532,12 +1542,12 @@ footer::after {
         .prcing_table-popup .item > ul li > div.parent div.children h5 {
           font-family: "Circular Std Book", Arial, sans-serif;
           color: #222f46;
-          font-size: 30px;
+          font-size: 25px;
           font-weight: bold; }
         .prcing_table-popup .item > ul li > div.parent div.children p {
           font-family: "Circular Std Book", Arial, sans-serif;
           color: #222f46;
-          font-size: 30px; }
+          font-size: 25px; }
         .prcing_table-popup .item > ul li > div.parent div.children span {
           display: none;
           font-family: "Circular Std Book", Arial, sans-serif;
@@ -1917,6 +1927,17 @@ footer::after {
 input[type="checkbox"] {
   -webkit-appearance: checkbox; }
 
+.about-us .sec-1 .hero {
+  position: absolute;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, 0);
+  top: 166px;
+  text-align: center; }
+  .about-us .sec-1 .hero h3 {
+    font-family: "Circular Std Black", Arial, sans-serif;
+    font-size: 60px;
+    color: #fff; }
 .about-us .sec-2 .abt-hldr {
   max-width: 65%;
   width: 100%;
@@ -1935,6 +1956,17 @@ input[type="checkbox"] {
     line-height: 28px;
     margin-bottom: 25px; }
 
+.check.schedule .sec-1 .hero {
+  position: absolute;
+  left: 50%;
+  z-index: 2;
+  transform: translate(-50%, 0);
+  top: 166px;
+  text-align: center; }
+  .check.schedule .sec-1 .hero h3 {
+    font-family: "Circular Std Black", Arial, sans-serif;
+    font-size: 60px;
+    color: #fff; }
 .check.schedule .sec-2 .hldr h3 {
   font-family: "Circular Std Black", Arial, sans-serif;
   font-size: 40px;
@@ -1947,6 +1979,11 @@ input[type="checkbox"] {
 .check.schedule .sec-2 .hldr p {
   font-family: "Circular Std Book", Arial, sans-serif;
   font-size: 18px; }
+
+.modal-body iframe {
+  height: auto;
+  min-height: 450px;
+  width: 100%; }
 
 .van-hldr .rowlines {
   position: absolute;
@@ -1990,5 +2027,21 @@ input[type="checkbox"] {
 
 #detailsModal {
   display: none !important; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  opacity: 1; }
+
+.capt-holder {
+  height: 80px; }
+  .capt-holder .g-recaptcha {
+    position: absolute;
+    right: 0; }
+
+/*  */
+/* input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  height:auto;
+} */
 
 /*# sourceMappingURL=main.css.map */

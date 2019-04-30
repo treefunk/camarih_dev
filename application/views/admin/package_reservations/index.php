@@ -11,7 +11,7 @@
                   <div class="row">
                       <form action="<?=base_url('package-reservations')?>" method="GET">
                       <!-- FILTERS ! -->
-                      <div class="col-md-offset-2">
+                      <div class="col-md-offset">
                         <div class="col-md-3">
                               <label for="filter_package">Search</label>
                               <input type="text" name="search" value="<?=isset($get['search']) ? $get['search'] : ''?>"  class="form-control">
@@ -37,25 +37,24 @@
                             </div>
 
                       </div>
-                        <div class="col-md-offset-10">
-                            <div class="col-md-2">
-                                <div class="form-group">
+                        <div class="col-md-offset">
+                            <div class="col-md-3" style="padding-top: 23px;">
+                                
                                     <div class="form-group">
                                         <a href="<?=base_url('package-reservations')?>">
                                             <button class="btn btn-info" type="button"
                                                 name="clearfilters">Clear</button>
                                         </a>
+                                        <button class="btn btn-default" type="submit">Filter</button>
                                     </div>
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-default" type="submit">Filter</button>
-                                </div>
+                                
                             </div>
                         </div>
                     </div>
                     </form>
 
-                  <table class="table table-hover">
+                  <div class="table-responsive">
+                    <table class="table table-hover">
                     <thead>
                     <tr>
                         <th>Full Name</th>
@@ -93,6 +92,8 @@
                         <?php endforeach; ?>
                     </tbody>
                   </table>
+                    
+                  </div>
                   <div class="text-center">
                       <div class="pagination">
                           <?=$links ?>
