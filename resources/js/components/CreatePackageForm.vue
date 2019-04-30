@@ -40,7 +40,14 @@
 				
 				<label for="">*Minimum Number of Persons</label>
 				<div>
-					<input name="minimum_count" v-model="package_.package_details.minimum_count" min="1" type="number" class="form-control"> 
+					
+					<div class="inc-item">
+						<input name="minimum_count" v-model="package_.package_details.minimum_count" min="1" type="text" class="form-control"> 
+						<div class="btns-hldr">
+							<button type="button" @click="package_.package_details.minimum_count++"><i class="fa fa-chevron-up"></i></button>
+							<button type="button" @click="package_.package_details.minimum_count--"><i class="fa fa-chevron-down"></i></button>
+						</div>
+					</div>
 				</div>
 			</div>
 

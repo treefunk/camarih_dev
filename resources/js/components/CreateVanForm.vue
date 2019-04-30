@@ -11,7 +11,14 @@
 
                 <div :class="['form-group',{'has-error': !formNotSubmitted && van.num_of_vans == ''}]">
                     <label for="num_of_vans">Number of Vans*</label>
-                    <input type="number" name="num_of_vans" id="" class="form-control" v-model="van.num_of_vans">
+                   
+                    <div class="inc-item">
+                         <input type="text" name="num_of_vans" id="" class="form-control" v-model="van.num_of_vans" min="1">
+                        <div class="btns-hldr">
+                            <button type="button" @click="van.num_of_vans++"><i class="fa fa-chevron-up"></i></button>
+                            <button type="button" @click="van.num_of_vans--"><i class="fa fa-chevron-down"></i></button>
+                        </div>
+                    </div>
                 </div>
 
                 <div :class="['form-group',{'has-error': !formNotSubmitted && van.description == ''}]">
@@ -58,7 +65,7 @@
                     return {
                         name: "",
                         description: "",
-                        num_of_vans: "",
+                        num_of_vans: 1,
                         van_details: {
                             oneway_rate: "",
                             roundtrip_rate: ""
@@ -118,6 +125,13 @@
             },
             updateImageCounter(ctr){
                 this.gallery_count = ctr
+            }
+        },
+        watch: {
+            'van.num_of_vans': function(newV,oldV){
+                if(newV == 0){
+                    this.van.num_of_vans = 1;
+                }
             }
         }
         

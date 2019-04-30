@@ -44,7 +44,14 @@
 
                 <li>
                     <h5>Adults</h5>
-                    <input type="number" v-model="adultCount" name="adult_count">
+                    
+                    <div class="inc-item">
+						<input type="text" v-model="adultCount" name="adult_count">
+						<div class="btns-hldr">
+							<button type="button" @click="adultCount++"><i class="fa fa-chevron-up"></i></button>
+							<button type="button" @click="adultCount--"><i class="fa fa-chevron-down"></i></button>
+						</div>
+					</div>
                     <span>{{ ratePrice }}</span>
                 </li>
             </ul>
@@ -295,11 +302,11 @@
                 deep: true
             },
             adultCount(newV,oldV){
-                if(parseInt(newV,10) < 0){
-                    this.adultCount = 0
+                if(parseInt(newV,10) < 1){
+                    this.adultCount = 1
                 }
                 if(isNaN(newV)){
-                    this.adultCount = 0
+                    this.adultCount = 1
                 }
             }
         }

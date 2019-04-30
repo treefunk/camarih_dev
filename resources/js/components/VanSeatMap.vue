@@ -6,7 +6,14 @@
             <label>Row {{ index + 1 }}</label>
             <div class="form-group">
                 <button type="button" class="btn btn-danger right_btn" @click="removeRow(index)"><i class="fa fa-times"></i></button>
-                <input type="number" v-model="seats[index]" :name="`seats[]`" id="header"  :placeholder="`Enter Number of seats for row ${index + 1}`" class="form-control" min="1" max="5">             
+                
+                <div class="inc-item">
+                    <input type="text" v-model="seats[index]" :name="`seats[]`" id="header"  :placeholder="`Enter Number of seats for row ${index + 1}`" class="form-control" min="1" max="5">             
+                    <div class="btns-hldr">
+                        <button type="button" @click="incUp(index)"><i class="fa fa-chevron-up"></i></button>
+                        <button type="button" @click="incDown(index)"><i class="fa fa-chevron-down"></i></button>
+                    </div>
+                </div>
             </div>
 
         </div>
@@ -28,6 +35,16 @@
             }
         },
         methods: {
+            incUp(index){
+                this.$nextTick(() => {
+                    this.$set(this.seats,index,(++this.seats[index]).toString())
+                })
+            },
+            incDown(index){
+                this.$nextTick(() => {
+                    this.$set(this.seats,index,(--this.seats[index]).toString())
+                })
+            },
             addRow(){
                 let seatCount = "3";
                 if(this.seats.length == 0){ seatCount = "2"}

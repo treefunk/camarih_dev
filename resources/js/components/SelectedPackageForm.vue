@@ -13,7 +13,14 @@
             </li>
             <li>
                 <h5>Adults</h5>
-                <input type="number" v-model="adult_count" :min="package_data.package_details.minimum_count">
+                
+                <div class="inc-item">
+                    <input type="text" v-model="adult_count" :min="package_data.package_details.minimum_count">
+                    <div class="btns-hldr">
+                    <button @click="adult_count++"><i class="fa fa-chevron-up"></i></button>
+                    <button @click="adult_count--"><i class="fa fa-chevron-down"></i></button>
+                    </div>
+                </div>
                 <span>Php {{ ( package_.rate * adult_count || 0 ) | formatNum }}</span>
             </li>
             <li>
