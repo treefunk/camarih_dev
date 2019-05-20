@@ -374,10 +374,10 @@
                             <li style="margin-bottom: 10px;">
                                 <div  class="parent" style="display: -webkit-box; display: -moz-box; display: -ms-flexbox; display: -webkit-flex; display: flex; -webkit-flex-flow: row wrap; justify-content: flex-start; flex-wrap: wrap;">
                                     <div  class="children" style="width: 35%; padding: 0px 20px;">
-                                        <p >Rate</p>
+                                        <p style="font-family: Arial, sans-serif; font-size: 18px; word-break: break-word; margin: 0px;">Rate</p>
                                     </div>
                                     <div  class="children" style="width: 65%; padding-left: 40px;">
-                                        <p ><?=$item['rate']?></p>
+                                        <p style="font-family: Arial, sans-serif; font-size: 18px; word-break: break-word; margin: 0px;" ><?=$item['rate']?></p>
                                     </div>
                                 </div>
                             </li>
