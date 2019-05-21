@@ -934,13 +934,17 @@ class Availability extends MY_Controller {
     }
 
     public function seatsLengthClass($length){
-        if($length <= 16){
+
+        if($length <= 18){
+            return "18-seater";
+        }elseif( $length <= 16){
             return "16-seater";
         }elseif( $length <= 14){
             return "14-seater";
-        }elseif( $length <= 12){
+        }elseif($length <= 12){
             return "12-seater";
         }
+        
     }
 
     public function generateCart(){
