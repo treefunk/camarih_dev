@@ -284,6 +284,7 @@ class Availability extends MY_Controller {
 
         $data = $this->getSeatplanDetails($args);
 
+
     
 
         $this->wrapper([
@@ -830,7 +831,9 @@ class Availability extends MY_Controller {
 
     public function getSeatPlan($rate,$post_data,$booking_num = null){
         //GET VAN LAYOUT
-        $data['seat_map'] = $this->rate_model->getVanlayoutByRateId($rate->id);                
+        $data['seat_map'] = $this->rate_model->getVanlayoutByRateId($rate->id); 
+        
+        $data['seats_length_class'] = $this->seatsLengthClass($this->seatsLength($data['seat_map']));
 
         //GET OCCUPIED SEATS
         $data['occupied_seat_map'] = $this->seatplan_model->getOccupiedSeatsByRate($rate,$post_data['departure_from']);
@@ -917,13 +920,27 @@ class Availability extends MY_Controller {
         ];
 
     }
-    public function viewConflictsSess(){
-        d($_SESSION['conflicts']);
+
+    public function seatsLength($seat_map){
+        $total = 0 ;
+        foreach($seat_map as $seatnum){
+            if(is_string($seatnum)){
+                $seatnum = (int)$seatnum;
+            }
+            $total += $seatnum;
+
+        }
+        return $total;
     }
 
-    public function viewCartSess(){
-        var_dump($this->session->userdata('cart'));
-        die();
+    public function seatsLengthClass($length){
+        if($length <= 16){
+            return "16-seater";
+        }elseif( $length <= 14){
+            return "14-seater";
+        }elseif( $length <= 12){
+            return "12-seater";
+        }
     }
 
     public function generateCart(){

@@ -31,7 +31,6 @@
             <book-summary
             :book_data='<?=json_encode($selected)?>'
             >
-    
             </book-summary>
             <li>
                 <div class="van-hldr">
@@ -40,6 +39,7 @@
                     :seats_data='<?=json_encode($seat_layout)?>'
                     :seat_map='<?=json_encode($seat_map)?>'
                     :sels_data='<?=json_encode([])?>'
+                    seats_length_class='<?=$seats_length_class?>'
                     :booking_information_data='<?=json_encode($booking_information)?>'
                     key="<?=$offset?>"
                     ></seat-plan-selection>

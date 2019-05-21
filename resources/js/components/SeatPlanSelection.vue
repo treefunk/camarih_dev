@@ -1,6 +1,6 @@
 <template>
     <div>
-            <div class="outline">
+            <div :class="['outline',seats_length_class]">
                 
                 <div v-for="(row,index) in seats" :key="index" class="rowlines">
                     
@@ -135,7 +135,8 @@
             current_seats_data:{
                 type: Array,
                 default: () => []
-            }
+            },
+            seats_length_class: String
         },
         data(){
             return {
