@@ -57,7 +57,7 @@ body, html, h1, h2, h3, h4, h5, h6, p, header, footer, div, article, section, as
 body, html {
   height: 100%; }
 
-input, select, textarea, button {
+input[type="text"], input[type="password"], input[type="email"], select, textarea, button {
   outline: 0;
   border: 0;
   appearance: none;
@@ -134,6 +134,12 @@ input, select, textarea, button {
   -webkit-flex-flow: row wrap;
   justify-content: flex-start;
   flex-wrap: wrap; }
+
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  margin: 0;
+  opacity: 1;
+  display: block; }
 
 /* Colors & Fonts */
 /* Colors */
@@ -551,12 +557,12 @@ input, select, textarea, button {
           text-align: left; }
           .home .sec-3 .testi-carou .text-hldr > .img-hldr > article > h4 {
             font-family: "Circular Std Black", Arial, sans-serif;
-            font-size: 32px;
+            font-size: 28px;
             color: #fff;
             margin-bottom: 10px; }
           .home .sec-3 .testi-carou .text-hldr > .img-hldr > article > h5 {
             font-family: "Circular Std Book", Arial, sans-serif;
-            font-size: 30px;
+            font-size: 26px;
             color: #fff; }
     .home .sec-3 .testi-carou .owl-nav {
       display: none; }
@@ -626,12 +632,15 @@ input, select, textarea, button {
             width: 100%;
             border: 1px solid #ccc;
             height: 38px;
-            padding-left: 15px; }
+            padding-left: 15px;
+            margin-bottom: 15px; }
           .book-trip > ul > li:nth-child(2) > div > ul > li h5 {
             color: #222f46;
             font-family: "Circular Std Book", Arial, sans-serif;
             font-weight: bold;
             text-transform: uppercase; }
+        .book-trip > ul > li:nth-child(2) > div > ul > li:last-child input[type="date"], .book-trip > ul > li:nth-child(2) > div > ul > li:last-child select {
+          margin-bottom: 0px; }
         .book-trip > ul > li:nth-child(2) > div > ul > li:nth-child(odd) {
           padding-right: 15px; }
         .book-trip > ul > li:nth-child(2) > div > ul > li:nth-child(even) {
@@ -769,6 +778,11 @@ input, select, textarea, button {
       background: #fff; }
       .packages-selected .sec-2 .itemhldr > article.dvider > article > div {
         padding: 35px 30px; }
+        .packages-selected .sec-2 .itemhldr > article.dvider > article > div h1 {
+          position: relative;
+          z-index: 2;
+          font-size: 40px;
+          font-family: "Circular Std Book", Arial, sans-serif; }
         .packages-selected .sec-2 .itemhldr > article.dvider > article > div > p {
           font-family: "Circular Std Book", Arial, sans-serif;
           color: #222f46;
@@ -1031,6 +1045,7 @@ input, select, textarea, button {
     .vans .sec-2 .cars .owl-dots {
       display: none; }
     .vans .sec-2 .cars .owl-nav {
+      /*  display: block;  */
       position: absolute;
       right: 65px;
       top: 35%;
@@ -1611,6 +1626,8 @@ footer::after {
       width: 1px;
       left: 50%;
       transform: translate(-50%, 0); }
+  .check .sec-2 .item + .text-center h4 {
+    margin-bottom: 30px; }
   .check .sec-2 .table-hldr {
     max-width: 80%;
     width: 100%;
@@ -1636,6 +1653,8 @@ footer::after {
         color: #000; }
       .check .sec-2 .table-hldr table tbody tr td:last-child {
         border-right: 0px; }
+      .check .sec-2 .table-hldr table tbody tr .title-moble {
+        display: none; }
       .check .sec-2 .table-hldr table tbody tr:nth-child(even) {
         background: #eaeaea; }
 .check .pckage_wrap {
@@ -1671,7 +1690,7 @@ footer::after {
   padding: 40px 50px;
   min-height: 700px; }
   .book .sec-2 .parent.mainlist {
-    min-height: 540px; }
+    min-height: 555px; }
   .book .sec-2 .parent {
     display: -webkit-box;
     display: -moz-box;
@@ -1685,8 +1704,7 @@ footer::after {
       width: 250px; }
       .book .sec-2 .parent > li:first-child .item {
         background: #429e47;
-        padding: 25px 15px;
-        height: 100%; }
+        padding: 25px 15px; }
         .book .sec-2 .parent > li:first-child .item label {
           color: #fff;
           font-family: "Circular Std Book", Arial, sans-serif;
@@ -1985,19 +2003,92 @@ input[type="checkbox"] {
   min-height: 450px;
   width: 100%; }
 
-.van-hldr .rowlines {
+.btn-holder.clearfix.single-button a {
+  float: none; }
+
+.tail {
   position: absolute;
-  width: 100%;
-  padding: 0px 45px 0px 40px;
-  left: 0; }
-.van-hldr .rowlines:first-of-type {
-  top: 165px; }
-.van-hldr .rowlines:nth-of-type(2) {
-  top: 265px; }
-.van-hldr .rowlines:nth-of-type(3) {
-  top: 360px; }
-.van-hldr .rowlines:nth-of-type(4) {
-  top: 459px; }
+  left: 4px;
+  bottom: 0; }
+
+.van-hldr {
+  /* .rowlines:first-of-type { }
+  .rowlines:nth-of-type(2) { }
+  .rowlines:nth-of-type(3) { }
+  .rowlines:nth-of-type(4) { } */ }
+  .van-hldr .rowlines {
+    position: relative;
+    width: 100%;
+    left: 0; }
+  .van-hldr .parent.ch3 .children {
+    width: 33%; }
+  .van-hldr .parent.ch4 .children {
+    width: 25%; }
+
+.van-hldr .outline.seater-18 {
+  height: 555px; }
+  .van-hldr .outline.seater-18 .rowlines {
+    position: relative;
+    width: 100%;
+    left: 0; }
+  .van-hldr .outline.seater-18 .rowlines:first-of-type {
+    margin-top: 60px; }
+  .van-hldr .outline.seater-18 .rowlines:nth-of-type(2) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-18 .rowlines:nth-of-type(3) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-18 .rowlines:nth-of-type(4) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-18 .rowlines:nth-of-type(5) {
+    margin-top: 30px; }
+.van-hldr .outline.seater-16 {
+  height: 555px; }
+  .van-hldr .outline.seater-16 .rowlines {
+    position: relative;
+    width: 100%;
+    left: 0; }
+  .van-hldr .outline.seater-16 .rowlines:first-of-type {
+    margin-top: 60px; }
+  .van-hldr .outline.seater-16 .rowlines:nth-of-type(2) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-16 .rowlines:nth-of-type(3) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-16 .rowlines:nth-of-type(4) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-16 .rowlines:nth-of-type(5) {
+    margin-top: 30px; }
+.van-hldr .outline.seater-14 {
+  height: 555px; }
+  .van-hldr .outline.seater-14 .rowlines {
+    position: relative;
+    width: 100%;
+    left: 0; }
+    .van-hldr .outline.seater-14 .rowlines .parent.ch4 .children {
+      width: 33.3%; }
+  .van-hldr .outline.seater-14 .rowlines:first-of-type {
+    margin-top: 60px; }
+  .van-hldr .outline.seater-14 .rowlines:nth-of-type(2) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-14 .rowlines:nth-of-type(3) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-14 .rowlines:nth-of-type(4) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-14 .rowlines:nth-of-type(5) {
+    margin-top: 30px; }
+.van-hldr .outline.seater-12 {
+  height: 480px; }
+  .van-hldr .outline.seater-12 .rowlines {
+    position: relative;
+    width: 100%;
+    left: 0; }
+  .van-hldr .outline.seater-12 .rowlines:first-of-type {
+    margin-top: 60px; }
+  .van-hldr .outline.seater-12 .rowlines:nth-of-type(2) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-12 .rowlines:nth-of-type(3) {
+    margin-top: 30px; }
+  .van-hldr .outline.seater-12 .rowlines:nth-of-type(4) {
+    margin-top: 30px; }
 .van-hldr .parent.ch3 .children {
   width: 33%; }
 .van-hldr .parent.ch4 .children {
@@ -2028,9 +2119,31 @@ input[type="checkbox"] {
 #detailsModal {
   display: none !important; }
 
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-  opacity: 1; }
+/* input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button {  
+
+   opacity: 1;
+
+}
+ */
+.inc-item {
+  position: relative;
+  width: 100%;
+  max-width: 250px;
+  width: 100%; }
+  .inc-item input[type="text"] {
+    height: 44px;
+    border: 1px solid #d5d5d5;
+    padding-left: 15px;
+    width: 100%;
+    padding-right: 30px; }
+  .inc-item .btns-hldr {
+    position: absolute;
+    right: 0;
+    top: 0; }
+    .inc-item .btns-hldr button {
+      display: block;
+      height: 22px; }
 
 .capt-holder {
   height: 80px; }
@@ -2039,9 +2152,5 @@ input[type=number]::-webkit-outer-spin-button {
     right: 0; }
 
 /*  */
-/* input[type="number"]::-webkit-outer-spin-button,
-input[type="number"]::-webkit-inner-spin-button {
-  height:auto;
-} */
 
 /*# sourceMappingURL=main.css.map */

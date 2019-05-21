@@ -15,7 +15,7 @@
 
             <div class="table-hldr">
                 <?php if(count($schedules)): ?>
-                <table class="table" >
+                <table class="table schedule-table" >
                     <thead>
                         <tr>
                             <th></th>
@@ -33,12 +33,14 @@
                                 </div>
                             </td>
                             <td>
-                                <div class="text-center">
+                                <span class="title-moble">Puerto Princesa - El Nido</span>
+                                <div class="text-right">
                                     <?=$sched->departure_time_pps?>
                                 </div>
                             </td>
                             <td>
-                                <div class="text-center">
+                                <span class="title-moble">El Nido- Puerto Princesa</span>
+                                <div class="text-right">
                                     <?=$sched->departure_time_eln?>
                                 </div>
                             </td>

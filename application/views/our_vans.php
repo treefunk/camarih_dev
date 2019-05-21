@@ -19,7 +19,7 @@
     <section class="sec-2">
         <article class="itm-hldr">
             <aside class="equip-dnone">
-                <img src="images/horizontal-equip.png">
+                <img src="<?=base_url('frontend/images/horizontal-equip.png')?>">
             </aside>
             
 

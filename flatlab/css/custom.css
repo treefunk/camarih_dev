@@ -180,3 +180,9 @@ src: local('Circular Std Black Italic'),
 .panel-pad .panel-heading { padding-left: 0px; }
 
 .input-group.input-large { z-index: 0; }
+
+
+.inc-item { position: relative; max-width: 100%; width: 100%; }
+.inc-item input[type="text"] {  height: 44px; border: 1px solid #d5d5d5; padding-left: 15px; width: 100%; padding-right: 30px; }
+.inc-item .btns-hldr { position: absolute; right: 0; top: 0; }
+.inc-item .btns-hldr button { display: block; height: 22px;}

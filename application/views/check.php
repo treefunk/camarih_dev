@@ -1,4 +1,4 @@
-<div class="check departure-trip">
+<div class="check departure-trip van--">
 
 <section class="sec-1">
       <div class="overlay"></div>
@@ -61,9 +61,11 @@
     </div>
     <?php
     $book = true;
+    $notrips = false;
     if(count($available_trips) == 1){
         if(!count($available_trips[0])){
             $book = false;
+            $notrips = true;
             $errormessage = "No Available trips found";
             require_once "partials/no_trips_found.php";
         }
@@ -171,7 +173,7 @@
     <?php endif; ?>
     <?php endif; ?>
 
-    <div class="btn-holder clearfix">
+    <div class="btn-holder clearfix <?=($notrips ? 'single-button' : '')?>">
         <a href="<?=base_url()?>" class="left">
                 <button class="btn-gray" type="button">Book Another Trip</button>
         </a>

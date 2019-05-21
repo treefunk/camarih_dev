@@ -935,15 +935,29 @@ class Availability extends MY_Controller {
 
     public function seatsLengthClass($length){
 
-        if($length <= 18){
-            return "18-seater";
-        }elseif( $length <= 16){
-            return "16-seater";
-        }elseif( $length <= 14){
-            return "14-seater";
-        }elseif($length <= 12){
-            return "12-seater";
+        switch($length){
+            case 18:
+            case 17:
+                return "seater-18";
+            case 16:
+            case 15:
+                return "seater-16";
+            case 14:
+            case 13:
+                return "seater-14";
+            default:
+                return "seater-12";
         }
+
+        // if($length <= 18){
+        //     return "18-seater";
+        // }elseif( $length <= 16){
+        //     return "16-seater";
+        // }elseif( $length <= 14){
+        //     return "14-seater";
+        // }elseif($length <= 12){
+        //     return "12-seater";
+        // }
         
     }
 

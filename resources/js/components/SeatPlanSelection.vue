@@ -1,11 +1,16 @@
 <template>
     <div>
-            <div :class="['outline',seats_length_class]">
+        <div :class="['outline',seats_length_class]">
                 
                 <div v-for="(row,index) in seats" :key="index" class="rowlines">
                     
                     <!-- driver -->
-                    <div :class="['parent',{'ch3': (row.length  + (index == 0 ? 1 : 0)) == 3, 'ch4': row.length == 4}]">
+
+                    <div :class="['parent',
+                     {'ch3': (index == 0 ? 1 : 0),
+                     'ch4': (index != 0 )}
+
+                    ]">
                         <div class="children" v-if="index == 0">
                             <div class="col-fixed-md" >
                                 <input class="occupied" disabled id="driverseat" name="seat" type="checkbox"> 
@@ -32,6 +37,8 @@
                         </div>
                     </div>                  
                 </div>
+
+                <div class="tail"><img src="../../images/tail.jpg"></div>
                 
             </div>
 

@@ -100,5 +100,5 @@
 </script>
 
 <style scoped>
-
+    .inc-item .btns-hldr { top: 49px;}
 </style>
