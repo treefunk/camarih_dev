@@ -115,6 +115,8 @@ class Migrate extends CI_Controller
 
       $this->db->insert('packages',[
         'name' => '3D2N El Nido',
+        'destination_id' => 4,
+        'is_day_tour' => 1,
         'rate' => 2790,
         'status' => 'active',
         'is_featured' => 1
@@ -127,7 +129,9 @@ class Migrate extends CI_Controller
       ]);
 
       $this->db->insert('packages',[
-        'name' => '6A5B Palawan',
+        'name' => '6A5B Puerto Princesa',
+        'destination_id' => 1,
+        'is_day_tour' => 1,
         'rate' => 1500,
         'status' => 'active'
       ]);
@@ -138,6 +142,35 @@ class Migrate extends CI_Controller
         'minimum_count' => 2
       ]);
 
+
+      $this->db->insert('packages_durations',[
+        'name' => '3D2N'
+      ]);
+
+      $this->db->insert('packages_durations',[
+        'name' => '4D3N'
+      ]);
+
+      $this->db->insert('packages_durations',[
+        'name' => '5D4N'
+      ]);
+
+      $this->db->insert('packages_tour_labels',[
+        'name' => '3D2N PPS Package Tour',
+        'duration_id' => 1
+      ]);
+
+      $this->db->insert('packages_tour_labels',[
+        'name' => '3D2N PPS City',
+        'duration_id' => 1,
+        'is_sub_directory' => 1
+      ]);
+
+      $this->db->insert('packages_tour_labels',[
+        'name' => '3D2N PPS City Tour+Honda Bay',
+        'duration_id' => 1,
+        'is_sub_directory' => 1
+      ]);
 
     $this->db->trans_complete();
 
