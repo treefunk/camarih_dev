@@ -5,6 +5,7 @@
 			<li :class="{'selected': tab == 1}"  @click="tab = 1"><a>Overview</a></li>
 			<li :class="{'selected': tab == 2}" @click="tab = 2"><a>Gallery</a></li>
 			<li :class="{'selected': tab == 3}" @click="tab = 3"><a>File Preview</a></li>
+			<li :class="{'selected': tab == 4}" @click="tab = 4"><a>File Preview</a></li>
 		</ul>
 
 
@@ -30,26 +31,66 @@
 	            <input v-model="package_.name" type="text" class="form-control" id="name" placeholder="Enter name" name="name" />
 	        </div>
 
+	        <div class="form-group">
+	            <label for="name">*Destination ID</label>
+	            <select class="form-control" v-model="package_.destination_id" name="destination_id">
+                    <option value="">Select Destination</option>
+                    <option v-for="destination in destinations" :key="destination.id" :value="destination.id">{{ destination.name }}</option>
+                </select>
+	        </div>
+
+
+	        <div class="form-group">
+                <label for="select_type">*Select Tour Type</label>
+                <div class="radio">
+                        <label>
+                            <input type="radio" v-model="package_.is_day_tour" name="is_day_tour" value="1">
+                            Day Tour
+                        </label>
+                        <label>
+                            <input type="radio" v-model="package_.is_day_tour" name="is_day_tour" value="0">
+                            Package Tour
+                        </label>
+                </div>
+            </div>
+
 
 	        <div class="form-group">
 	            <label for="rate">*Rate</label>
 	            <input v-model="package_.rate" type="text" class="form-control" id="rate" placeholder="Enter rate" name="rate" />
 	        </div>
 
-			<div class="form-group">
+			<div class="form-group" v-if="package_.is_day_tour == 0">
 				
 				<label for="">*Minimum Number of Persons</label>
 				<div>
 					
 					<div class="inc-item">
-						<input name="minimum_count" v-model="package_.package_details.minimum_count" min="1" type="text" class="form-control"> 
+						<input name="minimum_count" v-model="package_.minimum_count" min="1" type="text" class="form-control"> 
 						<div class="btns-hldr">
-							<button type="button" @click="package_.package_details.minimum_count++"><i class="fa fa-chevron-up"></i></button>
-							<button type="button" @click="package_.package_details.minimum_count--"><i class="fa fa-chevron-down"></i></button>
+							<button type="button" @click="package_.minimum_count++"><i class="fa fa-chevron-up"></i></button>
+							<button type="button" @click="package_.minimum_count--"><i class="fa fa-chevron-down"></i></button>
 						</div>
 					</div>
 				</div>
 			</div>
+
+			<div class="form-group" v-if="package_.is_day_tour == 0">
+	            <label for="name">Tour Package</label>
+	            <select class="form-control" name="" v-model="package_.package_root_name">
+                    <option value="">Select Package</option>
+                    <option v-for="package_tour in rootpackages" :value="package_tour" >{{ package_tour.name }}</option>
+                </select>
+                <input type="hidden" name="package_tour_id" v-model="package_.package_root_id">
+	        </div>
+
+	         <div class="form-group" v-if="subpackages != 0">
+	            <label for="name">Tour Package Sub</label>
+	            <select class="form-control" name="sub_packages" v-model="package_.package_tour_id">
+	            	<option value="">Select Sub Package</option>
+                    <option v-for="package_tour in subpackages" :value="package_tour.id">{{ package_tour.name }}</option>
+                </select>
+	        </div>
 
 	        <div class="form-group">
 
@@ -100,14 +141,14 @@
 	            <div class="btn-hldr">
 					<input type="hidden" name="description" :value="package_data.package_details.description">
 	            	<button type="button" class="finish btn_green left_btn" @click="tab = 1">Previous</button>
-					<button class="btn_orange right_btn" type="button" @click="tab = 3">Next</button>
+					<button class="btn_orange right_btn" type="button" @click="tab = 4">Next</button>
 	            </div>
 
 	            
 		</div>
 
-		<!-- third tab -->
-		<div v-show="tab == 3" :class="[{'active': tab == 3},'gal-tab']">
+		<!-- 4th tab -->
+		<div v-show="tab == 4" :class="[{'active': tab == 4},'gal-tab']">
 					<label for="">Document for Preview</label>
 					<div style="font-size:80%">
 						Preferred file formats: doc,docx
@@ -142,6 +183,7 @@
 
 	export default {
 		mounted(){
+
 			let self = this
 			this.editor = CKEDITOR.replace(this.$refs['editor'])
 			this.editor.on( 'change', function( evt ) {
@@ -151,6 +193,15 @@
 				this.main_preview = `${this.main_image_url}/${this.package_data.package_image.id}_${this.package_data.package_image.image_name}`
 			}
 			this.package_.is_featured = this.package_.is_featured == "1"
+
+			if (this.package_.package_root_name) {
+				console.log('root = '+this.package_.package_root_name.is_sub_directory_format);
+				for (var i = 0; i <= this.rootpackages.length - 1; i++) {
+					if (this.package_.package_root_name.is_sub_directory_format == this.rootpackages[i].name) {
+						this.package_.package_root_name = this.rootpackages[i];
+					}
+				}
+			}
 		},
 		props: {
 			form_url: String,
@@ -178,11 +229,15 @@
 				default: () => {
 					return {
 						name:'',
+						destination_id:'',
+						is_day_tour:true,
 						rate:'',
 						package_details:{
 							description:'',
-							minimum_count:1,
-						}
+						},
+						minimum_count:1,
+						package_tour_id:'',
+						package_root_id:'',
 					}
 				}
 			},
@@ -191,6 +246,10 @@
 				default: 'Create'
 			},
 			'destinations_data': {
+				type: Array,
+				default: []
+			},
+			'root_packages_tour_labels': {
 				type: Array,
 				default: []
 			}
@@ -205,13 +264,17 @@
 				file_list: [],
 				enable_preview: true,
 				destinations: this.destinations_data,
+				rootpackages: this.root_packages_tour_labels,
+				subpackages: [],
 				editor: "",
-				description: ""
+				description: "",
+				selectedrootpackages : "",				
+				selectedrootpackages_val : "",				
+
 			}
 		},
 		methods: {
 			addImage(e){
-				
 				this.packagegallery.push({
 					image_title: "",
 					preview_image: ""
@@ -326,7 +389,22 @@
 					this.$store.dispatch("showToastr",{ type:"error", message: "Minimum count is 1"})
 					this.package_.package_details.minimum_count = 1
 				}
+			},
+			"package_.package_root_name" : function(newV,oldV){
+				console.log(newV.sub_directories);
+				this.subpackages = newV.sub_directories;
+				hasOwnProperty
+
+				this.package_.package_root_id = newV.id;
+
 			}
+			// {
+			// 	2:true,
+			// 	6:true
+			// }
+
+
+
 		}
 
 	}

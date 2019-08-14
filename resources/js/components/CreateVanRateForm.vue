@@ -2,7 +2,7 @@
     <div class="panel-body">
         <form :action="form_url" method="POST" @submit.prevent="validateForms">
             <transition-group tag="div" name="fade">
-            <div class="row" v-for="(van_rate,index) in van_rates" :key="index" >
+            <div class="row" v-for="(van_rate,index) in van_rates" :key="van_rate.id">
             <input :value="van_rates[index].id || 0" type="hidden" :name="`van_rates[${index}][id]`">
                 <!-- <div class="col-md-1"> -->
                         <button type="button" style="margin-right: 15px" class="btn btn-danger right_btn" @click="removeRow(index)"><i class="fa fa-times" ></i></button>

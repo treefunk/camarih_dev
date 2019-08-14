@@ -6,6 +6,8 @@
                 <create-package-form
                 finish_button="Create"
                 :destinations_data='<?=json_encode($destinations)?>'
+                :packages_tour_labels='<?=json_encode($packages_tour_labels)?>'
+                :root_packages_tour_labels='<?=json_encode($root_packages_tour_labels)?>'
                 form_url='<?=base_url('tourpackages/store')?>'
                 ></create-package-form>
         </div>

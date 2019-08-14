@@ -12,6 +12,8 @@
                 gallery_url="<?=base_url()?>uploads/package_gallery/"
                 finish_button="Update"
                 :destinations_data='<?=json_encode($destinations)?>'
+                :packages_tour_labels='<?=json_encode($packages_tour_labels)?>'
+                :root_packages_tour_labels='<?=json_encode($root_packages_tour_labels)?>'
                 form_url='<?=base_url("tourpackages/update/{$package->id}")?>'
                 downloads_url='<?=base_url($this->packagedownload_model->upload_path)?>'
                 main_image_url='<?=base_url($this->packageimage_model->upload_path)?>'

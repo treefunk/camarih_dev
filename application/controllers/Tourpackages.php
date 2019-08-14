@@ -55,10 +55,23 @@ class Tourpackages extends Admin_Controller {
 	public function create()
 	{
 		$data['destinations'] = $this->destination_model->all();
+		$data['packages_tour_labels'] = $this->package_model->getPackageLabels();
+		$data['root_packages_tour_labels'] = $this->package_model->getPackageLabels('', 'root');
 
 		$this->wrapper([
 			'data' => $data,
 			'view' => 'admin/packages/create'
+		]);
+	}
+
+	public function organize()
+	{
+		$data['labels'] = $this->package_model->getPackageLabels();
+		$data['package_root'] = $this->package_model->getPackageLabels('', 'root');
+		$data['durations'] = $this->package_model->getDurations();
+		$this->wrapper([
+			'data' => $data,
+			'view' => 'admin/packages/organize'
 		]);
 	}
 
@@ -69,7 +82,18 @@ class Tourpackages extends Admin_Controller {
 		
 		$post = $this->input->post();
 
+		/*PACKAGE TOUR*/
+		$post['package_tour_id'] = 0;
+		$post['minimum_count'] = 0;
+		if ($post['is_day_tour'] == 0) {
+			if (isset($post['sub_packages'])) {
+				$post['package_tour_id'] = $post['sub_packages'];
+				unset($post['sub_packages']);
+			}
+		}
+		/*PACKAGE TOUR*/
 		
+
 		$this->packageIsFeatured($post['is_featured']);
 
 
@@ -78,8 +102,12 @@ class Tourpackages extends Admin_Controller {
 
 		if($package_id = $this->package_model->add([
 			'name' => $post['name'],
+			'destination_id' => $post['destination_id'],
 			'rate' => $post['rate'],
-			'is_featured' => $post['is_featured']
+			'is_featured' => $post['is_featured'],
+			'is_day_tour' => $post['is_day_tour'],
+			'package_tour_id' => $post['package_tour_id'],
+			'minimum_count' => $post['minimum_count']
 		])){
 			// set initial message
 			$alert = [
@@ -90,8 +118,7 @@ class Tourpackages extends Admin_Controller {
 			//package details
 			$this->packagedetail_model->add([
 				'package_id' => $package_id,
-				'description' => $post['description'],
-				'minimum_count' => $post['minimum_count']
+				'description' => $post['description']
 			]);
 
 			//package gallery
@@ -195,7 +222,8 @@ class Tourpackages extends Admin_Controller {
 	public function edit($id){
 				
 		$data['package'] = $this->package_model->find($id);
-
+		$data['packages_tour_labels'] = $this->package_model->getPackageLabels();
+		$data['root_packages_tour_labels'] = $this->package_model->getPackageLabels('', 'root');
 		$data['destinations'] = $this->destination_model->all();
 		$this->wrapper([
 			'view' => 'admin/packages/edit',
@@ -206,7 +234,17 @@ class Tourpackages extends Admin_Controller {
 	public function update($id){
 		$post = $this->input->post();
 
-		
+		/*PACKAGE TOUR*/
+		$post['package_tour_id'] = 0;
+		$post['minimum_count'] = 0;
+		if ($post['is_day_tour'] == 0) {
+			if (isset($post['sub_packages'])) {
+				$post['package_tour_id'] = $post['sub_packages'];
+				unset($post['sub_packages']);
+			}
+		}
+		/*PACKAGE TOUR*/
+
 		$images = cleanMultipleFilesArray('images');
 		
 		$package = $this->package_model->find($id);
@@ -221,13 +259,16 @@ class Tourpackages extends Admin_Controller {
 
 		$changes += (int)$this->package_model->update($package->id, [
 			'name' => $post['name'],
+			'destination_id' => $post['destination_id'],
 			'rate' => $post['rate'],
-			'is_featured' => $post['is_featured']
+			'is_featured' => $post['is_featured'],
+			'is_day_tour' => $post['is_day_tour'],
+			'package_tour_id' => $post['package_tour_id'],
+			'minimum_count' => $post['minimum_count']
 		]);
 
 		$changes += (int)$this->packagedetail_model->update($package->package_details->id,[
-			'description' => $post['description'],
-			'minimum_count' => $post['minimum_count']
+			'description' => $post['description']
 		]);
 
 		//images
@@ -490,5 +531,11 @@ class Tourpackages extends Admin_Controller {
 
 		$this->session->set_flashdata('alert',$alert);
         return redirect(base_url('tourpackages'));
+	}
+
+	public function add_package_label()
+	{
+
+		var_dump($this->package_model->addPackageLabel($this->input->post())); die();
 	}
 }
