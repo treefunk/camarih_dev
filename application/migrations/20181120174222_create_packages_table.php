@@ -17,6 +17,25 @@ class Migration_Create_packages_Table extends CI_Migration {
                                 'type' => 'VARCHAR',
                                 'constraint' => '300'         
                         ),
+                        'destination_id' => array(
+                                'type' => 'INT',
+                                'constraint' => '100'         
+                        ),
+                        'is_day_tour' => array(
+                                'type' => 'INT',
+                                'constraint' => '1',
+                                'default' => 0         
+                        ),
+                        'package_tour_id' => array(
+                                'type' => 'INT',
+                                'constraint' => '100',
+                                'default' => 0         
+                        ),
+                        'minimum_count' => array(
+                                'type' => 'INT',
+                                'constraint' => '3',
+                                'default' => 1      
+                        ),
                         'image_name' => array(
                                 'type' => 'VARCHAR',
                                 'constraint' => '100',
