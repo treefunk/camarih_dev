@@ -24,6 +24,12 @@ class Migration_Create_package_details_Table extends CI_Migration {
                         ),
                         'description' => array(
                                 'type' => 'LONGTEXT'
+                        ),
+                        'exclusions' => array(
+                                'type' => 'LONGTEXT'
+                        ),
+                        'inclusions' => array(
+                                'type' => 'LONGTEXT'
                         )
                 ));
 
