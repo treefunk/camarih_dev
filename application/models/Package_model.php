@@ -89,6 +89,13 @@ class Package_model extends CMS_Model
         ])->result();
 
         $package->package_gallery = $package_gallery;
+
+        #itineraries
+        $package_itineraries = $this->db->get_where('package_itineraries', [
+            'package_id' => $package->id
+        ])->result();
+
+        $package->package_itineraries = $package_itineraries;
         
         $package_download = $this->db->get_where('package_downloads',[
             'package_id' => $package->id

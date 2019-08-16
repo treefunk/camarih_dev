@@ -9,6 +9,7 @@ class Tourpackages extends Admin_Controller {
 		parent::__construct();
 		$this->load->model('package_model');
 		$this->load->model('packagedetail_model');
+		$this->load->model('packageitinerary_model');
 		$this->load->model('packagegallery_model');
 		$this->load->model('destination_model');
 		$this->load->model('packagedownload_model');
@@ -118,8 +119,22 @@ class Tourpackages extends Admin_Controller {
 			//package details
 			$this->packagedetail_model->add([
 				'package_id' => $package_id,
-				'description' => $post['description']
+				'description' => $post['description'],
+				'exclusions' => $post['exclusions'],
+				'inclusions' => $post['inclusions']
 			]);
+
+			//package itineraries
+			if (isset($post['itineraries'])) {
+				foreach ($post['itineraries'] as $key => $itinerary) {
+					$this->packageitinerary_model->add([
+						'package_id' => $package_id,
+						'title' => $post['itineraries'][$key]['title'],
+						'time' => $post['itineraries'][$key]['time'],
+						'description' => $post['itineraries'][$key]['description']
+					]);
+				}
+			}
 
 			//package gallery
 			if(isset($post['images']) && count($images)){
@@ -236,7 +251,6 @@ class Tourpackages extends Admin_Controller {
 
 		/*PACKAGE TOUR*/
 		$post['package_tour_id'] = 0;
-		$post['minimum_count'] = 0;
 		if ($post['is_day_tour'] == 0) {
 			if (isset($post['sub_packages'])) {
 				$post['package_tour_id'] = $post['sub_packages'];
@@ -245,6 +259,7 @@ class Tourpackages extends Admin_Controller {
 		}
 		/*PACKAGE TOUR*/
 
+		// d($post);
 		$images = cleanMultipleFilesArray('images');
 		
 		$package = $this->package_model->find($id);
@@ -268,8 +283,46 @@ class Tourpackages extends Admin_Controller {
 		]);
 
 		$changes += (int)$this->packagedetail_model->update($package->package_details->id,[
-			'description' => $post['description']
+			'description' => $post['description'],
+			'exclusions' => $post['exclusions'],
+			'inclusions' => $post['inclusions']
 		]);
+		//itineraries
+		$encoded_itineraries_string_ids = $this->db->select('GROUP_CONCAT(id) as ids')->from('package_itineraries')
+		->where(['package_id' => $package->id])
+		->get()->row();
+
+		$encoded_itineraries_ids = explode(",",$encoded_itineraries_string_ids->ids);
+		$encoded_itineraries_post_ids = [];
+
+		//add + update itinerary content
+		if (isset($post['itineraries'])) {
+			foreach ($post['itineraries'] as $key => $itinerary) {
+				if ($itinerary['id']) {
+					$encoded_itineraries_post_ids[] = $itinerary['id'];
+					$changes += (int)$this->packageitinerary_model->update($itinerary['id'],[
+						'title' =>  $itinerary['title'],
+						'time' =>  $itinerary['time'],
+						'description' =>  $itinerary['description']
+					]);
+				}else{
+					$changes += (int)$this->packageitinerary_model->add([
+						'package_id' => $package->id,
+						'title' => $post['itineraries'][$key]['title'],
+						'time' => $post['itineraries'][$key]['time'],
+						'description' => $post['itineraries'][$key]['description']
+					]);
+				}
+			}
+		}
+		//delete removed itinerary content
+		$iti_to_be_deleted = array_values(array_diff($encoded_itineraries_ids,$encoded_itineraries_post_ids));
+		if($iti_to_be_deleted){
+			$gallery_iti_to_be_deleted = $this->db->from('package_itineraries')->where_in('id',$iti_to_be_deleted)->get()->result();
+			$this->db->from('package_itineraries')->where_in('id',$iti_to_be_deleted)->delete();
+			$changes += 1;
+		}		
+
 
 		//images
 		

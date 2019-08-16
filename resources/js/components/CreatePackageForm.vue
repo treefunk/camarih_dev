@@ -4,8 +4,9 @@
 		<ul class="circle-btns">
 			<li :class="{'selected': tab == 1}"  @click="tab = 1"><a>Overview</a></li>
 			<li :class="{'selected': tab == 2}" @click="tab = 2"><a>Gallery</a></li>
-			<li :class="{'selected': tab == 3}" @click="tab = 3"><a>File Preview</a></li>
-			<li :class="{'selected': tab == 4}" @click="tab = 4"><a>File Preview</a></li>
+			<li :class="{'selected': tab == 3}" @click="tab = 3"><a>Itinerary</a></li>
+			<li :class="{'selected': tab == 4}" @click="tab = 4"><a>Inclusions &<br>Exclusions</a></li>
+			<li :class="{'selected': tab == 5}" @click="tab = 5"><a>File Preview</a></li>
 		</ul>
 
 
@@ -28,7 +29,7 @@
 
 			<div class="form-group">
 	            <label for="name">*Name</label>
-	            <input v-model="package_.name" type="text" class="form-control" id="name" placeholder="Enter name" name="name" />
+	            <input v-model="package_.name" type="text" class="form-control" placeholder="Enter name" name="name" />
 	        </div>
 
 	        <div class="form-group">
@@ -61,7 +62,6 @@
 	        </div>
 
 			<div class="form-group" v-if="package_.is_day_tour == 0">
-				
 				<label for="">*Minimum Number of Persons</label>
 				<div>
 					
@@ -95,12 +95,11 @@
 	        <div class="form-group">
 
 	            <label for="description">*Description</label>
-					<div id="editor" ref="editor" name="test" v-html="this.package_.package_details.description">
-					</div>
-	            <!-- <textarea name="description" id="inputdescription" class="form-control" rows="9" v-model="package_data.package_details.description"></textarea> -->
+	            	<ckeditor id="editor" :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.description"></ckeditor>
 	        </div>
 
 	        <div class="btn-hldr">
+	        	<input type="hidden" name="description" :value="package_data.package_details.description">
 	        	<button class="btn_orange right_btn" type="button" @click="tab = 2">Next</button>
 	        </div>
 
@@ -139,16 +138,70 @@
 			</div>
 
 	            <div class="btn-hldr">
-					<input type="hidden" name="description" :value="package_data.package_details.description">
+					
 	            	<button type="button" class="finish btn_green left_btn" @click="tab = 1">Previous</button>
+					<button class="btn_orange right_btn" type="button" @click="tab = 3">Next</button>
+	            </div>
+
+	            
+		</div>
+
+
+		<!-- 3rd TAB!! -->
+		<div v-show="tab == 3" :class="[{'active': tab == 3},'gal-tab']">
+			<div class="form-group">
+				<h3>Itinerary</h3>
+
+				<div v-for="(itinerary,index) in package_.package_itineraries" :key="index" style="text-align: right;">
+					<button class="btn btn-danger" type="button" @click="removeItinerary(index)">X</button>
+					<input type="hidden" :name="`itineraries[${index}][id]`" v-model="package_.package_itineraries[index].id">
+					<label style="width: 100%; margin-top: 15px; text-align: left;">Title</label>
+					<input type="text" class="form-control" :id="`itineraries[${index}][title]`" :name="`itineraries[${index}][title]`" v-model="package_.package_itineraries[index].title">
+
+					<label style="width: 100%; margin-top: 15px; text-align: left;">Time</label>
+					<input type="text" class="form-control" :id="`itineraries[${index}][time]`" :name="`itineraries[${index}][time]`" v-model="package_.package_itineraries[index].time">
+					<div class="form-group">
+						<label style="width: 100%; margin-top: 15px; text-align: left;">Description</label>
+							<ckeditor :id="`editor_itineraries_${index}`" :ref="`editor_itineraries_${index}`" :name="`itineraries[${index}][description]`"  :editor="ckeditor" :config="editorConfig" v-model="package_.package_itineraries[index].description"></ckeditor>
+			        </div>
+					<input type="hidden" :id="`itineraries[${index}][description]`" :name="`itineraries[${index}][description]`" :value="package_.package_itineraries[index].description">
+					<hr>
+				</div>
+				<button  type="button" class="btn btn-default" @click="addItinerary" for="itinerary">Add Itinerary</button>
+			</div>
+
+	            <div class="btn-hldr">
+	            	<button type="button" class="finish btn_green left_btn" @click="tab = 2">Previous</button>
 					<button class="btn_orange right_btn" type="button" @click="tab = 4">Next</button>
 	            </div>
 
 	            
 		</div>
 
-		<!-- 4th tab -->
 		<div v-show="tab == 4" :class="[{'active': tab == 4},'gal-tab']">
+			
+	        <div class="form-group">
+
+	            <label for="exclusions">Inclusions</label>
+	            	<ckeditor :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.inclusions" v-html="this.package_.package_details.inclusions"></ckeditor>
+	        </div>
+	        <hr>
+	        <div class="form-group">
+
+	            <label for="inclusions">Exclusions</label>
+	            	<ckeditor :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.exclusions"></ckeditor>
+	        </div>
+	        <div class="btn-hldr">
+	        	<input type="hidden" name="inclusions" :value="package_data.package_details.inclusions">
+	        	<input type="hidden" name="exclusions" :value="package_data.package_details.exclusions">
+	        	<button class="btn_orange right_btn" type="button" @click="tab = 5">Next</button>
+	        </div>
+
+
+
+		</div>
+		<!-- 4th tab -->
+		<div v-show="tab == 5" :class="[{'active': tab == 5},'gal-tab']">
 					<label for="">Document for Preview</label>
 					<div style="font-size:80%">
 						Preferred file formats: doc,docx
@@ -167,9 +220,7 @@
 				
 				<input accept=".doc,.docx" type="file" name="package_download">
 			<div class="btn-hldr">
-					<input type="hidden" name="description" :value="package_data.package_details.description">
-	            	<button type="button" class="finish btn_green left_btn" @click="tab = 2">Previous</button>
-					<!-- <button class="btn_orange right_btn" type="button" @click="tab = 3">Next</button> -->
+	            	<button type="button" class="finish btn_green left_btn" @click="tab = 4">Previous</button>
 	        </div>
 		</div>
 		<button type="submit" class="finish btn_orange right_btn">{{ finish_button }}</button>
@@ -180,22 +231,18 @@
 <script>
 	
 	import package_form_errors from './error_messages/package_form_errors';
+	import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 	export default {
 		mounted(){
 
 			let self = this
-			this.editor = CKEDITOR.replace(this.$refs['editor'])
-			this.editor.on( 'change', function( evt ) {
-				self.package_.package_details.description = evt.editor.getData()
-			});
 			if(this.package_data.package_image){
 				this.main_preview = `${this.main_image_url}/${this.package_data.package_image.id}_${this.package_data.package_image.image_name}`
 			}
 			this.package_.is_featured = this.package_.is_featured == "1"
 
 			if (this.package_.package_root_name) {
-				console.log('root = '+this.package_.package_root_name.is_sub_directory_format);
 				for (var i = 0; i <= this.rootpackages.length - 1; i++) {
 					if (this.package_.package_root_name.is_sub_directory_format == this.rootpackages[i].name) {
 						this.package_.package_root_name = this.rootpackages[i];
@@ -230,14 +277,17 @@
 					return {
 						name:'',
 						destination_id:'',
-						is_day_tour:true,
+						is_day_tour:1,
 						rate:'',
 						package_details:{
 							description:'',
+							exclusions:'',
+							inclusions:'',
 						},
 						minimum_count:1,
 						package_tour_id:'',
 						package_root_id:'',
+						package_itineraries:[],
 					}
 				}
 			},
@@ -259,6 +309,7 @@
 				tab: 1,
 				main_preview: "",
 				packagegallery: this.packagegallery_data,
+				num_itinerary: 0,
 				package_: this.package_data,
 				uploaded_images: this.uploaded_images_data,
 				file_list: [],
@@ -269,7 +320,12 @@
 				editor: "",
 				description: "",
 				selectedrootpackages : "",				
-				selectedrootpackages_val : "",				
+				selectedrootpackages_val : "",	
+				ckeditor: ClassicEditor,
+                editorConfig: {
+			        removePlugins: [ 'Heading', 'Link', 'blockQuote'],
+			        toolbar: [ 'bold', 'italic', 'bulletedList', 'numberedList']
+			    },
 
 			}
 		},
@@ -282,9 +338,29 @@
 
 				
 			},
+			addItinerary(e){
+				this.package_.package_itineraries.push({
+					title: "",
+					time:"",
+					description:""
+				});
+				
+			},
 			deleteUploaded(index){
 				this.uploaded_images.splice(index,1)
 				
+			},
+			removeItinerary: function(index) {
+
+				function arrayRemove(arr, value) {
+
+				   return arr.filter(function(ele){
+				       return ele != value;
+				   });
+
+				}
+				this.package_.package_itineraries.splice(index,1)
+				// this.package_.package_itineraries = arrayRemove(this.package_.package_itineraries, this.package_.package_itineraries[index]);
 			},
 			remove: function(index){
                 if(index != this.packagegallery.length - 1){
@@ -349,8 +425,11 @@
 				function validateObject(obj)
 				{
 					for(let key in obj){
-						
 
+						if(key == "package_itineraries"){
+								continue
+						}
+						
 						if(typeof obj[key] == 'object'){
 							validateObject(obj[key])
 						}else if(typeof obj[key] != 'boolean'){
@@ -397,13 +476,7 @@
 
 				this.package_.package_root_id = newV.id;
 
-			}
-			// {
-			// 	2:true,
-			// 	6:true
-			// }
-
-
+			},
 
 		}
 
@@ -412,9 +485,21 @@
 
 
 <style>
-.selected{
-	background-color:#f68000 !important;
-	/* border: 2px solid black; */
-	box-shadow: 2px 2px 1px 1px;
-}
+	.selected{
+		background-color:#f68000 !important;
+		/* border: 2px solid black; */
+		box-shadow: 2px 2px 1px 1px;
+	}
+    div.ck .ck-editor__main ul li {
+        list-style: disc;
+        margin-left: 55px;
+        text-align: left;
+    }
+    div.ck .ck-editor__main ol li {
+        text-align: left;
+    }
+    div.ck .ck-editor__main p{
+        text-align: left;
+    }
+    .ck-editor__editable_inline { min-height: 200px;max-height: 200px; } 
 </style>
