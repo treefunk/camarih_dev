@@ -4,7 +4,7 @@ export default {
     },
     minimum_count: {
         required: "You did not specify the minimum count.",
-        non_numeric: "Rate must be a number."
+        non_numeric: "Minimum count must be a number."
     },
     description: {
         required: "Description is required."
@@ -12,5 +12,8 @@ export default {
     rate: {
         required: "Rate is required.",
         non_numeric: "Rate must be a number."
+    },
+    destination_id: {
+        required: "Destination is required."
     }
 }

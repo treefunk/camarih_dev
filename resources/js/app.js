@@ -1,6 +1,9 @@
 import '@babel/polyfill'
 import Vue from 'vue';
 import App from './components/app.vue'
+import CKEditor from '@ckeditor/ckeditor5-vue';
+Vue.use( CKEditor );
+
 
 
 // Components
