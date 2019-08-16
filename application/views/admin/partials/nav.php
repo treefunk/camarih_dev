@@ -94,9 +94,15 @@
                     </li>
 
                     <li class="sub-menu">
-                      <a href="<?=base_url('tourpackages')?>" class="<?=isActive("tourpackages")?>">
+                      <a href="<?=base_url('tourpackages')?>" class="<?php echo (uri_string() == "tourpackages") ? 'active' : ''; ?>">
                           <i class="fa fa-archive"></i>
                           <span>Tour Packages</span>
+                      </a>
+                    </li>
+                    <li class="sub-menu">
+                      <a href="<?=base_url('tourpackages/organize')?>" class="<?php echo (uri_string() == "tourpackages/organize") ? 'active' : ''; ?>">
+                          <i class="fa fa-archive"></i>
+                          <span>Packages Naming</span>
                       </a>
                     </li>
 
