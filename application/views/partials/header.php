@@ -21,6 +21,8 @@
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/responsive.css">
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/main.css">
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/jhondz.css">
+  <link rel="stylesheet" type="text/css" href="<?=base_url()?>frontend/css/slick.css"/>
+  <link rel="stylesheet" type="text/css" href="<?=base_url()?>frontend/css/slick-theme.css"/>
   
   <!-- toastr -->
   <link href="<?=base_url('flatlab')?>/assets/toastr-master/toastr.css" rel="stylesheet" type="text/css">
