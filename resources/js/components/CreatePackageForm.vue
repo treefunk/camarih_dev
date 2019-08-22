@@ -61,7 +61,7 @@
 	            <input v-model="package_.rate" type="text" class="form-control" id="rate" placeholder="Enter rate" name="rate" />
 	        </div>
 
-			<div class="form-group" v-if="package_.is_day_tour == 0">
+			<div class="form-group">
 				<label for="">*Minimum Number of Persons</label>
 				<div>
 					
