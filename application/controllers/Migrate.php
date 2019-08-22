@@ -114,7 +114,7 @@ class Migrate extends CI_Controller
     $this->db->trans_start();
 
       $this->db->insert('packages',[
-        'name' => '3D2N El Nido',
+        'name' => 'El Nido',
         'destination_id' => 4,
         'is_day_tour' => 1,
         'rate' => 2790,
@@ -129,7 +129,7 @@ class Migrate extends CI_Controller
       ]);
 
       $this->db->insert('packages',[
-        'name' => '6A5B Puerto Princesa',
+        'name' => 'Puerto Princesa',
         'destination_id' => 1,
         'is_day_tour' => 1,
         'rate' => 1500,
@@ -170,6 +170,16 @@ class Migrate extends CI_Controller
         'name' => '3D2N PPS City Tour+Honda Bay',
         'duration_id' => 1,
         'is_sub_directory' => 1
+      ]);
+
+      $this->db->insert('package_locations',[
+        'package_id' => 1,
+        'location_id' => 4
+      ]);
+
+      $this->db->insert('package_locations',[
+        'package_id' => 2,
+        'location_id' => 1
       ]);
 
     $this->db->trans_complete();

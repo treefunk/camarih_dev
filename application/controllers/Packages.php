@@ -96,7 +96,7 @@ class Packages extends MY_Controller {
 		$data = [
 			'page_title' => 'Package Tours',
 			'is_day_tour' => 0,
-			'packages' => $this->package_model->format($query->get()->result()),
+			'packages' => $packages = $this->package_model->format($query->get()->result()),
 			'destinations' => $this->destination_model->getAllEndpoints(),
 			'durations' => $this->package_model->getDurations(),
 			'total_pages' => round($total_rows / $per_page),
@@ -105,7 +105,6 @@ class Packages extends MY_Controller {
 			'default_image' => $default_image,
 			'links' => $this->pagination->create_links()
 		];
-
 		$this->wrapper([
 			'view' => 'packages',
 			'data' => $data
@@ -143,7 +142,7 @@ class Packages extends MY_Controller {
 		$data = [
 			'page_title' => 'Day Tours',
 			'is_day_tour' => 1,
-			'packages' => $this->package_model->format($query->get()->result()),
+			'packages' => $packages = $this->package_model->format($query->get()->result()),
 			'destinations' => $this->destination_model->getAllEndpoints(),
 			'total_pages' => $total_pages = round($total_rows / $per_page),
 			'current_page' => ($offset) ? ($offset/$per_page) + 1  : 1,
@@ -151,7 +150,6 @@ class Packages extends MY_Controller {
 			'default_image' => $default_image,
 			'links' => $this->pagination->create_links()
 		];
-
 		$this->wrapper([
 			'view' => 'packages',
 			'data' => $data
@@ -160,6 +158,7 @@ class Packages extends MY_Controller {
 	public function selected($id)
 	{
 		$data['package'] = $this->package_model->find($id);
+		$data['is_day_tour_format'] = ($data['package']->is_day_tour) ? 'Day Tour' : 'Package Tour';
 		$data['downloads_url'] = $this->packagedownload_model->upload_path;
 		$data['dummy_doc'] = getenv("ENABLE_DUMMY_DOC_PREVIEW") == "true" ? true : false;
 		$data['destinations'] = $this->destination_model->getAllEndpoints();

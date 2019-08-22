@@ -53,10 +53,32 @@
     <!-- toastr -->
     <script src="<?=base_url()?>flatlab/assets/toastr-master/toastr.js"></script>
     <script src="<?=base_url()?>frontend/js/main.js"></script>
+    <!-- <script type="text/javascript" src="<?=base_url()?>frontend/js/jquery-1.11.0.min.js"></script> -->
+    <!-- <script type="text/javascript" src="<?=base_url()?>frontend/js/jquery-migrate-1.2.1.min.js"></script> -->
+    <script type="text/javascript" src="<?=base_url()?>frontend/js/slick.min.js"></script>
     <script src="<?=base_url()?>frontend/js/jquery.magnific-popup.min.js"></script>
     <script src="<?=base_url()?>/assets/js/app.js"></script>
     <script type="text/javascript">
+      $(document).ready(function() {
+          $('.gallery-item').magnificPopup({
+            delegate: 'a',
+            type: 'image',
+            gallery:{
+              enabled:true,
+              
+            }
+          });
+        });
 
+      $(document).scroll(function () {
+            var y = $(this).scrollTop();
+            if (y > 600) {
+                $('.addtocart').fadeIn();
+            } else {
+                $('.addtocart').fadeOut();
+            }
+
+      });
 
       $('.testi-carou').owlCarousel({
         loop:true,

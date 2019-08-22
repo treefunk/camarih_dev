@@ -1,79 +1,243 @@
 <div class="packages-selected">
 
+  <section class="sec-1">
+    <article class="hero">
 
-        <section class="sec-1">
-          <article class="hero">
-              
-              <h3>Tour Package</h3>
-          </article>
-          <div class="overlay"></div>
+      <h3><?php  echo $is_day_tour_format  ?></h3>
+    </article>
+    <div class="overlay"></div>
 
-        </section>
-          
+  </section>
 
+  <book-a-trip
+  url='<?=base_url('availability/check')?>'
+  :destinations_data='<?=json_encode($destinations)?>'
+  :origins_data='<?=json_encode($origins)?>'
+  > </book-a-trip>
 
-        <book-a-trip
-        url='<?=base_url('availability/check')?>'
-        :destinations_data='<?=json_encode($destinations)?>'
-        :origins_data='<?=json_encode($origins)?>'
-        > </book-a-trip>
+  <!-- <section class="sec-2">
 
-        <section class="sec-2">
-          
-          <div class="itemhldr">
-            <h3><?=$package->name?></h3>
-            <article class="dvider">
-              <aside>
-              <!-- <?php //base_url('frontend')?>/images/rocks.jpg -->
-              <?php if($package->package_image): ?>
-                <img src="<?=base_url("uploads/package_image/{$package->package_image->id}_{$package->package_image->image_name}")?>">
-              
-              <?php else: ?>
-                <img src=" <?= base_url('frontend')?>/images/rocks.jpg" alt="">
-              <?php endif; ?>
-              </aside>
-              
-              <article>
-                  <div class="pad-0">
-                    <?=$package->package_details->description?>
-                  </div>
-              </article>
-              
-            </article>
-            
-              <selected-package-form
-              :package_data='<?=json_encode($package)?>'
-              add_to_cart_url='<?=base_url('packages/add_to_cart')?>  '
-              ></selected-package-form>
+    <div class="itemhldr">
+      <h3><?=$package->name?></h3>
+      <article class="dvider">
+        <aside>
+          <?php if($package->package_image): ?>
+            <img src="<?=base_url("uploads/package_image/{$package->package_image->id}_{$package->package_image->image_name}")?>">
 
+            <?php else: ?>
+              <img src=" <?= base_url('frontend')?>/images/rocks.jpg" alt="">
+            <?php endif; ?>
+          </aside>
+
+          <article>
+            <div class="pad-0">
+              <?=$package->package_details->description?>
             </div>
-            
-          
-        </section>
+          </article>
 
+        </article>
 
-<?php if(count($package->package_gallery)): ?>
-<section class="sec-3">
-    <article class="item-hldr">
+        <selected-package-form
+        :package_data='<?=json_encode($package)?>'
+        add_to_cart_url='<?=base_url('packages/add_to_cart')?>  '
+        ></selected-package-form>
+
+      </div>
+  </section>
+
+  <?php if(count($package->package_gallery)): ?>
+    <section class="sec-3">
+      <article class="item-hldr">
         <h3>Tourist Attractions</h3>
         <div class="owl-carousel owl-theme slct-pckge owl-loaded owl-drag">
-            <?php foreach($package->package_gallery as $image): ?>
+          <?php foreach($package->package_gallery as $image): ?>
             <div class="item">
-                <aside>
-                    <img src="<?=base_url("uploads/package_gallery/{$package->id}_{$image->image_name}")?>">
-                </aside>
-                <article>
-                    <h4><?=$image->image_title?></h4>
-                </article>
+              <aside>
+                <img src="<?=base_url("uploads/package_gallery/{$package->id}_{$image->image_name}")?>">
+              </aside>
+              <article>
+                <h4><?=$image->image_title?></h4>
+              </article>
             </div>
-            <?php endforeach; ?>
+          <?php endforeach; ?>
         </div>
-    </article>
-</section>
-<?php endif; ?>
-    
-<?php if($package->package_download){
-  require_once("package_view_download_modal.php");
-} ?>
-        
+      </article>
+    </section>
+  <?php endif; ?>
+
+  <?php if($package->package_download){
+    require_once("package_view_download_modal.php");
+  } ?> -->
+
 </div>
+<div class="pagewrapper3" style="margin-top: 200px;">
+ <!-- Content for Selected Day Tour -->
+  <section class="tour-content">
+    <article class="tour-overview">
+      <h2><?=$package->name?></h2>
+      <h5><?php echo $package->location_name ?></h5>
+      <?php $package_desc = explode('</p><p>', $package->package_details->description); ?>
+      <h4><?php echo strip_tags($package_desc[0])?><br>
+        <?php unset($package_desc[0]); ?>
+        <span><?php echo implode(" ",$package_desc) ?></span>
+      </h4>
+    </article>
+
+    <?php if(count($package->package_gallery)): ?>
+      <article class="tour-highlights">
+       <h3>Tour Highlights</h3>
+       <div class="highlights gallery-item">
+          <?php foreach($package->package_gallery as $image): ?>
+            <div class="item">
+              <a href="<?=base_url("uploads/package_gallery/{$package->id}_{$image->image_name}")?>">
+                <div class="thumb"><img src="<?=base_url("uploads/package_gallery/{$package->id}_{$image->image_name}")?>" title="<?=$image->image_title?>"></div>
+                <span><?=$image->image_title?></span>
+              </a>
+            </div>
+          <?php endforeach; ?>
+          
+        </div>
+      </article>
+    <?php endif;?>
+    <?php if ($package->package_itineraries): ?>
+      <article class="itinerary">
+       <h3>Itinerary<span>*</span></h3>
+       <ul class="itinerary-list">
+         <?php foreach ($package->package_itineraries as $key => $itinerary): ?>
+           <li>
+             <h4>
+               <label><?php echo $itinerary->title ?></label>
+               <span><?php echo $itinerary->time ?></span>
+             </h4>
+             <p><?php echo $itinerary->description ?></p>
+           </li>
+         <?php endforeach ?>
+       </ul>
+      </article>
+    <?php endif ?>
+
+    <article class="accomodations">
+     <h3>Accomodation</h3>
+     <ul>
+       <li><label>EL NIDO:</label> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum tellus leo. </li>
+       <li><label>PUERTO PRINCESA:</label> Maecenas semper non dolor imperdiet feugiat. Morbi a enim urna. Nullam tincidunt porta justo non eleifend. </li>
+     </ul>
+    </article>
+    <?php if ($package->package_details->exclusions || $package->package_details->inclusions): ?>
+      <article class="inclusions-exclusions">
+        <?php if ($package->package_details->inclusions): ?>
+          <div class="col2">
+            <h3>Inclusions</h3>
+            <?php echo $package->package_details->inclusions; ?>
+            <!-- <ul class="inclusions">
+             <li>Lorem ipsum dolor sit amet</li>
+             <li>Consectetur adipiscing elit</li>
+             <li>Nam dictum tellus leo</li>
+             <li>Maecenas semper non dolor imperdiet feugiat</li>
+             <li>Morbi a enim urna</li>
+             <li>Nullam tincidunt porta justo non eleifend</li>
+           </ul> -->
+          </div>
+        <?php endif ?>
+        <?php if ($package->package_details->exclusions): ?>
+          <div class="col2">
+            <h3>Exclusions</h3>
+            <?php echo $package->package_details->exclusions; ?>
+            <!-- <ul>
+               <li>Lorem ipsum dolor sit amet</li>
+               <li>Consectetur adipiscing elit</li>
+
+            </ul> -->
+          </div>
+        <?php endif ?>
+
+      </article>
+    <?php endif ?>
+  </section>
+</div>
+<section class="addtocart">
+  <div class="pagewrapper3">
+    <article class="book">
+      <ul>
+
+        <li>BOOK THIS PACKAGE NOW</li>
+      </ul>
+    </article>
+    <aside>
+      <input type="submit" name="" value="INQUIRE NOW">
+    </aside>
+  </div>
+</section>
+
+<!-- <div class="packages-selected">
+
+  <section class="sec-1">
+    <article class="hero">
+
+      <h3>Tour Package</h3>
+    </article>
+    <div class="overlay"></div>
+
+  </section>
+
+  <book-a-trip
+  url='<?=base_url('availability/check')?>'
+  :destinations_data='<?=json_encode($destinations)?>'
+  :origins_data='<?=json_encode($origins)?>'
+  > </book-a-trip>
+
+  <section class="sec-2">
+
+    <div class="itemhldr">
+      <h3><?=$package->name?></h3>
+      <article class="dvider">
+        <aside>
+          <?php if($package->package_image): ?>
+            <img src="<?=base_url("uploads/package_image/{$package->package_image->id}_{$package->package_image->image_name}")?>">
+
+            <?php else: ?>
+              <img src=" <?= base_url('frontend')?>/images/rocks.jpg" alt="">
+            <?php endif; ?>
+          </aside>
+
+          <article>
+            <div class="pad-0">
+              <?=$package->package_details->description?>
+            </div>
+          </article>
+
+        </article>
+
+        <selected-package-form
+        :package_data='<?=json_encode($package)?>'
+        add_to_cart_url='<?=base_url('packages/add_to_cart')?>  '
+        ></selected-package-form>
+
+      </div>
+  </section>
+
+  <?php if(count($package->package_gallery)): ?>
+    <section class="sec-3">
+      <article class="item-hldr">
+        <h3>Tourist Attractions</h3>
+        <div class="owl-carousel owl-theme slct-pckge owl-loaded owl-drag">
+          <?php foreach($package->package_gallery as $image): ?>
+            <div class="item">
+              <aside>
+                <img src="<?=base_url("uploads/package_gallery/{$package->id}_{$image->image_name}")?>">
+              </aside>
+              <article>
+                <h4><?=$image->image_title?></h4>
+              </article>
+            </div>
+          <?php endforeach; ?>
+        </div>
+      </article>
+    </section>
+  <?php endif; ?>
+
+  <?php if($package->package_download){
+    require_once("package_view_download_modal.php");
+  } ?>
+
+</div> -->

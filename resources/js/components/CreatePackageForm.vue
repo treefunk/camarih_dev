@@ -33,8 +33,9 @@
 	        </div>
 
 	        <div class="form-group">
-	            <label for="name">*Destination ID</label>
-	            <select class="form-control" v-model="package_.destination_id" name="destination_id">
+	            <label for="name">*Location</label>
+	            <p style="margin-left: 9px; ">Tip: Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
+	            <select class="form-control" v-model="package_.package_locations" name="destination_id[]" multiple>
                     <option value="">Select Destination</option>
                     <option v-for="destination in destinations" :key="destination.id" :value="destination.id">{{ destination.name }}</option>
                 </select>
@@ -79,7 +80,7 @@
 	            <label for="name">Tour Package</label>
 	            <select class="form-control" name="" v-model="package_.package_root_name">
                     <option value="">Select Package</option>
-                    <option v-for="package_tour in rootpackages" :value="package_tour" >{{ package_tour.name }}</option>
+                    <option v-for="package_tour in rootpackages" :value="package_tour" >{{ package_tour.name }} ({{package_tour.duration_format}})</option>
                 </select>
                 <input type="hidden" name="package_tour_id" v-model="package_.package_root_id">
 	        </div>
@@ -278,6 +279,7 @@
 						name:'',
 						destination_id:'',
 						is_day_tour:1,
+						package_locations:[],
 						rate:'',
 						package_details:{
 							description:'',
@@ -472,8 +474,6 @@
 			"package_.package_root_name" : function(newV,oldV){
 				console.log(newV.sub_directories);
 				this.subpackages = newV.sub_directories;
-				hasOwnProperty
-
 				this.package_.package_root_id = newV.id;
 
 			},
