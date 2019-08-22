@@ -1,7 +1,7 @@
 <template>
     <div class="panel-body">
         <form :action="form_url" method="POST" @submit.prevent="validateForms">
-            <transition-group tag="div" name="fade">
+            <!-- <transition-group tag="div" name="fade"> -->
             <div class="row" v-for="(van_rate,index) in van_rates" :key="van_rate.id">
             <input :value="van_rates[index].id || 0" type="hidden" :name="`van_rates[${index}][id]`">
                 <!-- <div class="col-md-1"> -->
@@ -41,7 +41,7 @@
                 </div>
             </div>
             
-            </transition-group>
+            <!-- </transition-group> -->
         <button  type="button" class="btn_green" @click="addRow">Add Row</button>
 
         <button  type="submit" class="btn_orange">Submit</button>

@@ -12,8 +12,20 @@ class Package_model extends CMS_Model
         return $this->db->from('packages')
                         ->join('package_details', 'packages.id = package_details.package_id');
     }
+
+    public function getPriceRangeVal($id)
+    {
+        $price_ranges = array(
+            0 => '',
+            1 => array(0, 1000), 
+            2 => array(1001, 1500),
+            3 => array(1501, 999999)
+        );
+
+        return $price_ranges[$id];
+    }
     
-    public function getQuery() { // refactor attempt
+    public function getQuery($where = '') { // refactor attempt
 
         $query = $this->db->select("
             packages.*,
@@ -22,10 +34,34 @@ class Package_model extends CMS_Model
             package_details.description as package_detail_description,
             package_main_image.id as package_image_id,
             package_main_image.image_title as package_image_title,
-            package_main_image.image_name as package_image_name
+            package_main_image.image_name as package_image_name,
+            packages_tour_labels.duration_id as packages_tour_labels_duration_id
         ")->from('packages')
         ->join('package_details','packages.id = package_details.package_id','left')
+        ->join('packages_tour_labels','packages.package_tour_id = packages_tour_labels.id','left')
         ->join('package_main_image','packages.id = package_main_image.package_id','left');
+
+        if (is_int($where)) {
+            $query->where('packages.is_day_tour', $where);
+        }
+
+        if (isset($_GET['location']) && $_GET['location'] != '') {
+            $query->where('packages.destination_id', $_GET['location']);
+        }
+
+        if (isset($_GET['price_range']) && $_GET['price_range'] != '' && $_GET['price_range'] != 0) {
+            $price_range = $this->getPriceRangeVal($_GET['price_range']);
+            $query->where('packages.rate >= ' .$price_range[0]);
+            $query->where('packages.rate <= ' .$price_range[1]);
+        }
+
+        if (isset($_GET['duration']) && $_GET['duration'] != '' && $_GET['duration'] != 0) {
+            $query->where('packages_tour_labels.duration_id', $_GET['duration']);
+        }
+
+        if (isset($_GET['pax']) && $_GET['pax'] != '' && $_GET['pax'] != 0) {
+            $query->where('packages.minimum_count', $_GET['pax']);
+        }
 
         return $query;
     }
@@ -206,6 +242,20 @@ class Package_model extends CMS_Model
     public function addPackageLabel($post)
     {
         return $this->db->insert('packages_tour_labels', $post);
+    }
+
+    public function format($arr)
+    {
+        if (!$arr) {
+            return [];
+        }
+
+        foreach ($arr as $key => $value) {
+            $value->location_info = $this->db->get_where('destinations', ['id' => $value->destination_id])->row();
+            $arr[$key] = $value;
+        }
+
+        return $arr;
     }
 
 

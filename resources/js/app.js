@@ -27,6 +27,7 @@ import FeaturedPackage from './components/FeaturedPackage'
 import ContactForm from './components/ContactForm'
 import CreateSliderForm from './components/CreateSliderForm'
 import TestimonialForm from './components/TestimonialForm'
+import FilterTours from './components/FilterTours'
 
 
 // Vuex
@@ -79,7 +80,8 @@ new Vue({
         'featured-package': FeaturedPackage,
         'contact-form': ContactForm,
         'create-slider-form': CreateSliderForm,
-        'testimonial-form': TestimonialForm
+        'testimonial-form': TestimonialForm,
+        'filter-tours': FilterTours
     }   
 })
 

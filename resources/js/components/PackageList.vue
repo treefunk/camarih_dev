@@ -1,5 +1,5 @@
 <template>
-    <div >
+    <ul>
         <single-package 
         v-for="(singlepackage,index) in package_formatted" :item="singlepackage" 
         :key="index" 
@@ -9,7 +9,7 @@
         :main_image_url="main_image_url"
         >
         </single-package>
-    </div>
+    </ul>
 </template>
 
 <script>

@@ -1,5 +1,15 @@
 <template>
-    <div>
+  <li>
+               <aside><a :href="`${this.single_url}/${item.id}`"><img :src="main_image"></a></aside>
+               <article>
+                 <h3><a :href="`${this.single_url}/${item.id}`">{{ item.name }}</a></h3>
+                 <h5>{{ item.location_info.name }}</h5>
+                 <h4>Php {{ item.rate | formatNum }}</h4>
+                 <h6><a :href="`${this.single_url}/${item.id}`">View Details</a></h6>
+               </article>
+             </li>
+
+    <!-- <div>
         <section :class="{ 'sec-3': !isLeft ,
          'clearfix':isLeft, 'sec-2': isLeft}">
             <article class="pckage_wrap clearfix">
@@ -9,26 +19,19 @@
                 </aside>
                 <article :class="!isLeft ? 'right' : 'left'">
                   <div>
-                    <ul class="pad-0 listn">
+                    <ul class="pad-0 listn" >
                         <li>
                           <h3>{{ item.name }}</h3>
                         </li>
-                        <!-- <li>
-                          <h5>{{ item.package_details.description }}</h5>
-                        </li> -->
                         <li>
                           <h4>Php {{ item.rate | formatNum }} <span>per person</span></h4>
+
                         </li>
-                        <li>
-                          <br>
-                          <h6>Minimum Count: {{ package_.package_details.minimum_count }}</h6>
-                        </li>
-                        <li>
+                        <li v-if='package_.is_day_tour != 0'>
                           
                           <h6>Adults</h6>
-                          
                            <div class="inc-item">
-                             <input type="text" v-model="adult_count" :min="item.package_details.minimum_count">
+                             <input type="text" v-model="adult_count" :min="item.minimum_count">
                              <div class="btns-hldr">
                                <button type="button" @click="adult_count++"><i
                                    class="fa fa-chevron-up"></i></button>
@@ -43,8 +46,11 @@
                         <li>
                           <a :href="`${this.single_url}/${item.id}`">View Details</a>
                         </li>
-                        <li>
-                          <button @click="addToCart"><span class="add-to-cart">Add to cart</span></button>
+                        <li v-if='package_.is_day_tour == 1'>
+                          <button @click="addToCart" ><span class="add-to-cart">Add to cart</span></button>
+                        </li>
+                        <li v-if='package_.is_day_tour == 0'>
+                          <button ><a href="#modal" class="popup-with-form"><span class="add-to-cart">Add to cart</span></a></button>
                         </li>
                       </ul>
                     </aside>
@@ -52,12 +58,19 @@
                     </div>
   
                 </article>
+                <div :id="`modal`" class="mfp-hide white-popup-block prcing_table-popup">
+                    <div class="clearfix">
+                      <article class="item">
+                        <h3>{{ item.name }}</h3>
+                      </article>
+                    </div>
+                </div>
               </div>
 
             </article>
 
             </section>
-    </div>
+    </div> -->
 </template>
 
 <script>
@@ -65,10 +78,16 @@
     import { package_common } from './../mixins/package_common'
 
     export default {
+        mounted(){
+          $('.popup-with-form').magnificPopup({
+            type: 'inline'
+          });
+        },
         mixins: [ package_common ],
         data(){
             return {
-                adult_count: this.item.package_details.minimum_count,
+                // adult_count: this.item.minimum_count,
+                adult_count: 1,
                 isLeft: !((this.index + 1) % 2 == 0) ,
                 in: this.index,
                 loading: false,

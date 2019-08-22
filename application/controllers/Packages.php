@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 
 class Packages extends MY_Controller {
 
-	const PER_PAGE = 5;
+	const PER_PAGE = 6;
 
 	public function __construct()
 	{
@@ -29,7 +29,7 @@ class Packages extends MY_Controller {
         $clone_query = clone $query;
 
 		$query->order_by("created_at",'DESC');
-		$query->where('status','active');
+		$query->where('packages.status','active');
         $query->offset($offset);
         $query->limit($per_page);
 
@@ -49,7 +49,8 @@ class Packages extends MY_Controller {
 		
 		
 		$data = [
-			'packages' => $query->get()->result(),
+			'page_title' => 'Tour Packages',
+			'packages' => $this->package_model->format($query->get()->result()),
 			'destinations' => $this->destination_model->getAllEndpoints(),
 			'origins' => $this->destination_model->getAllOrigins(),
 			'default_image' => $default_image,
@@ -62,6 +63,100 @@ class Packages extends MY_Controller {
 		]);
 	}
 
+	public function package_tours($offset = 0)
+	{
+
+		$query = $this->package_model->getQuery(0);
+
+        $per_page = self::PER_PAGE;
+
+        $this->load->library('pagination');
+
+        $clone_query = clone $query;
+
+		$query->order_by("created_at",'DESC');
+		$query->where('packages.status','active');
+        $query->offset($offset);
+        $query->limit($per_page);
+
+        $config = [
+            'base_url' => base_url('packages/package_tours'),
+            'total_rows' => $total_rows = $clone_query->get()->num_rows(),
+			'per_page' => $per_page,
+			'reuse_query_string' => true,
+		];
+
+		setPaginationStyle($config);
+        
+        $this->pagination->initialize($config);
+
+        
+		$default_image = base_url('frontend/images/')."package.jpg";
+		
+		$data = [
+			'page_title' => 'Package Tours',
+			'is_day_tour' => 0,
+			'packages' => $this->package_model->format($query->get()->result()),
+			'destinations' => $this->destination_model->getAllEndpoints(),
+			'durations' => $this->package_model->getDurations(),
+			'total_pages' => round($total_rows / $per_page),
+			'current_page' => $offset,
+			'origins' => $this->destination_model->getAllOrigins(),
+			'default_image' => $default_image,
+			'links' => $this->pagination->create_links()
+		];
+
+		$this->wrapper([
+			'view' => 'packages',
+			'data' => $data
+		]);
+	}
+	public function day_tours($offset = 0)
+	{
+
+		$query = $this->package_model->getQuery(1);
+
+        $per_page = self::PER_PAGE;
+
+        $this->load->library('pagination');
+
+        $clone_query = clone $query;
+
+		$query->order_by("created_at",'DESC');
+		$query->where('packages.status','active');
+        $query->offset($offset);
+        $query->limit($per_page);
+        $config = [
+            'base_url' => base_url('packages/day_tours'),
+            'total_rows' => $total_rows = $clone_query->get()->num_rows(),
+			'per_page' => $per_page,
+			'reuse_query_string' => true,
+		];
+
+		setPaginationStyle($config);
+        
+        $this->pagination->initialize($config);
+
+        
+		$default_image = base_url('frontend/images/')."package.jpg";
+		
+		$data = [
+			'page_title' => 'Day Tours',
+			'is_day_tour' => 1,
+			'packages' => $this->package_model->format($query->get()->result()),
+			'destinations' => $this->destination_model->getAllEndpoints(),
+			'total_pages' => $total_pages = round($total_rows / $per_page),
+			'current_page' => ($offset) ? ($offset/$per_page) + 1  : 1,
+			'origins' => $this->destination_model->getAllOrigins(),
+			'default_image' => $default_image,
+			'links' => $this->pagination->create_links()
+		];
+
+		$this->wrapper([
+			'view' => 'packages',
+			'data' => $data
+		]);
+	}
 	public function selected($id)
 	{
 		$data['package'] = $this->package_model->find($id);
