@@ -14,13 +14,14 @@ class Tourpackages extends Admin_Controller {
 		$this->load->model('destination_model');
 		$this->load->model('packagedownload_model');
 		$this->load->model('packageimage_model');
+		$this->load->model('packagelocations_model');
 	}
 
 
 	public function index($offset = 0)
 	{
 
-		$query = $this->package_model->getAllQuery();
+		$query = $this->package_model->getQueryTourPackages();
 
 		$per_page = self::PER_PAGE;
 
@@ -35,7 +36,6 @@ class Tourpackages extends Admin_Controller {
             'base_url' => base_url('tourpackages'),
             'total_rows' => $clone_query->get()->num_rows(),
             'per_page' => $per_page,
-            // 'reuse_query_string' => TRUE
         ];
         
 		setPaginationStyle($config);
@@ -45,7 +45,6 @@ class Tourpackages extends Admin_Controller {
         $data['packages'] = $query->get()->result();
         
         $data['links'] = $this->pagination->create_links();
-
 		
 		$this->wrapper([
 			'view' => 'admin/packages/index',
@@ -84,7 +83,6 @@ class Tourpackages extends Admin_Controller {
 		$post = $this->input->post();
 
 		/*PACKAGE TOUR*/
-		$post['package_tour_id'] = 0;
 		$post['minimum_count'] = ($post['minimum_count'])?:0;
 		if ($post['is_day_tour'] == 0) {
 			if (isset($post['sub_packages'])) {
@@ -103,11 +101,10 @@ class Tourpackages extends Admin_Controller {
 
 		if($package_id = $this->package_model->add([
 			'name' => $post['name'],
-			'destination_id' => $post['destination_id'],
 			'rate' => $post['rate'],
 			'is_featured' => $post['is_featured'],
 			'is_day_tour' => $post['is_day_tour'],
-			'package_tour_id' => $post['package_tour_id'],
+			'package_tour_id' => ($post['package_tour_id'])?:0,
 			'minimum_count' => $post['minimum_count']
 		])){
 			// set initial message
@@ -115,6 +112,13 @@ class Tourpackages extends Admin_Controller {
 				'type' => 'success',
 				'message' => "Package Successfully Added"
 			];
+			//package locations
+			foreach ($post['destination_id'] as $location) {
+				$this->packagelocations_model->add([
+					'package_id' => $package_id,
+					'location_id' => $location
+				]);
+			}
 
 			//package details
 			$this->packagedetail_model->add([
@@ -250,7 +254,6 @@ class Tourpackages extends Admin_Controller {
 		$post = $this->input->post();
 
 		/*PACKAGE TOUR*/
-		$post['package_tour_id'] = 0;
 		if ($post['is_day_tour'] == 0) {
 			if (isset($post['sub_packages'])) {
 				$post['package_tour_id'] = $post['sub_packages'];
@@ -274,11 +277,10 @@ class Tourpackages extends Admin_Controller {
 
 		$changes += (int)$this->package_model->update($package->id, [
 			'name' => $post['name'],
-			'destination_id' => $post['destination_id'],
 			'rate' => $post['rate'],
 			'is_featured' => $post['is_featured'],
 			'is_day_tour' => $post['is_day_tour'],
-			'package_tour_id' => $post['package_tour_id'],
+			'package_tour_id' => (isset($post['package_tour_id']))? $post['package_tour_id']:0,
 			'minimum_count' => $post['minimum_count']
 		]);
 
@@ -321,8 +323,27 @@ class Tourpackages extends Admin_Controller {
 			$gallery_iti_to_be_deleted = $this->db->from('package_itineraries')->where_in('id',$iti_to_be_deleted)->get()->result();
 			$this->db->from('package_itineraries')->where_in('id',$iti_to_be_deleted)->delete();
 			$changes += 1;
-		}		
+		}	
 
+		//locations
+		$encoded_locations_string_ids = $this->db->select('GROUP_CONCAT(id) as ids')->from('package_locations')
+		->where(['package_id' => $package->id])
+		->get()->row();
+		$encoded_locations_string_ids = explode(",",$encoded_locations_string_ids->ids);
+		if($encoded_locations_string_ids){
+			foreach ($encoded_locations_string_ids as $location_to_del) {
+				$changes += $this->db->from('package_locations')->where('id',$location_to_del)->delete();
+			}
+		}
+
+		foreach ($post['destination_id'] as $loc) {
+			if ($loc) {
+				$changes += (int)$this->packagelocations_model->add([
+					'package_id' => $package->id,
+					'location_id' => $loc
+				]);
+			}
+		}		
 
 		//images
 		
