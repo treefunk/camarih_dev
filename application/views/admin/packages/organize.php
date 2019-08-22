@@ -10,7 +10,7 @@
                       </span>
                   </header>
                   <div class="panel-body">
-                  <?php #require_once "partials/alert.php"; ?> 
+                  <?php require_once "alert.php"; ?> 
                       <div class="row">
                           <!-- filters goes here -->
 
@@ -26,7 +26,7 @@
                         <th>Name</th>
                         <th>Sub-Directory of</th>
                         <th>Duration</th>
-                        <th>Status</th>
+                        <!-- <th>Status</th> -->
                         <th>Created At</th>
                         <th>Actions</th>
                     </tr>
@@ -38,19 +38,19 @@
                             <td><?=$tour_category->name?></td>
                             <td><?php echo $tour_category->is_sub_directory_format; ?></td>
                             <td><?=$tour_category->duration_format?></td>
-                            <td><?=$tour_category->status?></td>
+                            <!-- <td><?=$tour_category->status?></td> -->
                             <td><?=$tour_category->created_at?></td>
                             <td>
-                                <a data-toggle="modal" href="#editAdmin"
+                                <a data-toggle="modal" href="#editPackageName"
                                 data-payload='<?=json_encode($tour_category)?>'
-                                data-url='<?=base_url('admin/editAdmin/')?>'
+                                data-url='<?php #echo base_url('admin/editAdmin/')?>'
                                 >
                                     <button class="btn btn-info btn-s"><i class="fa fa-pencil"></i></button>
                                 </a>
 
-                                <a data-toggle="modal" href="#deleteAdmin"
+                                <a data-toggle="modal" href="#deletePackageName"
                                 data-payload='<?=json_encode($tour_category)?>'
-                                data-url='<?=base_url('admin/deleteAdmin/')?>'>
+                                data-url='<?php echo base_url('tourpackages/delete_package_label/')?>'>
                                     <button class="btn btn-danger btn-s"><i class="fa fa-trash-o"></i></button>
                                 </a>
 
@@ -75,7 +75,7 @@
 </section>
 
 <?php require_once "modals/add-package-label.php"; //Add modal here ?> 
-<?php #require_once "modals/edit.php"; //Edit modal here ?>
-<?php #require_once "modals/delete.php"; //Edit modal here ?>
+<?php require_once "modals/edit-package-label.php"; //Edit modal here ?>
+<?php require_once "modals/delete-package-label.php"; //Edit modal here ?>
 
 <?php //todo change password ?>

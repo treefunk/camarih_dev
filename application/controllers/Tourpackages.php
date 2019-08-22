@@ -609,7 +609,61 @@ class Tourpackages extends Admin_Controller {
 
 	public function add_package_label()
 	{
+		$alert = [
+			'type' => 'danger',
+			'message' => 'Something went wrong. Please try again.'
+		];
 
-		var_dump($this->package_model->addPackageLabel($this->input->post())); die();
+		$add = $this->package_model->addPackageLabel($this->input->post());
+
+		if($add){
+			$alert = [
+				'type' => 'success',
+				'message' => "Package Naming Successfully Added"
+			];
+		}
+
+		$this->session->set_flashdata('alert',$alert);
+        return redirect(base_url('tourpackages/organize'));
+	}
+
+	public function update_package_label()
+	{
+		$alert = [
+			'type' => 'danger',
+			'message' => 'Something went wrong. Please try again.'
+		];
+
+		$changes = $this->package_model->updatePackageLabel($this->input->post());
+
+		if($changes){
+			$alert = [
+				'type' => 'success',
+				'message' => "Package Naming Successfully Updated"
+			];
+		}
+
+		$this->session->set_flashdata('alert',$alert);
+        return redirect(base_url('tourpackages/organize'));
+	}
+
+	public function delete_package_label($value)
+	{
+		$alert = [
+			'type' => 'danger',
+			'message' => 'Something went wrong. Please try again.'
+		];
+
+		$delete = $this->db->from('packages_tour_labels')->where('id',$value)->delete();
+
+		if($delete){
+			$alert = [
+				'type' => 'success',
+				'message' => "Package Naming Successfully Deleted"
+			];
+		}
+
+		$this->session->set_flashdata('alert',$alert);
+        return redirect(base_url('tourpackages/organize'));
 	}
 }
