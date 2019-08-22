@@ -85,7 +85,7 @@ class Tourpackages extends Admin_Controller {
 
 		/*PACKAGE TOUR*/
 		$post['package_tour_id'] = 0;
-		$post['minimum_count'] = 0;
+		$post['minimum_count'] = ($post['minimum_count'])?:0;
 		if ($post['is_day_tour'] == 0) {
 			if (isset($post['sub_packages'])) {
 				$post['package_tour_id'] = $post['sub_packages'];
