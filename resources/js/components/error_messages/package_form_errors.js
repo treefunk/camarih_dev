@@ -13,7 +13,7 @@ export default {
         required: "Rate is required.",
         non_numeric: "Rate must be a number."
     },
-    destination_id: {
+    package_locations: {
         required: "Destination is required."
     }
 }
