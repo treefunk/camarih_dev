@@ -24,7 +24,24 @@ class Package_model extends CMS_Model
 
         return $price_ranges[$id];
     }
-    
+    public function getQueryTourPackages($where = '') { // refactor attempt
+
+        $query = $this->db->select("
+            packages.*,
+            package_details.id as package_detail_id,
+            package_details.minimum_count as package_detail_minimum_count,
+            package_details.description as package_detail_description,
+            package_main_image.id as package_image_id,
+            package_main_image.image_title as package_image_title,
+            package_main_image.image_name as package_image_name
+        ")->from('packages')
+        ->join('package_details','packages.id = package_details.package_id','left')
+        ->join('package_itineraries','packages.id = package_itineraries.package_id','left')
+        ->join('package_main_image','packages.id = package_main_image.package_id','left')
+        ->group_by('packages.id');
+
+        return $query;
+    }
     public function getQuery($where = '') { // refactor attempt
 
         $query = $this->db->select("
@@ -35,18 +52,21 @@ class Package_model extends CMS_Model
             package_main_image.id as package_image_id,
             package_main_image.image_title as package_image_title,
             package_main_image.image_name as package_image_name,
-            packages_tour_labels.duration_id as packages_tour_labels_duration_id
+            packages_tour_labels.duration_id as packages_tour_labels_duration_id,
+            package_locations.package_id, package_locations.location_id
         ")->from('packages')
         ->join('package_details','packages.id = package_details.package_id','left')
         ->join('packages_tour_labels','packages.package_tour_id = packages_tour_labels.id','left')
-        ->join('package_main_image','packages.id = package_main_image.package_id','left');
+        ->join('package_main_image','packages.id = package_main_image.package_id','left')
+        ->join('package_locations','packages.id = package_locations.package_id','left')
+        ->group_by('packages.id');
 
         if (is_int($where)) {
             $query->where('packages.is_day_tour', $where);
         }
 
         if (isset($_GET['location']) && $_GET['location'] != '') {
-            $query->where('packages.destination_id', $_GET['location']);
+            $query->where('package_locations.location_id', $_GET['location']);
         }
 
         if (isset($_GET['price_range']) && $_GET['price_range'] != '' && $_GET['price_range'] != 0) {
@@ -130,8 +150,23 @@ class Package_model extends CMS_Model
         $package_itineraries = $this->db->get_where('package_itineraries', [
             'package_id' => $package->id
         ])->result();
-
         $package->package_itineraries = $package_itineraries;
+
+        #locations
+        $package_locations = $this->db->get_where('package_locations', [
+            'package_id' => $package->id
+        ])->result();
+        $package_locations_ids = [];
+        $location_names = '';
+        foreach ($package_locations as $key => $value) {
+            $package_locations_ids[] = $value->location_id;
+            $loc = '';
+            $loc = $this->db->get_where('destinations', ['id' => $value->location_id])->row()->name;
+            $location_names .= $loc.' | ';
+        }
+
+        $package->location_name = rtrim($location_names, " | ");
+        $package->package_locations = $package_locations_ids;
         
         $package_download = $this->db->get_where('package_downloads',[
             'package_id' => $package->id
@@ -244,14 +279,27 @@ class Package_model extends CMS_Model
         return $this->db->insert('packages_tour_labels', $post);
     }
 
+    public function updatePackageLabel($value)
+    {
+        $id = $value['id'];
+        unset($value['id']);
+        return $this->db->update('packages_tour_labels', $value, ['id' => $id]);
+    }
+
     public function format($arr)
     {
         if (!$arr) {
             return [];
         }
-
-        foreach ($arr as $key => $value) {
-            $value->location_info = $this->db->get_where('destinations', ['id' => $value->destination_id])->row();
+        foreach ($arr as $key => $value) {  
+            $value->location_info = $this->db->get_where('package_locations', ['package_id' => $value->id])->result();
+            $location_names = '';
+            foreach ($value->location_info as $key_ => $location) {
+                $location->location_name = $this->db->get_where('destinations', ['id' => $location->location_id])->row();
+                $location_names .= $location->location_name->name.' | ';
+                $value->location_info[$key_] = $location;
+            }
+            $value->location_name = rtrim($location_names, " | ");
             $arr[$key] = $value;
         }
 
