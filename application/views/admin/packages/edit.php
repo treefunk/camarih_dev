@@ -5,7 +5,6 @@
     <section class="wrapper site-min-height app">
         <div class="panel-cs">
             <div class="panel-body tour-package">
-
                 <create-package-form
                 :package_data='<?=json_encode($package)?>'
                 :uploaded_images_data='<?=json_encode($package->package_gallery)?>'

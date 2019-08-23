@@ -186,7 +186,8 @@ class Package_model extends CMS_Model
 
         if (!$package->is_day_tour && $package->package_tour_id) { #if package tour
             
-
+            $package->package_root_id = '';
+            $package->package_root_name = '';
             if ($this->getPackageLabels($package->package_tour_id)[0]->is_sub_directory == 0) { #root direc
 
                 $package->package_root_id = $package->package_tour_id;
@@ -195,7 +196,7 @@ class Package_model extends CMS_Model
             }else{ #sub direc
 
                 $package->package_root_id = $this->getPackageLabels($package->package_tour_id)[0]->is_sub_directory; 
-                $package->package_root_name = $this->getPackageLabels($package->package_tour_id)[0]; 
+                $package->package_root_name = $this->getPackageLabels($package->package_root_id)[0]; 
             }
             
         }
@@ -259,8 +260,9 @@ class Package_model extends CMS_Model
         foreach ($arr as $key => $value) {
             $value->is_sub_directory_format = ($value->is_sub_directory != 0) ? $this->getPackageLabels($value->is_sub_directory)[0]->name:'NONE'; 
             $value->is_root_directory_bool = ($value->is_sub_directory != 0) ? 0:1; 
+            // $value->sub_directories = 0;
             if ($value->is_root_directory_bool) {
-                $value->sub_directories = $this->getSubDirectories($value->id);
+                $value->sub_directories = ($this->getSubDirectories($value->id))?:0;
             }
             $value->duration_format = $this->getDurations($value->duration_id)[0]->name;
 
