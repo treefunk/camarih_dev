@@ -71,6 +71,32 @@
 
 </div>
 <div class="pagewrapper3" style="margin-top: 200px;">
+  <?php if(isset($_SESSION['alert']['type'])): ?>
+    <div class="alert alert-<?=$_SESSION['alert']['type']?> alert-block fade in">
+        <button data-dismiss="alert" class="close close-sm" type="button">
+            <i class="fa fa-times"></i>
+        </button>
+        <?php $type = $_SESSION['alert']['type']; ?>
+
+        <?php if(in_array($type,['success','danger'])): ?>
+        <h4>
+            <i class="fa fa-ok-sign"></i>
+            <?php
+                
+                if($type == 'success'){
+                    echo "Success!";
+                }elseif($type == 'info'){
+                    echo "";
+                }else{
+                    echo "Error";
+                }
+            ?>
+        </h4>
+        <?php endif; ?>
+          <p style="margin-left: 5px;margin-top: 11px;"><?=$_SESSION['alert']['message']?></p>
+    </div>
+
+  <?php endif; ?>
  <!-- Content for Selected Day Tour -->
   <section class="tour-content">
     <article class="tour-overview">
@@ -116,38 +142,32 @@
       </article>
     <?php endif ?>
 
-    <article class="accomodations">
-     <h3>Accomodation</h3>
-     <ul>
-       <li><label>EL NIDO:</label> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum tellus leo. </li>
-       <li><label>PUERTO PRINCESA:</label> Maecenas semper non dolor imperdiet feugiat. Morbi a enim urna. Nullam tincidunt porta justo non eleifend. </li>
-     </ul>
-    </article>
+    <?php if ($package->package_accomodations): ?>
+      <article class="accomodations">
+       <h3>Accomodation</h3>
+       <ul>
+          <?php foreach ($package->package_accomodations as $key => $accomodation): ?>
+            <li>
+                <label><?php echo $accomodation->title ?></label> 
+                <?php echo $accomodation->description ?>
+            </li>
+          <?php endforeach ?>
+       </ul>
+      </article>
+    <?php endif ?>
+
     <?php if ($package->package_details->exclusions || $package->package_details->inclusions): ?>
       <article class="inclusions-exclusions">
         <?php if ($package->package_details->inclusions): ?>
           <div class="col2">
             <h3>Inclusions</h3>
             <?php echo $package->package_details->inclusions; ?>
-            <!-- <ul class="inclusions">
-             <li>Lorem ipsum dolor sit amet</li>
-             <li>Consectetur adipiscing elit</li>
-             <li>Nam dictum tellus leo</li>
-             <li>Maecenas semper non dolor imperdiet feugiat</li>
-             <li>Morbi a enim urna</li>
-             <li>Nullam tincidunt porta justo non eleifend</li>
-           </ul> -->
           </div>
         <?php endif ?>
         <?php if ($package->package_details->exclusions): ?>
           <div class="col2">
             <h3>Exclusions</h3>
             <?php echo $package->package_details->exclusions; ?>
-            <!-- <ul>
-               <li>Lorem ipsum dolor sit amet</li>
-               <li>Consectetur adipiscing elit</li>
-
-            </ul> -->
           </div>
         <?php endif ?>
 
@@ -155,20 +175,11 @@
     <?php endif ?>
   </section>
 </div>
-<section class="addtocart">
-  <div class="pagewrapper3">
-    <article class="book">
-      <ul>
-
-        <li>BOOK THIS PACKAGE NOW</li>
-      </ul>
-    </article>
-    <aside>
-      <input type="submit" name="" value="INQUIRE NOW">
-    </aside>
-  </div>
-</section>
-
+  <selected-package-form
+    :package_data='<?=json_encode($package)?>'
+    add_to_cart_url='<?=base_url('packages/add_to_cart')?>  '
+    form_url="<?=base_url("tourpackages/sendInquiry/{$package->id}")?>"
+  ></selected-package-form>
 <!-- <div class="packages-selected">
 
   <section class="sec-1">

@@ -22,12 +22,12 @@
                       </li>
                       <li>
                           <br>
-                          <h6>Minimum Count: {{ package_.package_details.minimum_count }}</h6>
+                          <h6>Minimum Count: {{ package_.minimum_count }}</h6>
                         </li>
                       <li>
                         <h6>Adults</h6>
                         <div class="inc-item">
-                          <input type="text" v-model="adult_count" :min="package_data.package_details.minimum_count">
+                          <input type="text" v-model="adult_count" :min="package_data.minimum_count">
                           <div class="btns-hldr">
                             <button @click="adult_count++"><i class="fa fa-chevron-up"></i></button>
                             <button @click="adult_count--"><i class="fa fa-chevron-down"></i></button>
@@ -75,7 +75,7 @@
         data(){
             return {
                 package_ : this.package_data,
-                adult_count: parseInt(this.package_data.package_details.minimum_count,10),
+                adult_count: parseInt(this.package_data.minimum_count,10),
                 modal_container: "",
                 loading: false
             }

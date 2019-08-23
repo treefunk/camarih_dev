@@ -16,6 +16,8 @@ class Tourpackages extends Admin_Controller {
 		$this->load->model('packagedownload_model');
 		$this->load->model('packageimage_model');
 		$this->load->model('packagelocations_model');
+		$this->load->model('tourinquiries_model');
+		$this->load->model('contact_model');
 	}
 
 
@@ -352,14 +354,12 @@ class Tourpackages extends Admin_Controller {
 					$encoded_accomodations_post_ids[] = $accom['id'];
 					$changes += (int)$this->packageaccomodation_model->update($accom['id'],[
 						'title' =>  $accom['title'],
-						'time' =>  $accom['time'],
 						'description' =>  $accom['description']
 					]);
 				}else{
-					$changes += (int)$this->packageitinerary_model->add([
+					$changes += (int)$this->packageaccomodation_model->add([
 						'package_id' => $package->id,
 						'title' => $post['accom'][$key]['title'],
-						'time' => $post['accom'][$key]['time'],
 						'description' => $post['accom'][$key]['description']
 					]);
 				}
@@ -717,8 +717,31 @@ class Tourpackages extends Admin_Controller {
 
 	public function sendInquiry($package_id)
 	{
+		$alert = [
+			'type' => 'danger',
+			'message' => 'Something went wrong. Please try again.'
+		];
 		$post = $this->input->post();
-		$post = array_merge($post, array('package_id' => $package_id));
-		var_dump($post); die();
+		if ($post) {
+			$post = array_merge($post, 
+				array(
+					'package_id' => $package_id, 
+					'package_name' => $this->package_model->find($package_id)->name
+				)
+			);
+			if($this->tourinquiries_model->sendEmail($post, 'customer') 
+				&& $this->tourinquiries_model->sendEmail($post, 'admin')){
+				unset($post['package_name']);
+				if ($this->tourinquiries_model->add($post)) {
+					$alert = [
+						'type' => 'success',
+						'message' => "Your inquiry has been sent! Thank you."
+					];
+				}
+	        }
+		}
+
+		$this->session->set_flashdata('alert',$alert);
+        return redirect(base_url('packages/selected/'.$package_id));
 	}
 }

@@ -28,11 +28,14 @@ export const package_common = {
     },
     watch: {
         adult_count(newV){
-          let min_count = this.package_.package_details.minimum_count
-          if(parseInt(newV,10) < parseInt(min_count,10) || newV.trim() == ""){
+          let min_count = this.package_.minimum_count
+          if( (typeof newV == "String" && newV.trim() == "") || parseInt(newV,10) < parseInt(min_count,10) ){
             this.$store.dispatch("showToastr", { message: `Minimum count of person for this package is ${min_count}`,type: "error"})
             this.adult_count = min_count
           }
+          let tprice = this.adult_count * this.package_.rate;
+          tprice.toLocaleString();
+          this.tprice_lbl = tprice.toLocaleString();
         }
     },
     computed: {

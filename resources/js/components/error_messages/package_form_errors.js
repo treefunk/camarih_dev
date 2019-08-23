@@ -6,9 +6,9 @@ export default {
         required: "You did not specify the minimum count.",
         non_numeric: "Minimum count must be a number."
     },
-    description: {
-        required: "Description is required."
-    },
+    // package_locations: {
+    //     required: "Location is required."
+    // },
     rate: {
         required: "Rate is required.",
         non_numeric: "Rate must be a number."
