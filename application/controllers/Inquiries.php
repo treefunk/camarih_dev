@@ -24,7 +24,7 @@ class Inquiries extends Admin_Controller {
         $query->limit($per_page);
 
         $config = [
-            'base_url' => base_url('admin'),
+            'base_url' => base_url('inquiries/index/'),
             'total_rows' => $clone_query->get()->num_rows(),
             'per_page' => $per_page,
             // 'reuse_query_string' => TRUE

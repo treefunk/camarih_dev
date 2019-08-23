@@ -92,7 +92,12 @@
                           <li class="<?=isActive('package-reservations')?>"><a href="<?=base_url('package-reservations')?>" >Package</a></li>
                       </ul>
                     </li>
-
+                    <li class="sub-menu">
+                      <a href="<?=base_url('inquiries')?>" class="<?php echo (uri_string() == "inquiries" || strpos(uri_string(), "inquiries") !== FALSE)  ? 'active' : ''; ?>">
+                          <i class="fa fa-archive"></i>
+                          <span>Tour Inquiries</span>
+                      </a>
+                    </li>
                     <li class="sub-menu">
                       <a href="<?=base_url('tourpackages')?>" class="<?php echo (uri_string() == "tourpackages") ? 'active' : ''; ?>">
                           <i class="fa fa-archive"></i>
