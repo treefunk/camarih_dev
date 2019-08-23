@@ -10,6 +10,7 @@ class Tourpackages extends Admin_Controller {
 		$this->load->model('package_model');
 		$this->load->model('packagedetail_model');
 		$this->load->model('packageitinerary_model');
+		$this->load->model('packageaccomodation_model');
 		$this->load->model('packagegallery_model');
 		$this->load->model('destination_model');
 		$this->load->model('packagedownload_model');
@@ -140,6 +141,17 @@ class Tourpackages extends Admin_Controller {
 				}
 			}
 
+			//package accomodations
+			if (isset($post['accom'])) {
+				foreach ($post['accom'] as $key => $itinerary) {
+					$this->packageaccomodation_model->add([
+						'package_id' => $package_id,
+						'title' => $post['accom'][$key]['title'],
+						'description' => $post['accom'][$key]['description']
+					]);
+				}
+			}
+
 			//package gallery
 			if(isset($post['images']) && count($images)){
 				$post['images'] = array_values($post['images']); //reset array keys
@@ -253,6 +265,7 @@ class Tourpackages extends Admin_Controller {
 	public function update($id){
 		$post = $this->input->post();
 
+		// d($post);
 		/*PACKAGE TOUR*/
 		if ($post['is_day_tour'] == 0) {
 			if (isset($post['sub_packages'])) {
@@ -262,7 +275,6 @@ class Tourpackages extends Admin_Controller {
 		}
 		/*PACKAGE TOUR*/
 
-		// d($post);
 		$images = cleanMultipleFilesArray('images');
 		
 		$package = $this->package_model->find($id);
@@ -322,6 +334,42 @@ class Tourpackages extends Admin_Controller {
 		if($iti_to_be_deleted){
 			$gallery_iti_to_be_deleted = $this->db->from('package_itineraries')->where_in('id',$iti_to_be_deleted)->get()->result();
 			$this->db->from('package_itineraries')->where_in('id',$iti_to_be_deleted)->delete();
+			$changes += 1;
+		}	
+
+		//accomodations
+		$encoded_accomodations_string_ids = $this->db->select('GROUP_CONCAT(id) as ids')->from('package_accomodations')
+		->where(['package_id' => $package->id])
+		->get()->row();
+
+		$encoded_accomodations_ids = explode(",",$encoded_accomodations_string_ids->ids);
+		$encoded_accomodations_post_ids = [];
+
+		//add + update itinerary content
+		if (isset($post['accom'])) {
+			foreach ($post['accom'] as $key => $accom) {
+				if ($accom['id']) {
+					$encoded_accomodations_post_ids[] = $accom['id'];
+					$changes += (int)$this->packageaccomodation_model->update($accom['id'],[
+						'title' =>  $accom['title'],
+						'time' =>  $accom['time'],
+						'description' =>  $accom['description']
+					]);
+				}else{
+					$changes += (int)$this->packageitinerary_model->add([
+						'package_id' => $package->id,
+						'title' => $post['accom'][$key]['title'],
+						'time' => $post['accom'][$key]['time'],
+						'description' => $post['accom'][$key]['description']
+					]);
+				}
+			}
+		}
+		//delete removed itinerary content
+		$accom_to_be_deleted = array_values(array_diff($encoded_accomodations_ids,$encoded_accomodations_post_ids));
+		if($accom_to_be_deleted){
+			$gallery_accom_to_be_deleted = $this->db->from('package_accomodations')->where_in('id',$accom_to_be_deleted)->get()->result();
+			$this->db->from('package_accomodations')->where_in('id',$accom_to_be_deleted)->delete();
 			$changes += 1;
 		}	
 
@@ -665,5 +713,12 @@ class Tourpackages extends Admin_Controller {
 
 		$this->session->set_flashdata('alert',$alert);
         return redirect(base_url('tourpackages/organize'));
+	}
+
+	public function sendInquiry($package_id)
+	{
+		$post = $this->input->post();
+		$post = array_merge($post, array('package_id' => $package_id));
+		var_dump($post); die();
 	}
 }

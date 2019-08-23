@@ -152,6 +152,12 @@ class Package_model extends CMS_Model
         ])->result();
         $package->package_itineraries = $package_itineraries;
 
+        #accomodations
+        $package_accomodations = $this->db->get_where('package_accomodations', [
+            'package_id' => $package->id
+        ])->result();
+        $package->package_accomodations = $package_accomodations;
+
         #locations
         $package_locations = $this->db->get_where('package_locations', [
             'package_id' => $package->id

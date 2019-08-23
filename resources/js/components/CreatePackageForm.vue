@@ -5,7 +5,7 @@
 			<li :class="{'selected': tab == 1}"  @click="tab = 1"><a>Overview</a></li>
 			<li :class="{'selected': tab == 2}" @click="tab = 2"><a>Gallery</a></li>
 			<li :class="{'selected': tab == 3}" @click="tab = 3"><a>Itinerary</a></li>
-			<li :class="{'selected': tab == 4}" @click="tab = 4"><a>Inclusions &<br>Exclusions</a></li>
+			<li :class="{'selected': tab == 4}" @click="tab = 4"><a>Tour <br>Details</a></li>
 			<li :class="{'selected': tab == 5}" @click="tab = 5"><a>File Preview</a></li>
 		</ul>
 
@@ -35,6 +35,7 @@
 	        <div class="form-group">
 	            <label for="name">*Location</label>
 	            <p style="margin-left: 9px; ">Tip: Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
+	            {{ package_.package_locations }}
 	            <select class="form-control" v-model="package_.package_locations" name="destination_id[]" multiple>
                     <option value="">Select Destination</option>
                     <option v-for="destination in destinations" :key="destination.id" :value="destination.id">{{ destination.name }}</option>
@@ -79,7 +80,6 @@
 			<div class="form-group" v-if="package_.is_day_tour == 0">
 	            <label for="name">Tour Package</label>
 	            <select class="form-control" name="" v-model="package_.package_root_name">
-                    <option value="">Select Package</option>
                     <option v-for="package_tour in rootpackages" :value="package_tour" >{{ package_tour.name }} ({{package_tour.duration_format}})</option>
                 </select>
                 <input type="hidden" name="package_tour_id" v-model="package_.package_root_id">
@@ -95,7 +95,7 @@
 
 	        <div class="form-group">
 
-	            <label for="description">*Description</label>
+	            <label for="description">Description</label>
 	            	<ckeditor id="editor" :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.description"></ckeditor>
 	        </div>
 
@@ -183,15 +183,32 @@
 			
 	        <div class="form-group">
 
-	            <label for="exclusions">Inclusions</label>
+	            <h3>Inclusions</h3>
 	            	<ckeditor :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.inclusions" v-html="this.package_.package_details.inclusions"></ckeditor>
 	        </div>
 	        <hr>
 	        <div class="form-group">
 
-	            <label for="inclusions">Exclusions</label>
+	            <h3>Exclusions</h3>
 	            	<ckeditor :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.exclusions"></ckeditor>
 	        </div>
+	        <hr>
+	        <div class="form-group">
+				<h3>Accomodations</h3>	
+				<div v-for="(itinerary,index) in package_.package_accomodations" :key="index" style="text-align: right;">
+					<button class="btn btn-danger" type="button" @click="removeAccom(index)">X</button>
+					<input type="hidden" :name="`accom[${index}][id]`" v-model="package_.package_accomodations[index].id">
+					<label style="width: 100%; margin-top: 15px; text-align: left;">Title</label>
+					<input type="text" class="form-control" :id="`accom[${index}][title]`" :name="`accom[${index}][title]`" v-model="package_.package_accomodations[index].title">
+					<div class="form-group">
+						<label style="width: 100%; margin-top: 15px; text-align: left;">Description</label>
+							<ckeditor :id="`editor_accom_${index}`" :ref="`editor_accom_${index}`" :name="`accom[${index}][description]`"  :editor="ckeditor" :config="editorConfig" v-model="package_.package_accomodations[index].description"></ckeditor>
+			        </div>
+					<input type="hidden" :id="`accom[${index}][description]`" :name="`accom[${index}][description]`" :value="package_.package_accomodations[index].description">
+					<hr>
+				</div>
+				<button  type="button" class="btn btn-default" @click="addAccom" for="itinerary">Add Accomodation</button>
+			</div>
 	        <div class="btn-hldr">
 	        	<input type="hidden" name="inclusions" :value="package_data.package_details.inclusions">
 	        	<input type="hidden" name="exclusions" :value="package_data.package_details.exclusions">
@@ -290,6 +307,7 @@
 						package_tour_id:'',
 						package_root_id:'',
 						package_itineraries:[],
+						package_accomodations:[],
 					}
 				}
 			},
@@ -348,9 +366,19 @@
 				});
 				
 			},
+			addAccom(e){
+				this.package_.package_accomodations.push({
+					title: "",
+					description:""
+				});
+				
+			},
 			deleteUploaded(index){
 				this.uploaded_images.splice(index,1)
 				
+			},
+			removeAccom: function(index) {
+				this.package_.package_accomodations.splice(index,1)
 			},
 			removeItinerary: function(index) {
 
