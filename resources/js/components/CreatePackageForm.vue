@@ -84,14 +84,13 @@
                 </select>
                 <input type="hidden" name="package_tour_id" v-model="package_.package_root_id">
 	        </div>
-
-	         <div class="form-group" v-if="subpackages != 0">
+	         <div class="form-group" v-if="package_.is_day_tour == 0 && package_.package_root_name.sub_directories">
 	            <label for="name">Tour Package Sub</label>
 	            <select class="form-control" name="sub_packages" v-model="package_.package_tour_id">
-	            	<option value="">Select Sub Package</option>
-                    <option v-for="package_tour in subpackages" :value="package_tour.id">{{ package_tour.name }}</option>
+                    <option v-for="package_tour in package_.package_root_name.sub_directories" :value="package_tour.id">{{ package_tour.name }}</option>
                 </select>
 	        </div>
+                <input type="hidden" name="" v-model="package_.package_tour_id">
 
 	        <div class="form-group">
 
@@ -308,6 +307,7 @@
 						package_root_id:'',
 						package_itineraries:[],
 						package_accomodations:[],
+						package_root_name:[],
 					}
 				}
 			},
@@ -500,9 +500,12 @@
 				}
 			},
 			"package_.package_root_name" : function(newV,oldV){
-				console.log(newV.sub_directories);
-				this.subpackages = newV.sub_directories;
+				// this.subpackages = newV.sub_directories;
+				this.package_.package_root_name.sub_directories = newV.sub_directories;
 				this.package_.package_root_id = newV.id;
+				if (newV.sub_directories[0]) {
+					this.package_.package_tour_id = newV.sub_directories[0].id;
+				}
 
 			},
 
