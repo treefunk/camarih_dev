@@ -12,7 +12,8 @@ class Packages extends MY_Controller {
 			'package_model',
 			'destination_model',
 			'packagedownload_model',
-			'packageimage_model'
+			'packageimage_model',
+			'descriptions_model'
 		]);
 	}
 
@@ -97,10 +98,12 @@ class Packages extends MY_Controller {
 			'page_title' => 'Package Tours',
 			'is_day_tour' => 0,
 			'packages' => $packages = $this->package_model->format($query->get()->result()),
+			'description' => $this->descriptions_model->findByName('package_tours_description'),
 			'destinations' => $this->destination_model->getAllEndpoints(),
 			'durations' => $this->package_model->getDurations(),
 			'total_pages' => round($total_rows / $per_page),
-			'current_page' => $offset,
+			'current_page' => ($offset) ? ($offset/$per_page) + 1  : 1,
+			'form_url' => base_url('packages/package_tours'),
 			'origins' => $this->destination_model->getAllOrigins(),
 			'default_image' => $default_image,
 			'links' => $this->pagination->create_links()
@@ -143,9 +146,11 @@ class Packages extends MY_Controller {
 			'page_title' => 'Day Tours',
 			'is_day_tour' => 1,
 			'packages' => $packages = $this->package_model->format($query->get()->result()),
+			'description' => $this->descriptions_model->findByName('day_tours_description'),
 			'destinations' => $this->destination_model->getAllEndpoints(),
 			'total_pages' => $total_pages = round($total_rows / $per_page),
 			'current_page' => ($offset) ? ($offset/$per_page) + 1  : 1,
+			'form_url' => base_url('packages/day_tours'),
 			'origins' => $this->destination_model->getAllOrigins(),
 			'default_image' => $default_image,
 			'links' => $this->pagination->create_links()

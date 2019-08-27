@@ -17,14 +17,14 @@
   <div class="pagewrapper3">
    <!-- Content for Day Tours Listing -->
     <article class="overview">
-        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum tellus leo. Maecenas semper non dolor imperdiet feugiat. Morbi a enim urna. Nullam tincidunt porta justo non eleifend. </p>
+        <p><?php echo($description->value) ?></p>
     </article>
     
    <!-- Filter Day Tours -->
     <?php if (!$_GET): ?>
       <?php $_GET = array('location' => '', 'duration' => '', 'pax' => '', 'price_range' => '' ); ?>
     <?php endif ?>
-   <form method="get">
+   <form method="get" action="<?php echo $form_url ?>">
      <filter-tours 
      service_name="<?=$page_title?>" 
      :destinations_data='<?=json_encode($destinations)?>'

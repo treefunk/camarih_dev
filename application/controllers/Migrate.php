@@ -228,7 +228,16 @@ class Migrate extends CI_Controller
       'short_name' => "Narra",
       'is_vanrental_dropoff' => 1
     ]);
+    //cms
+    $this->db->insert('cms',[
+      'name' => 'day_tours_description',
+      'value' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum tellus leo. Maecenas semper non dolor imperdiet feugiat. Morbi a enim urna. Nullam tincidunt porta justo non eleifend.'
+    ]);
 
+    $this->db->insert('cms',[
+      'name' => 'package_tours_description',
+      'value' => 'Package Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam dictum tellus leo. Maecenas semper non dolor imperdiet feugiat. Morbi a enim urna. Nullam tincidunt porta justo non eleifend.'
+    ]);
 
     $this->db->insert('vans',[
       'name' => 'Regular Van',

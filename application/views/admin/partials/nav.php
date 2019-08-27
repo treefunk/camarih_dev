@@ -69,12 +69,16 @@
                   </li>
 
                   <?php $cms_sub_items = ['about','sliders','testimonials','footer_details']; $cms = isActive($cms_sub_items); ?>
+                  <?php if (uri_string() == "tourpackages/cms"): ?>
+                    <?php $cms[0] = "active" ?>
+                  <?php endif ?>
                   <li class="sub-menu dcjq-parent-li">
                       <a href="javascript:;" class="dcjq-parent <?=$cms[0]?>">
                           <span>CMS</span> 
                       <span class="dcjq-icon"></span></a>
                       <ul class="sub" style="<?=$cms[1]?>">
                           <li class="<?=isActive('about')?>"><a href="<?=base_url('about/edit')?>" >About</a></li>
+                          <li class="<?php echo (uri_string() == "tourpackages/cms") ? 'active' : ''; ?>"><a href="<?=base_url('tourpackages/cms')?>" >Tours Description</a></li>
                           <li class="<?=isActive('sliders')?>"><a href="<?=base_url('sliders')?>" >Sliders</a></li>
                           <li class="<?=isActive('testimonials')?>"><a href="<?=base_url('testimonials')?>" >Testimonials</a></li>
                           <li class="<?=isActive('footer_details')?>"><a href="<?=base_url('footer_details')?>" >Footer Details</a></li>

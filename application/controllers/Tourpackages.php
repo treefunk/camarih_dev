@@ -18,6 +18,7 @@ class Tourpackages extends Admin_Controller {
 		$this->load->model('packagelocations_model');
 		$this->load->model('tourinquiries_model');
 		$this->load->model('contact_model');
+		$this->load->model('descriptions_model');
 	}
 
 
@@ -539,7 +540,7 @@ class Tourpackages extends Admin_Controller {
 		if($changes){
 			$this->session->set_flashdata('alert',$alert);
 		}
-		return redirect(base_url('tourpackages'));
+		return redirect(base_url('tourpackages/edit/'.$package->id));
 
 	}
 
@@ -743,5 +744,31 @@ class Tourpackages extends Admin_Controller {
 
 		$this->session->set_flashdata('alert',$alert);
         return redirect(base_url('packages/selected/'.$package_id));
+	}
+
+	public function cms()
+	{
+		$data['day_tours_desc'] = $this->descriptions_model->findByName('day_tours_description')->value;
+		$data['package_tours_desc'] = $this->descriptions_model->findByName('package_tours_description')->value;
+        $this->wrapper([
+            'data' => $data,
+            'view' => 'admin/packages/cms'
+        ]);
+	}
+
+	public function updateCMS()
+	{
+		$alert = [
+			'type' => 'success',
+			'message' => "Descriptions Updated"
+		];
+
+		$post = $this->input->post();
+		foreach ($post as $field => $value) {
+			$this->descriptions_model->update($field, $value);
+		}
+
+		$this->session->set_flashdata('alert',$alert);
+        return redirect(base_url('tourpackages/cms'));
 	}
 }
