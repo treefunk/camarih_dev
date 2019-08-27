@@ -1,7 +1,6 @@
 <template>
 	<section class="filter-tours">
      <h4>Filter {{service_name}} by </h4>
-     	{{selected}}
      <ul :class="{'fdt': is_day_tour == '1', 'fpt' : is_day_tour == '0'}">
        	<li>
          <select name="location" v-model="selected.location">

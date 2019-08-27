@@ -138,7 +138,7 @@ class Package_model extends CMS_Model
             'package_id' => $package->id
         ])->row();
 
-        $package->package_details = $package_details;
+        $package->package_details = ($package_details)?:array('description' => '','exclusions' => '','inclusions'=> '');
 
         $package_gallery = $this->db->get_where('package_gallery', [
             'package_id' => $package->id

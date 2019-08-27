@@ -102,11 +102,13 @@
     <article class="tour-overview">
       <h2><?=$package->name?></h2>
       <h5><?php echo $package->location_name ?></h5>
-      <?php $package_desc = explode('</p><p>', $package->package_details->description); ?>
-      <h4><?php echo strip_tags($package_desc[0])?><br>
-        <?php unset($package_desc[0]); ?>
-        <span><?php echo implode(" ",$package_desc) ?></span>
-      </h4>
+      <?php if (isset($package_desc)): ?>
+        <?php $package_desc = explode('</p><p>', $package->package_details->description); ?>
+        <h4><?php echo strip_tags($package_desc[0])?><br>
+          <?php unset($package_desc[0]); ?>
+          <span><?php echo implode(" ",$package_desc) ?></span>
+        </h4>
+      <?php endif ?>
     </article>
 
     <?php if(count($package->package_gallery)): ?>
@@ -156,7 +158,7 @@
       </article>
     <?php endif ?>
 
-    <?php if ($package->package_details->exclusions || $package->package_details->inclusions): ?>
+    <?php if (isset($package->package_details->exclusions) || isset($package->package_details->inclusions)): ?>
       <article class="inclusions-exclusions">
         <?php if ($package->package_details->inclusions): ?>
           <div class="col2">

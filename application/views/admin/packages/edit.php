@@ -5,6 +5,7 @@
     <section class="wrapper site-min-height app">
         <div class="panel-cs">
             <div class="panel-body tour-package">
+                <?php require_once __DIR__. "/../partials/alert.php"; ?> 
                 <create-package-form
                 :package_data='<?=json_encode($package)?>'
                 :uploaded_images_data='<?=json_encode($package->package_gallery)?>'
