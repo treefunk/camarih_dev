@@ -57,6 +57,7 @@ $route['trip_availability/(:num)'] = "trip_availability/index/$1";
 $route['admin/(:num)'] = "admin/index/$1";
 $route['sliders/(:num)'] = "sliders/index/$1";
 $route['testimonials/(:num)'] = "testimonials/index/$1";
+$route['packages'] = "packages/day_tours";
 
 $route['tourpackages/(:num)'] = "tourpackages/index/$1";
 $route['packages/(:num)'] = "packages/index/$1";

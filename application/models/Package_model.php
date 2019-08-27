@@ -116,7 +116,12 @@ class Package_model extends CMS_Model
     }
 
     public function find($id,$featured = false){
-
+        if (!is_numeric($id)) {
+            $package_slug = $this->db->get_where('packages',[
+                    'slug' => $id
+                ])->row();
+            $id = $package_slug->id;
+        }
         //sanitize input
         $id = htmlspecialchars_decode($id);
 
@@ -308,12 +313,39 @@ class Package_model extends CMS_Model
                 $value->location_info[$key_] = $location;
             }
             $value->location_name = rtrim($location_names, " | ");
+            $value->slug  = base_url('packages/selected/'.$value->slug);
             $arr[$key] = $value;
         }
 
         return $arr;
     }
 
+    public function checkSlugifExists($slug)
+    {
+        return $this->db->get_where('packages',[
+                'slug' => $slug
+            ])->row();
+    }
+
+    public function seo_friendly_url($string){
+        $string = str_replace(array('[\', \']'), '', $string);
+        $string = preg_replace('/\[.*\]/U', '', $string);
+        $string = preg_replace('/&(amp;)?#?[a-z0-9]+;/i', '-', $string);
+        $string = htmlentities($string, ENT_COMPAT, 'utf-8');
+        $string = preg_replace('/&([a-z])(acute|uml|circ|grave|ring|cedil|slash|tilde|caron|lig|quot|rsquo);/i', '\\1', $string );
+        $string = preg_replace(array('/[^a-z0-9]/i', '/[-]+/') , '-', $string);
+        return strtolower(trim($string, '-'));
+    }
+
+    public function encryptID($token)
+    {
+        $cipher_method = 'AES-128-CTR';
+        $enc_key = openssl_digest(php_uname(), 'SHA256', TRUE);
+        $enc_iv = openssl_random_pseudo_bytes(openssl_cipher_iv_length($cipher_method));
+        $crypted_token = openssl_encrypt($token, $cipher_method, $enc_key, 0, $enc_iv) . "::" . bin2hex($enc_iv);
+        unset($token, $cipher_method, $enc_key, $enc_iv);
+        return substr(rawurlencode($crypted_token), 0,5);
+    }
 
     
 }

@@ -48,6 +48,10 @@ class Migration_Create_packages_Table extends CI_Migration {
                                 'type' => 'boolean',
                                 'default' => false,
                         ),
+                        'slug' => array(
+                                'type' => 'VARCHAR',
+                                'constraint' => '300'         
+                        ),
                         'status' => array(
                                 'type' => 'VARCHAR',
                                 'constraint' => '100',

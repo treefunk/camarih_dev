@@ -42,7 +42,7 @@
                         </div> -->
                     <ul class="pad-0 listn">
                       <li>
-                        <a :href="`${this.single_url}/${package_.id}`">View Details</a>
+                        <a :href="`${this.single_url}`">View Details</a>
                       </li>
                       <li>
                         <a ref="addButton" href="" @click.prevent="addToCart">Add to cart</a>

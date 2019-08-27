@@ -85,7 +85,6 @@ class Tourpackages extends Admin_Controller {
 		
 		
 		$post = $this->input->post();
-
 		/*PACKAGE TOUR*/
 		$post['minimum_count'] = ($post['minimum_count'])?:0;
 		if ($post['is_day_tour'] == 0) {
@@ -111,6 +110,13 @@ class Tourpackages extends Admin_Controller {
 			'package_tour_id' => ($post['package_tour_id'])?:0,
 			'minimum_count' => $post['minimum_count']
 		])){
+			$slug = $this->package_model->seo_friendly_url($post['name']);
+			if ($this->package_model->checkSlugifExists($slug) != null) {
+				$slug = $this->package_model->seo_friendly_url($post['name']).'-'.$this->package_model->encryptID($package_id);
+			}
+			$this->package_model->update($package_id, [
+				'slug' => $slug
+			]);
 			// set initial message
 			$alert = [
 				'type' => 'success',
@@ -284,6 +290,18 @@ class Tourpackages extends Admin_Controller {
 
 		if($package->status != 'inactive'){
 			$this->packageIsFeatured($post['is_featured']);
+		}
+		
+
+
+		if ($package->name != $post['name'] ) {
+			$slug = $this->package_model->seo_friendly_url($post['name']);
+			if ($this->package_model->checkSlugifExists($slug) != null) {
+				$slug = $this->package_model->seo_friendly_url($post['name']).'-'.$this->package_model->encryptID($package_id);
+			}
+			$this->package_model->update($package->id, [
+				'slug' => $slug
+			]);
 		}
 
 		$changes = 0;
@@ -743,7 +761,7 @@ class Tourpackages extends Admin_Controller {
 		}
 
 		$this->session->set_flashdata('alert',$alert);
-        return redirect(base_url('packages/selected/'.$package_id));
+		return redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	public function cms()

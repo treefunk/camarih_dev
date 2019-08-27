@@ -37,14 +37,18 @@
 
    <!-- List of Day Tours -->
    <section class="day-tours">
-      <package-list 
-       :packages='<?=json_encode($packages)?>'
-       single_url="<?=base_url('packages/selected')?>"
-       add_to_cart_url="<?=base_url('packages/add_to_cart')?>"
-       main_image_url="<?=base_url($this->packageimage_model->upload_path)?>"
-       default_image_url="<?=$default_image?>"
-       >
-      </package-list>
+      <?php if ($packages): ?>
+        <package-list 
+         :packages='<?=json_encode($packages)?>'
+         single_url="<?=base_url('packages/selected')?>"
+         add_to_cart_url="<?=base_url('packages/add_to_cart')?>"
+         main_image_url="<?=base_url($this->packageimage_model->upload_path)?>"
+         default_image_url="<?=$default_image?>"
+         >
+        </package-list>
+      <?php else: ?>
+        <h2>No result/s.</h2>
+      <?php endif ?>
    </section>
    <!-- Pagination -->
     <div class="pagination">

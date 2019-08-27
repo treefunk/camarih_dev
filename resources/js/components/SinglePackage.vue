@@ -1,11 +1,11 @@
 <template>
   <li>
-               <aside><a :href="`${this.single_url}/${item.id}`"><img :src="main_image"></a></aside>
+               <aside><a :href="item.slug"><img :src="main_image"></a></aside>
                <article>
-                 <h3><a :href="`${this.single_url}/${item.id}`">{{ item.name }}</a></h3>
+                 <h3><a :href="item.slug">{{ item.name }}</a></h3>
                  <h5>{{ item.location_name }}</h5>
                  <h4>Php {{ item.rate | formatNum }}</h4>
-                 <h6><a :href="`${this.single_url}/${item.id}`">View Details</a></h6>
+                 <h6><a :href="item.slug">View Details</a></h6>
                </article>
              </li>
 

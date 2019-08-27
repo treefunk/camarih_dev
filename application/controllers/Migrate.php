@@ -119,6 +119,7 @@ class Migrate extends CI_Controller
         'is_day_tour' => 1,
         'rate' => 2790,
         'status' => 'active',
+        'slug' => 'el-nido',
         'is_featured' => 1
       ]);
 
@@ -133,7 +134,8 @@ class Migrate extends CI_Controller
         'destination_id' => 1,
         'is_day_tour' => 1,
         'rate' => 1500,
-        'status' => 'active'
+        'status' => 'active',
+        'slug' => 'puerto-prinsesa'
       ]);
 
       $this->db->insert('package_details',[
