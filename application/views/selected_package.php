@@ -101,9 +101,10 @@
   <section class="tour-content">
     <article class="tour-overview">
       <h2><?=$package->name?></h2>
+      <p><?php echo $package->package_details->description; ?></p>
       <h5><?php echo $package->location_name ?></h5>
-      <?php if (isset($package_desc)): ?>
-        <?php $package_desc = explode('</p><p>', $package->package_details->description); ?>
+      <?php if (isset($package->package_details->price_description)): ?>
+        <?php $package_desc = explode('</p><p>', $package->package_details->price_description); ?>
         <h4><?php echo strip_tags($package_desc[0])?><br>
           <?php unset($package_desc[0]); ?>
           <span><?php echo implode(" ",$package_desc) ?></span>
@@ -178,7 +179,7 @@
   </section>
 </div>
   <selected-package-form
-    :package_data='<?=json_encode($package)?>'
+    :package_data='<?=json_encode($package, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE)?>'
     add_to_cart_url='<?=base_url('packages/add_to_cart')?>  '
     form_url="<?=base_url("tourpackages/sendInquiry/{$package->id}")?>"
   ></selected-package-form>

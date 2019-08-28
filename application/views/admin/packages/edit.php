@@ -1,13 +1,13 @@
 
 
-<script src="<?=base_url('node_modules/ckeditor/ckeditor.js')?>"></script>
+<!-- <script src="<?=base_url('node_modules/ckeditor/ckeditor.js')?>"></script> -->
 <section id="main-content">
     <section class="wrapper site-min-height app">
         <div class="panel-cs">
             <div class="panel-body tour-package">
                 <?php require_once __DIR__. "/../partials/alert.php"; ?> 
                 <create-package-form
-                :package_data='<?=json_encode($package)?>'
+                :package_data='<?=json_encode($package, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE)?>'
                 :uploaded_images_data='<?=json_encode($package->package_gallery)?>'
                 gallery_url="<?=base_url()?>uploads/package_gallery/"
                 finish_button="Update"
