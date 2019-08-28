@@ -35,7 +35,6 @@
 	        <div class="form-group">
 	            <label for="name">*Location</label>
 	            <p style="margin-left: 9px; ">Tip: Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
-	            {{ package_.package_locations }}
 	            <select class="form-control" v-model="package_.package_locations" name="destination_id[]" multiple>
                     <option value="">Select Destination</option>
                     <option v-for="destination in destinations" :key="destination.id" :value="destination.id">{{ destination.name }}</option>
@@ -57,6 +56,19 @@
                 </div>
             </div>
 
+            <div class="form-group" v-if="package_.is_day_tour == 0">
+	            <label for="name">Tour Package</label>
+	            <select class="form-control" name="" v-model="package_.package_root_name">
+                    <option v-for="package_tour in rootpackages" :value="package_tour" >{{ package_tour.name }} ({{package_tour.duration_format}})</option>
+                </select>
+                <input type="hidden" name="package_tour_id" v-model="package_.package_root_id">
+	        </div>
+	         <div class="form-group" v-if="package_.is_day_tour == 0 && package_.package_root_name.sub_directories">
+	            <label for="name">Tour Package Sub</label>
+	            <select class="form-control" name="sub_packages" v-model="package_.package_tour_id">
+                    <option v-for="package_tour in package_.package_root_name.sub_directories" :value="package_tour.id">{{ package_tour.name }}</option>
+                </select>
+	        </div>
 
 	        <div class="form-group">
 	            <label for="rate">*Rate</label>
@@ -77,19 +89,7 @@
 				</div>
 			</div>
 
-			<div class="form-group" v-if="package_.is_day_tour == 0">
-	            <label for="name">Tour Package</label>
-	            <select class="form-control" name="" v-model="package_.package_root_name">
-                    <option v-for="package_tour in rootpackages" :value="package_tour" >{{ package_tour.name }} ({{package_tour.duration_format}})</option>
-                </select>
-                <input type="hidden" name="package_tour_id" v-model="package_.package_root_id">
-	        </div>
-	         <div class="form-group" v-if="package_.is_day_tour == 0 && package_.package_root_name.sub_directories">
-	            <label for="name">Tour Package Sub</label>
-	            <select class="form-control" name="sub_packages" v-model="package_.package_tour_id">
-                    <option v-for="package_tour in package_.package_root_name.sub_directories" :value="package_tour.id">{{ package_tour.name }}</option>
-                </select>
-	        </div>
+			
                 <input type="hidden" name="" v-model="package_.package_tour_id">
 
 	        <div class="form-group">
@@ -98,8 +98,15 @@
 	            	<ckeditor id="editor" :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.description"></ckeditor>
 	        </div>
 
+	        <div class="form-group">
+
+	            <label for="description">Price Description</label>
+	            	<ckeditor id="editor" :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.price_description"></ckeditor>
+	        </div>
+
 	        <div class="btn-hldr">
 	        	<input type="hidden" name="description" :value="package_data.package_details.description">
+	        	<input type="hidden" name="price_description" :value="package_data.package_details.price_description">
 	        	<button class="btn_orange right_btn" type="button" @click="tab = 2">Next</button>
 	        </div>
 
@@ -266,6 +273,10 @@
 					}
 				}
 			}
+
+			if (this.package_.is_day_tour == 1) {
+				this.package_.package_category = 'daytour';
+			}
 		},
 		props: {
 			form_url: String,
@@ -308,6 +319,8 @@
 						package_itineraries:[],
 						package_accomodations:[],
 						package_root_name:[],
+						package_category:'',
+						location_name:'',
 					}
 				}
 			},
@@ -493,10 +506,10 @@
 			}
 		},
 		watch: {
-			"package_.package_details.minimum_count": function(newV,oldV){
+			"package_.minimum_count": function(newV,oldV){
 				if(newV < 1){
 					this.$store.dispatch("showToastr",{ type:"error", message: "Minimum count is 1"})
-					this.package_.package_details.minimum_count = 1
+					this.package_.minimum_count = 1
 				}
 			},
 			"package_.package_root_name" : function(newV,oldV){
@@ -508,6 +521,21 @@
 				}
 
 			},
+			"package_.is_day_tour" : function(newV,oldV){
+				if (newV == 1) {
+					this.package_.package_category = 'daytour';
+				}else{
+					this.package_.package_category = this.package_.package_root_name;
+					this.package_.package_root_name = this.rootpackages[0];
+				}
+
+			},
+
+			"package_.package_locations" : function(newV,oldV){
+				this.package_.location_name=newV[0];
+
+			},
+
 
 		}
 

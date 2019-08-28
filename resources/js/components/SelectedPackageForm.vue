@@ -12,7 +12,6 @@
                             <button @click="adult_count++"><i class="fa fa-chevron-up"></i></button>
                             <button @click="adult_count--"><i class="fa fa-chevron-down"></i></button>
                             </div>
-                            {{package_.is_day_tour}}
                       <li>x P{{ package_.rate }} = <span>Php {{tprice_lbl}}</span></li>
                     </ul>
                   </article>

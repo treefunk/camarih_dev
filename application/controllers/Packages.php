@@ -52,7 +52,7 @@ class Packages extends MY_Controller {
 		$data = [
 			'page_title' => 'Tour Packages',
 			'packages' => $this->package_model->format($query->get()->result()),
-			'destinations' => $this->destination_model->getAllEndpoints(),
+			'destinations' => $this->destination_model->all(),
 			'origins' => $this->destination_model->getAllOrigins(),
 			'default_image' => $default_image,
 			'links' => $this->pagination->create_links()
@@ -99,7 +99,7 @@ class Packages extends MY_Controller {
 			'is_day_tour' => 0,
 			'packages' => $packages = $this->package_model->format($query->get()->result()),
 			'description' => $this->descriptions_model->findByName('package_tours_description'),
-			'destinations' => $this->destination_model->getAllEndpoints(),
+			'destinations' => $this->destination_model->all(),
 			'durations' => $this->package_model->getDurations(),
 			'total_pages' => round($total_rows / $per_page),
 			'current_page' => ($offset) ? ($offset/$per_page) + 1  : 1,
@@ -147,7 +147,7 @@ class Packages extends MY_Controller {
 			'is_day_tour' => 1,
 			'packages' => $packages = $this->package_model->format($query->get()->result()),
 			'description' => $this->descriptions_model->findByName('day_tours_description'),
-			'destinations' => $this->destination_model->getAllEndpoints(),
+			'destinations' => $this->destination_model->all(),
 			'total_pages' => $total_pages = round($total_rows / $per_page),
 			'current_page' => ($offset) ? ($offset/$per_page) + 1  : 1,
 			'form_url' => base_url('packages/day_tours'),
@@ -166,7 +166,7 @@ class Packages extends MY_Controller {
 		$data['is_day_tour_format'] = ($data['package']->is_day_tour) ? 'Day Tour' : 'Package Tour';
 		$data['downloads_url'] = $this->packagedownload_model->upload_path;
 		$data['dummy_doc'] = getenv("ENABLE_DUMMY_DOC_PREVIEW") == "true" ? true : false;
-		$data['destinations'] = $this->destination_model->getAllEndpoints();
+		$data['destinations'] = $this->destination_model->all();
 		$data['origins'] = $this->destination_model->getAllOrigins();
 		// var_dump($data); die();
 
