@@ -68,9 +68,33 @@ class Tourpackages extends Admin_Controller {
 		]);
 	}
 
-	public function organize()
+	public function organize($offset = 0)
 	{
-		$data['labels'] = $this->package_model->getPackageLabels();
+		$query = $this->package_model->getQueryPackageNaming();
+
+		$per_page = self::PER_PAGE;
+
+        $this->load->library('pagination');
+
+        $clone_query = clone $query;
+
+        $query->offset($offset);
+        $query->limit($per_page);
+
+        $config = [
+            'base_url' => base_url('tourpackages/organize'),
+            'total_rows' => $clone_query->get()->num_rows(),
+            'per_page' => $per_page,
+        ];
+        
+		setPaginationStyle($config);
+		
+        $this->pagination->initialize($config);
+
+        
+        $data['links'] = $this->pagination->create_links();
+
+		$data['labels'] = $this->package_model->formatPackageLabels($query->get()->result());
 		$data['package_root'] = $this->package_model->getPackageLabels('', 'root');
 		$data['durations'] = $this->package_model->getDurations();
 		$this->wrapper([
@@ -135,7 +159,8 @@ class Tourpackages extends Admin_Controller {
 				'package_id' => $package_id,
 				'description' => $post['description'],
 				'exclusions' => $post['exclusions'],
-				'inclusions' => $post['inclusions']
+				'inclusions' => $post['inclusions'],
+				'price_description' => $post['price_description']
 			]);
 
 			//package itineraries
@@ -320,7 +345,8 @@ class Tourpackages extends Admin_Controller {
 		$changes += (int)$this->packagedetail_model->update($package->package_details->id,[
 			'description' => $post['description'],
 			'exclusions' => $post['exclusions'],
-			'inclusions' => $post['inclusions']
+			'inclusions' => $post['inclusions'],
+			'price_description' => $post['price_description']
 		]);
 		//itineraries
 		$encoded_itineraries_string_ids = $this->db->select('GROUP_CONCAT(id) as ids')->from('package_itineraries')

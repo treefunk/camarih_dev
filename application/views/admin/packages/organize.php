@@ -66,7 +66,7 @@
                   </table>
                   <div class="text-center">
                       <div class="pagination">
-                          <?= @$links ?>
+                          <?=$links ?>
                       </div>
                   </div>
               </section>

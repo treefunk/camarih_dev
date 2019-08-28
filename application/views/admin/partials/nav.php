@@ -109,7 +109,7 @@
                       </a>
                     </li>
                     <li class="sub-menu">
-                      <a href="<?=base_url('tourpackages/organize')?>" class="<?php echo (uri_string() == "tourpackages/organize") ? 'active' : ''; ?>">
+                      <a href="<?=base_url('tourpackages/organize')?>" class="<?php echo (strpos(uri_string(), 'tourpackages/organize')  !== false) ? 'active' : ''; ?>">
                           <i class="fa fa-archive"></i>
                           <span>Packages Naming</span>
                       </a>

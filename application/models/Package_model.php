@@ -42,6 +42,15 @@ class Package_model extends CMS_Model
 
         return $query;
     }
+    public function getQueryPackageNaming($where = '') { // refactor attempt
+
+        $query = $this->db->select("packages_tour_labels.*,
+            packages_durations.name as duration_format
+        ")->from('packages_tour_labels')
+        ->join('packages_durations','packages_tour_labels.duration_id = packages_durations.id','left');
+
+        return $query;
+    }
     public function getQuery($where = '') { // refactor attempt
 
         $query = $this->db->select("
@@ -204,6 +213,9 @@ class Package_model extends CMS_Model
                 $package->package_root_name = $this->getPackageLabels($package->package_root_id)[0]; 
             }
             
+        }else{
+            $package->package_root_id = $package->package_tour_id;
+            $package->package_root_name = $this->getPackageLabels($package->package_root_id)[0];
         }
 
         $package->image_path = base_url('frontend/images/')."package.jpg";
