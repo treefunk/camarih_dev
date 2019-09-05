@@ -41,7 +41,17 @@
                             <li class="<?=isPageActive("aboutus")?>"><a href="<?=base_url('aboutus')?>">About Us</a></li>
                             <li class="<?=isPageActive("ourvans")?>"><a href="<?=base_url('ourvans')?>">Our Vans</a></li>
                             <li class="<?=isPageActive("schedule")?>"><a href="<?=base_url('schedule')?>">Trip schedule</a></li>
-                            <li class="<?=isPageActive("packages")?>"><a href="<?=base_url('packages')?>">Tour packages</a></li>
+                            <li class="<?=isPageActive("packages")?> dropdown-">
+                              <a>Tour packages</a>
+                              <ul class="pad-0 listn submenu-">
+                                <li>
+                                  <a href="<?=base_url('packages/package_tours')?>">Package Tours</a>
+                                </li>
+                                <li>
+                                  <a href="<?=base_url('packages/day_tours')?>">Day Tours</a>
+                                </li>
+                              </ul>
+                            </li>
                             <li class="bg-orange"><a class="<?=isPageActive("contact")?>" href="<?=base_url('contact')?>">Contact Us</a></li>
                             <!-- <li class="acc dropdown">
                               <a data-toggle="dropdown" class="dropdown-toggle" href="#">My Account<b class="caret"></b></a>

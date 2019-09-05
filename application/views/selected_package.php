@@ -181,7 +181,7 @@
   <selected-package-form
     :package_data='<?=json_encode($package, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE)?>'
     add_to_cart_url='<?=base_url('packages/add_to_cart')?>  '
-    form_url="<?=base_url("tourpackages/sendInquiry/{$package->id}")?>"
+    form_url="<?=base_url("packages/sendInquiry/{$package->id}")?>"
   ></selected-package-form>
 <!-- <div class="packages-selected">
 

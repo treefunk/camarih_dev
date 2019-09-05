@@ -190,7 +190,7 @@ class Vans extends Admin_Controller {
 
         unset($post['image_title']);
 
-        $van_gallery_titles = ($post['van_gallery']) ? $post['van_gallery'] : [];
+        $van_gallery_titles = (isset($post['van_gallery'])) ? $post['van_gallery'] : [];
         unset($post['van_gallery']);
 
         // var_dump($post); die();

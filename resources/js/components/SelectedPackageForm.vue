@@ -4,22 +4,27 @@
         <div class="btm_sec" v-if="package_.is_day_tour == 1">
             <section class="addtocart">
                 <div class="pagewrapper3">
-                  <article class="qty-price">
-                    <ul>
-                      <!-- <li><div class="quantity"><input type="number" name="" min="1" max="20" value="1"></div></li> -->
-                      <input type="text" v-model="adult_count" :min="package_data.minimum_count" style='width: 122px;height: 68px;font: 36px/36px "Circular Std Medium",Arial,sans-serif;color: #353535;padding: 0 15px;border: 0;'>
-                            <div class="btns-hldr">
-                            <button @click="adult_count++"><i class="fa fa-chevron-up"></i></button>
-                            <button @click="adult_count--"><i class="fa fa-chevron-down"></i></button>
-                            </div>
-                      <li>x P{{ package_.rate }} = <span>Php {{tprice_lbl}}</span></li>
-                    </ul>
-                  </article>
-                  <aside>
-                    <a @click.prevent="addToCart" style='height: 101px;background: #f68000;border: 0;color: #fff;font: 24px/36px "Circular Std Medium",Arial,sans-serif;text-transform: uppercase;letter-spacing: 2px;padding-bottom: 20px;padding-top: 20px;padding-left: 26px; padding-right: 26px;'>Add to Cart</a>
+                  <div class="parent">
+                        <article class="qty-price">
+                            <ul>
+                                <!-- <li><div class="quantity"><input type="number" name="" min="1" max="20" value="1"></div></li> -->
+                                <li>
+                                    <input type="text" v-model="adult_count" :min="package_data.minimum_count" style='width: 122px;height: 68px;font: 36px/36px "Circular Std Medium",Arial,sans-serif;color: #353535;padding: 0 15px;border: 0;'>
+                                    <div class="btns-hldr">
+                                        <button @click="adult_count++"><i class="fa fa-chevron-up"></i></button>
+                                        <button @click="adult_count--"><i class="fa fa-chevron-down"></i></button>
+                                    </div>
+                                </li>
+                                <li>x P{{ package_.rate }} = <span>Php {{tprice_lbl}}</span></li>
+                            </ul>
+                        </article>
+                        <aside>
+                            <a @click.prevent="addToCart" style=''>Add to Cart</a>
                     
-                    <!-- <input type="submit" name="" value="ADD TO CART"> -->
-                  </aside>
+                            <!-- <input type="submit" name="" value="ADD TO CART"> -->
+                        </aside>
+
+                  </div>
                 </div>
             </section>
 
@@ -62,29 +67,53 @@
 
         <section class="addtocart" v-if="package_.is_day_tour == 0">
             <div class="pagewrapper3">
-              <article class="book">
+              <div class="parent">
+                  <article class="book">
                 <ul>
                   
                   <li>BOOK THIS PACKAGE NOW</li>
                 </ul>
               </article>
               <aside>
-                <a :href="`#bookPackageTour`" class="popup-with-form" style='height: 68px;background: #f68000;border: 0;color: #fff;font: 24px/36px "Circular Std Medium",Arial,sans-serif;text-transform: uppercase;letter-spacing: 2px;'>INQUIRE NOW</a>
+                <a :href="`#bookPackageTour`" class="popup-with-form">INQUIRE NOW</a>
                 <!-- <input type="submit" name="" value="INQUIRE NOW"> -->
               </aside>
+
+              </div>
             </div>
-            <div :id="`bookPackageTour`" class="mfp-hide white-popup-block prcing_table-popup">
+            <div :id="`bookPackageTour`" class="mfp-hide white-popup-block prcing_table-popup inquire-pop">
                 <div class="clearfix">
                   <article class="item">
                     <form method="post" :action="form_url">
-                        <h4>{{ package_.name }}</h4>
-                        <label>Name</label>
-                        <input type="text" name="name"><br>
-                        <label>Mobile #</label>
-                        <input type="text" name="mobile"><br>
-                        <label>Email Address</label>
-                        <input type="email" name="email_address"><br>
-                        <input type="submit" name="" value="Send Inquiry">
+                        <div class="top">
+                            <h5>Inquire</h5>
+                            <h4>{{ package_.name }}</h4>
+                        </div>
+                        <div class="body">
+                            <ul class="pad-0 listn">
+                                <li>
+                                    <label>Name</label>
+                                    <input type="text" name="name">
+                                </li>
+                                <li>
+                                    <label>Mobile #</label>
+                                    <input type="text" name="mobile">
+                                </li>
+                                <li>
+                                    <label>Email Address</label>
+                                    <input type="email" name="email_address">
+                                </li>
+                                <!-- <li>
+                                    <label># of Pax</label>
+                                    <input type="text" name="pax">
+                                </li> -->
+                                <li>
+                                    <input type="submit" name="" value="Send Inquiry">
+                                </li>
+                            </ul>
+                        </div>
+                        
+                        
                     </form>
                   </article>
                 </div>

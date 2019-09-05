@@ -762,6 +762,7 @@ class Tourpackages extends Admin_Controller {
 
 	public function sendInquiry($package_id)
 	{
+		d($package_id);
 		$alert = [
 			'type' => 'danger',
 			'message' => 'Something went wrong. Please try again.'

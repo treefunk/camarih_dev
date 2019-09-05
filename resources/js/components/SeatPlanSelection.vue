@@ -189,7 +189,19 @@
         },
         methods: {
             showInfoForm(){
-                $('#bookingInformation').modal('show')   
+                let can_next = 1;
+                for(let x = 0 ; x < this.currentSeats.length ; x++)
+                {
+                    if (this.currentSeats[x]['name'] == '') {
+                        can_next = 0;
+                        this.$store.dispatch("showToastr", { message: 'Seat #'+(this.currentSeats[x]['seatnum'])+' Passenger\'s Name is required', type: "error"})
+                        break;
+                    }
+
+                }
+                if (can_next) {
+                    $('#bookingInformation').modal('show')   
+                }
             },
             unselectSeat(payload){
                 this.seats[payload.parentindex][payload.index].selected = false

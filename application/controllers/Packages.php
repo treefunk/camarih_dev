@@ -13,7 +13,9 @@ class Packages extends MY_Controller {
 			'destination_model',
 			'packagedownload_model',
 			'packageimage_model',
-			'descriptions_model'
+			'descriptions_model',
+			'tourinquiries_model',
+			'contact_model'
 		]);
 	}
 
@@ -193,6 +195,36 @@ class Packages extends MY_Controller {
 				'message' => 'Package added to cart',
 				'code' => 200
 			]));
+	}
+
+	public function sendInquiry($package_id)
+	{
+		$alert = [
+			'type' => 'danger',
+			'message' => 'Something went wrong. Please try again.'
+		];
+		$post = $this->input->post();
+		if ($post) {
+			$post = array_merge($post, 
+				array(
+					'package_id' => $package_id, 
+					'package_name' => $this->package_model->find($package_id)->name
+				)
+			);
+			if($this->tourinquiries_model->sendEmail($post, 'customer') 
+				&& $this->tourinquiries_model->sendEmail($post, 'admin')){
+				unset($post['package_name']);
+				if ($this->tourinquiries_model->add($post)) {
+					$alert = [
+						'type' => 'success',
+						'message' => "Your inquiry has been sent! Thank you."
+					];
+				}
+	        }
+		}
+
+		$this->session->set_flashdata('alert',$alert);
+		return redirect($_SERVER['HTTP_REFERER']);
 	}
 
 	

@@ -1,4 +1,4 @@
-<!-- <footer>
+<footer style="width: 100%; float: left">
   <div class="cs-container">
     <aside class="footer_logo" style="z-index:99">
       <a href="<?=base_url()?>" >
@@ -43,7 +43,7 @@
               <li><a href="">Terms & Conditions</a></li>
             </ul>
           </div>
-</footer> -->
+</footer>
 
       </div>
     </div>
@@ -59,7 +59,41 @@
     <script src="<?=base_url()?>frontend/js/jquery.magnific-popup.min.js"></script>
     <script src="<?=base_url()?>/assets/js/app.js"></script>
     <script type="text/javascript">
-
+      $('.highlights').slick({
+          infinite: true,
+          slidesToShow: 3,
+          slidesToScroll: 3,
+          centerPadding: '5px',
+          arrows: true,
+          responsive: [
+            {
+              breakpoint: 1024,
+              settings: {
+                slidesToShow: 3,
+                slidesToScroll: 3,
+                infinite: true,
+                dots: true
+              }
+            },
+            {
+              breakpoint: 800,
+              settings: {
+                slidesToShow: 2,
+                slidesToScroll: 2
+              }
+            },
+            {
+              breakpoint: 560,
+              settings: {
+                slidesToShow: 1,
+                slidesToScroll: 1
+              }
+            }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+          ]
+        });
       // jQuery('<div class="quantity-nav"><div class="quantity-button quantity-up"></div><div class="quantity-button quantity-down"></div></div>').insertAfter('.quantity input');
       jQuery('.quantity').each(function() {
         var spinner = jQuery(this),
@@ -103,14 +137,23 @@
           });
         });
 
-      $(document).scroll(function () {
-            var y = $(this).scrollTop();
-            if (y > 10) {
-                $('.addtocart').fadeIn();
-            } else {
-                $('.addtocart').fadeOut();
-            }
+      var footerX = $('footer').offset().top;
+      
+      $(window).on('scroll', function(){
+        
+        var scrolled = $(window).scrollTop() + ($(window).height() - 50);
 
+        if(scrolled > 10){
+          $('.addtocart').fadeIn();
+        }
+
+        if (scrolled > footerX){
+          $('.addtocart').css("position", "relative");
+        }
+        else {
+          $('.addtocart').css("position", "fixed");
+        }
+        
       });
 
       $('.testi-carou').owlCarousel({

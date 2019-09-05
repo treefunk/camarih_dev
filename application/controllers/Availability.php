@@ -673,7 +673,7 @@ class Availability extends MY_Controller {
 
         // Content
         $mail->isHTML(true);                                  // Set email format to HTML
-        $mail->Subject = 'booking';
+        $mail->Subject = 'CAMARIH Booking Details';
         $mail->Body = $mail_string;
         if($mail->send()){
 

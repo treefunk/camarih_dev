@@ -243,9 +243,13 @@
 	
 	.book .sec-2 .parent > li:nth-child(2) { min-height: 540px; margin-top: 40px;}
 	.tour-content .tour-overview h2 {font-size: 40px; line-height: 48px;}
-	.overview p, .tour-content .tour-overview p, .tour-content .tour-overview h5, .tour-content .itinerary ul.itinerary-list li p, .tour-content .itinerary ul.itinerary-list li h4, .tour-content .inclusions-exclusions .col2 ul, .tour-content .accomodations ul {font-size: 20px; line-height: 26px;}
+	.overview p, .tour-content .tour-overview p, .tour-content .tour-overview h5, .tour-content .itinerary ul.itinerary-list li p, .tour-content .itinerary ul.itinerary-list li h4, .tour-content .inclusions-exclusions .col2 ul, .tour-content .accomodations ul {font-size: 20px!important; line-height: 26px!important;}
 	.tour-content .tour-overview h4 {font-size: 30px; line-height: 34px; }
 	.addtocart .qty-price ul li {font-size: 30px; line-height: 30px;}
+
+	.dropdown- .submenu- { position: relative!important; display: block!important; top: 0!important }
+	.dropdown- .submenu- li a { color: #000!important; padding: 10px 15px!important}
+
 }
 
 
@@ -442,6 +446,7 @@
 	.addtocart .book ul li {margin-left: 0;}
 	.addtocart .qty-price ul li .quantity-nav {top: 0;}
 	.addtocart .qty-price ul li input[type="number"] {font-size: 24px;}
+	.packages-- { padding-top: 0px!important; }
 }
 
 @media only screen and (max-width: 768px){
@@ -458,13 +463,13 @@
 	.packages-selected .sec-2 .itemhldr > article.dvider > article > div h1 { margin-bottom: 15px; }
 	.packages-selected .sec-2 .itemhldr > article.dvider > article > div > p:last-of-type { margin-bottom: 0px!important; }
 
-	.filter-tours ul.fdt li select {width: 200px}
-	.day-tours ul li article h3 {font-size: 24px; line-height: 34px;}
-	.day-tours ul li article h5 {font-size: 16px; line-height: 22px;}
-	.day-tours ul li article h4 {font-size: 20px; line-height: 26px;}
-	.tour-content {padding-bottom: 30px;}
+	.filter-tours ul.fdt li select {width: 200px!important}
+	.day-tours ul li article h3 {font-size: 24px!important; line-height: 34px!important;}
+	.day-tours ul li article h5 {font-size: 16px!important; line-height: 22px!important;}
+	.day-tours ul li article h4 {font-size: 20px!important; line-height: 26px!important;}
+	.tour-content {padding-bottom: 30px!important;}
 	.tour-content .inclusions-exclusions .col2 {width: 100%; margin-bottom: 30px}
-	.overview p, .tour-content .tour-overview p, .tour-content .tour-overview h5, .tour-content .itinerary ul.itinerary-list li p, .tour-content .itinerary ul.itinerary-list li h4, .tour-content .inclusions-exclusions .col2 ul, .tour-content .accomodations ul {font-size: 20px; line-height: 26px;}
+	.overview p, .tour-content .tour-overview p, .tour-content .tour-overview h5, .tour-content .itinerary ul.itinerary-list li p, .tour-content .itinerary ul.itinerary-list li h4, .tour-content .inclusions-exclusions .col2 ul, .tour-content .accomodations ul {font-size: 20px!important; line-height: 26px!important;}
 }
 
 
@@ -475,17 +480,17 @@
 	.book .sec-2 .parent .outline { position: relative!important; left: 0!important;}
 	.book .sec-2 .parent > li:nth-child(2) { padding-left: 0px!important;}
 	.book .sec-2 .parent > li:first-child .item { max-width: 100%!important;}
-	.overview p {font-size: 18px; line-height: 24px;} 
+	.overview p {font-size: 18px!important; line-height: 24px!important;} 
 	.filter-tours h4 {font-size: 20px; line-height: 20px;}
-	.filter-tours ul.fdt li select {font-size: 16px;}
-	.day-tours ul li {width: 100%}
+	.filter-tours ul.fdt li select {font-size: 16px!important;}
+	.day-tours ul li {width: 100%!important}
 	.tour-content .tour-overview {padding: 30px;}
 	.tour-content .tour-overview h2 {font-size: 36px; line-height: 44px;}
 	.tour-content h3 {font-size: 24px; line-height: 36px; margin-bottom: 20px;}
 	.tour-content .itinerary, .tour-content .inclusions-exclusions {padding: 0 30px 30px;}
 	.tour-content .tour-overview h4 {font-size: 26px; line-height: 30px}
 	.tour-content .tour-overview h4 span {font-size: 18px; line-height: 24px;}
-	.overview p, .tour-content .tour-overview p, .tour-content .tour-overview h5, .tour-content .itinerary ul.itinerary-list li p, .tour-content .itinerary ul.itinerary-list li h4, .tour-content .inclusions-exclusions .col2 ul, .tour-content .accomodations ul {font-size: 16px; line-height: 22px;}
+	.overview p, .tour-content .tour-overview p, .tour-content .tour-overview h5, .tour-content .itinerary ul.itinerary-list li p, .tour-content .itinerary ul.itinerary-list li h4, .tour-content .inclusions-exclusions .col2 ul, .tour-content .accomodations ul {font-size: 16px!important; line-height: 22px!important;}
 }
 
 
@@ -653,8 +658,8 @@
 
 	.packages-selected .sec-2 .itemhldr > article.dvider > article > div { padding: 25px 15px!important;}
 	.filter-tours ul.fdt li, .filter-tours ul.fpt li  {width: 100%; margin: 0 0 15px;}
-	.filter-tours ul.fdt li select, .filter-tours ul.fpt li select  {width: 100%}
-	.overview {padding-left: 15px; padding-right: 15px;}
+	.filter-tours ul.fdt li select, .filter-tours ul.fpt li select  {width: 100%!important}
+	.overview {padding-left: 15px!important; padding-right: 15px!important;}
 
 	.tour-content .tour-overview h2 {font-size: 30px; line-height: 42px;}
 	.tour-content h3 {font-size: 22px; line-height: 32px; margin-bottom: 20px;}

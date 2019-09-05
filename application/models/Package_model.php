@@ -68,6 +68,7 @@ class Package_model extends CMS_Model
         ->join('packages_tour_labels','packages.package_tour_id = packages_tour_labels.id','left')
         ->join('package_main_image','packages.id = package_main_image.package_id','left')
         ->join('package_locations','packages.id = package_locations.package_id','left')
+        ->where('packages.status', 'active')
         ->group_by('packages.id');
 
         if (is_int($where)) {
