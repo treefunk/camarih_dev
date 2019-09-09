@@ -200,6 +200,12 @@
 	        </div>
 	        <hr>
 	        <div class="form-group">
+
+	            <h3>Booking Conditions</h3>
+	            	<ckeditor :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.booking_conditions"></ckeditor>
+	        </div>
+	        <hr>
+	        <div class="form-group">
 				<h3>Accomodations</h3>	
 				<div v-for="(itinerary,index) in package_.package_accomodations" :key="index" style="text-align: right;">
 					<button class="btn btn-danger" type="button" @click="removeAccom(index)">X</button>
@@ -218,6 +224,7 @@
 	        <div class="btn-hldr">
 	        	<input type="hidden" name="inclusions" :value="package_data.package_details.inclusions">
 	        	<input type="hidden" name="exclusions" :value="package_data.package_details.exclusions">
+	        	<input type="hidden" name="booking_conditions" :value="package_data.package_details.booking_conditions">
 	        	<button class="btn_orange right_btn" type="button" @click="tab = 5">Next</button>
 	        </div>
 
@@ -312,6 +319,7 @@
 							description:'',
 							exclusions:'',
 							inclusions:'',
+							booking_conditions:'',
 						},
 						minimum_count:1,
 						package_tour_id:'',

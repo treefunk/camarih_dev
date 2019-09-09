@@ -160,6 +160,7 @@ class Tourpackages extends Admin_Controller {
 				'description' => $post['description'],
 				'exclusions' => $post['exclusions'],
 				'inclusions' => $post['inclusions'],
+				'booking_conditions' => $post['booking_conditions'],
 				'price_description' => $post['price_description']
 			]);
 
@@ -346,6 +347,7 @@ class Tourpackages extends Admin_Controller {
 			'description' => $post['description'],
 			'exclusions' => $post['exclusions'],
 			'inclusions' => $post['inclusions'],
+			'booking_conditions' => $post['booking_conditions'],
 			'price_description' => $post['price_description']
 		]);
 		//itineraries

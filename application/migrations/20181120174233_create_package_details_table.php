@@ -31,6 +31,9 @@ class Migration_Create_package_details_Table extends CI_Migration {
                         'inclusions' => array(
                                 'type' => 'LONGTEXT'
                         ),
+                        'booking_conditions' => array(
+                                'type' => 'LONGTEXT'
+                        ),
                         'price_description' => array(
                                 'type' => 'LONGTEXT'
                         )

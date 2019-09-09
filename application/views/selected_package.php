@@ -167,10 +167,17 @@
             <?php echo $package->package_details->inclusions; ?>
           </div>
         <?php endif ?>
-        <?php if ($package->package_details->exclusions): ?>
+        <?php if ($package->package_details->exclusions || $package->package_details->booking_conditions): ?>
           <div class="col2">
-            <h3>Exclusions</h3>
-            <?php echo $package->package_details->exclusions; ?>
+            <?php if ($package->package_details->exclusions): ?>
+              <h3>Exclusions</h3>
+              <?php echo $package->package_details->exclusions; ?>
+            <?php endif ?>
+
+            <?php if ($package->package_details->booking_conditions): ?>
+              <h3>Booking Conditions</h3>
+              <?php echo $package->package_details->booking_conditions; ?>
+            <?php endif ?>
           </div>
         <?php endif ?>
 
