@@ -10,6 +10,11 @@
                             <button class="btn btn-success btn-s"> Create New Package</button>
                           </a>
                       </span>
+                      <form>
+                        
+                      <input type="text" name="package_name" value="<?php echo @$_GET['package_name']; ?>">
+                      <input type="submit">
+                      </form>
                   </header>
                   <div class="panel-body">
                   <?php require_once __DIR__. "/../partials/alert.php"; ?> 

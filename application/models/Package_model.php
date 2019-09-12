@@ -26,7 +26,24 @@ class Package_model extends CMS_Model
     }
     public function getQueryTourPackages($where = '') { // refactor attempt
 
-        $query = $this->db->select("
+       
+
+        if (isset($_GET['package_name'])) {
+            $query = $this->db->select("
+                packages.*,
+                package_details.id as package_detail_id,
+                package_details.minimum_count as package_detail_minimum_count,
+                package_details.description as package_detail_description,
+                package_main_image.id as package_image_id,
+                package_main_image.image_title as package_image_title,
+                package_main_image.image_name as package_image_name
+            ")->from('packages')
+            ->join('package_details','packages.id = package_details.package_id','left')
+            ->join('package_itineraries','packages.id = package_itineraries.package_id','left')
+            ->join('package_main_image','packages.id = package_main_image.package_id','left')
+            ->group_by('packages.id')->where('packages.name LIKE "%'.$_GET['package_name'].'%"');
+        }else{
+             $query = $this->db->select("
             packages.*,
             package_details.id as package_detail_id,
             package_details.minimum_count as package_detail_minimum_count,
@@ -39,6 +56,7 @@ class Package_model extends CMS_Model
         ->join('package_itineraries','packages.id = package_itineraries.package_id','left')
         ->join('package_main_image','packages.id = package_main_image.package_id','left')
         ->group_by('packages.id');
+        }
 
         return $query;
     }
