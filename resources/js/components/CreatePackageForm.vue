@@ -6,7 +6,7 @@
 			<li :class="{'selected': tab == 2}" @click="tab = 2"><a>Gallery</a></li>
 			<li :class="{'selected': tab == 3}" @click="tab = 3"><a>Itinerary</a></li>
 			<li :class="{'selected': tab == 4}" @click="tab = 4"><a>Tour <br>Details</a></li>
-			<li :class="{'selected': tab == 5}" @click="tab = 5"><a>File Preview</a></li>
+			<!-- <li :class="{'selected': tab == 5}" @click="tab = 5"><a>File Preview</a></li> -->
 		</ul>
 
 
@@ -76,7 +76,7 @@
 	        </div>
 
 			<div class="form-group">
-				<label for="">*Minimum Number of Persons</label>
+				<label for="" v-if="package_.is_day_tour == 0">*Number of Persons</label>
 				<div>
 					
 					<div class="inc-item">

@@ -40,7 +40,7 @@
        <section class="day-tours">
           <?php if ($packages): ?>
             <package-list 
-             :packages='<?=json_encode($packages)?>'
+             :packages='<?=json_encode($packages, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE)?>'
              single_url="<?=base_url('packages/selected')?>"
              add_to_cart_url="<?=base_url('packages/add_to_cart')?>"
              main_image_url="<?=base_url($this->packageimage_model->upload_path)?>"

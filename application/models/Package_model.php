@@ -58,6 +58,7 @@ class Package_model extends CMS_Model
             package_details.id as package_detail_id,
             package_details.minimum_count as package_detail_minimum_count,
             package_details.description as package_detail_description,
+            package_details.price_description as package_detail_price_description,
             package_main_image.id as package_image_id,
             package_main_image.image_title as package_image_title,
             package_main_image.image_name as package_image_name,
@@ -327,6 +328,14 @@ class Package_model extends CMS_Model
             }
             $value->location_name = rtrim($location_names, " | ");
             $value->slug  = base_url('packages/selected/'.$value->slug);
+            $value->price_description_f  = str_replace('&nbsp;', ' ',str_replace('</p><p>', ' ', $value->package_detail_price_description));
+            $value->price_description_f = strip_tags($value->price_description_f);
+
+            if (strpos($value->price_description_f, "ALL IN") !== false) {
+                $price_explode = explode("ALL IN", $value->price_description_f);
+                $value->price_description_f = $price_explode[0];
+                $value->price_description_span = 'ALL IN '.$price_explode[1];
+            }
             $arr[$key] = $value;
         }
 
