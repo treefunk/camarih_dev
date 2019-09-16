@@ -3713,4 +3713,6 @@ input[type="checkbox"] {
 .dropdown- .submenu- li a { display: block; text-decoration: none; }
 .nav-custom .navbar-right li.active.dropdown- .submenu- li a, .nav-custom .navbar-right li.active.dropdown-:hover .submenu- li a { border-bottom: 0px }
 .dropdown-:hover .submenu- { display: block;  }
+
+.highlights .slick-list { width: 100%; }
 /*# sourceMappingURL=main.css.map */

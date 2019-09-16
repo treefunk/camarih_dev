@@ -101,7 +101,7 @@
   <section class="tour-content">
     <article class="tour-overview">
       <h2><?=$package->name?></h2>
-      <p><?php echo $package->package_details->description; ?></p>
+     
       <h5><?php echo $package->location_name ?></h5>
       <?php if (isset($package->package_details->price_description)): ?>
         <?php $package_desc = explode('</p><p>', $package->package_details->price_description); ?>
@@ -115,6 +115,8 @@
     <?php if(count($package->package_gallery)): ?>
       <article class="tour-highlights">
        <h3>Tour Highlights</h3>
+       <?php echo $package->package_details->description; ?>
+       <p style="margin-bottom: 30px;"></p>
        <div class="highlights gallery-item">
           <?php foreach($package->package_gallery as $image): ?>
             <div class="item">
@@ -146,16 +148,18 @@
     <?php endif ?>
 
     <?php if ($package->package_accomodations): ?>
-      <article class="accomodations">
-       <h3>Accomodation</h3>
-       <ul>
-          <?php foreach ($package->package_accomodations as $key => $accomodation): ?>
-            <li>
-                <label><?php echo $accomodation->title ?></label> 
-                <?php echo $accomodation->description ?>
-            </li>
-          <?php endforeach ?>
-       </ul>
+      <article class="accomodations" style="padding-bottom: 0px; margin-bottom: 30px;">
+       <div class="hldr" style="width: 100%; padding: 30px 0px; border-top: 2px solid #d5d5d5;  border-bottom: 2px solid #d5d5d5;">
+         <h3>Accommodation</h3>
+         <ul>
+            <?php foreach ($package->package_accomodations as $key => $accomodation): ?>
+              <li>
+                  <label><?php echo $accomodation->title ?></label> 
+                  <?php echo $accomodation->description ?>
+              </li>
+            <?php endforeach ?>
+         </ul>
+       </div>
       </article>
     <?php endif ?>
 
@@ -173,7 +177,11 @@
               <h3>Exclusions</h3>
               <?php echo $package->package_details->exclusions; ?>
             <?php endif ?>
+          </div>
+        <?php endif ?>
 
+        <?php if ($package->package_details->exclusions || $package->package_details->booking_conditions): ?>
+          <div class="col2">
             <?php if ($package->package_details->booking_conditions): ?>
               <h3>Booking Conditions</h3>
               <?php echo $package->package_details->booking_conditions; ?>
