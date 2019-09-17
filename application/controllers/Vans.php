@@ -302,8 +302,8 @@ class Vans extends Admin_Controller {
     public function rates($id)
     {
         $data['van'] = $this->van_model->find($id);
-        $data['destinations'] = $this->destination_model->getAllVanRentDropoff();
-        $data['origins'] = $this->destination_model->getAllVanRentOrigins();
+        $data['destinations'] = $this->destination_model->all();
+        $data['origins'] = $this->destination_model->all();
 
         $this->wrapper([
             'view' => 'admin/vans/rates',

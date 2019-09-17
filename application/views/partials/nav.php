@@ -39,6 +39,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li class="<?=isPageActive("")?>"><a href="<?=base_url()?>">Home</a></li>
                             <li class="<?=isPageActive("aboutus")?>"><a href="<?=base_url('aboutus')?>">About Us</a></li>
+                            <li class="<?=isPageActive("rates")?>"><a href="<?=base_url('rates')?>">Rates</a></li>
                             <li class="<?=isPageActive("ourvans")?>"><a href="<?=base_url('ourvans')?>">Our Vans</a></li>
                             <li class="<?=isPageActive("schedule")?>"><a href="<?=base_url('schedule')?>">Trip schedule</a></li>
                             <li class="<?=isPageActive("packages")?> dropdown-">

@@ -36,7 +36,7 @@
                         <?php foreach($inquiries as $inquiry): ?>
                         <tr>
                             <td><?=$inquiry->name?></td>
-                            <td><?=$inquiry->package_name.$inquiry->package_id?></td>
+                            <td><?=$inquiry->package_name?></td>
                             <td><?=$inquiry->mobile?></td>
                             <td><a href="mailto:<?=$inquiry->email_address?>"><?=$inquiry->email_address?></a></td>
                             <td><?=$inquiry->created_at?></td>
