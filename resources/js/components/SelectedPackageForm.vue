@@ -96,17 +96,17 @@
                                     <input type="text" name="name">
                                 </li>
                                 <li>
-                                    <label>Mobile #</label>
+                                    <label>Mobile Number</label>
                                     <input type="text" name="mobile">
                                 </li>
                                 <li>
                                     <label>Email Address</label>
                                     <input type="email" name="email_address">
                                 </li>
-                                <!-- <li>
+                                <li>
                                     <label># of Pax</label>
                                     <input type="text" name="pax">
-                                </li> -->
+                                </li>
                                 <li>
                                     <input type="submit" name="" value="Send Inquiry">
                                 </li>

@@ -34,15 +34,23 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="title-moble">P<?php echo number_format($van_rate->oneway_rate); ?>.00</span>
+                                        <span class="title-moble">Puerto Princesa - El Nido</span>
                                         <div class="text-right">
-                                            P<?php echo number_format($van_rate->oneway_rate); ?>.00
+                                            <?php if ($van_rate->oneway_rate): ?>
+                                                P<?php echo number_format($van_rate->oneway_rate); ?>.00
+                                            <?php else: ?>
+                                                N/A
+                                            <?php endif ?>
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="title-moble">P<?php echo number_format($van_rate->roundtrip_rate); ?>.00</span>
+                                        <span class="title-moble">El Nido- Puerto Princesa</span>
                                         <div class="text-right">
-                                            P<?php echo number_format($van_rate->roundtrip_rate); ?>.00
+                                            <?php if ($van_rate->roundtrip_rate): ?>
+                                                P<?php echo number_format($van_rate->roundtrip_rate); ?>.00
+                                            <?php else: ?>
+                                                N/A
+                                            <?php endif ?>
                                         </div>
                                     </td>
                                 </tr>

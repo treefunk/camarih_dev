@@ -225,7 +225,7 @@
 	        	<input type="hidden" name="inclusions" :value="package_data.package_details.inclusions">
 	        	<input type="hidden" name="exclusions" :value="package_data.package_details.exclusions">
 	        	<input type="hidden" name="booking_conditions" :value="package_data.package_details.booking_conditions">
-	        	<button class="btn_orange right_btn" type="button" @click="tab = 5">Next</button>
+	        	<!-- <button class="btn_orange right_btn" type="button" @click="tab = 5">Next</button> -->
 	        </div>
 
 
@@ -441,12 +441,17 @@
 				for(let x = 0; x < this.packagegallery.length ; x++){
 					let reader = new FileReader();
 					let elem = document.querySelector(`input[type="file"][id="gallery_${x}"]`).files[0]
-					
-					if(elem != undefined){
-						reader.onload = function(){
-							self.packagegallery[x].preview_image = reader.result
+					if (elem['size'] > 5000000) {
+						this.$store.dispatch("showToastr", { message: 'Image size limit to 5mb', type: "error"})
+						this.packagegallery.splice(x,1)
+					}else{
+						if(elem != undefined){
+							reader.onload = function(){
+								self.packagegallery[x].preview_image = reader.result
+							}
+							reader.readAsDataURL(elem)
 						}
-						reader.readAsDataURL(elem)
+
 					}
 				}
 				// update all preview image elem

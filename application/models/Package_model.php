@@ -302,7 +302,6 @@ class Package_model extends CMS_Model
                 $value->sub_directories = ($this->getSubDirectories($value->id))?:0;
             }
             $value->duration_format = $this->getDurations($value->duration_id)[0]->name;
-
             $arr[$key] = $value;
         }
 

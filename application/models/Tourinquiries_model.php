@@ -30,6 +30,7 @@ class Tourinquiries_model extends CMS_Model
 			Email: '.$post['email_address'].'<br>
 			Contact #: '.$post['mobile'].'<br>
 			Package Name: '.$post['package_name'].'<br>
+			Number of Pax: '.$post['pax'].'<br>
 			';
 			$email_to = 'dianeocampo97@gmail.com';
 			$subject = 'Camarih Transport: New Inquiry';

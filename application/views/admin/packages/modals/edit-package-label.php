@@ -52,12 +52,21 @@
 <script>
 
 $('#editPackageName').on('show.bs.modal',function(e){
+
+    $("#is_sub_directory option").removeAttr('style');
+
+
     var modal = $(this);
     var button = $(e.relatedTarget);
     var data = button.data('payload');
+
     modal.find('#package_name').val(data.name);
     modal.find('#duration').val(data.duration_id);
     modal.find('#is_sub_directory').val(data.is_sub_directory);
+
+    $("#is_sub_directory option[value='"+data.id+"']").attr('style', 'display: none;');
+
+
     modal.find('#id').val(data.id);
 })
 

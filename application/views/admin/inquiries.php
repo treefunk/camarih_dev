@@ -27,6 +27,7 @@
                         <th>Package</th>
                         <th>Contact #</th>
                         <th>Email</th>
+                        <th>Pax</th>
                         <th>Date Inquired</th>
                         <!-- <th>Actions</th> -->
                     </tr>
@@ -39,6 +40,7 @@
                             <td><?=$inquiry->package_name?></td>
                             <td><?=$inquiry->mobile?></td>
                             <td><a href="mailto:<?=$inquiry->email_address?>"><?=$inquiry->email_address?></a></td>
+                            <td><?php var_dump($inquiry)?></td>
                             <td><?=$inquiry->created_at?></td>
                         </tr>
                         <?php endforeach; ?>

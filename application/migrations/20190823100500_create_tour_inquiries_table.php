@@ -26,6 +26,10 @@ class Migration_Create_tour_inquiries_Table extends CI_Migration {
                             'type' => 'VARCHAR',
                             'constraint' => '300'         
                         ),
+                        'pax' => array(
+                            'type' => 'VARCHAR',
+                            'constraint' => '300'         
+                        ),
                         'email_address' => array(
                             'type' => 'VARCHAR',
                             'constraint' => '300'         
