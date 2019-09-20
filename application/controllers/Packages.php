@@ -31,7 +31,7 @@ class Packages extends MY_Controller {
 
         $clone_query = clone $query;
 
-		$query->order_by("created_at",'DESC');
+		$query->order_by("name",'ASC');
 		$query->where('packages.status','active');
         $query->offset($offset);
         $query->limit($per_page);
@@ -77,7 +77,7 @@ class Packages extends MY_Controller {
 
         $clone_query = clone $query;
 
-		$query->order_by("created_at",'DESC');
+		$query->order_by("name",'ASC');
 		$query->where('packages.status','active');
         $query->offset($offset);
         $query->limit($per_page);
@@ -126,7 +126,7 @@ class Packages extends MY_Controller {
 
         $clone_query = clone $query;
 
-		$query->order_by("created_at",'DESC');
+		$query->order_by("name",'ASC');
 		$query->where('packages.status','active');
         $query->offset($offset);
         $query->limit($per_page);

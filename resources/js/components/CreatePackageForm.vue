@@ -76,7 +76,8 @@
 	        </div>
 
 			<div class="form-group">
-				<label for="" v-if="package_.is_day_tour == 0">*Number of Persons</label>
+				<!-- v-if="package_.is_day_tour == 0" -->
+				<label for="">*Number of Persons</label>
 				<div>
 					
 					<div class="inc-item">
@@ -206,7 +207,7 @@
 	        </div>
 	        <hr>
 	        <div class="form-group">
-				<h3>Accomodations</h3>	
+				<h3>Accommodations</h3>	
 				<div v-for="(itinerary,index) in package_.package_accomodations" :key="index" style="text-align: right;">
 					<button class="btn btn-danger" type="button" @click="removeAccom(index)">X</button>
 					<input type="hidden" :name="`accom[${index}][id]`" v-model="package_.package_accomodations[index].id">
@@ -219,7 +220,7 @@
 					<input type="hidden" :id="`accom[${index}][description]`" :name="`accom[${index}][description]`" :value="package_.package_accomodations[index].description">
 					<hr>
 				</div>
-				<button  type="button" class="btn btn-default" @click="addAccom" for="itinerary">Add Accomodation</button>
+				<button  type="button" class="btn btn-default" @click="addAccom" for="itinerary">Add Accommodation</button>
 			</div>
 	        <div class="btn-hldr">
 	        	<input type="hidden" name="inclusions" :value="package_data.package_details.inclusions">

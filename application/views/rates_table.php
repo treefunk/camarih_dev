@@ -13,7 +13,7 @@
         <div class="hldr">
             <div class="table-hldr">
                 <?php if(count($rates)): ?>
-                    <?php foreach ($rates as $rate): ?>
+                    <?php foreach ($rates as $key => $rate): ?>
                         <h3 <?php echo ($key != 0)?'style="margin-top: 50px;"':'';  ?>><?php echo $rate->name ?></h3>
                         <center><p><?php echo $rate->description ?></p></center>
                         <table class="table schedule-table" >
@@ -34,24 +34,24 @@
                                         </div>
                                     </td>
                                     <td>
-                                        <span class="title-moble">Puerto Princesa - El Nido</span>
-                                        <div class="text-right">
+                                        <span class="title-moble">One Way Rate <?php echo ($rate->name == 'Regular Van') ? '<br>per person': '' ?></span>
+                                        <p>
                                             <?php if ($van_rate->oneway_rate): ?>
                                                 P<?php echo number_format($van_rate->oneway_rate); ?>.00
                                             <?php else: ?>
                                                 N/A
                                             <?php endif ?>
-                                        </div>
+                                        </p>
                                     </td>
                                     <td>
-                                        <span class="title-moble">El Nido- Puerto Princesa</span>
-                                        <div class="text-right">
+                                        <span class="title-moble">Round Trip Rate <?php echo ($rate->name == 'Regular Van') ? '<br>per person': '' ?></span>
+                                        <p>
                                             <?php if ($van_rate->roundtrip_rate): ?>
                                                 P<?php echo number_format($van_rate->roundtrip_rate); ?>.00
                                             <?php else: ?>
                                                 N/A
                                             <?php endif ?>
-                                        </div>
+                                        </p>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
