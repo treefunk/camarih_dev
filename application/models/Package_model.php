@@ -205,6 +205,10 @@ class Package_model extends CMS_Model
             $location_names .= $loc.' | ';
         }
 
+        if ($package->is_day_tour) {
+            $package_locations_ids = $package_locations_ids[0];
+        }
+
         $package->location_name = rtrim($location_names, " | ");
         $package->package_locations = $package_locations_ids;
         

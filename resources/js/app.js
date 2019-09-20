@@ -47,6 +47,12 @@ Vue.mixin({
              minimumFractionDigits: 2,
           })
           
+        },
+        addLetterP: (value) => {
+
+          if(value == "N/A"){ return "N/A" }
+          return 'P'+value
+          
         }
       }
 })

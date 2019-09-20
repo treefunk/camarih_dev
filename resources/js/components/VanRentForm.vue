@@ -99,15 +99,15 @@
 
                   <div class="children clearfix">
                     <span>Destination:</span>
-                    <p>{{ rate.destination.name }}</p>
+                    <p>{{ rate.origin.name }} - {{ rate.destination.name }}</p>
                   </div>
                   <div class="children clearfix">
                     <span>One-way Rate (PhP):</span>
-                    <p>{{ (rate.oneway_rate || "N/A") | formatNum }}</p>
+                    <p>{{ (rate.oneway_rate || "N/A") | formatNum | addLetterP}}</p>
                   </div>
                   <div class="children clearfix">
                     <span>Round Trip Rate (PhP):</span>
-                    <p>{{ (rate.roundtrip_rate || "N/A") | formatNum}}</p>
+                    <p>{{ (rate.roundtrip_rate || "N/A") | formatNum | addLetterP}}</p>
                   </div>
                   </div>
                 </li>

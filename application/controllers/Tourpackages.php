@@ -244,7 +244,7 @@ class Tourpackages extends Admin_Controller {
 				if($main_image_id = $this->packageimage_model->add([
 					'package_id' => $package_id,
 					'image_name' => $name,
-					'image_title' => $name,
+					'image_title' => $file['name'],
 					'type' => "",
 				])){
 					
@@ -453,7 +453,8 @@ class Tourpackages extends Admin_Controller {
 			foreach($post['uploaded_images'] as $image){
 				$uploaded_images_post_ids[] = $image['id'];
 				$changes += (int)$this->packagegallery_model->update($image['id'],[
-					'image_title' =>  preg_replace('/\s+/', '_', $image['image_title'])
+					// 'image_title' =>  preg_replace('/\s+/', '_', $image['image_title'])
+					'image_title' =>  $image['image_title']
 				]);
 			}
 		}
@@ -545,7 +546,8 @@ class Tourpackages extends Admin_Controller {
 			if($download_id = $this->packageimage_model->add([
 				'package_id' => $package->id,
 				'image_name' =>preg_replace('/\s+/', '_', $file['name']),
-				'image_title' => preg_replace('/\s+/', '_', $file['name']),
+				// 'image_title' => preg_replace('/\s+/', '_', $file['name']),
+				'image_title' => $file['name'],
 				'type' => "",
 			])){
 				

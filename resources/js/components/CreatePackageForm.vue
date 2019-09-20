@@ -33,16 +33,6 @@
 	        </div>
 
 	        <div class="form-group">
-	            <label for="name">*Location</label>
-	            <p style="margin-left: 9px; ">Tip: Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
-	            <select class="form-control" v-model="package_.package_locations" name="destination_id[]" multiple>
-                    <option value="">Select Destination</option>
-                    <option v-for="destination in destinations" :key="destination.id" :value="destination.id">{{ destination.name }}</option>
-                </select>
-	        </div>
-
-
-	        <div class="form-group">
                 <label for="select_type">*Select Tour Type</label>
                 <div class="radio">
                         <label>
@@ -55,6 +45,17 @@
                         </label>
                 </div>
             </div>
+
+	        <div class="form-group">
+	            <label for="name">*Location</label>
+	            <p style="margin-left: 9px; " v-if="package_.is_day_tour == 0">Tip: Hold down the Ctrl (windows) / Command (Mac) button to select multiple options.</p>
+	            <select class="form-control" v-model="package_.package_locations" name="destination_id[]"  :multiple="package_.is_day_tour == 0">
+                    <option value="" disabled="">Select Destination</option>
+                    <option v-for="destination in destinations" :key="destination.id" :value="destination.id">{{ destination.name }}</option>
+                </select>
+	        </div>
+
+
 
             <div class="form-group" v-if="package_.is_day_tour == 0">
 	            <label for="name">Tour Package</label>
@@ -206,7 +207,7 @@
 	            	<ckeditor :editor="ckeditor" :config="editorConfig" v-model="package_.package_details.booking_conditions"></ckeditor>
 	        </div>
 	        <hr>
-	        <div class="form-group">
+	        <div class="form-group" v-if="package_.is_day_tour == 0">
 				<h3>Accommodations</h3>	
 				<div v-for="(itinerary,index) in package_.package_accomodations" :key="index" style="text-align: right;">
 					<button class="btn btn-danger" type="button" @click="removeAccom(index)">X</button>
@@ -538,6 +539,7 @@
 			"package_.is_day_tour" : function(newV,oldV){
 				if (newV == 1) {
 					this.package_.package_category = 'daytour';
+					this.package_.package_locations = this.package_.package_locations[0];
 				}else{
 					this.package_.package_category = this.package_.package_root_name;
 					this.package_.package_root_name = this.rootpackages[0];

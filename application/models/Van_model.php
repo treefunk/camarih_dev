@@ -25,7 +25,7 @@ class Van_model extends CMS_Model
         $q = $this->db->select('vans.*,van_details.oneway_rate,van_details.roundtrip_rate')
                       ->from('vans')
                       ->join('van_details','vans.id = van_details.van_id')
-                      ->order_by('vans.name');
+                      ->order_by('vans.created_at');
 
         $vans = $q->get()->result();
 
@@ -52,7 +52,7 @@ class Van_model extends CMS_Model
         $q = $this->db->select('vans.*,van_details.oneway_rate,van_details.roundtrip_rate')
                       ->from('vans')
                       ->join('van_details','vans.id = van_details.van_id')
-                      ->order_by('vans.id');
+                      ->order_by('vans.created_at');
 
         $vans = $q->get()->result();
 

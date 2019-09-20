@@ -122,7 +122,7 @@
             <div class="item">
               <a href="<?=base_url("uploads/package_gallery/{$package->id}_{$image->image_name}")?>">
                 <div class="thumb"><img src="<?=base_url("uploads/package_gallery/{$package->id}_{$image->image_name}")?>" title="<?=$image->image_title?>"></div>
-                <span><?=$image->image_title?></span>
+                <span><?php echo str_replace('_', ' ', $image->image_title) ?></span>
               </a>
             </div>
           <?php endforeach; ?>
@@ -146,8 +146,7 @@
        </ul>
       </article>
     <?php endif ?>
-
-    <?php if ($package->package_accomodations): ?>
+    <?php if (!$package->is_day_tour && $package->package_accomodations): ?>
       <article class="accomodations" style="padding-bottom: 0px; margin-bottom: 30px;">
        <div class="hldr" style="width: 100%; padding: 30px 0px; border-top: 2px solid #d5d5d5;  border-bottom: 2px solid #d5d5d5;">
          <h3>Accommodation</h3>
