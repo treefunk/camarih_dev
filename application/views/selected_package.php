@@ -8,12 +8,13 @@
     <div class="overlay"></div>
 
   </section>
-
+  <?php if ($is_day_tour_format != 'Package Tour'): ?>
   <book-a-trip
   url='<?=base_url('availability/check')?>'
   :destinations_data='<?=json_encode($destinations)?>'
   :origins_data='<?=json_encode($origins)?>'
   > </book-a-trip>
+  <?php endif; ?>
 
   <!-- <section class="sec-2">
 
@@ -70,7 +71,7 @@
   } ?> -->
 
 </div>
-<div class="pagewrapper3" style="margin-top: 200px;">
+<div class="pagewrapper3" style="<?php echo ($is_day_tour_format != 'Package Tour') ? 'margin-top: 200px;' : ''; ?>">
   <?php if(isset($_SESSION['alert']['type'])): ?>
     <div class="alert alert-<?=$_SESSION['alert']['type']?> alert-block fade in">
         <button data-dismiss="alert" class="close close-sm" type="button">
