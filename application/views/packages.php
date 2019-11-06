@@ -8,11 +8,7 @@
 
   </section>
   <?php if ($is_day_tour): ?>
-    <book-a-trip
-    url='<?=base_url('availability/check')?>'
-    :destinations_data='<?=json_encode($destinations)?>'
-    :origins_data='<?=json_encode($origins)?>'
-    > </book-a-trip>
+    <?php include('partials/book_a_trip.php'); ?>
   <?php endif; ?>
 
   <div class="packages--" <?php echo ($is_day_tour) ? '':'style="padding-top:0px!important;"' ?>>

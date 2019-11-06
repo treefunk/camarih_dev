@@ -145,14 +145,12 @@ class Tripavailability_model extends CMS_Model
      */
     public function checkAvailability($post)
     {
-        $dt = new DateTimeZone('Asia/Hong_Kong');
-        $departure_from_datetime = DateTime::createFromFormat('Y-m-d',$post['departure_from'],$dt);
-        $post['departure_from'] = $departure_from_datetime->format('Y-m-d') . " 00:00:00";
 
-        // if(isset($post['departure_to'])){
-        //     $departure_to_datetime = DateTime::createFromFormat('Y-m-d',$post['departure_to'],$dt);
-        //     $post['departure_to'] = $departure_to_datetime->format('Y-m-d') . " 23:59:59";
-        // }
+        $date = new DateTime($post["departure_from"]);
+        date_timezone_set($date, timezone_open('Asia/Singapore'));
+        $post["departure_from"] = date_format($date, 'Y-m-d 00:00:00');
+
+        $dt = new DateTimeZone('Asia/Hong_Kong');
 
         $today = (new DateTime('now',$dt))->format('Y-m-d');
 
@@ -228,6 +226,25 @@ class Tripavailability_model extends CMS_Model
         ');
         $query->join('vans','trip_availability.van_id = vans.id');
         $query->join('destinations', 'trip_availability.destination_from = destinations.id');
+
+        return $query;
+    }
+
+    public function getOrigins($origin_id){
+        $query = $this->db->from('trip_availability');
+
+        $query->select('
+        trip_availability.id,
+        trip_availability.selling_start,
+        trip_availability.selling_end,
+        trip_availability.created_at,
+        trip_availability.destination_from,
+        vans.name as van_name,
+        destinations.name as origin_name
+        ');
+        $query->join('vans','trip_availability.van_id = vans.id');
+        $query->join('destinations', 'trip_availability.destination_from = '. $origin_id);
+        $query->group_by('trip_availability.id');
 
         return $query;
     }

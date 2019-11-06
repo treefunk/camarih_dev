@@ -131,6 +131,208 @@ class Availability extends MY_Controller {
         
     }
 
+    public function check_selling_dates()
+    {
+
+        $date = new DateTime();
+        date_timezone_set($date, timezone_open('Asia/Singapore'));
+        $date_today = date_format($date, 'Y-m-d H:i:s');
+
+
+        $post = json_decode(file_get_contents("php://input"));
+        $query = $this->tripavailability_model->getOrigins($post->destination_from);
+
+        $trips = $query->get()->result();
+        
+        $available_trips = [];
+        if ($trips) {
+            foreach ($trips as $key => $trip) {
+                $trip_availability = $this->tripavailability_model->findById($trip->id);
+                $trip_availability = $this->tripavailability_model->initRelations($trip_availability);
+                if ($trip_availability->rates) {
+                    foreach ($trip_availability->rates as $rate) {
+                        if ($rate->destination_id == $post->destination_to) {
+                            $available_trips[] = $trip;
+                        }
+                    }
+                }
+                
+            }
+        }
+        /** [two-way trip] */
+        $available_trips_2way = [];
+        $selling_dates_2way = [];
+        $dates_2way = [];
+        $min_date_2way = '';
+
+        $dates_in_ranges_2way = [];
+        $dates_in_between_2way = [];
+        $disabled_dates_arr_2way = [];
+        $int_dates_2way = [];
+
+        if ($post->triptype == 'roundtrip') {
+            $query_2way = $this->tripavailability_model->getOrigins($post->destination_to);
+
+            $trips_2way = $query_2way->get()->result();
+            
+            if ($trips_2way) {
+                foreach ($trips_2way as $key => $trip) {
+                    $trip_availability = $this->tripavailability_model->findById($trip->id);
+                    $trip_availability = $this->tripavailability_model->initRelations($trip_availability);
+                    if ($trip_availability->rates) {
+                        foreach ($trip_availability->rates as $rate) {
+                            if ($rate->destination_id == $post->destination_from) {
+                                $available_trips_2way[] = $trip;
+                            }
+                        }
+                    }
+                    
+                }
+            }
+
+           
+            if ($available_trips_2way) {
+                foreach ($available_trips_2way as $key => $trip) {
+                    $dates_2way[] = $trip->selling_start;
+                    $dates_2way[] = $trip->selling_end;
+                    $selling_dates_2way[] = array('start' => $trip->selling_start, 'end' => $trip->selling_end);
+                }
+            }
+            $min_date_2way = ($dates_2way) ? min($dates_2way) : 0;
+
+            
+
+            if (count($available_trips_2way) > 1) {
+                $dates_in_between_2way = $this->getDatesFromRange($min_date_2way,  max($dates_2way), 'm/d/Y');
+                foreach ($available_trips_2way as $key => $value) {
+                    $dates_in_ranges_2way = array_merge($dates_in_ranges_2way, $this->getDatesFromRange($value->selling_start,  $value->selling_end, 'm/d/Y'));
+                }
+                $disabled_dates = array_diff($dates_in_between_2way, $dates_in_ranges_2way);
+                $int_dates_2way = array_intersect($dates_in_between_2way, $dates_in_ranges_2way);
+                foreach ($disabled_dates as $key => $value) {
+                    $disabled_dates_arr_2way[] = $value;
+                }
+            }
+
+            if (count($available_trips_2way) == 1) {
+                $dates_in_between_2way = $this->getDatesFromRange($min_date_2way,  max($dates_2way), 'm/d/Y');
+                $int_dates_2way = $dates_in_between_2way;
+            }
+
+            $new_arr_2way = [];
+            if ($int_dates_2way) {
+                $date = new DateTime();
+                date_timezone_set($date, timezone_open('Asia/Singapore'));
+                $date_today = date_format($date, 'm/d/Y');
+                foreach ($int_dates_2way as $key => $value) {
+
+                    if ($value >= $date_today) {
+                        $new_arr_2way[] = $value;
+                    }
+                }
+                if ($new_arr_2way) {
+                    $min_date_2way = min($new_arr_2way);
+                }
+            }
+
+            // if ($dates_2way && date('m/d/Y',strtotime(max($dates_2way))) > $min_date_2way) {
+            //     $min_date_2way = 0;
+            // }
+
+
+
+        }
+        /** [two-way trip] */
+
+        $selling_dates = [];
+        $dates = [];
+        if ($available_trips) {
+            foreach ($available_trips as $key => $trip) {
+                $dates[] = $trip->selling_start;
+                $dates[] = $trip->selling_end;
+                $selling_dates[] = array('start' => $trip->selling_start, 'end' => $trip->selling_end);
+            }
+        }
+        $min_date = ($dates) ? min($dates) : 0;
+        
+        $dates_in_ranges = [];
+        $dates_in_between = [];
+        $disabled_dates_arr = [];
+        $int_dates = [];
+
+        if (count($available_trips) > 1) {
+            $dates_in_between = $this->getDatesFromRange($min_date,  max($dates), 'm/d/Y');
+            foreach ($available_trips as $key => $value) {
+                $dates_in_ranges = array_merge($dates_in_ranges, $this->getDatesFromRange($value->selling_start,  $value->selling_end, 'm/d/Y'));
+            }
+            $disabled_dates = array_diff($dates_in_between, $dates_in_ranges);
+            $int_dates = array_intersect($dates_in_between, $dates_in_ranges);
+            foreach ($disabled_dates as $key => $value) {
+                $disabled_dates_arr[] = $value;
+            }
+        }
+
+        if (count($available_trips) == 1) {
+            $dates_in_between = $this->getDatesFromRange($min_date,  max($dates), 'm/d/Y');
+            $int_dates = $dates_in_between;
+        }
+
+        $new_arr = [];
+        if ($int_dates) {
+            $date = new DateTime();
+            date_timezone_set($date, timezone_open('Asia/Singapore'));
+            $date_today = date_format($date, 'm/d/Y');
+            foreach ($int_dates as $key => $value) {
+
+                if ($value >= $date_today) {
+                    $new_arr[] = $value;
+                }
+            }
+            if ($new_arr) {
+                $min_date = min($new_arr);
+            }
+        }
+
+        $response = [
+            'dates' => $new_arr,
+            'dates_in_between' => $dates_in_between,
+            'dates_in_ranges' => $dates_in_ranges,
+            'dates_in_between_2way' => $dates_in_between_2way,
+            'dates_in_ranges_2way' => $dates_in_ranges_2way,
+            'disabled_dates' => $disabled_dates_arr,
+            'disabled_dates_2way' => $disabled_dates_arr_2way,
+            'available_trips' => $available_trips,
+            'available_trips_2way' => $available_trips_2way,
+            'selling_dates' => $selling_dates,
+            'selling_dates_2way' => $selling_dates_2way,
+            'min' => ($min_date) ? date('m-d-Y',strtotime($min_date))   : 0,
+            'min_date_2way' => ($min_date_2way) ? date('m-d-Y',strtotime($min_date_2way))   : 0,
+            'min_format' => ($min_date) ? date('m/d/Y',strtotime($min_date))   : 0,
+            'min_format_2way' => ($min_date_2way) ? date('m/d/Y',strtotime($min_date_2way))   : 0,
+            'max' => ($min_date) ? date('m-d-Y',strtotime(max($dates)))   : 0,
+            'max_date_2way' => ($min_date_2way) ? date('m-d-Y',strtotime(max($dates_2way)))   : 0,
+            'max_format' => ($min_date) ? date('m/d/Y',strtotime(max($dates)))   : 0,
+            'max_format_2way' => ($min_date_2way) ? date('m/d/Y',strtotime(max($dates_2way)))   : 0
+        ];
+        die(json_encode($response));
+    }
+
+    public function getDatesFromRange($start, $end, $format = 'Y-m-d') {
+        $array = array();
+        $interval = new DateInterval('P1D');
+
+        $realEnd = new DateTime($end);
+        // $realEnd->add($interval);
+
+        $period = new DatePeriod(new DateTime($start), $interval, $realEnd);
+
+        foreach($period as $date) { 
+            $array[] = $date->format($format); 
+        }
+
+        return $array;
+    }
+
     // Step 2 show van seat plan + per head input fields
     public function book($return = false)
     {

@@ -58,6 +58,31 @@
     <script type="text/javascript" src="<?=base_url()?>frontend/js/slick.min.js"></script>
     <script src="<?=base_url()?>frontend/js/jquery.magnific-popup.min.js"></script>
     <script src="<?=base_url()?>/assets/js/app.js"></script>
+    <script>
+      $(function(){
+        <?php if (isset($default_slider)): ?>
+          $('.home-carousel').owlCarousel({
+            loop:true,
+            margin:10,
+            startPosition: <?=$default_slider?>,
+            nav:true,
+            responsive:{
+                0:{
+                    items:1
+                },
+                600:{
+                    items:1
+                },
+                1000:{
+                    items:1
+                }
+            }
+          });
+        <?php endif ?>
+
+      })
+
+    </script>
     <script type="text/javascript">
       $('.highlights').slick({
           infinite: true,

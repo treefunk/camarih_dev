@@ -23,6 +23,7 @@
   <link rel="stylesheet" href="<?=base_url()?>frontend/css/jhondz.css">
   <link rel="stylesheet" type="text/css" href="<?=base_url()?>frontend/css/slick.css"/>
   <link rel="stylesheet" type="text/css" href="<?=base_url()?>frontend/css/slick-theme.css"/>
+  <link rel="stylesheet" type="text/css" href="<?=base_url()?>frontend/css/bootstrap-datepicker.min.css">
   
   <!-- toastr -->
   <link href="<?=base_url('flatlab')?>/assets/toastr-master/toastr.css" rel="stylesheet" type="text/css">
@@ -30,6 +31,8 @@
 
   <link href="<?=base_url()?>assets/css/app.css" rel="stylesheet" />
   <script src="<?=base_url()?>frontend/js/vendor/jquery-v3.2.1.min.js"></script>
+
+  <script type="text/javascript" src="<?=base_url()?>frontend/js/bootstrap-datepicker.js"></script>
 
 </head>
 

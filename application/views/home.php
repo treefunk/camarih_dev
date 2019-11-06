@@ -61,12 +61,7 @@
 </section>
 
 
-
-  <book-a-trip
-  url='<?=base_url('availability/check')?>'
-  :destinations_data='<?=json_encode($destinations)?>'
-  :origins_data='<?=json_encode($origins)?>'
-  > </book-a-trip>
+<?php include('partials/book_a_trip.php'); ?>
 
 
 <section class="sec-2">
@@ -124,27 +119,3 @@
 
 
 </div>
-
-<script>
-  $(function(){
-    $('.home-carousel').owlCarousel({
-      loop:true,
-      margin:10,
-      startPosition: <?=$default_slider?>,
-      nav:true,
-      responsive:{
-          0:{
-              items:1
-          },
-          600:{
-              items:1
-          },
-          1000:{
-              items:1
-          }
-      }
-    });
-
-  })
-
-</script>

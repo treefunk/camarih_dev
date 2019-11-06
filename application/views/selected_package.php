@@ -9,11 +9,7 @@
 
   </section>
   <?php if ($is_day_tour_format != 'Package Tour'): ?>
-  <book-a-trip
-  url='<?=base_url('availability/check')?>'
-  :destinations_data='<?=json_encode($destinations)?>'
-  :origins_data='<?=json_encode($origins)?>'
-  > </book-a-trip>
+  <?php include('partials/book_a_trip.php'); ?>
   <?php endif; ?>
 
   <!-- <section class="sec-2">

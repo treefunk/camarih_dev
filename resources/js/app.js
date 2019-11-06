@@ -17,6 +17,7 @@ import BookSummary from './components/BookSummary.vue'
 import FinalSummary from './components/FinalSummary.vue'
 import ShoppingCart from './components/ShoppingCart.vue'
 import BookATrip from './components/BookATrip.vue'
+import BookATripNew from './components/BookATripNew.vue'
 import ScheduleForm from './components/ScheduleForm.vue'
 import VanGallery from './components/VanGallery.vue'
 import CreateVanForm from './components/CreateVanForm'
@@ -77,6 +78,7 @@ new Vue({
         'final-summary': FinalSummary,
         'shopping-cart': ShoppingCart,
         'book-a-trip' : BookATrip,
+        'book-a-trip-new' : BookATripNew,
         'schedule-form': ScheduleForm,
         'van-gallery': VanGallery,
         'create-van-form': CreateVanForm,
